@@ -1,6 +1,4 @@
-# Codelabs 
-
-## Flutter
+# Flutter
 
 *Write your first Flutter app*
 
