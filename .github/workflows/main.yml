@@ -21,7 +21,7 @@ jobs:
     - name: Build
       run: |
           go get github.com/googlecodelabs/tools/claat
-          claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
+          # claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
 
     - name: Deploy website
       uses: peaceiris/actions-gh-pages@v3.6.4
