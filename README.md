@@ -20,7 +20,7 @@ $ claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
 ok	write-1st-flutter-app-1
 ```
 
-## 　デプロイ
+## デプロイ
 
 定期的にサイトを生成して、サイトに反映させます。
 
