@@ -1,29 +1,31 @@
-# Unit 1: Get started
+# Unit 1: はじめに
 
-## Lesson 1: Build your first app
+## レッスン 1: 最初のアプリを作る
 
-[1.1: Android Studio and Hello World](./1-1/)
+[1.1: Android Studio と Hello World](./1-1/)
 
-[1.2 Part A: Your first interactive UI]()
+[1.2 パート A: 最初の対話型UI](./1-2A/)
 
-[1.2 Part B: The layout editor]()
+[1.2 パート B: レイアウトエディタ](./1-2B/)
 
-[1.3: Text and scrolling views]()
+[1.3: テキストとスクロールの表示](./1-3/)
 
-[1.4: Learn to help yourself]()
+[1.4: 自分でできるようになる](./1-4/)
 
-## Lesson 2: Activities and intents
 
-[2.1: Activities and intents]()
+## レッスン 2: activity と intent
 
-[2.2: Activity lifecycle and state]()
+[2.1: activity と intent](./2-1/)
 
-[2.3: Implicit intents]()
+[2.2: Activity のライフサイクルと状態](./2-2/)
 
-## Lesson 3: Testing, debugging, and using support libraries
+[2.3: 暗黙的な intent](./2-3/)
 
-[3.1: The debugger]()
 
-[3.2: Unit tests]()
+## レッスン 3: テスト、デバッグ、およびサポートライブラリの使用
 
-[3.3: Support libraries]()
+[3.1: デバッガ](./3-1/)
+
+[3.2: ユニットテスト](./3-2/)
+
+[3.3: サポートライブラリ](./3-3/)
