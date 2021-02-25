@@ -1,0 +1,519 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android fundamentals 01.1: Android Studio and Hello World</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="1-1"
+                  title="Android fundamentals 01.1: Android Studio and Hello World"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="ようこそ" duration="0">
+        <p>この実用的な codelab は、Android 開発者基本編 (バージョン2) コースの <a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">Unit 1:はじめに</a> の一部です。このコースを最大限に活用するには、以下の Codelabs を順に進めます。</p>
+<ul>
+<li>このコースの Codelabs の一覧は <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a> を参照してください。</li>
+<li>コースの詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>を参照してください。チャプターのコンセプト、アプリケーション、スライドを含んでいます。</li>
+</ul>
+<p>注: このコースでは、codelab と practical (実習) を同じような意味で使います。</p>
+<h2 is-upgraded>はじめに</h2>
+<p>この実習では、Android 開発環境である Android Studio のインストール方法を学習します。また、最初のAndroidアプリである Hello World をエミュレータと物理デバイス上で作成して実行します。</p>
+<h2 is-upgraded>すでに知っているべきこと</h2>
+<p>以下のことは、すでに知っていることとします: </p>
+<ul>
+<li>Android Studio などの IDE (統合開発環境)を使用したオブジェクト指向アプリケーションの一般的なソフトウェア開発プロセスを理解していること。</li>
+<li>Java プログラミング言語に重点を置いたオブジェクト指向プログラミングの経験が少なくとも1~3年あること。(以下の実習では、オブジェクト指向プログラミングや Java 言語については説明しません。)</li>
+</ul>
+<h2 is-upgraded>必要になること</h2>
+<ul>
+<li>Windows または Linux を実行しているコンピュータ、または macOS を実行している Mac が必要です。最新のシステム要件については、Android Studio のダウンロードページを参照してください。</li>
+<li>インターネットへのアクセス、または最新の Android Studio とJava をコンピュータにインストールして読み込む他の手段。</li>
+</ul>
+<h2 is-upgraded>この実習で学ぶこと</h2>
+<ul>
+<li>Android Studio IDE をインストールして使用する方法</li>
+<li>Android アプリを構築するための開発プロセスの使用方法</li>
+<li>テンプレートからAndroidプロジェクトを作成する方法</li>
+<li>デバッグのためにアプリにログメッセージを追加する方法</li>
+</ul>
+<h2 is-upgraded>今後すること</h2>
+<ul>
+<li>開発環境である Android Studio をインストールします。</li>
+<li>コンピュータ上でアプリケーションを実行するエミュレータ(仮想デバイス)を作成します。</li>
+<li>Hello World アプリケーションを作成し、仮想デバイスと物理デバイスで実行します。</li>
+<li>プロジェクトのレイアウトについて調査します。</li>
+<li>アプリケーションからログメッセージを生成して表示します。</li>
+<li> <code>AndroidManifest.xml</code> ファイルを調べます。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="App overview" duration="0">
+        <p>After you successfully install Android Studio, you will create, from a template, a new project for the Hello World app. This simple app displays the string &#34;Hello World&#34; on the screen of the Android virtual or physical device.</p>
+<p>Here&#39;s what the finished app will look like:</p>
+<p class="image-container"><img alt="Finished Hello World App" style="width: 302.16px" src="img/7d9f0ab03e4b7bdf.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task 1: Install Android Studio" duration="0">
+        <p>Android Studio provides a complete integrated development environment (IDE) including an advanced code editor and a set of app templates. In addition, it contains tools for development, debugging, testing, and performance that make it faster and easier to develop apps. You can test your apps with a large range of preconfigured emulators or on your own mobile device, build production apps, and publish on the Google Play store.</p>
+<p>Note: Android Studio is continually being improved. For the latest information on system requirements and installation instructions, see <a href="https://developer.android.com/studio/index.html" target="_blank">Android Studio</a>.</p>
+<p>Android Studio is available for computers running Windows or Linux, and for Macs running macOS. The newest OpenJDK (Java Development Kit) is bundled with Android Studio.</p>
+<p>To get up and running with Android Studio, first check the <a href="https://developer.android.com/studio/index.html#Requirements" target="_blank">system requirements</a> to ensure that your system meets them. The installation is similar for all platforms. Any differences are noted below.</p>
+<ol type="1" start="1">
+<li>Navigate to the <a href="https://developer.android.com/sdk/index.html" target="_blank">Android developers site</a> and follow the instructions to download and <a href="https://developer.android.com/studio/install.html" target="_blank">install Android Studio</a>.</li>
+<li>Accept the default configurations for all steps, and ensure that all components are selected for installation.</li>
+<li>After finishing the install, the Setup Wizard will download and install some additional components including the Android SDK. Be patient, this might take some time depending on your Internet speed, and some of the steps may seem redundant.</li>
+<li>When the download completes, Android Studio will start, and you are ready to create your first project.</li>
+</ol>
+<p>Troubleshooting: If you run into problems with your installation, check the <a href="https://developer.android.com/studio/releases/index.html" target="_blank">Android Studio release notes</a>, or get help from you instructors.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task 2: Create the Hello World app" duration="0">
+        <p>In this task, you will create an app that displays &#34;Hello World&#34; to verify that Android studio is correctly installed, and to learn the basics of developing with Android Studio.</p>
+<h2 is-upgraded>2.1 Create the app project</h2>
+<ol type="1" start="1">
+<li>Open Android Studio if it is not already opened.</li>
+<li>In the main Welcome to Android Studio window, click Start a new Android Studio project.</li>
+<li>In the Create Android Project window, enter Hello World for the Application name.</li>
+</ol>
+<p class="image-container"><img alt="Create Android Project window" style="width: 641.76px" src="img/792bf9606d44dbf5.png"></p>
+<ol type="1" start="4">
+<li>Verify that the default Project location is where you want to store your Hello World app and other Android Studio projects, or change it to your preferred directory.</li>
+<li>Accept the default android.example.com for Company Domain, or create a unique company domain.</li>
+</ol>
+<p>If you are not planning to publish your app, you can accept the default. Be aware that changing the package name of your app later is extra work.</p>
+<ol type="1" start="6">
+<li>Leave unchecked the options to Include C++ support and Include Kotlin support, and click Next.</li>
+<li>On the Target Android Devices screen, Phone and Tablet should be selected. Ensure that API 15: Android 4.0.3 IceCreamSandwich is set as the Minimum SDK; if it is not, use the popup menu to set it.</li>
+</ol>
+<p class="image-container"><img alt="Selecting the target Android devices for the app" style="width: 641.76px" src="img/88ac6958ba506d0.png"></p>
+<p>These are the settings used by the examples in the lessons for this course. As of this writing, these settings make your Hello World app compatible with 97% of Android devices active on the Google Play Store.</p>
+<ol type="1" start="8">
+<li>Leave unchecked the Include Instant App support and all other options. Then click Next. If your project requires additional components for your chosen target SDK, Android Studio will install them automatically.</li>
+<li>The Add an Activity window appears. An <a href="https://developer.android.com/reference/android/app/Activity.html" target="_blank"><code>Activity</code></a> is a single, focused thing that the user can do. It is a crucial component of any Android app. An <code>Activity</code> typically has a layout associated with it that defines how UI elements appear on a screen. Android Studio provides <code>Activity</code> templates to help you get started. For the Hello World project, choose Empty Activity as shown below, and click Next.</li>
+</ol>
+<p class="image-container"><img alt="Choose the Empty Activity template" style="width: 641.76px" src="img/7d46fc3d7d5c606c.png"></p>
+<ol type="1" start="10">
+<li>The Configure Activity screen appears (which differs depending on which template you chose in the previous step). By default, the empty <code>Activity</code> provided by the template is named <code>MainActivity</code>. You can change this if you want, but this lesson uses <code>MainActivity</code>.</li>
+</ol>
+<p class="image-container"><img alt="Configuring the Activity" style="width: 641.76px" src="img/caacdb52afab2187.png"></p>
+<ol type="1" start="11">
+<li>Make sure that the Generate Layout file option is checked. The layout name by default is <code>activity_main</code>. You can change this if you want, but this lesson uses <code>activity_main</code>.</li>
+<li>Make sure that the Backwards Compatibility (App Compat) option is checked. This ensures that your app will be backwards-compatible with previous versions of Android.</li>
+<li>Click Finish.</li>
+</ol>
+<p>Android Studio creates a folder for your projects, and builds the project with <a href="https://gradle.org/" target="_blank">Gradle</a> (this may take a few moments).</p>
+<p>Tip: See the <a href="https://developer.android.com/studio/build/index.html" target="_blank">Configure your build</a> developer page for detailed information.</p>
+<p>You may also see a &#34;Tip of the day&#34; message with keyboard shortcuts and other useful tips. Click Close to close the message.</p>
+<p>The Android Studio editor appears. Follow these steps:</p>
+<ol type="1" start="1">
+<li>Click the activity_main.xml tab to see the layout editor.</li>
+<li>Click the layout editor Design tab, if not already selected, to show a graphical rendition of the layout as shown below.</li>
+</ol>
+<p class="image-container"><img alt="The layout editor after clicking the Design tab" style="width: 641.76px" src="img/aa3798d703bfdcbd.png"></p>
+<ol type="1" start="3">
+<li>Click the MainActivity.java tab to see the code editor as shown below.</li>
+</ol>
+<p class="image-container"><img alt="The code editor" style="width: 641.76px" src="img/c8e5112d81bd1528.png"></p>
+<h2 is-upgraded>2.2 Explore the Project &gt; Android pane</h2>
+<p>In this practical, you will explore how the project is organized in Android Studio.</p>
+<ol type="1" start="1">
+<li>If not already selected, click the Project tab in the vertical tab column on the left side of the Android Studio window. The Project pane appears.</li>
+<li>To view the project in the standard Android project hierarchy, choose Android from the popup menu at the top of the Project pane, as shown below.</li>
+</ol>
+<p class="image-container"><img alt="The Project &gt; Android pane" style="width: 364.00px" src="img/7de27bcc3ac9d644.png"></p>
+<p>Note: This chapter and other chapters refer to the Project pane, when set to Android, as the Project &gt; Android pane.</p>
+<h2 is-upgraded>2.3 Explore the Gradle Scripts folder</h2>
+<p>The Gradle build system in Android Studio makes it easy to include external binaries or other library modules to your build as dependencies.</p>
+<p>When you first create an app project, the Project &gt; Android pane appears with the Gradle Scripts folder expanded as shown below.</p>
+<p class="image-container"><img alt="The Gradle Scripts folder" style="width: 346.00px" src="img/ed05bf9493dbf08d.png"></p>
+<p>Follow these steps to explore the Gradle system:</p>
+<ol type="1" start="1">
+<li>If the Gradle Scripts folder is not expanded, click the triangle to expand it.</li>
+</ol>
+<p>This folder contains all the files needed by the build system.</p>
+<ol type="1" start="2">
+<li>Look for the build.gradle(Project: HelloWorld) file.</li>
+</ol>
+<p>This is where you&#39;ll find the configuration options that are common to all of the modules that make up your project. Every Android Studio project contains a single, top-level Gradle build file. Most of the time, you won&#39;t need to make any changes to this file, but it&#39;s still useful to understand its contents.</p>
+<p>By default, the top-level build file uses the <code>buildscript</code> block to define the Gradle repositories and dependencies that are common to all modules in the project. When your dependency is something other than a local library or file tree, Gradle looks for the files in whichever online repositories are specified in the repositories block of this file. By default, new Android Studio projects declare JCenter and Google (which includes the <a href="https://maven.google.com/" target="_blank">Google Maven repository</a>) as the repository locations:</p>
+<pre>allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}</pre>
+<ol type="1" start="3">
+<li>Look for the build.gradle(Module:app) file.</li>
+</ol>
+<p>In addition to the project-level <code>build.gradle</code> file, each module has a <code>build.gradle</code> file of its own, which allows you to configure build settings for each specific module (the HelloWorld app has only one module). Configuring these build settings allows you to provide custom packaging options, such as additional build types and product flavors. You can also override settings in the <code>AndroidManifest.xml</code> file or the top-level <code>build.gradle</code> file.</p>
+<p>This file is most often the file to edit when changing app-level configurations, such as declaring dependencies in the <code>dependencies</code> section. You can declare a library dependency using one of several different dependency configurations. Each dependency configuration provides Gradle different instructions about how to use the library. For example, the statement <code>implementation fileTree(dir: 'libs', include: ['*.jar'])</code> adds a dependency of all &#34;.jar&#34; files inside the <code>libs</code> directory.</p>
+<p>The following is the build.gradle(Module:app) file for the HelloWorld app:</p>
+<p><code>apply plugin: 'com.android.application'</code></p>
+<pre>apply plugin: &#39;com.android.application&#39;
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId &#34;com.example.android.helloworld&#34;
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName &#34;1.0&#34;
+        testInstrumentationRunner 
+                   &#34;android.support.test.runner.AndroidJUnitRunner&#34;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles 
+                     getDefaultProguardFile(&#39;proguard-android.txt&#39;), 
+                     &#39;proguard-rules.pro&#39;
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: &#39;libs&#39;, include: [&#39;*.jar&#39;])
+    implementation &#39;com.android.support:appcompat-v7:26.1.0&#39;
+    implementation 
+             &#39;com.android.support.constraint:constraint-layout:1.0.2&#39;
+    testImplementation &#39;junit:junit:4.12&#39;
+    androidTestImplementation &#39;com.android.support.test:runner:1.0.1&#39;
+    androidTestImplementation 
+              &#39;com.android.support.test.espresso:espresso-core:3.0.1&#39;
+}</pre>
+<ol type="1" start="4">
+<li>Click the triangle to close Gradle Scripts.</li>
+</ol>
+<h2 is-upgraded>2.4 Explore the app and res folders</h2>
+<p>All code and resources for the app are located within the <code>app</code> and <code>res</code> folders.</p>
+<ol type="1" start="1">
+<li>Expand the app folder, the java folder, and the com.example.android.helloworld folder to see the MainActivity java file. Double-clicking the file opens it in the code editor.</li>
+</ol>
+<p class="image-container"><img alt="The app folder" style="width: 343.00px" src="img/5d953745a96d5f71.png"></p>
+<p>The java folder includes Java class files in three subfolders, as shown in the figure above. The com.example.hello.helloworld (or the domain name you have specified) folder contains all the files for an app package. The other two folders are used for testing and described in another lesson. For the Hello World app, there is only one package and it contains <code>MainActivity.java</code>. The name of the first <code>Activity</code> (screen) the user sees, which also initializes app-wide resources, is customarily called MainActivity (the file extension is omitted in the Project &gt; Android pane).</p>
+<ol type="1" start="2">
+<li>Expand the res folder and the layout folder, and double-click the activity_main.xml file to open it in the layout editor.</li>
+</ol>
+<p class="image-container"><img alt="The res folder" style="width: 342.00px" src="img/96b04ce46a09016d.png"></p>
+<p>The res folder holds resources, such as layouts, strings, and images. An <code>Activity</code> is usually associated with a layout of UI views defined as an XML file. This file is usually named after its <code>Activity</code>.</p>
+<h2 is-upgraded>2.5 Explore the manifests folder</h2>
+<p>The <code>manifests</code> folder contains files that provide essential information about your app to the Android system, which the system must have before it can run any of the app&#39;s code.</p>
+<ol type="1" start="1">
+<li>Expand the manifests folder.</li>
+<li>Open the AndroidManifest.xml file.</li>
+</ol>
+<p>The <code>AndroidManifest.xml</code> file describes all of the components of your Android app. All components for an app, such as each <code>Activity</code>, must be declared in this XML file. In other course lessons you will modify this file to add features and feature permissions. For an introduction, see <a href="https://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">App Manifest Overview</a>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task 3: Use a virtual device (emulator)" duration="0">
+        <p>In this task, you will use the <a href="http://developer.android.com/tools/devices/managing-avds.html" target="_blank">Android Virtual Device (AVD) manager</a> to create a virtual device (also known as an emulator) that simulates the configuration for a particular type of Android device, and use that virtual device to run the app. Note that the Android Emulator has <a href="https://developer.android.com/studio/run/emulator.html#Requirements" target="_blank">additional requirements</a> beyond the basic system requirements for Android Studio.</p>
+<p>Using the AVD Manager, you define the hardware characteristics of a device, its API level, storage, skin and other properties and save it as a virtual device. With virtual devices, you can test apps on different device configurations (such as tablets and phones) with different API levels, without having to use physical devices.</p>
+<h2 is-upgraded>3.1 Create an Android virtual device (AVD)</h2>
+<p>In order to run an emulator on your computer, you have to create a configuration that describes the virtual device.</p>
+<ol type="1" start="1">
+<li>In Android Studio, select Tools &gt; Android &gt; AVD Manager, or click the AVD Manager icon <img alt="AVD Manager Icon" style="width: 36.00px" src="img/c46555f7a03d86c.png"> in the toolbar. The Your Virtual Devices screen appears. If you&#39;ve already created virtual devices, the screen shows them (as shown in the figure below); otherwise you see a blank list.</li>
+</ol>
+<p class="image-container"><img alt="The Android Virtual Device (AVD) Manager showing a list of virtual devices already created" style="width: 641.76px" src="img/7ce8fdf4cc68d6a5.png"></p>
+<ol type="1" start="2">
+<li>Click the +Create Virtual Device. The Select Hardware window appears showing a list of pre configured hardware devices. For each device, the table provides a column for its diagonal display size (Size), screen resolution in pixels (Resolution), and pixel density (Density).</li>
+</ol>
+<p class="image-container"><img alt="Selecting the hardware device" style="width: 641.76px" src="img/844f1b3f88597d8e.png"></p>
+<ol type="1" start="3">
+<li>Choose a device such as Nexus 5x or Pixel XL, and click Next. The System Image screen appears.</li>
+<li>Click the Recommended tab if it is not already selected, and choose which version of the Android system to run on the virtual device (such as Oreo).</li>
+</ol>
+<p class="image-container"><img alt="Selecting the Android version" style="width: 641.76px" src="img/1cb6def497a268e2.png"></p>
+<p>There are many more versions available than shown in the Recommended tab. Look at the x86 Images and Other Images tabs to see them.</p>
+<p>If a Download link is visible next to a system image you want to use, it is not installed yet. Click the link to start the download, and click Finish when it&#39;s done.</p>
+<ol type="1" start="5">
+<li>After choosing a system image, click Next. The Android Virtual Device (AVD) window appears. You can also change the name of the AVD. Check your configuration and click Finish.</li>
+</ol>
+<h2 is-upgraded>3.2 Run the app on the virtual device</h2>
+<p>In this task, you will finally run your Hello World app.</p>
+<ol type="1" start="1">
+<li>In Android Studio, choose Run &gt; Run app or click the Run icon <img alt="choose Run &gt; Run app or click the Run icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_run.png, Android Studio Run icon" style="width: 24.00px" src="img/609c3e4473493202.png"> in the toolbar.</li>
+<li>The Select Deployment Target window, under Available Virtual Devices, select the virtual device, which you just created, and click OK.</li>
+</ol>
+<p class="image-container"><img alt="Selecting the virtual device" style="width: 626.00px" src="img/9051ea788fdec52d.png"></p>
+<p>The emulator starts and boots just like a physical device. Depending on the speed of your computer, this may take a while. Your app builds, and once the emulator is ready, Android Studio will upload the app to the emulator and run it.</p>
+<p>You should see the Hello World app as shown in the following figure.</p>
+<p class="image-container"><img alt="Finished Hello World app in the emulator" style="width: 530.00px" src="img/17deaba0fc32b860.png"></p>
+<p>Tip: When testing on a virtual device, it is a good practice to start it up once, at the very beginning of your session. You should not close it until you are done testing your app, so that your app doesn&#39;t have to go through the device startup process again. To close the virtual device, click the X button at the top of the emulator, choose Quit from the menu, or press Control-Q in Windows or Command-Q in macOS.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task 4: (Optional) Use a physical device" duration="0">
+        <p>In this final task, you will run your app on a physical mobile device such as a phone or tablet. You should always test your apps on both virtual and physical devices.</p>
+<p>What you need:</p>
+<p>An Android device such as a phone or tablet.</p>
+<p>A data cable to connect your Android device to your computer via the USB port.</p>
+<p>If you are using a Linux or Windows system, you may need to perform additional steps to run on a hardware device. Check the Using Hardware Devices documentation. You may also need to install the appropriate USB driver for your device. For Windows-based USB drivers, see OEM USB Drivers.</p>
+<p>4.1 Turn on USB debugging</p>
+<p>To let Android Studio communicate with your device, you must turn on USB Debugging on your Android device. This is enabled in the Developer options settings of your device.</p>
+<p>On Android 4.2 and higher, the Developer options screen is hidden by default. To show developer options and enable USB Debugging:</p>
+<p>On your device, open Settings, search for About phone, click on About phone, and tap Build number seven times.</p>
+<p>Return to the previous screen (Settings / System). Developer options appears in the list. Tap Developer options.</p>
+<p>Choose USB Debugging.</p>
+<p>4.2 Run your app on a device</p>
+<p>Now you can connect your device and run the app from Android Studio.</p>
+<p>Connect your device to your development machine with a USB cable.</p>
+<p>Click the Run button Android Studio Run icon in the toolbar. The Select Deployment Target window opens with the list of available emulators and connected devices.</p>
+<p>Select your device, and click OK.</p>
+<p>Android Studio installs and runs the app on your device.</p>
+<p>Troubleshooting</p>
+<p>If your Android Studio does not recognize your device, try the following:</p>
+<p>Unplug and replug your device.</p>
+<p>Restart Android Studio.</p>
+<p>If your computer still does not find the device or declares it &#34;unauthorized&#34;, follow these steps:</p>
+<p>Unplug the device.</p>
+<p>On the device, open Developer Options in Settings app.</p>
+<p>Tap Revoke USB Debugging authorizations.</p>
+<p>Reconnect the device to your computer.</p>
+<p>When prompted, grant authorizations.</p>
+<p>You may need to install the appropriate USB driver for your device. See the Using Hardware Devices documentation.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task 5: Change the app Gradle configuration" duration="0">
+        <p>In this task you will change something about the app configuration in the <code>build.gradle(Module:app)</code> file in order to learn how to make changes and synchronize them to your Android Studio project.</p>
+<h2 is-upgraded>5.1 Change the minimum SDK version for the app</h2>
+<p>Follow these steps:</p>
+<ol type="1" start="1">
+<li>Expand the Gradle Scripts folder if it is not already open, and double-click the build.gradle(Module:app) file.</li>
+</ol>
+<p>The content of the file appears in the code editor.</p>
+<ol type="1" start="2">
+<li>Within the <code>defaultConfig</code> block, change the value of <code>minSdkVersion</code> to <code>17</code> as shown below (it was originally set to <code>15</code>).</li>
+</ol>
+<p class="image-container"><img alt="Changing the app Gradle configuration" style="width: 641.76px" src="img/580e6fcce31b788d.png"></p>
+<p>The code editor shows a notification bar at the top with the Sync Now link.</p>
+<h2 is-upgraded>5.2 Sync the new Gradle configuration</h2>
+<p>When you make changes to the build configuration files in a project, Android Studio requires that you <em>sync</em> the project files so that it can import the build configuration changes and run some checks to make sure the configuration won&#39;t create build errors.</p>
+<p>To sync the project files, click Sync Now in the notification bar that appears when making a change (as shown in the previous figure), or click the Sync Project with Gradle Files icon <img alt="click Sync Now in the notification bar that appears when making a change (as shown in the previous figure), or click the Sync Project with Gradle Files icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_gradle_sync.png, Sync Project with Gradle Files" style="width: 34.00px" src="img/c7c08012b7a7e63.png"> in the toolbar.</p>
+<p>When the Gradle synchronization is finished, the message <code>Gradle build finished</code> appears in the bottom left corner of the Android Studio window.</p>
+<p>For a deeper look into Gradle, check out the <a href="http://developer.android.com/sdk/installing/studio-build.html" target="_blank">Build System Overview</a> and <a href="http://developer.android.com/tools/building/configuring-gradle.html" target="_blank">Configuring Gradle Builds</a> documentation.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task 6: Add log statements to your app" duration="0">
+        <p>In this task, you will add <a href="https://developer.android.com/reference/android/util/Log.html" target="_blank"><code>Log</code></a> statements to your app, which display messages in the Logcat pane. <code>Log</code> messages are a powerful debugging tool that you can use to check on values, execution paths, and report exceptions.</p>
+<h2 is-upgraded>6.1 View the Logcat pane</h2>
+<p>To see the Logcat pane, click the Logcat tab at the bottom of the Android Studio window as shown in the figure below.</p>
+<p class="image-container"><img alt="Android Studio Logcat" style="width: 641.76px" src="img/a5e6c724284507ab.png"></p>
+<p>In the figure above:</p>
+<ol type="1" start="1">
+<li>The Logcat tab for opening and closing the Logcat pane, which displays information about your app as it is running. If you add <code>Log</code> statements to your app, <code>Log</code> messages appear here.</li>
+<li>The <code>Log</code> level menu set to Verbose (the default), which shows all <code>Log</code> messages. Other settings include Debug, Error, Info, and Warn.</li>
+</ol>
+<h2 is-upgraded>6.2 Add log statements to your app</h2>
+<p><code>Log</code> statements in your app code display messages in the Logcat pane. For example:</p>
+<pre>Log.d(&#34;MainActivity&#34;, &#34;Hello World&#34;); </pre>
+<p>The parts of the message are:</p>
+<ul>
+<li><code>Log</code>: The <a href="http://developer.android.com/reference/android/util/Log.html" target="_blank"><code>Log</code></a> class for sending log messages to the Logcat pane.</li>
+<li><code>d</code>: The Debug <code>Log</code> level setting to filter log message display in the Logcat pane. Other log levels are <code>e</code> for Error, <code>w</code> for Warn, and <code>i</code> for Info.</li>
+<li><code>"MainActivity"</code>: The first argument is a tag which can be used to filter messages in the Logcat pane. This is commonly the name of the <code>Activity</code> from which the message originates. However, you can make this anything that is useful to you for debugging.</li>
+</ul>
+<p>By convention, log tags are defined as constants for the <code>Activity</code>:</p>
+<pre>private static final String LOG_TAG = MainActivity.class.getSimpleName(); </pre>
+<ul>
+<li><code>"Hello world"</code>: The second argument is the actual message.</li>
+</ul>
+<p>Follow these steps:</p>
+<ol type="1" start="1">
+<li>Open your Hello World app in Android studio, and open <code>MainActivity</code>.</li>
+<li>To add unambiguous imports automatically to your project (such as <code>android.util.Log</code> required for using <code>Log</code>), choose File &gt; Settings in Windows, or Android Studio &gt; Preferences in macOS.</li>
+<li>Choose Editor &gt; General &gt;Auto Import. Select all checkboxes and set Insert imports on paste to All.</li>
+<li>Click Apply and then click OK.</li>
+<li>In the <code>onCreate()</code> method of <code>MainActivity</code>, add the following statement:</li>
+</ol>
+<p><code>Log.d("MainActivity", "Hello World");</code></p>
+<pre>Log.d(&#34;MainActivity&#34;, &#34;Hello World&#34;); </pre>
+<p>The <code>onCreate()</code> method should now look like the following code:</p>
+<pre>@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    Log.d(&#34;MainActivity&#34;, &#34;Hello World&#34;);
+}</pre>
+<ol type="1" start="6">
+<li>If the Logcat pane is not already open, click the Logcat tab at the bottom of Android Studio to open it.</li>
+<li>Check that the name of the target and package name of the app are correct.</li>
+<li>Change the <code>Log</code> level in the Logcat pane to Debug (or leave as Verbose since there are so few log messages).</li>
+<li>Run your app.</li>
+</ol>
+<p>The following message should appear in the Logcat pane:</p>
+<p>11-24 14:06:59.001 4696-4696/? D/MainActivity: Hello World</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Coding challenge" duration="0">
+        <p>Note: All coding challenges are optional and are not prerequisites for later lessons.</p>
+<p>Challenge: Now that you are set up and familiar with the basic development workflow, do the following:</p>
+<ol type="1" start="1">
+<li>Create a new project in Android Studio.</li>
+<li>Change the &#34;Hello World&#34; greeting to &#34;Happy Birthday to &#34; and the name of someone with a recent birthday.</li>
+<li>(Optional) Take a screenshot of your finished app and email it to someone whose birthday you forgot.</li>
+<li>A common use of the <a href="https://developer.android.com/reference/android/util/Log.html" target="_blank"><code>Log</code></a> class is to log <a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/" target="_blank">Java exceptions</a> when they occur in your program. There are some useful methods, such as <a href="https://developer.android.com/reference/android/util/Log.html#e(java.lang.String,%20java.lang.String)" target="_blank">Log.e()</a>, that you can use for this purpose. Explore methods you can use to include an exception with a <code>Log</code> message. Then, write code in your app to trigger and log an exception.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="0">
+        <ul>
+<li>To install Android Studio, go to <a href="https://developer.android.com/sdk/index.html" target="_blank">Android Studio</a> and follow the instructions to download and install it.</li>
+<li>When creating a new app, ensure that API 15: Android 4.0.3 IceCreamSandwich is set as the Minimum SDK.</li>
+<li>To see the app&#39;s Android hierarchy in the Project pane, click the Project tab in the vertical tab column, and then choose Android in the popup menu at the top.</li>
+<li>Edit the <code>build.gradle(Module:app)</code> file when you need to add new libraries to your project or change library versions.</li>
+<li>All code and resources for the app are located within the <code>app</code> and <code>res</code> folders. The <code>java</code> folder includes activities, tests, and other components in Java source code. The <code>res</code> folder holds resources, such as layouts, strings, and images.</li>
+<li>Edit the <code>AndroidManifest.xml</code> file to add features components and permissions to your Android app. All components for an app, such as multiple activities, must be declared in this XML file.</li>
+<li>Use the <a href="http://developer.android.com/tools/devices/managing-avds.html" target="_blank">Android Virtual Device (AVD) manager</a> to create a virtual device (also known as an emulator) to run your app.</li>
+<li>Add <a href="https://developer.android.com/reference/android/util/Log.html" target="_blank"><code>Log</code></a> statements to your app, which display messages in the Logcat pane as a basic tool for debugging.</li>
+<li>To run your app on a physical Android device using Android Studio, turn on USB Debugging on the device. Open Settings &gt; About phone and tap Build number seven times. Return to the previous screen (Settings), and tap Developer options. Choose USB Debugging.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Related concepts" duration="0">
+        <p>The related concept documentation is in <a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-1-build-your-first-app/1-0-c-introduction-to-android/1-0-c-introduction-to-android.html" target="_blank">1.0: Introduction to Android</a> and <a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-1-build-your-first-app/1-1-c-your-first-android-app/1-1-c-your-first-android-app.html" target="_blank">1.1 Your first Android app</a>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Learn more" duration="0">
+        <p>Android Studio documentation:</p>
+<ul>
+<li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio download page</a></li>
+<li><a href="https://developer.android.com/studio/releases/index.html" target="_blank">Android Studio release notes</a></li>
+<li><a href="http://developer.android.com/tools/studio/index.html" target="_blank">Meet Android Studio</a></li>
+<li><a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">Logcat command-line tool</a></li>
+<li><a href="http://developer.android.com/tools/devices/managing-avds.html" target="_blank">Android Virtual Device (AVD) manager</a></li>
+<li><a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">App Manifest Overview</a></li>
+<li><a href="https://developer.android.com/studio/build/index.html" target="_blank">Configure your build</a></li>
+<li><a href="https://developer.android.com/reference/android/util/Log.html" target="_blank"><code>Log</code></a> class</li>
+<li><a href="https://developer.android.com/studio/run/managing-avds.html" target="_blank">Create and Manage Virtual Devices</a></li>
+</ul>
+<p>Other:</p>
+<ul>
+<li><a href="https://gradle.org/" target="_blank">Gradle site</a></li>
+<li><a href="http://groovy-lang.org/syntax.html" target="_blank">Apache Groovy syntax</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Gradle" target="_blank">Gradle Wikipedia page</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Homework" duration="0">
+        <p>This section lists possible homework assignments for students who are working through this codelab as part of a course led by an instructor. It&#39;s up to the instructor to do the following:</p>
+<ul>
+<li>Assign homework if required.</li>
+<li>Communicate to students how to submit homework assignments.</li>
+<li>Grade the homework assignments.</li>
+</ul>
+<p>Instructors can use these suggestions as little or as much as they want, and should feel free to assign any other homework they feel is appropriate.</p>
+<p>If you&#39;re working through this codelab on your own, feel free to use these homework assignments to test your knowledge.</p>
+<h2 is-upgraded>Build and run an app</h2>
+<ul>
+<li>Create a new Android project from the Empty Template.</li>
+<li>Add logging statements for various log levels in <code>onCreate()</code> in the main activity.</li>
+<li>Create an emulator for a device, targeting any version of Android you like, and run the app.</li>
+<li>Use filtering in Logcat to find your log statements and adjust the levels to only display debug or error logging statements.</li>
+</ul>
+<h2 is-upgraded>Answer these questions</h2>
+<h3 is-upgraded>Question 1</h3>
+<p>What is the name of the layout file for the main activity?</p>
+<ul>
+<li><code>MainActivity.java</code></li>
+<li><code>AndroidManifest.xml</code></li>
+<li><code>activity_main.xml</code></li>
+<li><code>build.gradle</code></li>
+</ul>
+<h3 is-upgraded>Question 2</h3>
+<p>What is the name of the string resource that specifies the application&#39;s name?</p>
+<ul>
+<li><code>app_name</code></li>
+<li><code>xmlns:app</code></li>
+<li><code>android:name</code></li>
+<li><code>applicationId</code></li>
+</ul>
+<h3 is-upgraded>Question 3</h3>
+<p>Which tool do you use to create a new emulator?</p>
+<ul>
+<li>Android Device Monitor</li>
+<li>AVD Manager</li>
+<li>SDK Manager</li>
+<li>Theme Editor</li>
+</ul>
+<h3 is-upgraded>Question 4</h3>
+<p>Assume that your app includes this logging statement:</p>
+<pre>Log.i(&#34;MainActivity&#34;, &#34;MainActivity layout is complete&#34;);</pre>
+<p>You see the statement &#34;MainActivity layout is complete&#34; in the Logcat pane if the Log level menu is set to which of the following? (Hint: multiple answers are OK.)</p>
+<ul>
+<li>Verbose</li>
+<li>Debug</li>
+<li>Info</li>
+<li>Warn</li>
+<li>Error</li>
+<li>Assert</li>
+</ul>
+<h2 is-upgraded>Submit your app for grading</h2>
+<p>Check to make sure the app has the following:</p>
+<ul>
+<li>An <code>Activity</code> that displays &#34;Hello World&#34; on the screen.</li>
+<li>Log statements in <code>onCreate()</code> in the main activity.</li>
+<li>Log level in the Logcat pane shows only debug or error logging statements.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
