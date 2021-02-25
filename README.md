@@ -7,15 +7,15 @@
 
 翻訳原稿の共同編集のために利用します。草案の作成後の変更は提案モードで行い、変更がある場合は、提案を受け入れて反映させます。
 
-1. claat 
+2. claat 
 
 Google ドキュメントの id を指定して、Codelabs を生成します。
 
-1. codelabs.yml
+3. codelabs.yml
 
 codelabs の名前と Google ドキュメントの id を階層に分けて記述します。
 
-1. GitHub Actions
+4. GitHub Actions
 
 定期的に設定ファイル(codelabs.yml)の構造に合わせて Codelabs を吐き出します。
 
