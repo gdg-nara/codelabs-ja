@@ -1,7 +1,29 @@
-# Codelabs 邦訳
+# サイト生成手順(案)
 
-Codelabs のリソースの邦訳を作成し、ハンズオンの資料を作成するためのレポジトリです。 
+
+## ツールと利用法
+
+1. Google ドキュメント
+
+翻訳原稿の共同編集のために利用します。草案の作成後の変更は提案モードで行い、変更がある場合は、提案を受け入れて反映させます。
+
+[Codelabs-ja](https://drive.google.com/drive/folders/1eVsf8mqg8Figsg2xSseqPHfPq6EgiS0z?usp=sharing)
+
+2. claat 
+
+Google ドキュメントの id を指定して、Codelabs を生成します。
+
+Google ドキュメントの document id を指定すると、ドキュメントのメタデータの 1 つである URL の値がディレクトリ名として codelabs が書き出されます。
+
+```
+$ claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
+ok	write-1st-flutter-app-1
+```
+
+## 　デプロイ
+
+定期的にサイトを生成して、サイトに反映させます。
 
 ## ライセンス
 
-Codelabs のライセンスに準じます
+Codelabs に準じます。
