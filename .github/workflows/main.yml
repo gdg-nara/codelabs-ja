@@ -21,10 +21,4 @@ jobs:
     - name: Build
       run: |
           go get github.com/googlecodelabs/tools/claat
-          # claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
-
-    - name: Deploy website
-      uses: peaceiris/actions-gh-pages@v3.6.4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
+          claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
