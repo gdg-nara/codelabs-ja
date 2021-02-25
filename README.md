@@ -7,6 +7,8 @@
 
 翻訳原稿の共同編集のために利用します。草案の作成後の変更は提案モードで行い、変更がある場合は、提案を受け入れて反映させます。
 
+[Codelabs-ja](https://drive.google.com/drive/folders/1eVsf8mqg8Figsg2xSseqPHfPq6EgiS0z?usp=sharing)
+
 2. claat 
 
 Google ドキュメントの id を指定して、Codelabs を生成します。
