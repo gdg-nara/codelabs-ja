@@ -53,7 +53,7 @@ android:
       hoge: 24jkldjsfsj3rj  # 記事の名前: Google ドキュメント id
       huga: 34kjdhfkjdhs
 
-flutter
+flutter:
   firstapp:
     part1:
       hoge2: jds23hkjsdhf 
