@@ -3,15 +3,19 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2021-02-15T04:13:19Z",
-  "id": "",
+  "updated": "2021-02-25T02:20:19Z",
+  "id": "write-1st-flutter-app-1",
   "duration": 0,
   "title": "Write your first Flutter app, part 1",
   "summary": "",
   "source": "1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw",
-  "theme": "",
-  "status": [],
-  "category": [],
+  "theme": "flutter",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Flutter"
+  ],
   "tags": [],
-  "url": ""
+  "url": "write-1st-flutter-app-1"
 }
