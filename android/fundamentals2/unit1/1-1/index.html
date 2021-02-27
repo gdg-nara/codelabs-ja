@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android fundamentals 01.1: Android Studio and Hello World</title>
+  <title>Android 基礎講座 01.1: Android Studio と Hello World</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,12 +23,12 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="1-1"
-                  title="Android fundamentals 01.1: Android Studio and Hello World"
+                  title="Android 基礎講座 01.1: Android Studio と Hello World"
                   environment="web"
                   feedback-link="">
     
       <google-codelab-step label="ようこそ" duration="0">
-        <p>この実用的な codelab は、Android 開発者基本編 (バージョン2) コースの <a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">Unit 1:はじめに</a> の一部です。このコースを最大限に活用するには、以下の Codelabs を順に進めます。</p>
+        <p>この実用的な codelab は、Android 開発者基礎 (バージョン2) コースの <a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">Unit 1:はじめに</a> の一部です。このコースを最大限に活用するには、以下の Codelabs を順に進めます。</p>
 <ul>
 <li>このコースの Codelabs 一覧は <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a> を参照してください。</li>
 <li>コースの詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>を参照してください。チャプターのコンセプト、アプリケーション、スライドを含んでいます。</li>
@@ -126,70 +126,355 @@
 <p class="image-container"><img alt="The layout editor after clicking the Design tab" style="width: 641.76px" src="img/aa3798d703bfdcbd.png"></p>
 <p>3. MainActivity.java タブをクリックして、次のようなコードエディタを表示します。</p>
 <p class="image-container"><img alt="The code editor" style="width: 641.76px" src="img/c8e5112d81bd1528.png"></p>
+<h2 is-upgraded>2.2 Project &gt; Android を詳しくみる</h2>
+<p>この実習では、Android Studioでプロジェクトがどのように構成されているかを調べます。</p>
+<ol type="1" start="1">
+<li>プロジェクトのタブが選択されていない場合は、Android Studio ウィンドウの左側にあるプロジェクトのタブをクリックすると、プロジェクトペインが表示されます。</li>
+<li>標準の Android プロジェクトの階層でプロジェクトを表示するには、次に示すように、プロジェクト pane のポップアップメニューから Android を選択します。</li>
+</ol>
 <p class="image-container"><img alt="The Project &gt; Android pane" style="width: 364.00px" src="img/7de27bcc3ac9d644.png"></p>
+<p>(注) この章およびその他の章では、プロジェクトの pane が Android に設定されている場合、Project &gt; Android pane と表記します。</p>
+<h2 is-upgraded>2.3 Gradle Scripts フォルダを詳しくみる</h2>
+<p>Android Studio の Gradle ビルドシステムでは、外部バイナリやその他のライブラリモジュールを依存関係としてビルドに含めることが簡単にできます。</p>
+<p>最初に App プロジェクトを作成すると、Project &gt; Android pane が表示され、下に示すように Gradle Scripts フォルダが展開されます。</p>
 <p class="image-container"><img alt="The Gradle Scripts folder" style="width: 346.00px" src="img/ed05bf9493dbf08d.png"></p>
+<p>次の手順に従って、Gradle のシステムを操作します。</p>
+<ol type="1" start="1">
+<li>Gradle Scripts フォルダが展開されていない場合は、三角形をクリックして展開します。</li>
+</ol>
+<p>このフォルダには、構築システムに必要なすべてのファイルが含まれています。</p>
+<ol type="1" start="2">
+<li>build.gradle (Project: HelloWorld) ファイルを探します。</li>
+</ol>
+<p>ここには、プロジェクトを構成するすべてのモジュールに共通の構成オプションがあります。すべての Android Studio プロジェクトには、単一の最上位レベルの Gradle ビルドファイルが含まれている。多くの場合、このファイルに変更を加える必要はありませんが、内容を理解しておくと役に立つことがあります。</p>
+<p><code>デフォルトでは、最上位レベルの構築ファイルは、buildscript</code> <code>ブロックを使用して、Gradle リポジトリとプロジェクト内のすべてのモジュールに共通する依存関係を定義します。依存関係がローカルライブラリやファイルツリー以外のものである場合、Gradle はこのファイルの repositories ブロックで指定されているオンラインリポジトリ内のファイルを探します。デフォルトでは、新しい Android Studio プロジェクトは JCenter と Google (Google Maven リポジトリが含む)をリポジトリの場所として宣言します。</code></p>
+<pre>allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}</pre>
+<p>      3.   build.gradle (Module:app) を見てください。</p>
+<p>プロジェクトレベルの build.gradle ファイルに加えて、各モジュールには独自の build.gradle ファイルがあります。このファイルを使用すると、(HelloWorld アプリケーションにはモジュールが1つしかありませんが) 特定のモジュール ごとにビルド設定を構成できます。これらのビルド設定を構成すると、追加のビルドの種類や製品の種類など、カスタムパッケージのオプションを提供できます。AndroidManifest.xml ファイルまたは最上位の build.gradle ファイルの設定をオーバーライドすることもできます。</p>
+<p><code>このファイルは、dependencies で依存性を宣言するときなど、アプリケーションレベルの設定を変更するときに編集するファイルです。ライブラリの依存関係は、いくつかの異なfる依存関係設定のいずれかを使用して宣言できます。依存関係の設定ごとに、ライブラリの使用方法に関するさまざまな指示がGradleに提供されます。たとえば、implementation fileTree(dir: 'libs', include: ['*.jar']) は、libs ディレクトリ内のすべての .jar ファイルの依存関係を追加します。</code></p>
+<p><code>HelloWorld アプリケーションの build.gradle (Module:app) を次に示します。</code></p>
+<pre>apply plugin: &#39;com.android.application&#39;
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId &#34;com.example.android.helloworld&#34;
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName &#34;1.0&#34;
+        testInstrumentationRunner 
+                   &#34;android.support.test.runner.AndroidJUnitRunner&#34;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles 
+                     getDefaultProguardFile(&#39;proguard-android.txt&#39;), 
+                     &#39;proguard-rules.pro&#39;
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: &#39;libs&#39;, include: [&#39;*.jar&#39;])
+    implementation &#39;com.android.support:appcompat-v7:26.1.0&#39;
+    implementation 
+             &#39;com.android.support.constraint:constraint-layout:1.0.2&#39;
+    testImplementation &#39;junit:junit:4.12&#39;
+    androidTestImplementation &#39;com.android.support.test:runner:1.0.1&#39;
+    androidTestImplementation 
+              &#39;com.android.support.test.espresso:espresso-core:3.0.1&#39;
+}</pre>
+<p>    4.   三角形をクリックして、Gradle スクリプトを閉じます。</p>
+<h2 is-upgraded>2.4  app フォルダと res フォルダを詳しくみる</h2>
+<p>アプリケーションのすべてのコードとリソースは、app フォルダと res フォルダにあります。</p>
+<ol type="1" start="1">
+<li>app フォルダ、java フォルダ、および com.example.android.helloworld フォルダを展開し、MainActivity の java ファイルを表示します。ファイルをダブルクリックすると、コードエディタで開きます。</li>
+</ol>
 <p class="image-container"><img alt="The app folder" style="width: 343.00px" src="img/5d953745a96d5f71.png"></p>
+<p>java フォルダには、上の図に示すように、3 つのサブフォルダに Java クラスファイルが含まれています。com.example.hello.helloworld (または指定したドメイン名) のフォルダには、アプリケーションパッケージのすべてのファイルが含まれています。他の 2 つのフォルダはテストに使用し、別のレッスンで説明します。Hello World アプリはパッケージが 1 つしかなく、MainActivity.java が含まれています。ユーザーに最初に表示される Activity (screen) の名前は、通常 MainActivity と呼ばれています(Project&gt;Android ではファイル拡張子が省略されています)。</p>
+<ol type="1" start="2">
+<li>res フォルダと layout フォルダを展開し、activity_main.xml ファイルをダブルクリックしてレイアウトエディタで開きます。</li>
+</ol>
 <p class="image-container"><img alt="The res folder" style="width: 342.00px" src="img/96b04ce46a09016d.png"></p>
+<p>res フォルダには、レイアウト、文字列、イメージなどのリソースが格納されます。アクティビティは通常、XML ファイルとして定義された UI ビューのレイアウトに関連付けられます。通常、このファイルの名前は <code>Activity</code> に基づいて付けられます。</p>
+<h2 is-upgraded>2.5 manifests フォルダを詳しくみる</h2>
+<p>manifests フォルダには、あなたのアプリに関する重要な情報を Android システムに提供するファイルが含まれており、アプリのコードを実行する前にシステムが必要な情報が入っています。</p>
+<ol type="1" start="1">
+<li>目録フォルダを展開します。</li>
+<li>AndroidManifest.xml ファイルを開きます。</li>
+</ol>
+<p>AndroidManifest.xml ファイルには、Android アプリケーションのすべてのコンポーネントが記述されています。各アクティビティなど、アプリケーションのすべてのコンポーネントは、この XML ファイルで宣言する必要があります。他のコースレッスンでは、このファイルを修正してフィーチャとフィーチャの権限を追加します。概要については、<a href="https://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">App Manifest Overview</a> を参照してください。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Task 3: Use a virtual device (emulator)" duration="0">
-        <ol type="1" start="1">
+      <google-codelab-step label="タスク3 : 仮想デバイス (エミュレータ) の使用" duration="0">
+        <p>このタスクでは、<a href="http://developer.android.com/tools/devices/managing-avds.html" target="_blank">Android Virtual Device (AVD) Manager</a> を使用して、特定の種類の Android デバイスの構成をシミュレートする仮想デバイス(エミュレータ)を作成し、その仮想デバイスを使用してアプリケーションを実行します。Android エミュレータには、Android Studio の基本的なシステム要件以外にも<a href="https://developer.android.com/studio/run/emulator.html#Requirements" target="_blank">追加の要件</a>があります。</p>
+<p>AVD Manager を使用して、デバイスのハードウェア特性、API レベル、ストレージ、スキン、およびその他のプロパティを定義し、仮想デバイスとして保存します。仮想デバイスを使用すると、物理デバイスを使用せずに、API レベルが異なるさまざまなデバイス構成(タブレットや携帯電話など)でアプリケーションをテストできます。</p>
+<ol type="1" start="1">
 <li><img alt="AVD Manager Icon" style="width: 36.00px" src="img/c46555f7a03d86c.png"></li>
 </ol>
+<h2 is-upgraded> 3.1 Android 仮想デバイス (AVD) を作成する</h2>
+<p>コンピュータ上でエミュレータを実行するには、仮想デバイスを記述する構成を作成する必要があります。</p>
+<ol type="1" start="1">
+<li>Android Studioで、Tools &gt; Android &gt; AVD Manager を選択するか、ツールバーの AVD Maneger アイコン<img alt="AVD Manager Icon" style="width: 27.62px" src="img/c46555f7a03d86c.png">をクリックします。Your Virtual Devices (ご自身の仮想デバイス) の画面が表示されます。すでに仮想デバイスを作成している場合は、画面に(下図のように)と表示されます。そうでなければ、空のリストが表示されます。</li>
+</ol>
 <p class="image-container"><img alt="The Android Virtual Device (AVD) Manager showing a list of virtual devices already created" style="width: 641.76px" src="img/7ce8fdf4cc68d6a5.png"></p>
+<ol type="1" start="2">
+<li>  + Create Virtual Device (仮想デバイスを作成) をクリックします。Select Hardware (ハードウェアの選択) ウィンドウが表示され、設定済みのハードウェアデバイスのリストが表示されます。各デバイスの対角表示サイズ (サイズ) 、ピクセル単位の画面解像度 (解像度) 、およびピクセル密度 (密度) がテーブルに列で表示されます。</li>
+</ol>
 <p class="image-container"><img alt="Selecting the hardware device" style="width: 641.76px" src="img/844f1b3f88597d8e.png"></p>
+<ol type="1" start="3">
+<li>Nexus 5x または Pixel XL などのデバイスを選択し、Next をクリックします。System Image (システムのイメージ) 画面が表示されます。</li>
+<li>Recommended (推奨) タブが選択されていない場合はクリックし、仮想デバイスで実行するAndroid システムのバージョンを選択します ( Oreo など)。</li>
+</ol>
 <p class="image-container"><img alt="Selecting the Android version" style="width: 641.76px" src="img/1cb6def497a268e2.png"></p>
+<p>推奨タブに表示されるバージョンよりも多くのバージョンがあります。x86 Images タブと Other Images タブを確認します。</p>
+<p>使用するシステムイメージの横に Download リンクが表示されている場合は、まだインストールされていません。リンクをクリックしてダウンロードを開始し、完了したら 完了 をクリックします。</p>
+<ol type="1" start="5">
+<li>システムイメージを選択したら、次へをクリックします。Android Virtual Device (AVD)  ウィンドウが表示されます。AVDの名前を変更することもできます。構成を確認し、 完了をクリックします。</li>
+</ol>
 <ol type="1" start="1">
 <li><img alt="choose Run &gt; Run app or click the Run icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_run.png, Android Studio Run icon" style="width: 24.00px" src="img/609c3e4473493202.png"></li>
 </ol>
+<h2 is-upgraded>3.2 仮想デバイス上でアプリケーションを実行する</h2>
+<p>このタスクでは、最後にHello Worldアプリケーションを実行します。</p>
+<ol type="1" start="1">
+<li>Android Studioで、Run &gt; Run を選択するか、ツールバーの Run アイコン<img alt="choose Run &gt; Run app or click the Run icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_run.png, Android Studio Run icon" style="width: 20.00px" src="img/609c3e4473493202.png">をクリックします。</li>
+<li>Select Deployment Target (開発ターゲットの選択) ウィンドウの Available Virtual Devices (利用可能な仮想デバイス) で、作成した仮想デバイスを選択し、 OK をクリックします。</li>
+</ol>
 <p class="image-container"><img alt="Selecting the virtual device" style="width: 626.00px" src="img/9051ea788fdec52d.png"></p>
-<p class="image-container"><img alt="Finished Hello World app in the emulator" style="width: 530.00px" src="img/17deaba0fc32b860.png"></p>
+<p>エミュレータが起動し、物理デバイスと同じように起動します。コンピュータの速度によっては、この処理に時間がかかる場合があります。アプリがビルドされ、エミュレータの準備ができると、Android Studio はアプリをエミュレータにアップロードして実行します。</p>
+<p>次の図のような Hello World アプリケーションが表示されます。</p>
+<p class="image-container"><img alt="Finished Hello World app in the emulator" style="width: 322.67px" src="img/17deaba0fc32b860.png"></p>
+<p>(ヒント) 仮想デバイスでテストする場合は、セッションの最初に仮想デバイスを 1 回だけ起動することをお勧めします。アプリのテストが終わるまでアプリを閉じてはいけません。仮想デバイスを閉じるには、エミュレータの上部にある X ボタンをクリックするか、メニューから終了を選択するか、Windows では Ctrl を押しながら Q を、macOS では Command キーを押しながら Q を押します。  </p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Task 4: (Optional) Use a physical device" duration="0">
-        
+      <google-codelab-step label="タスク4: 物理デバイスの使用 (任意)" duration="0">
+        <p>この最後のタスクでは、スマートフォンやタブレットなどの物理的なモバイルデバイスでアプリケーションを実行します。アプリケーションは、常に仮想デバイスと物理デバイスの両方でテストする必要があります。</p>
+<p>必要なもの:</p>
+<ul>
+<li>携帯電話やタブレットなどの Android デバイス</li>
+<li>USB ポート経由で Android デバイスをコンピュータに接続するためのケーブル</li>
+</ul>
+<p>Linux または Windows システムを使用している場合は、ハードウェアデバイスでを実行するために追加の手順を実行する必要があります。Using Hardware Devices documentation を参照してください。デバイスに適した USB ドライバをインストールする必要がある場合もあります。Windows ベースのUSB ドライバーについては、OEM USB Drivers を参照してください。</p>
+<h2 is-upgraded>4.1 USBデバッグを有効にする</h2>
+<p>Android Studio がデバイスと通信できるようにするには、Android デバイスで USB Debugging をオンにする必要があります。これは、ご自身のデバイス上の開発者用オプションの設定で有効になります。</p>
+<p>Android 4.2 以降では、開発者オプション画面はデフォルトで非表示になっています。開発者オプションを表示してUSB デバッグを有効にするには、次の手順に従います。</p>
+<p>デバイスで設定を開き、About phone を検索してクリックして、Build number を 7 回タップします。</p>
+<p>前の画面(設定/システム)に戻ります。開発者オプションがリストに表示されます。開発者用オプション をタップします。</p>
+<p>USB Debugging を選択します。</p>
+<h2 is-upgraded>4.2 デバイス上でアプリケーションを実行する</h2>
+<p>Android Studio からデバイスを接続してアプリを実行できるようになりました。</p>
+<p>デバイスを USB ケーブルで開発マシンに接続します。</p>
+<p>ツールバーの実行ボタンか Android Studio の実行アイコンをクリックします。Select Deployment Target ウィンドウが開き、使用可能なエミュレータと接続されているデバイスのリストが表示されます。</p>
+<p>デバイスを選択し、OK をクリックします。</p>
+<p>Android Studio はアプリをデバイスにインストールして実行します。</p>
+<p>トラブルシューティング</p>
+<p>Android Studioがデバイスを認識しない場合は、次の操作を試してください。</p>
+<p>デバイスのプラグを抜いて再プラグします。</p>
+<p>Android Studio を再起動します。</p>
+<p>それでもデバイスが見つからないか、デバイスが unauthorized と宣言されている場合は、次の手順を実行します。</p>
+<p>デバイスを取り外します。</p>
+<p>デバイスで、設定アプリの開発者オプションを開きます。</p>
+<p>Revoke USB Debugging authorizations (USBデバッグ認証の取り消し) をタップします。</p>
+<p>デバイスをコンピュータに再接続します。</p>
+<p>プロンプトが表示されたら、承認を許可します。</p>
+<p>デバイスに適した USB ドライバをインストールする必要がある場合があります。Using Hardware Devices ドキュメントを参照してください。</p>
+
 
       </google-codelab-step>
     
-      <google-codelab-step label="Task 5: Change the app Gradle configuration" duration="0">
-        <p class="image-container"><img alt="Changing the app Gradle configuration" style="width: 641.76px" src="img/580e6fcce31b788d.png"></p>
+      <google-codelab-step label="タスク5 : アプリケーション の Gradle 設定を変更する" duration="0">
+        <p>このタスクでは、build.gradle (Module:app) ファイル内のアプリケーション構成を変更し、変更内容をAndroid Studioプロジェクトに同期する方法を学びます。</p>
+<h2 is-upgraded>5.1 アプリケーションの最小 SDK バージョンを変更する</h2>
+<p>次の手順に従います。</p>
+<ol type="1" start="1">
+<li>Gradle Scriptsフォルダが開いていない場合は展開し、build.gradle (Module:app) ファイルをダブルクリックします。</li>
+</ol>
+<p>ファイルの内容がコードエディタに表示されます。</p>
+<ol type="1" start="2">
+<li>次に示すように、defaultConfig ブロック内で、minSdkVersion の値を 17 に変更します(最初は15 に設定されていました)。</li>
+</ol>
+<p class="image-container"><img alt="Changing the app Gradle configuration" style="width: 641.76px" src="img/580e6fcce31b788d.png"></p>
+<h2 is-upgraded>コードエディタの上部に通知バーが表示され、 Sync Now(今すぐ同期)のリンクが表示されます。</h2>
 <p class="image-container"><img alt="click Sync Now in the notification bar that appears when making a change (as shown in the previous figure), or click the Sync Project with Gradle Files icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_gradle_sync.png, Sync Project with Gradle Files" style="width: 34.00px" src="img/c7c08012b7a7e63.png"></p>
+<h2 is-upgraded>5.2 新しい Gradle 設定の同期</h2>
+<p>プロジェクト内のビルド設定ファイルを変更する場合、Android Studio はビルド設定の変更をインポートし、ビルドエラーが発生しないことを確認するためのチェックを実行できるように、プロジェクトファイルの同期を要求します。</p>
+<p>プロジェクトファイルを同期するには、(前の図のように) 変更時に表示される通知バーをクリックするか、ツールバーのプロジェクトをグラドルファイルと同期アイコン<img alt="click Sync Now in the notification bar that appears when making a change (as shown in the previous figure), or click the Sync Project with Gradle Files icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_gradle_sync.png, Sync Project with Gradle Files" style="width: 23.77px" src="img/c7c08012b7a7e63.png">をクリックします。</p>
+<p>Gradle の同期が完了すると、Android Studio ウィンドウの左下隅に Gradle build finished (Gradle ビルド終了)というメッセージが表示されます。</p>
+<p>Gradle の詳細については、<a href="http://developer.android.com/sdk/installing/studio-build.html" target="_blank">Build System Overview</a> と <a href="http://developer.android.com/tools/building/configuring-gradle.html" target="_blank">Configuring Gradle Builds</a> のドキュメントを参照してください。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Task 6: Add log statements to your app" duration="0">
-        <p class="image-container"><img alt="Android Studio Logcat" style="width: 641.76px" src="img/a5e6c724284507ab.png"></p>
+      <google-codelab-step label="タスク6 : アプリケーションにログ文を追加する" duration="0">
+        <p>このタスクでは、Logcat にメッセージを表示する <a href="https://developer.android.com/reference/android/util/Log.html" target="_blank">Log</a> ステートメントをアプリケーションに追加します。ログメッセージは、値、実行パス、およびレポート例外のチェックに使用できる強力なデバッグツールです。</p>
+<h2 is-upgraded>6.1 Logcat を表示する</h2>
+<p>Logcatペインを表示するには、次の図に示すように、Android Studioウィンドウの下部にあるLogcatタブをクリックします。</p>
+<p class="image-container"><img alt="Android Studio Logcat" style="width: 641.76px" src="img/a5e6c724284507ab.png"></p>
+<p>上の図では、次のようになります。</p>
+<ol type="1" start="1">
+<li>Logcat タブは、Logcat パネルを開いたり閉じたりするためのタブで、実行中のアプリケーションに関する情報が表示されます。アプリケーションに Log 文を追加すると、ここにログメッセージが表示されます。</li>
+<li>Log level のメニューを Verbose (デフォルト) に設定すると、すべての Log メッセージが表示されます。その他の設定には Debug(デバッグ)、Error(エラー)、Info(情報)、Warn(警告) があります。</li>
+</ol>
+<h2 is-upgraded>6.2 アプリケーションにログの文を追加する</h2>
+<p>アプリケーションコードのログの文は、Logcat メッセージを表示します。たとえば、次のようになります。</p>
+<pre>Log.d(&#34;MainActivity&#34;, &#34;Hello World&#34;); </pre>
+<p>メッセージの部分は次のとおりです。</p>
+<ul>
+<li>Log: Logcat にログメッセージを送信するためのLogクラス</li>
+<li>d: ログメッセージをフィルタするデバッグログレベルの設定が Logcat に表示されます。その他のログレベルは、エラーの場合は e、警告の場合は w、情報の場合は i です。</li>
+<li><code>"MainActivity"</code>: 最初の引数は、Logcat のメッセージをフィルタリングするために使用できるタグです。これは通常、メッセージの発信元である Activity の名前です。ただし、デバッグに役立つ任意のものを作成できます。</li>
+</ul>
+<p>慣例により、ログのタグは <code>Activity</code> の定数として定義されます。</p>
+<pre>private static final String LOG_TAG = MainActivity.class.getSimpleName(); </pre>
+<ul>
+<li><code>"Hello world"</code>: 2 番目の引数は実際のメッセージです。</li>
+</ul>
+<p>次の手順に従います。</p>
+<ol type="1" start="1">
+<li>Android Studio で Hello World アプリを開き、MainActivity を開きます。</li>
+<li>曖昧さのないインポートをプロジェクトに自動的に追加するには (たとえば android.util.Log は Log を使用するために必要)、Windows で File &gt; Settings を選択するか、macOS で Android Studio &gt; Preferences を選択します。</li>
+<li> を選択します。すべてのチェックボックスをオンにし、 貼り付け時にインポートを挿入 (Insert imports on paste) をすべて (All) に設定します。</li>
+<li>適用をクリックし、OK をクリックします。</li>
+<li>MainActivity の onCreate () メソッドに、次の文を追加します。</li>
+</ol>
+<pre>Log.d(&#34;MainActivity&#34;, &#34;Hello World&#34;); </pre>
+<p>onCreate () メソッドは次のコードのようになります。</p>
+<pre>@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    Log.d(&#34;MainActivity&#34;, &#34;Hello World&#34;);
+}</pre>
+<ol type="1" start="6">
+<li>Logcat が開いていない場合は、Android Studio の下部にある Logcat タブをクリックして開きます。</li>
+<li>ターゲットの名前とアプリケーションのパッケージ名が正しいことを確認します。</li>
+<li>Logcat でログのレベルを Debug に変更します(または、ログメッセージが非常に少ないようであれば、Verbose のままにします。)。</li>
+<li>アプリケーションを実行します。</li>
+</ol>
+<p>Logcat に次のメッセージが表示されます。</p>
+<p>11-24 14:06:59.001 4696-4696/? D/MainActivity: Hello World</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Coding challenge" duration="0">
-        
+      <google-codelab-step label="コーディングの課題" duration="0">
+        <p>(注) コーディングの課題はすべて任意であり、以降のレッスンの前提条件ではありません。</p>
+<p>チャレンジ: 基本的な開発ワークフローを理解したので、次の手順を実行します。</p>
+<ol type="1" start="1">
+<li>Android Studioで新しいプロジェクトを作成します。</li>
+<li>&#34;Hello World&#34; の挨拶を &#34;Happy Birthday to &#34; に変更し、最近誕生日を迎えた人の名前を入力します。</li>
+<li>完成したアプリのスクリーンショットを撮って、誕生日を忘れた人にメールしましょう。(任意) </li>
+<li><a href="https://developer.android.com/reference/android/util/Log.html" target="_blank">Log</a> クラスの一般的な使用方法は、プログラム内で発生した Java の例外をログに記録することです。この目的で使用できる便利なメソッドには、<a href="https://developer.android.com/reference/android/util/Log.html#e(java.lang.String,%20java.lang.String)" target="_blank">Log.e()</a> などがあります。ログのメッセージに例外を含めるために使用できる方法を調べます。次に、アプリケーションに例外をトリガーしてログに記録するコードを記述します。</li>
+</ol>
+
 
       </google-codelab-step>
     
-      <google-codelab-step label="Summary" duration="0">
-        
+      <google-codelab-step label="まとめ" duration="0">
+        <ul>
+<li>Android Studio をインストールするには、<a href="https://developer.android.com/sdk/index.html" target="_blank">Android Studio</a> に移動し、指示に従ってダウンロードしてインストールします。</li>
+<li>新しいアプリケーションを作成するときは、API 15:Android 4.0.3 IceCreamSandwich がMinimum SDK として設定されていることを確認します。</li>
+<li>アプリケーションの Android 階層をプロジェクトのパネルに表示するには、プロジェクトのタブをクリックし、ポップアップメニューの上の方にある Android を選択します。</li>
+<li>プロジェクトに新しいライブラリを追加したり、ライブラリのバージョンを変更する必要がある場合は、build.gradle (Module:app) のファイルを編集します。</li>
+<li>アプリケーションのすべてのコードとリソースは、app フォルダと res フォルダにあります。java フォルダには、Java ソースコード内のアクティビティー、テスト、およびその他のコンポーネントが含まれます。res フォルダには、レイアウト、文字列、イメージなどのリソースが格納されます。</li>
+<li>AndroidManifest.xml ファイルを編集して、機能コンポーネントおよび権限を Android アプリケーションに追加します。複数のアクティビティなど、アプリケーションのすべてのコンポーネントは、この XML ファイルで宣言する必要があります。</li>
+<li><a href="http://developer.android.com/tools/devices/managing-avds.html" target="_blank">Android Virtual Device (AVD) Manager</a> を使用して、アプリケーションを実行するための仮想デバイス(エミュレータ)を作成します。</li>
+<li>デバッグ用の基本ツールとしてLogcat にメッセージを表示する <a href="https://developer.android.com/reference/android/util/Log.html" target="_blank">Log</a> ステートメントをアプリケーションに追加します。</li>
+<li>Android Studio を使用して物理的な Android デバイスでアプリケーションを実行するには、デバイスで USB デバッグをオンにします。Settings &gt; About phone と開き、Build number を 7 回タップします。前の画面 (設定) に戻り、開発者用オプションをタップします。USB Debugging を選択します。</li>
+</ul>
+
 
       </google-codelab-step>
     
-      <google-codelab-step label="Related concepts" duration="0">
-        
+      <google-codelab-step label="関連する概念" duration="0">
+        <p>関連するコンセプトは <a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-1-build-your-first-app/1-0-c-introduction-to-android/1-0-c-introduction-to-android.html" target="_blank">1.0:Introduction to Android</a> と <a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-1-build-your-first-app/1-1-c-your-first-android-app/1-1-c-your-first-android-app.html" target="_blank">1.1 Your first Android app</a> にあります。</p>
+
 
       </google-codelab-step>
     
-      <google-codelab-step label="Learn more" duration="0">
-        
+      <google-codelab-step label="詳細情報" duration="0">
+        <ul>
+<li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio download page</a></li>
+<li><a href="https://developer.android.com/studio/releases/index.html" target="_blank">Android Studio release notes</a></li>
+<li><a href="http://developer.android.com/tools/studio/index.html" target="_blank">Meet Android Studio</a></li>
+<li><a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">Logcat command-line tool</a></li>
+<li><a href="http://developer.android.com/tools/devices/managing-avds.html" target="_blank">Android Virtual Device (AVD) manager</a></li>
+<li><a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">App Manifest Overview</a></li>
+<li><a href="https://developer.android.com/studio/build/index.html" target="_blank">Configure your build</a></li>
+<li><a href="https://developer.android.com/reference/android/util/Log.html" target="_blank"><code>Log</code></a> class</li>
+<li><a href="https://developer.android.com/studio/run/managing-avds.html" target="_blank">Create and Manage Virtual Devices</a></li>
+</ul>
+
 
       </google-codelab-step>
     
-      <google-codelab-step label="Homework" duration="0">
-        <p>You see the statement &#34;MainActivity layout is complete&#34; in the Logcat pane if the Log level menu is set to which of the following? (Hint: multiple answers are OK.)</p>
+      <google-codelab-step label="その他:" duration="0">
+        <ul>
+<li><a href="https://gradle.org/" target="_blank">Gradle site</a></li>
+<li><a href="http://groovy-lang.org/syntax.html" target="_blank">Apache Groovy syntax</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Gradle" target="_blank">Gradle Wikipedia page</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="宿題" duration="0">
+        <p>このセクションでは、講師が指導するコースの一部として、このコードラボで学習している学生のために考えられる宿題をリストします。次の操作は、インストラクターが行います。</p>
+<ul>
+<li>必要に応じて宿題を割り当てます。</li>
+<li>宿題の提出方法を生徒に伝える。</li>
+<li>宿題を採点しなさい。</li>
+</ul>
+<p>インストラクターは、これらの提案を必要なだけ、または必要なだけ使用できます。また、適切と思われる他の宿題を自由に割り当てることができます。</p>
+<p>このコードラボを独力で学習している場合は、これらの宿題を使って知識をテストしてみてください。</p>
+<h2 is-upgraded>アプリケーションの構築と実行</h2>
+<ul>
+<li>空のテンプレートから新しいAndroidプロジェクトを作成します。</li>
+<li>メイン・アクティビティーの onCreate () に、さまざまなログ・レベルのロギング・ステートメントを追加します。</li>
+<li>好きなバージョンの Android をターゲットにしてデバイスのエミュレータを作成し、アプリを実行します。</li>
+<li>Logcat でフィルタリングを使用してログ・ステートメントを検索し、デバッグまたはエラー・ロギング・ステートメントのみを表示するようにレベルを調整します。</li>
+</ul>
+<h2 is-upgraded>以下の質問に答えてください</h2>
+<p>問１</p>
+<p>メインアクティビティのレイアウトファイルの名前は何ですか?</p>
+<ul>
+<li><code>MainActivity.java</code></li>
+<li><code>AndroidManifest.xml</code></li>
+<li><code>activity_main.xml</code></li>
+<li><code>build.gradle</code></li>
+</ul>
+<p> 問２</p>
+<p>アプリケーションの名前を指定する文字列リソースの名前は何ですか?</p>
+<ul>
+<li><code>app_name</code></li>
+<li><code>xmlns:app</code></li>
+<li><code>android:name</code></li>
+<li><code>applicationId</code></li>
+</ul>
+<p> 問３</p>
+<p>新しいエミュレータを作成するには、どのツールを使用しますか。</p>
+<ul>
+<li>Android Device Monitor</li>
+<li>AVD Manager</li>
+<li>SDK Manager</li>
+<li>Theme Editor</li>
+</ul>
+<p> 問４</p>
+<p>アプリケーションに次のログステートメントが含まれているとします。</p>
+<pre>Log.i(&#34;MainActivity&#34;, &#34;MainActivity layout is complete&#34;);</pre>
+<p>ログレベルメニューが次のどれに設定されている場合、Logcat に  &#34;MainActivity layout is complete&#34;(MainActivityのレイアウトが完了)という文が表示されますか。(ヒント:複数回答可)</p>
 <ul>
 <li>Verbose</li>
 <li>Debug</li>
@@ -198,20 +483,20 @@
 <li>Error</li>
 <li>Assert</li>
 </ul>
-<h2 is-upgraded>Submit your app for grading</h2>
-<p>Check to make sure the app has the following:</p>
+<h2 is-upgraded>採点のためにアプリを提出する</h2>
+<p>アプリケーションに次のものがあることを確認します。</p>
 <ul>
-<li>An <code>Activity</code> that displays &#34;Hello World&#34; on the screen.</li>
-<li>Log statements in <code>onCreate()</code> in the main activity.</li>
-<li>Log level in the Logcat pane shows only debug or error logging statements.</li>
+<li>画面に &#34;Hello World&#34; と表示されるアクティビティ。</li>
+<li>メイン・アクティビティのonCreate() にステートメントを記録します。</li>
+<li>Logcat のログレベルには、デバッグまたはエラーロギング文だけが表示されます。</li>
 </ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Next codelab" duration="0">
-        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
-<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
+      <google-codelab-step label="次の codelab" duration="0">
+        <p>Android Developer Fundamentals (V2) コースの次の実用的なコードを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a> を参照してください。</p>
+<p>章立て、アプリ、スライドへのリンクを含む概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a> を参照してください。</p>
 
 
       </google-codelab-step>
