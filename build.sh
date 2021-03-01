@@ -2,9 +2,9 @@
 
 # Android fundamentals
 # Unit 1-1
-cd ./android/fundamentals2/unit1
+cd ./android/fundamentals2
 claat export 1PPfXc5VLN0m_DOBVQzbDfssKBbjC67PNRIkWW9d3QWY
-cd ../../../
+cd ../../
 
 # Flutter
 # Write your first Flutter app, part 1
