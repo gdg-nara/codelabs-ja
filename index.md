@@ -1,8 +1,7 @@
 # Codelabs 邦訳
 
-1. [Android](./android/)
+1. [Codelabs for Android Developer Fundamentals](./android/fundamentals2/)
 
-1. [Flutter](./flutter/)
 
 
 
