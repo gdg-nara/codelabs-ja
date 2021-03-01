@@ -16,7 +16,7 @@
 
 ### Lesson 2: Activity と Intent
 
-[2.1: ](./2-1/)
+[2.1: Activity と Intent](./2-1/)
 
 [2.2: Activity のライフサイクルと状態](./2-2/)
 
