@@ -65,16 +65,10 @@ claat export 1PPfXc5VLN0m_DOBVQzbDfssKBbjC67PNRIkWW9d3QWY
 
 cd ../../
 
-# Flutter
-cd ./flutter
-# Write your first Flutter app, part 1
-claat export 1Ec9z15R6uIHjxqRPQMnqhzZI6eIigMxGjsKsqvu8mEw
-cd ../
-
-# デプロイ
-commitTime=`date +%Y_%m%d_%H:%M`
-commitMessage="updated: ${commitTime}"
-git add .
-git commit -m ${commitMessage}
-git push -u origin master
-echo ${commitMessage}
+# push
+#commitTime=`date +%Y_%m%d_%H:%M`
+#commitMessage="updated: ${commitTime}"
+#git add .
+#git commit -m ${commitMessage}
+#git push -u origin master
+#echo ${commitMessage}
