@@ -1,0 +1,415 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 01.2B: The layout editor</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="1-2b"
+                  title="Android 開発者基礎講座 01.2B: The layout editor"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="はじめに" duration="0">
+        <p>この実践的なコードラボはユニット 1: Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
+<p>コースのコードラボの完全なリストについては、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
+<p>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer Fundamentals (Version 2)を参照してください。</p>
+<p>注：このコースでは、「codelab」と「実践」という用語を入れ替えて使用しています。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="はじめに" duration="0">
+        <p>Android端末の画面に表示されるユーザー・インターフェース（UI）は、ビューと呼ばれるオブジェクトの階層構造で構成されており、画面のすべての要素がビューとなります。View クラスは、すべての UI コンポーネントの基本的な構成要素であり、ボタン、チェックボックス、テキスト入力フィールドなどのインタラクティブな UI コンポーネントを提供するクラスの基底クラスです。いくつかのレッスンで説明されている一般的に使用される View のサブクラスには、以下のものがあります。</p>
+<ul>
+<li>テキストを表示するためのTextView</li>
+<li>ユーザがテキストを入力したり編集したりできるようにするためのEditText。</li>
+<li>ボタンやその他のクリック可能な要素（RadioButton、CheckBox、Spinnerなど）でインタラクティブな動作を提供します。</li>
+<li>スクロール可能なアイテムを表示するためのScrollViewとRecyclerView。</li>
+<li>画像を表示するための ImageView。</li>
+<li>ConstraintLayoutとLinearLayoutは、他のView要素を含み、それらを配置するためのものです。</li>
+</ul>
+<p>UIを表示したり駆動したりするJavaコードは、Activityを継承するクラスに含まれています。アクティビティは通常、XML（eXtended Markup Language）ファイルとして定義されたUIビューのレイアウトに関連付けられています。この XML ファイルは通常、アクティビティにちなんだ名前が付けられ、画面上のビュー要素のレイアウトを定義します。</p>
+<p>例えば、Hello WorldアプリのMainActivityコードは、activity_main.xmlレイアウトファイルで定義されたレイアウトを表示しており、「Hello World」というテキストを持つTextViewが含まれています。</p>
+<p>より複雑なアプリでは、アクティビティは、ユーザーのタップに反応したり、グラフィカルなコンテンツを描画したり、データベースやインターネットからデータを要求したりするアクションを実装することがあります。アクティビティクラスについては別のレッスンで学びます。</p>
+<p>この実習では、最初のインタラクティブアプリ、つまりユーザーとのインタラクションを可能にするアプリを作成する方法を学びます。Empty Activity テンプレートを使用してアプリを作成します。また、レイアウト エディタを使用してレイアウトを設計する方法と、XML でレイアウトを編集する方法も学びます。これらのスキルを身につけておくことで、このコースの他の実習を修了することができます。</p>
+<h2 is-upgraded>すでに知っておくべきこと</h2>
+<p>よく知っておいた方がいいこと:</p>
+<ul>
+<li>Android Studioをインストールして開く方法。</li>
+<li>HelloWorldアプリの作成方法。</li>
+<li>HelloWorldアプリの実行方法。</li>
+</ul>
+<h2 is-upgraded>学習内容</h2>
+<ul>
+<li>インタラクティブな動作を持つアプリを作る方法</li>
+<li>レイアウトエディタを使ってレイアウトを設計する方法。</li>
+<li>XMLでレイアウトを編集する方法。</li>
+<li>新しい用語がたくさん。親しみやすい定義については、Vocabulary words and concepts glossaryをチェックしてください。</li>
+</ul>
+<h2 is-upgraded>あなたがすること</h2>
+<ul>
+<li>アプリを作成し、2つのButton要素とTextViewをレイアウトに追加します。</li>
+<li>ConstraintLayoutの各要素を操作して、余白や他の要素に制約をかけます。</li>
+<li>UI要素の属性を変更します。</li>
+<li>アプリのレイアウトを XML で編集します。</li>
+<li>ハードコードされた文字列を文字列リソースに抽出します。</li>
+<li>ユーザーが各Buttonをタップしたときに画面にメッセージを表示するためのクリックハンドラメソッドを実装します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="アプリの概要" duration="0">
+        <p>HelloToastアプリは、2つのButton要素と1つのTextViewで構成されています。ユーザーが最初のボタンをタップすると、画面上に短いメッセージ（乾杯）が表示されます。2つ目のButtonをタップすると、TextViewに表示される「クリック」カウンターが増加します。</p>
+<p>完成したアプリは以下のようになります。</p>
+<p class="image-container"><img alt="Hello Toast App after tapping the Toast button" style="width: 241.64px" src="img/9048846fe18c96b7.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク 1. 新しいプロジェクトを作成して探索する" duration="0">
+        <p>この実習では、HelloToastアプリのプロジェクトを設計し、実装します。最後にソリューションコードへのリンクが用意されています。</p>
+<h2 is-upgraded>1.1 Android Studioプロジェクトの作成</h2>
+<p>Android Studioを起動し、以下のパラメータで新規プロジェクトを作成します。</p>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+</table>
+<ol type="1" start="2">
+<li><img alt="Run Icon" style="width: 24.00px" src="img/609c3e4473493202.png"></li>
+</ol>
+<p>  2.選択して実行 &gt; アプリを実行するか、ツールバーの実行アイコンをクリックしてエミュレータまたはデバイス上でアプリをビルドして実行します。</p>
+<h2 is-upgraded>1.2 レイアウトエディタを探る</h2>
+<p>Android Studioは、ユーザーインターフェイス（UI）要素のアプリのレイアウトを素早く構築するためのレイアウトエディタを提供します。このエディタでは、ビジュアル デザインやブループリント ビューに要素をドラッグしてレイアウト内に配置したり、制約を追加したり、属性を設定したりすることができます。制約は、レイアウト内での UI 要素の位置を決定します。制約は、他のビュー、親レイアウト、または目に見えないガイドラインとの接続や配置を表します。</p>
+<p>レイアウト エディタを探索し、下の図を参照しながら、番号の付いたステップに従ってください。</p>
+<p class="image-container"><img alt="1e1372ceb5ca59bb.png" style="width: 641.76px" src="img/1e1372ceb5ca59bb.png"></p>
+<ol type="1" start="1">
+<li>Project &gt; Android ペインの app &gt; res &gt; layout フォルダで、activity_main.xml ファイルをダブルクリックして開きます（まだ開いていない場合）。</li>
+<li>まだ選択されていない場合は、デザイン タブをクリックします。デザイン] タブを使用して要素やレイアウトを操作し、[テキスト] タブを使用してレイアウトの XML コードを編集します。</li>
+<li>パレット］ペインには、アプリのレイアウトで使用できる UI 要素が表示されます。</li>
+<li>コンポーネント ツリー ペインには、UI 要素のビュー階層が表示されます。ビュー要素は、親と子のツリー階層に編成され、子は親の属性を継承します。上の図では、TextView は ConstraintLayout の子です。これらの要素については、このレッスンの後半で学びます。</li>
+<li>レイアウトエディタのデザインペインとブループリントペインは、レイアウト内のUI要素を示しています。上の図では、レイアウトには1つの要素しか表示されていません: &#34;Hello World &#34;を表示するTextViewです。</li>
+<li>属性タブには、UI要素のプロパティを設定するための属性ペインが表示されます。</li>
+</ol>
+<p>ヒント：レイアウトエディタの使用方法の詳細については、レイアウトエディタでUIを構築するを参照してください。</p>
+<p>このタスクでは、レイアウト エディタで ConstraintLayout 機能を使用して HelloToast アプリの UI レイアウトを作成します。制約は、後で示すように手動で作成することも、自動接続ツールを使用して自動的に作成することもできます。</p>
+<h2 is-upgraded>2.1 要素の制約を調べる</h2>
+<p>以下の手順に従ってください。</p>
+<ol type="1" start="1">
+<li>まだ開いていない場合は、プロジェクト &gt; Androidペインからactivity_main.xmlを開きます。デザインタブがまだ選択されていない場合は、それをクリックします。</li>
+</ol>
+<p class="image-container"><img alt="click the Select Design Surface button [ICON HERE] in the toolbar and choose Design + Blueprint. [IMAGEINFO]: ic_blueprint_icon.png, Blueprint button" style="width: 47.00px" src="img/2e7121c2997b0da8.png"></p>
+<ol type="1" start="2">
+<li><img alt="ensure that the tool is not disabled. [IMAGEINFO]: ic_autoconnect_enabled_icon.png, Autoconnect button" style="width: 24.00px" src="img/63a7326830300797.png"></li>
+<li><img alt="Zoom in or out" style="width: 173.00px" src="img/5cfc051ca6d3c426.png"></li>
+</ol>
+<p>設計図がない場合は、ツールバーの[設計面の選択]ボタンをクリックして、[設計] + [設計図]を選択します。</p>
+<ol type="1" start="2">
+<li>自動接続ツールもツールバーにあります。デフォルトでは有効になっています。このステップでは、ツールが無効になっていないことを確認してください。</li>
+<li>ズームインボタンをクリックして、デザインペインとブループリントペインを拡大し、クローズアップして見ます。</li>
+<li>コンポーネントツリーペインでテキストビューを選択します。Hello World&#34; TextViewがデザインと設計図ペインでハイライトされ、要素の制約が表示されます。</li>
+<li>このステップについては、下のアニメーション図を参照してください。テキストビューの右側にある円形のハンドルをクリックして、ビューをレイアウトの右側にバインドしている水平方向の制約を削除します。右側に拘束されなくなったため、TextViewは左側にジャンプします。水平方向の制約を元に戻すには、同じハンドルをクリックしてレイアウトの右側に線をドラッグします。</li>
+</ol>
+<p class="image-container"><img alt="Deleting and adding a constraint" style="width: 471.53px" src="img/6c8bdbe6c333e65.gif"></p>
+<p>青写真やデザインペインでは、以下のハンドルがTextView要素に表示されます。</p>
+<ul>
+<li>制約ハンドル。制約ハンドル：上のアニメーション図のように制約を作成するには、要素の側面に円で表示されている制約ハンドルをクリックします。次に、そのハンドルを別の制約ハンドル、または親の境界にドラッグします。ジグザグ線が制約を表します。</li>
+</ul>
+<p class="image-container"><img alt="Constraint handle" style="width: 60.00px" src="img/a218f51d7a5b38e0.png"></p>
+<ul>
+<li>リサイズハンドルです。要素のサイズを変更するには、四角いリサイズハンドルをドラッグします。ハンドルをドラッグしている間は、ハンドルは角のある角に変化します。</li>
+</ul>
+<p class="image-container"><img alt="Constraint handle" style="width: 100.00px" src="img/63d2724133105ff9.png"></p>
+<p>この機能を有効にすると、オートコネクト ツールは、UI 要素の親レイアウトに対する 2 つ以上の制約を自動的に作成します。要素をレイアウトにドラッグすると、要素の位置に基づいて制約が作成されます。</p>
+<p>ボタンを追加するには、以下の手順に従ってください。</p>
+<ul>
+<li>何もない状態から始めます。TextView要素は不要なので、選択したままの状態でDeleteキーを押すか、Edit &gt; Deleteを選択します。これで完全に真っ白なレイアウトになりました。</li>
+<li>パレットペインからボタンをレイアウトの任意の位置にドラッグします。ボタンをレイアウトの上部中央エリアにドロップすると、制約が自動的に表示される場合があります。そうでない場合は、下のアニメーション図のように、レイアウトの上部、左側、右側に制約をドラッグすることができます。</li>
+</ul>
+<p class="image-container"><img alt="Adding a button with constraints" style="width: 466.53px" src="img/1b828f1e5dc8e0db.gif"></p>
+<ol type="1" start="1">
+<li>下の図に示すように、パレットペインから別のボタンをレイアウトの中央にドラッグしてください。オートコネクトが水平方向の制約を提供してくれるかもしれません（提供されていない場合は、自分でドラッグすることができます）。</li>
+<li>垂直方向の制約をレイアウトの下部にドラッグします（下図を参照）。</li>
+</ol>
+<p class="image-container"><img alt="Adding a second button with constraints" style="width: 459.00px" src="img/de16bf0107211668.gif"></p>
+<p class="image-container"><img alt="click the specific handle that sets the constraint. [IMAGEINFO]: ic_remove_constraints_button.png" style="width: 46.00px" src="img/c5b4eebad60244c9.png"></p>
+<p>要素を選択し、その上にポインタを置くと、制約のクリアボタンが表示され、要素から制約を削除することができます。このボタンをクリックすると、選択した要素上のすべての制約が削除されます。単一の制約をクリアするには、制約を設定している特定のハンドルをクリックします。</p>
+<p>レイアウト全体のすべての制約をクリアするには、ツールバーの「すべての制約をクリア」ツールをクリックします。このツールは、レイアウト内のすべての制約をやり直したい場合に便利です。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク3：UI要素の属性を変更する" duration="0">
+        <p>[属性] ペインでは、UI 要素に割り当てることのできるすべての XML 属性にアクセスすることができます。すべてのビューに共通の属性（プロパティとして知られている）は、ビュークラスのドキュメントに記載されています。</p>
+<p>このタスクでは、ほとんどのビュータイプに適用される重要な Button 属性の値を新規に入力したり、変更したりします。</p>
+<p>レイアウトエディタには、ビューの四隅にリサイズハンドルが用意されているので、ビューのサイズを素早く変更することができます。ビューの各コーナーにあるハンドルをドラッグしてサイズを変更することができますが、そうすると幅と高さの寸法がハードコードされます。ハードコードされた寸法は、異なるコンテンツや画面サイズに適応できないため、ほとんどのビュー要素のサイズをハードコードしないようにしてください。</p>
+<p>代わりに、レイアウトエディタの右側にある「属性」ペインを使用して、ハードコードされた寸法を使用しないサイジングモードを選択します。属性ペインには、上部にあるビューインスペクタと呼ばれる正方形のサイジングパネルがあります。正方形の中の記号は、以下のように高さと幅の設定を表しています。</p>
+<p class="image-container"><img alt="Sizing panel in the Attributes pane" style="width: 344.77px" src="img/21fa69f6d1d39dbc.png"></p>
+<p>上の図では</p>
+<ol type="1" start="1">
+<li>Heightコントロールです。このコントロールはlayout_height属性を指定し、正方形の上側と下側の2つのセグメントに表示されます。角度は、このコントロールが wrap_content に設定されていることを示しており、これは、ビューがその内容に合わせて必要に応じて垂直方向に展開されることを意味しています。8」は標準的な余白が8dpに設定されていることを示しています。</li>
+<li>幅コントロール。このコントロールはlayout_widthを指定し、正方形の左右に2つのセグメントで表示されます。角度は、このコントロールが wrap_content に設定されていることを示しています。これは、ビューがその内容に合わせて必要に応じて水平方向に展開され、最大 8dp のマージンが設定されていることを意味しています。</li>
+<li>属性ペインの閉じるボタン。クリックしてペインを閉じます。</li>
+</ol>
+<p>以下の手順に従ってください。</p>
+<ol type="1" start="1">
+<li>コンポーネントツリーペインの一番上のボタンを選択します。</li>
+<li>レイアウトエディタウィンドウの右側にある「属性」タブをクリックします。</li>
+</ol>
+<p class="image-container"><img alt="Attributes tab" style="width: 406.00px" src="img/222cadd26ca52ce2.png"></p>
+<p>  3. 幅コントロールを2回クリックすると、1回目のクリックで「直線で固定」に、2回目のクリックで「スプリングコイルで制約を一致」に変化します。</p>
+<p class="image-container"><img alt="Changing the width and height attributes" style="width: 451.70px" src="img/8c7c1ab4c9662009.gif"></p>
+<p>幅のコントロールを変更した結果、属性ペインの layout_width 属性に match_constraint という値が表示され、Button 要素がレイアウトの左右のスペースを埋めるように横に伸びるようになりました。</p>
+<p>  4. 2番目のButtonを選択し、下の図に示すように、前のステップと同じようにlayout_widthに変更を加えます。</p>
+<p class="image-container"><img alt="Changing the width and height attributes for the second Button" style="width: 489.65px" src="img/6b0256c215243921.png"></p>
+<p>前の手順で示したように、インスペクタの高さと幅のコントロールを変更すると、［属性］ペインの［layout_width］と［layout_height］属性が変わります。これらの属性は、レイアウトの3つの値のうちの1つを取ることができ、これはConstraintLayoutです。</p>
+<ul>
+<li>match_constraint設定は、設定されている場合は、親の幅または高さをマージンまで埋めるようにビュー要素を展開します。この場合の親は ConstraintLayout です。ConstraintLayoutについては、次のタスクで詳しく説明します。</li>
+<li>wrap_content設定は、View要素の寸法を縮小して、コンテンツを囲むのに十分な大きさにします。コンテンツがない場合、View 要素は非表示になります。</li>
+<li>デバイスの画面サイズに合わせた固定サイズを指定するには、密度に依存しないピクセル数（dp単位）を指定します。例えば、16dpは16個の密度に依存しないピクセルを意味します。</li>
+</ul>
+<p>ヒント：そのポップアップメニューを使用してlayout_width属性を変更すると、設定された寸法がないため、layout_width属性はゼロに設定されます。この設定は match_constraint-と同じで、制約や余白の設定を満たすために、ビューを可能な限り拡大することができます。</p>
+<h2 is-upgraded>3.2 ボタンの属性を変更する</h2>
+<p>アクティビティレイアウト内で各ビューを一意に識別するために、各ビューまたはビューのサブクラス（Buttonなど）は一意のIDを必要とします。また、Button要素にはテキストが必要です。ビュー要素には、色や画像の背景を持つこともできます。</p>
+<p>属性ペインでは、ビュー要素に割り当てることができるすべての属性にアクセスすることができます。android:id、背景、textColor、text属性などの各属性に値を入力することができます。</p>
+<p>次のアニメーション図は、これらのステップを実行する方法を示しています。</p>
+<ol type="1" start="1">
+<li>最初のボタンを選択した後、レイアウト内の要素を識別するために使用される android:id 属性のために、属性ペインの上部にある ID フィールドを button_toast に編集します。</li>
+<li>background属性を@color/colorPrimaryに設定します。(@cを入力すると、選択しやすいように選択肢が表示されます)</li>
+<li>textColor属性を@android:color/whiteに設定します。</li>
+<li>text属性をToastに編集します。</li>
+</ol>
+<p class="image-container"><img alt="Changing other UI element attributes" style="width: 497.53px" src="img/430fda86941c934e.gif"></p>
+<p>  5. button_countをIDとして使用し、text属性のCountを使用し、背景とテキストの色を前のステップと同じにして、2つ目のButtonに対して同じ属性変更を実行します。</p>
+<p>colorPrimaryはテーマの原色で、colors.xmlリソースファイルで定義されている事前定義のテーマベースカラーの1つです。これはアプリバーに使用されます。他のUI要素にベースカラーを使用することで、統一されたUIが作成されます。アプリのテーマとマテリアルデザインについては、別のレッスンで学びます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク 4: テキストエディットの追加と属性の設定" duration="0">
+        <p>ConstraintLayoutの利点の1つは、他の要素との相対的な位置合わせや制約を行うことができることです。このタスクでは、レイアウトの中央にTextViewを追加し、水平方向に余白に、垂直方向に2つのButton要素に制約をかけます。次に、属性ペインでテキストビューの属性を変更します。</p>
+<h2 is-upgraded>4.1 テキストビューと制約の追加</h2>
+<ol type="1" start="1">
+<li>下のアニメーション図のように、パレットペインからTextViewをレイアウトの上部にドラッグし、TextViewの上部からトーストボタンの下部にあるハンドルに制約をドラッグします。これにより、TextViewがボタンの下になるように拘束されます。</li>
+</ol>
+<p class="image-container"><img alt="Constraining the TextView to the Toast Button" style="width: 641.76px" src="img/c12c78f4ef5a50ba.gif"></p>
+<p>  2. 下のアニメーション図に示すように、テキストビューの下からカウントボタンの上のハンドルまで、そしてテキストビューの側面からレイアウトの側面まで制約をドラッグします。これにより、TextViewが2つのButton要素の間のレイアウトの中央に位置するように制約されます。</p>
+<p class="image-container"><img alt="Constraining the TextView to the Count Button and to the left and right margins" style="width: 641.76px" src="img/ba955bf16152e7ba.gif"></p>
+<h2 is-upgraded>4.2 テキストビューの属性を設定する</h2>
+<p>テキストビューを選択した状態で、まだ開いていない場合は、属性ペインを開きます。下の図のようにテキストビューの属性を設定します。まだ見たことのない属性については、図の後で説明します。</p>
+<ol type="1" start="1">
+<li>IDをshow_countに設定します。</li>
+<li>テキストを 0 に設定します。</li>
+<li>textSizeを160spに設定。</li>
+<li>textStyleをB（太字）に、textAlignmentをALIGNCENTER（段落の中央）に設定します。</li>
+<li>水平と垂直のビューサイズコントロール（layout_widthとlayout_height）を match_constraint に変更します。</li>
+<li>textColor を @color/colorPrimary に設定します。</li>
+<li>ペインを下にスクロールして「すべての属性を表示」をクリックし、2ページ目の属性を下にスクロールして背景に移動し、黄色の陰影に「#FFFF00」を入力します。</li>
+<li>重力まで下にスクロールして重力を展開し、center_ver（中心垂直の場合）を選択します。</li>
+</ol>
+<p class="image-container"><img alt="Setting the TextEdit attributes" style="width: 465.53px" src="img/d54470522ef25865.gif"></p>
+<ul>
+<li>textSize。テキストビューのテキストサイズ。このレッスンでは、サイズは160spに設定されています。spはスケールに依存しないピクセルの略で、dpと同様に画面の密度とユーザーのフォントサイズの好みに合わせてスケールする単位です。フォントサイズを指定する際には、画面密度とユーザーの好みの両方に合わせてサイズが調整されるように、dpの単位を使用してください。</li>
+<li>textStyleとtextAlignment。このレッスンではB（太字）に設定されているテキストスタイルと、ALIGNCENTER（段落を中央に配置する）に設定されているテキストアライメント。</li>
+<li>重力を指定します。gravity属性は、ビューが親ビューまたはViewGroup内でどのように整列されるかを指定します。このステップでは、親ConstraintLayout内でTextViewを垂直方向に中央揃えします。</li>
+</ul>
+<p class="image-container"><img alt="but on the second page of the Attributes pane for a TextView. The Attributes pane changes for each type of View: The most popular attributes for the View type appear on the first page, and the rest are listed on the second page. To return to the first page of the Attributes pane, click the [ICON HERE] icon in the toolbar at the top of the pane. [IMAGEINFO]: attributes_pane_switch_pages.png, Switch Attribute pane pages" style="width: 54.00px" src="img/d7227997a62342bd.png"></p>
+<p>背景属性はボタンの場合は属性ペインの1ページ目にありますが、テキストビューの場合は属性ペインの2ページ目にあることに気づくかもしれません。属性ペインはビューのタイプごとに変わります。ビュータイプで最も人気のある属性が最初のページに表示され、残りの属性は2ページ目に表示されます。属性ペインの最初のページに戻るには、ペイン上部のツールバーのアイコンをクリックします。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク5：XMLでレイアウトを編集する" duration="0">
+        <p>Hello Toastアプリのレイアウトがほぼ完成しました。しかし、コンポーネントツリーの各UI要素の横に感嘆符が表示されます。これらの感嘆符の上にポインタを合わせると、以下のような警告メッセージが表示されます。ハードコードされた文字列はリソースを使用する必要があります。</p>
+<p class="image-container"><img alt="Viewing UI element warnings" style="width: 641.76px" src="img/3ec110c4d063e9ee.gif"></p>
+<p>レイアウトの問題を修正する最も簡単な方法は、XMLでレイアウトを編集することです。レイアウトエディタは強力なツールですが、一部の変更はXMLソースコードで直接行った方が簡単です。</p>
+<p>このタスクでは、まだ開いていない場合は、activity_main.xmlファイルを開き、レイアウトエディタの下部にある[テキスト]タブをクリックします。</p>
+<p class="image-container"><img alt="Switch from Design to Text (XML editing)" style="width: 206.00px" src="img/b831e1af57bae08c.png"></p>
+<p>XML エディタが表示され、デザインペインと設計図ペインの代わりになります。レイアウトのXMLコードの一部を示す下の図を見るとわかるように、警告は強調表示されています。(ハードコードされた &#34;0 &#34;もハイライトされていますが、図には表示されていません。) ハードコードされた文字列 &#34;Toast &#34;にポインタを合わせると、警告メッセージが表示されます。</p>
+<p class="image-container"><img alt="The XML code for the Hello Toast layout showing the first warning" style="width: 422.53px" src="img/e1908ac169380f6.png"></p>
+<h2 is-upgraded>5.2 文字列リソースを抽出</h2>
+<p>文字列をハードコーディングするのではなく、文字列を表す文字列リソースを使用するのが最良の方法です。文字列を別のファイルに入れておくと、特にこれらの文字列を複数回使用する場合に、文字列の管理が容易になります。また、各言語ごとに文字列リソースファイルを作成する必要があるため、アプリの翻訳やローカライズには文字列リソースは必須です。</p>
+<ol type="1" start="1">
+<li>「トースト」（最初に強調表示された警告）という単語を一度クリックします。</li>
+<li>Windowsの場合はAlt-Enter、macOSの場合はOption-Enterを押し、ポップアップメニューから文字列リソースの抽出を選択します。</li>
+<li>リソース名にbutton_label_toastを入力します。</li>
+<li>OKをクリックします。文字列リソースが values/res/string.xml ファイルに作成され、コード内の文字列がリソースへの参照に置き換えられます。</li>
+</ol>
+<p>@string/button_label_toast</p>
+<ol type="1" start="5">
+<li>残りの文字列を抽出します。&#34;Count &#34;のbutton_label_countと &#34;0 &#34;のcount_initial_valueを抽出します。</li>
+<li>Project &gt; Androidペインで、res内の値を展開し、string.xmlをダブルクリックしてstring.xmlファイル内の文字列リソースを確認します。</li>
+</ol>
+<p>  7. メッセージを表示する後続のタスクで使用するために、別の文字列が必要です。string.xmlファイルに &#34;Hello Toast!&#34;というフレーズ用のtoast_messageという名前の別の文字列リソースを追加します。</p>
+<p>ヒント：文字列リソースには、空のテンプレートを使用してアプリプロジェクトを開始した場合、画面上部のアプリバーに表示されるアプリ名が含まれます。app_nameリソースを編集することで、アプリ名を変更することができます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク 6: ボタンの onClick ハンドラの追加" duration="0">
+        <p>このタスクでは、MainActivityの各Buttonに、ユーザーがButtonをタップしたときに実行されるJavaメソッドを追加します。</p>
+<h2 is-upgraded>6.1 各ボタンに onClick 属性とハンドラを追加する</h2>
+<p>クリック ハンドラは、ユーザーがクリック可能な UI 要素をクリックまたはタップしたときに呼び出されるメソッドです。Android Studio では、デザイン タブの属性ペインの onClick フィールドでメソッド名を指定できます。また、XML エディタで Button に android:onClick プロパティを追加することで、ハンドラメソッドの名前を指定することもできます。ハンドラメソッドをまだ作成していないので、後者の方法を使うことになりますが、XML エディタはそれらのメソッドを自動的に作成する方法を提供します。</p>
+<ol type="1" start="1">
+<li>XMLエディタを開いた状態（テキストタブ）で、android:idがbutton_toastに設定されているButtonを見つけます。</li>
+</ol>
+<p>  2. button_toast要素の末尾にandroid:onClick属性を追加し、最後の属性の後、 /&gt;終了インジケーターの前に追加します。</p>
+<p>android:onClick=&#34;showToast&#34; /&gt;</p>
+<p>  3. 属性の隣に表示される赤い電球のアイコンをクリックします。クリックハンドラの作成を選択し、MainActivityを選択し、OKをクリックします。</p>
+<p>赤い電球のアイコンが表示されない場合は、メソッド名（「showToast」）をクリックします。Alt-Enter（Macの場合はOption-Enter）を押し、MainActivityで「Create &#39;showToast(view)&#39;」を選択し、「OK」をクリックします。</p>
+<p>このアクションは、これらの手順の最後に示すように、MainActivityのshowToast()メソッドのプレースホルダメソッドのスタブを作成します。</p>
+<p>  4. button_count Buttonで最後の2つの手順を繰り返します。最後にandroid:onClick属性を追加し、クリックハンドラを追加します。</p>
+<p>android:onClick=&#34;countUp&#34; /&gt;</p>
+<p>ConstraintLayout 内の UI 要素の XML コードは次のようになります。</p>
+<p>  5. MainActivity.javaがまだ開いていない場合は、Project &gt; Androidビューでjavaを展開し、com.example.android.hellotoastを展開し、MainActivityをダブルクリックします。MainActivityのコードが表示され、コードエディタが表示されます。</p>
+<h2 is-upgraded>6.2 トーストボタンハンドラの編集</h2>
+<p>ここで、MainActivity の Toast ボタンのクリックハンドラである showToast() メソッドを編集して、メッセージを表示するようにします。トーストは、小さなポップアップウィンドウにシンプルなメッセージを表示する方法を提供します。メッセージに必要なスペースだけを埋めます。現在のアクティビティは表示されたままで、インタラクティブな状態を維持します。ボタンをタップしたり、アクションを実行した結果を表示するには、Toastメッセージを追加します。</p>
+<p>  1. 以下の手順に従って、Toast ボタンのクリックハンドラを編集してください。</p>
+<p>新しく作成された showToast() メソッドを探します。</p>
+<p>  2. Toast のインスタンスを作成するには、Toast クラスの makeText() ファクトリメソッドを呼び出します。</p>
+<p>このステートメントは、すべてのステップを完了するまで不完全です。</p>
+<p>  3. アプリ アクティビティのコンテキストを指定します。トーストはアクティビティUIの上に表示されるため、システムは現在のアクティビティに関する情報を必要とします。コンテキストが必要なアクティビティのコンテキスト内にすでにいる場合は、これをショートカットとして使用します。</p>
+<p>  4. 文字列リソース（前のステップで作成したtoast_message）など、表示するメッセージを指定します。文字列リソースtoast_messageはR.stringで識別されます。</p>
+<p>  5. 表示する時間を指定します。例えば、Toast.LENGTH_SHORTは比較的短い時間だけトーストを表示します。</p>
+<p>トーストの表示時間は、Toast.LENGTH_LONGまたはToast.LENGTH_SHORTのいずれかになります。実際の長さは、長いToastで約3.5秒、短いToastで約2秒です。</p>
+<p>  6. show()を呼び出してトーストを表示します。showToast()メソッド全体を以下に示します。</p>
+<p>アプリを実行して、ToastボタンをタップしたときにToastメッセージが表示されることを確認します。</p>
+<p class="image-container"><img alt="The Hello Toast app showing a Toast message" style="width: 240.27px" src="img/9048846fe18c96b7.png"></p>
+<p>6.3 カウントボタンハンドラの編集</p>
+<p>ここで、MainActivityのカウントボタンのクリックハンドラであるcountUp()メソッドを編集し、カウントがタップされた後に現在のカウントを表示するようにします。タップするたびにカウントが1つずつ増えていきます。</p>
+<p>ハンドラのコードは次のようにしなければなりません:</p>
+<ul>
+<li>変更されたカウントを追跡する。</li>
+<li>更新されたカウントをテキストビューに送信して表示する。</li>
+</ul>
+<p>以下の手順でCount Buttonクリックハンドラを編集します。</p>
+<p>  1. 新しく作成されたcountUp()メソッドを見つける。</p>
+<p>  2. カウントを追跡するには、プライベート・メンバー変数が必要です。Countボタンをタップするたびに、この変数の値が増加します。以下のように入力すると、赤でハイライトされ、赤い電球のアイコンが表示されます。</p>
+<p>赤い球根のアイコンが表示されない場合は、mCount++式を選択します。最終的に赤い球根が表示されます。</p>
+<p>  3. 赤い球根のアイコンをクリックして、ポップアップメニューからフィールド「mCount」の作成を選択します。これでMainActivityの上部にプライベートメンバ変数が作成され、Android Studioでは整数(int)にしたいと想定しています。</p>
+<p>  4. private member variable文を変更して、変数を0に初期化します。</p>
+<p>  5. 上記の変数と一緒に、クリックハンドラに追加するshow_count TextViewの参照用のプライベートメンバ変数も必要です。この変数mShowCountを呼び出します。</p>
+<p>  6. mShowCountができたので、レイアウトファイルで設定したIDを使ってTextViewへの参照を取得します。この参照を一度だけ取得するには、onCreate()メソッドで指定します。別のレッスンで習うように、onCreate()メソッドはレイアウトを膨らませるために使われますが、これは画面のコンテンツビューをXMLレイアウトに設定することを意味します。また、レイアウト内の他のUI要素（TextViewなど）への参照を取得するためにも使用できます。MainActivity の onCreate() メソッドを探します。</p>
+<p>  7. メソッドの最後に findViewById 文を追加します。</p>
+<p>ビューは文字列のように id を持つことができるリソースです。findViewById呼び出しはビューのIDをパラメータとして受け取り、ビューを返します。このメソッドはビューを返すので、結果を期待するビュータイプ（この場合はTextView）にキャストする必要があります。</p>
+<p>  8. mShowCountにTextViewを代入したので、この変数を使ってTextView内のテキストをmCount変数の値に設定します。countUp()メソッドに以下を追加します。</p>
+<p>countUp() メソッド全体が以下のようになりました。</p>
+<p>  9. アプリを実行して、カウントボタンをタップするとカウントが増えることを確認します。</p>
+<p class="image-container"><img alt="The Hello Toast app showing the count as you tap the Count button" style="width: 268.03px" src="img/1963d74e64b44a2f.png"></p>
+<p>ヒント。ConstraintLayoutの使用に関する詳細なチュートリアルについては、「Codelab Using ConstraintLayout to design your views」を参照してください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="解答のコード" duration="0">
+        <p>Android Studioプロジェクト。HelloToast</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="コーディングの課題" duration="0">
+        <p>注: すべてのコーディング課題は任意であり、後のレッスンの前提条件ではありません。</p>
+<p>HelloToastアプリは、デバイスやエミュレータが縦向きの場合には問題なく表示されます。しかし、デバイスやエミュレータを横向きにした場合、下図のようにカウントボタンが下のテキストビューと重なることがあります。</p>
+<p class="image-container"><img alt="The Hello Toast app in horizontal orientation" style="width: 522.53px" src="img/dab672435d737157.png"></p>
+<p>課題です。水平方向と垂直方向の両方で見栄えが良くなるようにレイアウトを変更します。</p>
+<ol type="1" start="1">
+<li>コンピュータ上で HelloToast プロジェクトフォルダのコピーを作成し、HelloToastChallenge に名前を変更します。</li>
+<li>Android Studio で HelloToastChallenge を開き、リファクタリングします。(コピーとリファクタリングの手順については、付録. プロジェクトをコピーしてリファクタリングする方法については、「ユーティリティ」を参照してください)。</li>
+<li>下の図のように、Toast ボタンと Count ボタンが左側に表示されるようにレイアウトを変更します。テキストビューはそれらの隣に表示されますが、その内容を表示するのに十分な幅しかありません。(ヒント: wrap_contentを使用してください。)</li>
+<li>水平方向と垂直方向の両方でアプリを実行します。</li>
+</ol>
+<p class="image-container"><img alt="The Hello Toast app with a different layout" style="width: 452.53px" src="img/d21ce6546bae3b84.png"></p>
+<p class="image-container"><img alt="The Hello Toast app with a different layout in horizontal orientation" style="width: 460.53px" src="img/4ad6eff0cc982129.png"></p>
+<p>チャレンジソリューションコード</p>
+<p>Android Studioプロジェクト。HelloToastChallenge</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="まとめ" duration="0">
+        <p>View、ViewGroup、およびレイアウト:</p>
+<ul>
+<li>すべての UI 要素は View クラスのサブクラスであり、したがって View スーパークラスの多くのプロパティを継承します。</li>
+<li>ビュー要素は、コンテナとして機能する ViewGroup 内でグループ化することができます。親は ViewGroup であり、子は View または別の ViewGroup です。</li>
+<li>onCreate()メソッドを使ってレイアウトを膨らませる、つまり画面のコンテンツビューをXMLレイアウトに設定することができます。また、レイアウト内の他のUI要素への参照を取得するためにも使用できます。</li>
+<li>Viewは文字列のように、idを持つことができるリソースです。findViewById呼び出しは、ビューのIDをパラメータとして取り、Viewを返します。</li>
+<li><img alt="click the specific handle that sets the constraint. [IMAGEINFO]: remove_constraints_button.png" style="width: 46.00px" src="img/c5b4eebad60244c9.png"></li>
+</ul>
+<p>レイアウト エディタを以下のように使用します : </p>
+<ul>
+<li>デザイン] タブをクリックして要素とレイアウトを操作し、[テキスト] タブをクリックしてレイアウトの XML コードを編集します。</li>
+<li>デザイン] タブの [パレット] ペインには、アプリのレイアウトで使用できる UI 要素が表示され、[コンポーネント ツリー] ペインには UI 要素のビュー階層が表示されます。</li>
+<li>レイアウト エディタの [デザイン] ペインと [ブループリント] ペインには、レイアウト内の UI 要素が表示されます。</li>
+<li>属性] タブには、UI 要素のプロパティを設定するための [属性] ペインが表示されます。</li>
+<li>制約ハンドル。要素の両側に円で表示されている制約ハンドルをクリックし、別の制約ハンドルまたは親境界にドラッグして制約を作成します。制約はジグザグ線で表されます。</li>
+<li>リサイズハンドル。四角いリサイズハンドルをドラッグして、要素のサイズを変更することができます。ドラッグしている間は、ハンドルは角度のついた角に変化します。</li>
+<li>有効にすると、オートコネクトツールは、親レイアウトに対するUI要素の2つ以上の制約を自動的に作成します。レイアウトに要素をドラッグすると、要素の位置に基づいて制約が作成されます。</li>
+<li>要素を選択してポインタをその上に置くと、制約のクリア・ボタンが表示され、要素から制約を削除することができます。このボタンをクリックすると、選択した要素上のすべての制約が削除されます。単一の制約をクリアするには、制約を設定している特定のハンドルをクリックします。</li>
+<li>属性] ペインでは、UI 要素に割り当てることのできるすべての XML 属性にアクセスできます。また、上部にはビュー インスペクタと呼ばれる正方形のサイズ変更パネルがあります。正方形の中の記号は、高さと幅の設定を表しています。</li>
+</ul>
+<p>レイアウトの幅と高さを設定する</p>
+<p>ビューインスペクタの高さと幅のサイズコントロールを変更すると、layout_widthとlayout_heightの属性が変わります。これらの属性は、ConstraintLayoutの3つの値のうちの1つを取ることができます。</p>
+<ul>
+<li>match_constraint設定は、幅または高さが設定されている場合はマージンまでビューを展開して親を埋めます。</li>
+<li>wrap_content設定は、ビューの寸法を縮小して、コンテンツを囲むのに十分な大きさにします。コンテンツがない場合、ビューは見えなくなります。</li>
+<li>デバイスの画面サイズに合わせて調整された固定サイズを指定するには、固定数の dp (密度に依存しないピクセル) を使用します。</li>
+</ul>
+<p>文字列リソースを抽出する</p>
+<p>文字列をハードコーディングするのではなく、文字列を表す文字列リソースを使用するのが最良の方法です。以下の手順に従ってください。</p>
+<ol type="1" start="1">
+<li>抽出したいハードコードされた文字列を一度クリックし、Alt-Enter（Macの場合はOption-Enter）を押し、ポップアップメニューから文字列リソースの抽出を選択します。</li>
+<li>リソース名を設定します。</li>
+<li>OKをクリックします。これで values/res/string.xml ファイル内に文字列リソースが作成され、コード内の文字列がリソースへの参照に置き換えられます。string/button_label_toast</li>
+</ol>
+<p>クリックを処理する</p>
+<ul>
+<li>クリック ハンドラは、ユーザーが UI 要素をクリックまたはタップしたときに呼び出されるメソッドです。</li>
+<li>ボタンなどの UI 要素のクリック ハンドラは、デザイン タブの属性ペインの onClick フィールドに名前を入力するか、XML エディタでボタンなどの UI 要素に android:onClick プロパティを追加することで指定します。</li>
+<li>View パラメータを使用して、メイン アクティビティでクリック ハンドラを作成します。例：public void showToast(View view) {/...}.</li>
+<li>すべての Button プロパティについては Button クラスのドキュメントを、すべての TextView プロパティについては TextView クラスのドキュメントを参照してください。</li>
+</ul>
+<p>トーストのメッセージを表示する</p>
+<p>トーストは小さなポップアップウィンドウにシンプルなメッセージを表示する方法を提供します。メッセージに必要なスペースだけを埋めます。Toast のインスタンスを作成するには、以下の手順に従います。</p>
+<ol type="1" start="1">
+<li>Toast クラスの makeText() ファクトリ メソッドを呼び出します。</li>
+<li>アプリのアクティビティのコンテキストと表示するメッセージ（文字列リソースなど）を指定します。</li>
+<li>表示する期間を指定します。例えば、短い期間のToast.LENGTH_SHORTなどです。期間は、Toast.LENGTH_LONGまたはToast.LENGTH_SHORTのいずれかにすることができます。</li>
+<li>show()を呼び出してToastを表示します。</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

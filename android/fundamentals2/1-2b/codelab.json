@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-03-05T23:16:32Z",
+  "id": "1-2b",
+  "duration": 0,
+  "title": "Android 開発者基礎講座 01.2B: The layout editor",
+  "summary": "",
+  "source": "1YC1a5pOeyXdCm-16MrzkdPb7LjocozAI89xprK7Uk7A",
+  "theme": "android",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Android"
+  ],
+  "tags": [],
+  "url": "1-2b"
+}

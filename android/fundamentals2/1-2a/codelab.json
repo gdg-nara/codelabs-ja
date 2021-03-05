@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-03-05T23:17:44Z",
+  "id": "1-2a",
+  "duration": 0,
+  "title": "Android 開発者基礎講座 1.2A: 初めてのインタラクティブUI",
+  "summary": "",
+  "source": "1ZS4wqGHj7XcOd-lOiI8h4g6lBYOBVGEaKcIwMM8fp10",
+  "theme": "android",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Android"
+  ],
+  "tags": [],
+  "url": "1-2a"
+}
