@@ -1,0 +1,393 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 03.1:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="3-1"
+                  title="Android 開発者基礎講座 03.1:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。Welcome" duration="0">
+        <p>1。</p>
+<p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コースのコードラボの完全なリストについては、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</li>
+</ul>
+<p>注：このコースでは、「Codelab」と「実践」という用語を入れ替えて使用しています。</p>
+<p>序章</p>
+<p>以前の実習では <a href="https://developer.android.com/reference/android/util/Log.html" target="_blank">ログ</a>クラスを使用して、アプリの実行時に Android Studio のLogcatペインに表示されるシステム ログに情報を印刷します。アプリにロギング文を追加することは、エラーを見つけてアプリの動作を改善するための1つの方法です。もう一つの方法は、Android Studioに組み込まれたデバッガを使用することです。</p>
+<p>この実習では、エミュレータやデバイス上でのアプリのデバッグ方法、ブレークポイントの設定と表示、コードのステップスルー、変数の調べ方を学びます。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>Android Studioプロジェクトを作成します。</li>
+<li>レイアウトエディタを使用して、EditTextとButton要素を操作する。</li>
+<li>Android Studio で、エミュレータとデバイスの両方でアプリをビルドして実行する。</li>
+<li>ラストオン、ファーストオフを含むスタックトレースを読み込んで分析します。</li>
+<li>Android Studioでログ ステートメントを追加し、システム ログ（Logcatペイン）を表示します。</li>
+</ul>
+<p>What you&#39;ll learn</p>
+<ul>
+<li>エミュレータまたはデバイス上でデバッグモードでアプリを実行する方法。</li>
+<li>アプリの実行を段階的に実行する方法。</li>
+<li>ブレークポイントを設定して整理する方法</li>
+<li>デバッガで変数を調べて変更する方法</li>
+</ul>
+<p>What you&#39;ll do</p>
+<ul>
+<li>SimpleCalc アプリをビルドする。</li>
+<li>SimpleCalc のコードにブレークポイントを設定して表示します。</li>
+<li>実行中のコードをステップスルーします。</li>
+<li>変数を調べ、式を評価します。</li>
+<li>サンプルアプリの問題を特定して修正する</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。アプリの概要" duration="0">
+        <p>SimpleCalcアプリは、2つの<code>EditText</code>要素と4つの<code>Button</code>要素を持っています。2つの数字を入力して<code>Buttonを</code>クリックすると、アプリはその<code>Buttonの</code>計算を行い、結果を表示します。</p>
+<p class="image-container"><img alt="26a2273d0165e2cb.png" style="width: 641.76px" src="img/26a2273d0165e2cb.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1.SimpleCalcプロジェクトとアプリを探索する" duration="0">
+        <p>この実践では、SimpleCalcアプリを自分でビルドすることはありません。完全なプロジェクトは<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>で入手できます。このタスクでは、Android StudioでSimpleCalcプロジェクトを開き、アプリの主要な機能の一部を探索します。</p>
+<p>1.1 SimpleCalcプロジェクトをダウンロードして開く</p>
+<ol type="1" start="1">
+<li><a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalcを</a>ダウンロードし、ファイルを解凍します。</li>
+<li>Android Studioを起動し、「ファイル」→「開く」を選択します。</li>
+<li>SimpleCalcのフォルダに移動し、そのフォルダファイルを選択し、OKをクリックします。SimpleCalcプロジェクトがビルドされます。</li>
+<li>プロジェクト] &gt; [Android] ペインがまだ開いていない場合は、[プロジェクト] &gt; [Android] ペインを開きます。</li>
+</ol>
+<p>警告。このアプリには、発見して修正するエラーが含まれています。デバイスやエミュレータでアプリを実行すると、アプリのクラッシュなど予期せぬ動作に遭遇する可能性があります。</p>
+<p>1.2 レイアウトを探る</p>
+<ol type="1" start="1">
+<li>activity_main.xmlを開きます。</li>
+<li>テキスト］タブをクリックしてXMLコードを表示します。</li>
+<li>レイアウトのプレビューを表示するには、[プレビュー]タブをクリックします。</li>
+</ol>
+<p>レイアウトのXMLコードとデザインを確認し、以下の点に注意してください。</p>
+<ul>
+<li>レイアウトには、入力用の2つのEditText要素、計算用の4つのButton要素、結果を表示するための1つのTextViewが含まれています。</li>
+<li>各計算ボタンは、それ自身のandroid:onClickクリックハンドラ（onAdd , OnSub など）を持っています。</li>
+<li>結果のためのTextViewは、デフォルトではテキストを持っていません。</li>
+<li>つのEditText要素は、android:inputType属性と値&#34;numberDecimal&#34;を持っています。この属性は、EditTextが数字のみを入力として受け入れることを示しています。画面上に表示されるキーボードには数字のみが入力されます。EditText要素の入力タイプについては、後の実践で詳しく学びます。</li>
+</ul>
+<p class="image-container"><img alt="ba9cb309525495aa.png" style="width: 641.76px" src="img/ba9cb309525495aa.png"></p>
+<p>1.3 アプリのコードを探る</p>
+<ol type="1" start="1">
+<li>プロジェクト] &gt; [Android] ペインで、[アプリ] &gt; [java] フォルダを展開します。このプロジェクトには、MainActivityクラスに加えて、ユーティリティのCalculatorクラスも含まれています。</li>
+<li>電卓を開き、コードを調べます。電卓で実行できる操作はOperator enum で定義されており、操作メソッドはすべてpublic であることに注意してください。</li>
+<li>MainActivity を開き、コードとコメントを確認します。</li>
+</ol>
+<p>次の点に注意してください。</p>
+<ul>
+<li>定義されているすべてのandroid:onClickクリックハンドラは、Calculator.Operator 列挙の値の 1 つとして操作名を指定して、プライベートのcompute()メソッドを呼び出します。</li>
+<li>compute() メソッドは、プライベートメソッドgetOperand() を呼び出します (続いてgetOperandText () を呼び出します)。</li>
+<li>compute() メソッドは、オペランド名のスイッチを使用して、Calculatorインスタンス(mCalculator) の適切なメソッドを呼び出します。</li>
+<li>Calculatorクラスの計算メソッドは、実際の演算を行い、値を返します。</li>
+<li>compute()メソッドの最後の部分は、計算結果でTextViewを更新します。</li>
+</ul>
+<p>1.4 アプリを実行する</p>
+<p>アプリを実行し、以下の手順に従ってください。</p>
+<ol type="1" start="1">
+<li>計算に整数値と浮動小数点値の両方を入力します。</li>
+<li>小数点以下の大きな端数を持つ浮動小数点値を入力します（例：1.6753456）。</li>
+<li>数字をゼロで割る。</li>
+<li>EditText要素の片方または両方を空のままにして、任意の計算を試してみてください。</li>
+<li>Android Studio ウィンドウの下部にあるLogcatタブをクリックしてLogcatペインを開きます（まだ開いていない場合）。アプリがエラーを報告するポイントのスタックトレースを調べます。</li>
+</ol>
+<p>SimpleCalc のEditText要素の一方または両方が空の場合、アプリは下図のように例外を報告し、システムログにはアプリがエラーを発生させた時点での実行スタックの状態が表示されます。スタックトレースは通常、エラーが発生した理由についての重要な情報を提供します。</p>
+<p class="image-container"><img alt="Stack trace in the Logcat pane for the SimpleCalc App" style="width: 641.76px" src="img/810e4acd0460ddc2.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2: デバッガでSimpleCalcを実行する" duration="0">
+        <p>このタスクでは、Android Studio のデバッガについて紹介し、ブレークポイントを設定してデバッグモードでアプリを実行する方法を学びます。</p>
+<p>2.1 デバッグモードでアプリを起動して実行する</p>
+<ol type="1" start="1">
+<li>Android Studioで、[実行] &gt; [デバッグアプリ]を選択するか、<img alt="select Run &gt; Debug app or click the Debug icon [ICON HERE] in the toolbar. [IMAGEINFO]: ic_debug.png, Debug icon" style="width: 25.00px" src="img/ffaf36ec07e7146e.png">ツールバー の[デバッグ]アイコンを クリックします。</li>
+<li>アプリがすでに実行中の場合は、デバッグモードでアプリを再起動するかどうかを尋ねられます。アプリを再起動]をクリックします。</li>
+</ol>
+<p>Android Studio は、エミュレータまたはデバイス上でアプリをビルドして実行します。デバッグはどちらの場合でも同じです。Android Studio がデバッガを初期化している間、アプリを使用する前にデバイス上に「デバッガを待っています」というメッセージが表示されることがあります。</p>
+<ol type="1" start="3">
+<li>Android Studioウィンドウの下部にある「デバッグ」タブをクリックすると、「デバッグ」ペインが表示されます（または、「表示」→「ツールウィンドウ」→「デバッグ」を選択）。ペインの[デバッガ]タブがすでに選択されており、[デバッガ]ペインが表示されているはずです。</li>
+</ol>
+<p>2.2 ブレークポイントの設定</p>
+<p>ブレークポイントとは、変数の検証や式の評価などの他のアクションを実行するためにアプリの通常の実行を一時停止したり、ランタイム エラーの原因を特定するためにコードを一行ずつ実行したりするコード内の場所のことです。実行可能なコード行にブレークポイントを設定することができます。</p>
+<ol type="1" start="1">
+<li>MainActivityを開き、compute()メソッドの4行目(try文の直後の行)をクリックします。</li>
+<li>エディタペインの左側のガッターで、その行の行番号の横をクリックしてください。その行に赤い点が現れ、ブレークポイントを示しています。赤い点は、アプリがすでにデバッグモードで実行されている場合、チェックマークが含まれています。</li>
+</ol>
+<p>別の方法として、[実行] &gt; [行のブレークポイントを切り替える]を選択するか、Control-F8（Macの場合はCommand-F8）を押して、行のブレークポイントを設定またはクリアすることができます。</p>
+<p class="image-container"><img alt="Setting a breakpoint while running the app in debug mode" style="width: 641.76px" src="img/ac56077118a2cd60.png"></p>
+<p>間違ってブレークポイントをクリックしてしまった場合は、ブレークポイントをクリックすることで元に戻すことができます。実行できない行をクリックした場合、赤い点には「x」が含まれ、その行は実行できないという警告が表示されます。</p>
+<ol type="1" start="3">
+<li>SimpleCalcアプリで、EditText要素に数字を入力し、計算ボタン要素のいずれかをクリックします。</li>
+</ol>
+<p>アプリの実行は、設定したブレークポイントに到達すると停止し、デバッガは下の図に示すように、そのブレークポイントでのアプリの現在の状態を表示します。</p>
+<p class="image-container"><img alt="Debug pane in Android Studio" style="width: 641.76px" src="img/472679cda2419269.png"></p>
+<p>上の図は、デバッガとコンソールタブのあるデバッグペインを示しています。デバッガ] タブを選択すると、以下の機能を持つ [デバッガ] ペインが表示されます。</p>
+<ol type="1" start="1">
+<li>Framesタブ**:**クリックすると、指定されたスレッドの現在の実行スタックのフレームが表示される **Frames** ペインが表示されます。実行スタックには、アプリと Android ランタイムで呼び出された各クラスとメソッドが表示され、最新のメソッドが一番上に表示されます。</li>
+</ol>
+<p>スレッド] タブをクリックして、[フレーム] ペインを [スレッド] ペインに置き換えます。アプリは現在メインスレッドで実行されており、アプリはMainActivityのcompute()メソッドを実行しています。</p>
+<ol type="1" start="2">
+<li>ウォッチボタン**:**クリックすると、**変数**ペイン内の**ウォッチ**ペインが表示され、設定した変数ウォッチの値が表示されます。ウォッチを使用すると、プログラム内の特定の変数を追跡し、プログラムの実行中にその変数がどのように変化するかを確認することができます。</li>
+<li>変数ペイン**:**現在のスコープ内の変数とその値が表示されます。アプリの実行のこの段階で、利用可能な変数は、this（アクティビティ）、operator（メソッドが呼び出されたCalculator.Operatorからの演算子名）、EditText要素とTextView のグローバル変数です。このペインの各変数には、変数のオブジェクト プロパティのリストを展開するための展開アイコンがあります。変数を展開して、そのプロパティを調べてみてください。</li>
+</ol>
+<p>2.3 アプリの実行を再開する</p>
+<p>実行 &gt; プログラムの再開を選択するか、<img alt="or click the Resume [ICON HERE] icon on the left side of the debugger window. [IMAGEINFO]: ic_resume.png, Resume icon" style="width: 25.00px" src="img/1c83d051db67e1dc.png">デバッガウィンドウの左側にある再開<img alt="or click the Resume [ICON HERE] icon on the left side of the debugger window. [IMAGEINFO]: ic_resume.png, Resume icon" style="width: 25.00px" src="img/1c83d051db67e1dc.png">アイコンをクリックして、アプリの実行を再開します。</p>
+<p>SimpleCalc アプリは実行を継続し、次にコード実行がブレークポイントに到達するまでアプリと対話することができます。</p>
+<p>2.4 実行中のアプリをデバッグする</p>
+<p>アプリがすでにデバイスやエミュレータ上で実行されていて、そのアプリをデバッグしたい場合は、すでに実行されているアプリをデバッグモードに切り替えることができます。</p>
+<ol type="1" start="1">
+<li>SimpleCalc アプリを通常通り、[実行 ]<img alt="with the Run [ICON HERE] icon. [IMAGEINFO]: ic_run.png, Run icon" style="width: 25.00px" src="img/5cf611b753940b18.png">アイコンで実行します。</li>
+<li>実行] &gt; [デバッガを Android プロセスに添付] を選択するか、<img alt="Attach icon" style="width: 25.00px" src="img/5ce90cfcc2b5f50c.png">ツールバーの[添付 ] アイコ<img alt="Attach icon" style="width: 25.00px" src="img/5ce90cfcc2b5f50c.png">ンをクリックします。</li>
+<li>表示されるダイアログからアプリのプロセスを選択します（下図）。OK]をクリックします。</li>
+</ol>
+<p class="image-container"><img alt="Choose process dialog" style="width: 274.00px" src="img/52541a228592919f.png"></p>
+<p>デバッグペインが開いた状態で表示され、デバッグ モードで起動したかのようにアプリをデバッグすることができるようになります。</p>
+<p>注意: [ デバッグ] ペインが自動的に表示されない場合は、画面下部の [デバッグ] タブをクリックします。まだ選択されていない場合は、[デバッグ]ペインの[デバッガ]タブをクリックして、[デバッガ]ペインを表示します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5。 タスク 3: デバッガの機能を調べる" duration="0">
+        <p>このタスクでは、アプリを 1 行ずつ実行したり、ブレークポイントを使って作業したり、変数を調べたりするなど、Android Studio デバッガーのさまざまな機能を探っていきます。</p>
+<p>3.1 Step through your app&#39;s execution</p>
+<p>ブレークポイントの後、デバッガを使用して、アプリ内のコードを 1 行ずつ実行し、アプリの実行中に変数の状態を調べることができます。</p>
+<ol type="1" start="1">
+<li>最後のタスクで設定したブレークポイントで、Android Studioでアプリをデバッグします。</li>
+<li>アプリで、両方の<code>EditText</code>要素に数字を入力し、追加ボタンをクリックします。</li>
+</ol>
+<p>アプリの実行が先ほど設定したブレークポイントで停止し、デバッガペインにアプリの現在の状態が表示されます。現在の行はコード内でハイライト表示されます。</p>
+<ol type="1" start="3">
+<li>デバッガ<img alt="Step Over icon" style="width: 25.00px" src="img/e874f3322ef31e11.png">ウィンドウの上部にある[ステップ オーバー]<img alt="Step Over icon" style="width: 25.00px" src="img/e874f3322ef31e11.png">ボタンをクリックします。</li>
+</ol>
+<p>デバッガは、<code>compute()</code>メソッドの現在の行(ブレークポイントがあるところ、<code>オペランドOne</code>の代入)を実行し、ハイライトがコードの次の行(<code>オペランドTwo</code>の代入)に移動します。変数ペインは、新しい実行状態を反映するように更新され、変数の現在の値は、ソースコードの各行の後にイタリック体で表示されます。</p>
+<p>また、実行 &gt; ステップオーバーを使用するか、F8を押してコードをステップオーバーすることもできます。</p>
+<ol type="1" start="4">
+<li>次の行（<code>オペランドTwo</code>の代入）で、Step Into <img alt="click the Step Into [ICON HERE] icon. [IMAGEINFO]: ic_step-into.png, Step Into icon" style="width: 25.00px" src="img/96a42c8660c76781.png">アイコンをクリックします。</li>
+</ol>
+<p>ステップイントゥは、現在の行でのメソッド呼び出しの実行にジャンプします（そのメソッドを実行して同じ行に残るのと比較して）。この場合、その割り当てには<code>getOperand()</code> への呼び出しが含まれているため、デバッガは<code>MainActivity</code>コードをそのメソッド定義までスクロールします。</p>
+<p>メソッドに足を踏み入れると、[フレーム] ペインが更新され、呼び出しスタック内の新しいフレーム (ここでは<code>getOperand()</code> が表示されます。フレーム] ペインのいずれかの行をクリックすると、メソッドが呼び出された前のスタック フレーム内のポイントを確認できます。</p>
+<p class="image-container"><img alt="Debugger pane after clicking Step Into" style="width: 641.76px" src="img/6e0705650cf4865f.png"></p>
+<p>メソッドにステップインするには、[実行] &gt; [ステップイントゥ] または F7 を使用することもできます。</p>
+<ol type="1" start="5">
+<li>ステップオーバー をクリックして、<img alt="and all the panels update with the new information. [IMAGEINFO]: ic_step-over.png, Step Over icon" style="width: 25.00px" src="img/e874f3322ef31e11.png"> <code>getOperand()</code>の各行を実行します。<img alt="and all the panels update with the new information. [IMAGEINFO]: ic_step-over.png, Step Over icon" style="width: 25.00px" src="img/e874f3322ef31e11.png">メソッドが完了すると、デバッガは最初にメソッドにステップインしたポイントに戻り、すべてのパネルが新しい情報を表示するように更新されることに注意してください。</li>
+<li>ステップ・オーバーを 2 回クリックして、実行ポイントを<code>ADD</code> の<code>case</code>文内の最初の行に移動します。</li>
+<li>ステップ・イントゥ をクリックします<img alt="Step Into icon" style="width: 25.00px" src="img/96a42c8660c76781.png">。</li>
+</ol>
+<p>デバッガは、<code>Calculator</code>クラスで定義された適切なメソッドを実行し、Calculator<code>.java</code>ファイルを開き、そのクラスの実行ポイントまでスクロールします。ここでも、さまざまなペインが新しい状態を反映するように更新されます。</p>
+<ol type="1" start="8">
+<li>Step Out <img alt="Step Out icon" style="width: 25.00px" src="img/a92312808b1e9a44.png">アイコンを使用して、<img alt="Step Out icon" style="width: 25.00px" src="img/a92312808b1e9a44.png">残りの計算メソッドを実行し、<code>MainActivity</code>の<code>compute()</code>メソッドにポップアウトします。<img alt="Step Out icon" style="width: 25.00px" src="img/a92312808b1e9a44.png">その後、<code>Compute(</code>)メソッドのデバッグを続けられます。</li>
+</ol>
+<p>また、Run &gt; Step Outを使うか、 Shift-F8キーを押して、メソッドの実行から抜け出すこともできます。</p>
+<p>3.2 ブレークポイントを使った作業</p>
+<p>ブレークポイントを使用して、アプリのその部分をデバッグするためにアプリの実行を中断したいコードのどこにあるかを示します。</p>
+<ol type="1" start="1">
+<li>最後のタスクで設定したブレークポイントを、<code>MainActivity</code>の<code>compute()</code>メソッドの開始点で見つけます。</li>
+<li><code>switch</code>文の先頭にブレークポイントを追加します。</li>
+<li>この新しいブレークポイントを右クリックして条件を入力し、下図のように、Conditionフィールドに次のテストを入力します。</li>
+</ol>
+<p>(operandOne == 42)||(operandTwo == 42)</p>
+<p class="image-container"><img alt="Entering a test in the Condition field" style="width: 641.76px" src="img/825ca476fcf3f0f9.png"></p>
+<ol type="1" start="4">
+<li>完了をクリックします。</li>
+</ol>
+<p>この2つ目のブレークポイントは、<em>条件</em>付きブレークポイントです。アプリの実行は、条件のテストが真の場合にのみ、このブレークポイントで停止します。この場合、入力したオペランドの1つまたは他のオペランドが42である場合にのみ、式が真になります。<code>ブール</code>値を返す限り、条件として任意のJava式を入力することができます。</p>
+<ol type="1" start="5">
+<li>デバッグ・モード（[実行] &gt; [デバッグ]）でアプリを実行するか、<img alt="or click Resume [ICON HERE] if it is already running. In the app, enter two numbers other than 42 and click the Add button. Execution halts at the first breakpoint in the compute() method.[IMAGEINFO]: ic_resume.png, Resume icon" style="width: 25.00px" src="img/1c83d051db67e1dc.png">既に実行中の場合は [再開]をクリックします。<img alt="or click Resume [ICON HERE] if it is already running. In the app, enter two numbers other than 42 and click the Add button. Execution halts at the first breakpoint in the compute() method.[IMAGEINFO]: ic_resume.png, Resume icon" style="width: 25.00px" src="img/1c83d051db67e1dc.png">アプリで、42以外の2つの数字を入力し、[追加]ボタンをクリックします。実行は、<code>compute()</code>メソッドの最初のブレークポイントで停止します。</li>
+<li>Resumeをクリックして、アプリのデバッグを続けます。条件が満たされていなかったため、2つ目のブレークポイントで実行が停止しなかったことを確認してください。</li>
+<li>アプリで、最初の<code>EditText</code>に42を入力し、任意の<code>Buttonを</code>クリックします。最初のブレークポイントの後に実行を再開するには、[再開]をクリックします。<code>スイッチ</code>ステートメントの 2 番目のブレークポイント（<em>条件付き</em>ブレークポイント）では、条件が満たされたために実行が開始されていることを確認してください。</li>
+<li><code>compute()</code>の最初のブレークポイントを右クリック(またはControl-click)し、Enabledのチェックを外してください。Doneをクリックします。ブレークポイントのアイコンが緑のドットと赤枠になったことを確認してください。</li>
+</ol>
+<p>ブレークポイントを無効にすると、コードから実際にブレークポイントを削除しなくても、一時的に&#34;ミュート&#34;することができます。ブレークポイントを完全に削除すると、そのブレークポイントのために作成した条件も失われるので、無効にした方が良い選択となることが多いです。</p>
+<p>また、[Mute Breakpoints ]<img alt="Mute Breakpoints Icon" style="width: 25.00px" src="img/dee48dcdbb470701.png">アイコンを使用して、アプリ内のすべてのブレークポイントを一度にミュートすることもできます。</p>
+<ol type="1" start="9">
+<li><img alt="View Breakpoints icon" style="width: 25.00px" src="img/6af58cd9f3bee5fb.png">デバッガウィンドウの左端にある[View Breakpoints ] をクリックします。<img alt="View Breakpoints icon" style="width: 25.00px" src="img/6af58cd9f3bee5fb.png"> ブレークポイント] ウィンドウが表示されます。</li>
+</ol>
+<p>ブレークポイント] ウィンドウでは、アプリ内のすべてのブレークポイントを表示したり、個々のブレークポイントを有効または無効にしたり、条件、他のブレークポイントへの依存関係、ロギングなどのブレークポイントの追加機能を追加したりすることができます。</p>
+<p class="image-container"><img alt="Breakpoints window" style="width: 641.76px" src="img/bfd1f3c7f20a39bd.png"></p>
+<p>ブレークポイント］ウィンドウを閉じるには、［完了］をクリックします。</p>
+<p>3.3 変数の検査と変更</p>
+<p>Android Studio デバッガーを使用すると、アプリの実行中にアプリ内の変数の状態を調べることができます。</p>
+<ol type="1" start="1">
+<li>SimpleCalc アプリがまだ実行されていない場合は、デバッグ モードで実行します。</li>
+<li>アプリで、2つの数字を入力し、そのうちの1つは42と入力して、Addボタンをクリックします。</li>
+</ol>
+<p><code>compute()</code>の最初のブレークポイントはまだミュートされています。実行は2つ目のブレークポイント(<code>switch</code>文の条件付きブレークポイント)で停止し、デバッガが表示されます。</p>
+<ol type="1" start="3">
+<li>変数ペインで、<code>operandOne</code>変数と<code>operandTwo</code>変数が、アプリに入力した値を持っていることを確認してください。</li>
+</ol>
+<p class="image-container"><img alt="Variables at the breakpoint" style="width: 641.76px" src="img/c0f6bed873741388.png"></p>
+<ol type="1" start="4">
+<li><code>この</code>変数は<code>MainActivity</code>オブジェクトです。拡張アイコンをクリックすると、そのオブジェクトのメンバ変数のリストが表示されます。展開アイコンをもう一度クリックすると、リストが閉じます。</li>
+<li>このような場合には、このオブジェクトには、そのオブジェクトに含まれているすべての情報が含まれている必要があります。</li>
+</ol>
+<p class="image-container"><img alt="Setting a variable at the breakpoint" style="width: 641.76px" src="img/9040dd687e9fb1bb.png"></p>
+<ol type="1" start="6">
+<li>オペランド<code>１の</code>値を10に変更して、Return キーを押します。</li>
+<li>このようにして、<code>オペランド</code>の値を10に変更し、Return キーを押します。</li>
+<li>例えば、ステップ 2 で追加 <code>ボタンを</code>クリックしてから、アプリの結果は 20 になりました。</li>
+<li>アプリを実行し続けるには、[再開]アイコンをクリックします。</li>
+<li>アプリでは、元のエントリ（42を含む）が<code>EditText</code>要素に保存されています（これらの値は、アプリ内でのみ変更されました。(それらの値はデバッガでのみ変更されました。) [追加]ボタンをクリックします。実行が再びブレークポイントで停止します。</li>
+<li>式の評価 ] アイコ<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png">ンをクリックするか、[<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png"> 実行] &gt; [式の評価] を<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png">選択します。<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png">また、任意の変数を右クリック(またはControl-click) して、[式の評価] を選択することもできます。</li>
+</ol>
+<p>コード・フラグメントの評価ウィンドウが表示されます。このウィンドウを使用して、アプリ内の変数とオブジェクトの状態を調べます。このウィンドウには、任意のコードを入力できます。</p>
+<p class="image-container"><img alt="Evaluate Code Fragment window" style="width: 570.00px" src="img/fef759a78ae30a3e.png"></p>
+<ol type="1" start="12">
+<li>上図のように、[コードフラグメントの評価] ウィンドウの上部フィールドにステートメントmOperandOneEditText.getHint();を入力し、[評価] をクリックします。</li>
+<li>結果フィールドには、その式の結果が表示されます。この<code>EditText</code>のヒントは、その<code>EditText の</code> XML で元々定義されていた通り、<code>"Type Operand 1" という</code>文字列です。</li>
+</ol>
+<p>式を評価して得られる結果は、アプリの現在の状態に基づいています。式を評価する時のアプリ内の変数の値によっては、異なる結果が得られる場合があります。</p>
+<p>式の評価を使用して変数またはオブジェクトのプロパティの値を変更すると、アプリの実行状態が変更されることにも注意してください。</p>
+<ol type="1" start="14">
+<li>閉じる］をクリックして、［評価するコード フラグメント］ウィンドウを閉じます。</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6. Coding challenge" duration="0">
+        <p>注意:コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>課題。タスク 1 の最後に、EditText要素の 1 つに値がない状態で SimpleCalc アプリを実行しようとしたところ、エラーが発生しました。デバッガを使用してコードを実行し、このエラーが発生した理由を正確に特定してください。このエラーの原因となるバグを修正してください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。Summary" duration="0">
+        <ul>
+<li>Logcatタブをクリックして Android Studio でログ情報を表示します。</li>
+<li>デバッグアイコンをクリックするか、[実行] &gt; [デバッグアプリ]を選択して、デバッグモードでアプリを実行します。</li>
+<li>デバッグ] タブをクリックすると、[デバッグ] ペインが表示されます。デバッグ］ペインの［デバッガ］タブをクリックして、［デバッガ］ペインを表示します（まだ選択されていない場合）。</li>
+<li>デバッガペインには、フレーム、特定のフレーム内の変数、ウォッチ（プログラム実行中の変数のアクティブなトラッキング）が表示されます。</li>
+<li>ブレークポイントは、他のアクションを実行するためにアプリの通常の実行を一時停止したいコード内の場所です。エディタ ウィンドウの左ガッターでターゲット行のすぐ横をクリックして、デバッグ ブレークポイントを設定またはクリアします。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。Related concept" duration="0">
+        <p>関連するコンセプトのドキュメントは「3<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-1-c-the-android-studio-debugger/3-1-c-the-android-studio-debugger.html" target="_blank">.1: Android Studio デバッガ</a>」にあります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。Learn more" duration="0">
+        <p>9。</p>
+<p>Android Studio のドキュメントです。</p>
+<ul>
+<li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio ユーザーガイド</a></li>
+<li><a href="https://developer.android.com/studio/debug/index.html" target="_blank">アプリのデバッグ</a></li>
+<li><a href="https://developer.android.com/studio/debug/am-logcat.html" target="_blank">ログの書き込みと表示</a></li>
+<li><a href="https://developer.android.com/studio/debug/stacktraces.html" target="_blank">スタックトレースの分析</a></li>
+<li><a href="https://developer.android.com/studio/command-line/adb.html" target="_blank">Android デバッグブリッジ</a></li>
+<li><a href="https://developer.android.com/studio/profile/android-profiler.html" target="_blank">アンドロイドプロファイラー</a></li>
+<li><a href="https://developer.android.com/studio/profile/network-profiler.html" target="_blank">ネットワークプロファイラ</a></li>
+<li><a href="https://developer.android.com/studio/profile/cpu-profiler.html" target="_blank">CPUプロファイラ</a></li>
+<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank">トレースビュー</a></li>
+</ul>
+<p>その他。</p>
+<ul>
+<li>ビデオ <a href="https://www.youtube.com/watch?v=2I6fuD20qlY" target="_blank">Android Studioでのデバッグとテスト</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。Homework" duration="0">
+        <p>10。</p>
+<p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を割り当てる。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題の割り当てを評価します。</li>
+</ul>
+<p>インストラクターは、これらの提案を少しでも多くのように使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じる必要があります。</p>
+<p>あなた自身でこのコードラボを介して作業している場合は、あなたの知識をテストするためにこれらの宿題の割り当てを使用して自由に感じています。</p>
+<p>アプリをビルドして実行する</p>
+<p><a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>アプリを開きます。</p>
+<ol type="1" start="1">
+<li>MainActivity で、onAdd()メソッドの 1 行目にブレークポイントを配置します。</li>
+<li>デバッガでアプリを実行します。アプリで追加操作を実行します。実行はブレークポイントで停止します。</li>
+<li>Step Intoをクリックして、アプリの実行をステップバイステップで追跡します。 Step Intoは Android フレームワークからファイルを開いて実行するので、Android 自体がコード上でどのように動作するかを見ることができます。</li>
+<li>現在のスタック フレームとローカル変数のコードをステップスルーすると、デバッグペインがどのように変化するかを調べます。</li>
+<li>エディタペインのコード自体が、各行が実行されるたびにどのように注釈されるかを調べます。</li>
+<li>実行スタックが深すぎて理解できない場合は、ステップ アウトをクリックしてアプリに戻ります。</li>
+</ol>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>デバッガなしでSimpleCalcアプリを実行します。EditText要素の片方または両方を空のままにして、任意の計算を試してみてください。なぜエラーが発生したのでしょうか？</p>
+<ul>
+<li>java.lang.NumberFormatException: empty String</li>
+<li>W/OpenGLRendererを使用しています。EGL_SWAP_BEHAVIOR_PRESERVEDで設定の選択に失敗しました。</li>
+<li>アプリがメインスレッドで作業をしすぎている可能性があります。</li>
+<li>コードキャッシュの容量を128KBに増やしました。</li>
+</ul>
+<p>質問2</p>
+<p>ブレークポイントがある現在の行を実行し、コードの次の行で停止するために、[デバッグ]ペインで実行する関数はどれですか?1つ選んでください。</p>
+<ul>
+<li>ステップイントゥ</li>
+<li>ステップオーバー</li>
+<li>ステップアウト</li>
+<li>履歴書の書き方</li>
+</ul>
+<p>質問3</p>
+<p>ブレークポイントがある現在の行からメソッド呼び出しの実行にジャンプするために、[デバッグ]ペインで実行する関数はどれですか？1つ選んでください。</p>
+<ul>
+<li>ステップイントゥ</li>
+<li>ステップオーバー</li>
+<li>ステップアウト</li>
+<li>履歴書の書き方</li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>この宿題に提出するアプリはありません。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。Next codelab" duration="0">
+        <p>11。次のコーデラボ</p>
+<p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

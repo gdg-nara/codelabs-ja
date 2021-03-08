@@ -1,0 +1,626 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 05.2:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="5-2"
+                  title="Android 開発者基礎講座 05.2:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、&#34;codelab&#34;と&#34;practical&#34;という用語を入れ替えて使用しています。</p>
+<p>序章</p>
+<p>Google のマテリアルデザインガイドラインは、視覚的に魅力的で直感的なアプリケーションを作成するための一連のベストプラクティスです。この実践編では、<code>CardView</code> と <code>FloatingActionButton</code> ウィジェットをアプリに追加する方法、画像を効率的に使用する方法、そしてユーザーの体験を楽しくするための Material Design のベストプラクティスを採用する方法を学びます。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>Android Studioでアプリを作成して実行します。</li>
+<li>レイアウトエディタを使用してUI要素を作成し、編集します。</li>
+<li>XMLレイアウトコードを編集したり、Javaコードから要素にアクセスしたりすることができます。</li>
+<li>ボタンクリックのクリックハンドラを作成します。</li>
+<li>テキストを文字列リソースに、次元を次元リソースに抽出します。</li>
+<li>ドローアブル、スタイル、テーマを使用します。</li>
+<li>リストを表示するには<a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code> を</a>使用します。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank"><code>FloatingActionButton</code></a><code>や</code><a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html" target="_blank"><code>CardViewなどの</code></a>Material Design<code>ウィジェットのおすすめの使い方。</code></li>
+<li>アプリ内の画像を効率的に使う方法</li>
+<li>太い色を使って直感的にレイアウトをデザインするための推奨ベストプラクティス</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li><a href="https://www.google.com/design/spec/material-design/introduction.html" target="_blank">マテリアルデザインの</a>ガイドラインに沿ってアプリを修正します。</li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code></a>リストに画像とスタイリングを追加します。</li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html" target="_blank"><code>ItemTouchHelper</code> を</a>実装して、アプリにドラッグ アンド ドロップ機能を追加します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>MaterialMeアプリは、デザインの実装が非常に悪い模擬スポーツニュースアプリです。デザインガイドラインを満たすように修正して、楽しいユーザー体験を作りましょう以下はMaterial Designの改善前と後のアプリのスクリーンショットです。</p>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+</table>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1.スターターコードのダウンロード" duration="0">
+        <p>この実践のための完全なスターターアプリプロジェクトは、<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps/tree/master/MaterialMe-Starter" target="_blank">MaterialMe-Starter</a>で入手できます。このタスクでは、プロジェクトをAndroid Studioにロードし、アプリの主要な機能のいくつかを探索します。</p>
+<p>1.1 MaterialMeプロジェクトを開いて実行する</p>
+<ol type="1" start="1">
+<li><a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/MaterialMe-Starter" target="_blank">MaterialMe-Starter</a>コードをダウンロードしてください。</li>
+<li>Android Studioでアプリを開きます。</li>
+<li>アプリを実行します。</li>
+</ol>
+<p>このアプリは、スポーツ名のリストと各スポーツのプレースホルダニューステキストを表示します。現在のレイアウトとスタイルでは、アプリはほとんど使用できません。</p>
+<p>1.2 アプリを探索する</p>
+<p>アプリに修正を加える前に、現在の構造を探ってみましょう。以下の要素が含まれています。</p>
+<p><code>Sport.java</code></p>
+<p>このクラスは <code>RecyclerView</code> の各行のデータモデルを表します。現在は、スポーツのタイトルとスポーツに関する情報のフィールドが含まれています。</p>
+<p><code>SportsAdapter.java</code></p>
+<p>これは <code>RecyclerView</code> 用のアダプタです。これは、Sport オブジェクトの <code>ArrayList</code> をデータとして使用し、各行にこのデータを表示します。</p>
+<p><code>MainActivity.java</code></p>
+<p><code>MainActivity</code>は、 RecyclerViewとアダプタを初期化し、リソースファイルからデータを作成します。</p>
+<p>ストリングス<code>.xml</code></p>
+<p>このリソースファイルには、各スポーツのタイトルや情報など、アプリのデータがすべて収録されています。</p>
+<p><code>list_item.xml</code></p>
+<p>このレイアウトファイルは <code>RecyclerView</code> の各行を定義しています。3つの<code>TextView</code>要素で構成されており、1つは各データ（タイトルと各スポーツの情報）、もう1つはラベルとして使用されます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：CardViewと画像を追加する" duration="0">
+        <p>マテリアルデザインの基本原則の一つは、ユーザーエクスペリエンスを向上させるために大胆な画像を使用することです。<code>RecyclerView</code>のリスト項目に画像を追加することは、ダイナミックで魅力的なユーザー体験を作るための良いスタートとなります。</p>
+<p>マテリアルデザインガイドラインでは、メディア（画像やテキストなど）が混在する情報を表示する場合、<a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html" target="_blank"><code>CardView</code></a>を使用することを推奨しています。<code>CardView</code>はAndroidサポートライブラリにあるUIコンポーネントです。</p>
+<p>ここでは、各リスト項目を<code>CardView</code>に移動させ、<code>Image</code>を追加してアプリをMaterialガイドラインに準拠させていきます。</p>
+<p>2.1 CardViewの追加</p>
+<p><code>CardView</code>はデフォルトのAndroid SDKには含まれていないので、<code>build.gradle</code>の依存関係として追加する必要があります。以下のようにしてください。</p>
+<ol type="1" start="1">
+<li>build.gradle (Module: app) ファイルを開き、依存関係セクションに以下の行を追加します。</li>
+</ol>
+<p><code>実装 'com.android.support:cardview-v7:26.1.0'</code></p>
+<p>この実践を書いている時点でサポートライブラリのバージョンが変わっている可能性があります。上記をAndroid Studioが推奨するバージョンにアップデートし、Syncをクリックして<code>build.gradle</code>ファイルを同期します。</p>
+<ol type="1" start="1">
+<li>list_item.xml<code>ファイルを開き、ルートLinearLayoutをandroid.support.v7.widget.CardViewで囲みます。スキーマ宣言</code>(<code>xmlns:android="</code>http://schemas.android.com/apk/res/android)<code>をCardViewに移動し、以下の属性を追加します。</code></li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの幅</p>
+</td><td colspan="1" rowspan="1"><p><code>"match_parent"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの高さ</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ラップコンテンツ<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトマージン</p>
+</td><td colspan="1" rowspan="1"><p><code>"8dp"</code></p>
+</td></tr>
+</table>
+<p><code>CardView</code>がレイアウトファイルのトップレベルビューになったので、スキーマ宣言は<code>CardView</code>に移動する必要があります。</p>
+<ol type="1" start="1">
+<li>コード &gt; コードの再フォーマットを選択すると、XML コードが再フォーマットされ、ファイルの最初と最後は次のようになります。</li>
+</ol>
+<p><code><android.support.v7.widget.CardView</code></p>
+<p><code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="8dp"></code></p>
+<p><code><LinearLayout</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="vertical">アンドロイド:orientation="vertical</code></p>
+<p><code><!</code></p>
+<p><code><!</code></p>
+<p><code></LinearLayout> </LinearLayout</code></p>
+<p><code></android.support.v7.widget.CardView> </android.support.v7.widget.CardView</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。これで、各行のアイテムは<code>CardView</code>の中に含まれ、最下層の上に高くなり、影ができます。</li>
+</ol>
+<p>2.2 画像のダウンロード</p>
+<p><code>CardView</code>はプレーンテキストのみでの使用を意図したものではありません：それはコンテンツの混合物を表示するのに最適です。各行にバナー画像を追加することで、このアプリをよりエキサイティングなものにする良い機会があります。</p>
+<p>画像を使用することは、アプリのリソースを消費します。Androidフレームワークは、アプリが画像の小さなサムネイルを表示するだけの場合でも、画像全体をフル解像度でメモリにロードしなければなりません。</p>
+<p>このセクションでは、<a href="https://github.com/bumptech/glide" target="_blank">Glide</a> ライブラリを使って大きな画像を効率的に読み込む方法を学びます。</p>
+<ol type="1" start="1">
+<li><a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/blob/master/5_2_P_starter_images.zip" target="_blank">バナー画像のzipファイルを</a>ダウンロードしてください。</li>
+<li>オペレーティングシステムのファイルエクスプローラでMaterialMe &gt; app &gt; src &gt; main &gt; resディレクトリを開き、描画可能なディレクトリを作成し、個々のグラフィックファイルを描画可能なディレクトリにコピーします。</li>
+<li><code>Sports</code> オブジェクトに含めるためには、各画像へのパスを含む配列が必要です。これを行うには、<code>string.xml</code>ファイル内の項目として、描画可能な画像へのパスをすべて含む配列を定義します。これらの配列は、同じファイルで定義されている <code>sports_titles</code> 配列と同じ順番であることを確認してください。</li>
+</ol>
+<p><code><array name="sports_images"></code></p>
+<p><code><item> @drawable/img_baseball</item>です。</code></p>
+<p><code><item> @drawable/img_badminton</item>の場合</code></p>
+<p><code><item> @drawable/img_basketball</item>です。</code></p>
+<p><code><item> @drawable/img_bowling</item>の場合</code></p>
+<p><code><item> @drawable/img_cycling</item>の場合</code></p>
+<p><code><item> @drawable/img_golf</item>です。</code></p>
+<p><code><item> @drawable/img_running</item> です。</code></p>
+<p><code><item> @drawable/img_soccer</item></code></p>
+<p><code><item> @drawable/img_swimming</item> です。</code></p>
+<p><code><item> @drawable/img_tabletennis</item>です。</code></p>
+<p><code><item> @drawable/img_tennis</item> です。</code></p>
+<p><code></array> </array</code></p>
+<p>2.3 Sportオブジェクトの変更</p>
+<p><code>Sport</code>オブジェクトには、スポーツに対応する<code>Drawable</code>リソースを含める必要があります。これを実現するには</p>
+<ol type="1" start="1">
+<li><code>Drawable</code>リソースを含むSportオブジェクトに整数のメンバ変数を追加します。</li>
+</ol>
+<p><code>private final int imageResource.</code></p>
+<ol type="1" start="1">
+<li>コンストラクタを変更して、整数をパラメータとして受け取り、それをメンバ変数に代入するようにします。</li>
+</ol>
+<p><code>public Sport(String title, String info, int imageResource) {</code></p>
+<p><code>this.title = title.</code></p>
+<p><code>this.info = info.</code></p>
+<p><code>this.imageResource = imageResource.</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>リソース整数のゲッターを作成します。</li>
+</ol>
+<p><code>public int getImageResource() {</code></p>
+<p>返します。</p>
+<p><code>}</code></p>
+<p>2.4 initializeData() メソッドの修正</p>
+<p><code>MainActivity</code>では、<code>Sport</code>オブジェクトのコンストラクタが3番目のパラメータとして画像リソースを要求するため、 <code>initializeData()</code>メソッドが壊れてしまいました。</p>
+<p>使用する便利なデータ構造は、<a href="https://developer.android.com/reference/android/content/res/TypedArray.html" target="_blank"><code>TypedArray</code>に</a>なります。<code>TypedArray</code>は、他のXMLリソースの配列を格納することができます。<code>TypedArray</code>を使用して、同じループ内のインデックスを使用して、画像リソースだけでなく、スポーツのタイトルと情報を取得することができます。</p>
+<ol type="1" start="1">
+<li><code>initializeData()メソッドで、getResources().getTypedArray()を呼び出してリソース</code>ID<code>のTypedArrayを取得し、string.xmlファイルで定義したDrawableリソースの配列名を渡します。</code></li>
+</ol>
+<p><code>TypedArray sportsImageResources = スポーツ画像リソース</code></p>
+<p><code>        getResources().getTypedArray(R.array.sports_images)を取得します。</code></p>
+<p>配列内のリソースの型に応じて、適切な&#34;get&#34;メソッドを使用して<code>TypedArray</code>のインデックス<code>i</code>の要素にアクセスすることができます。この特定のケースでは、リソースIDが含まれているので、<code>getResourceId()</code>メソッドを使用します。</p>
+<ol type="1" start="1">
+<li>スポーツオブジェクトを作成するループのコードを修正し、<code>TypedArray</code>上で<code>getResourceId()</code>を呼び出すことで、3番目のパラメータとして適切な<code>Drawable</code>リソースIDを追加します。</li>
+</ol>
+<p><code>for(int i=0;i<sportsList.length;i++){</code></p>
+<p><code>   mSportsData.add(new Sport(sportsList[i],sportsInfo[i].</code></p>
+<p><code>0)).</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>スポーツデータ<code>ArrayList</code>を作成したら、型付けされた配列のデータをクリーンアップします。</li>
+</ol>
+<p><code>sportsImageResources.recycle()。</code></p>
+<p>2.5 リスト項目にImageViewを追加する</p>
+<ol type="1" start="1">
+<li>list_item.xml<code>ファイル内のLinearLayoutをRelativeLayoutに変更し、android:orientation属性を削除します。</code></li>
+<li>以下の属性を持つ<code>ImageView</code>を、<code>RelativeLayout</code>内の最初の要素として追加します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの幅</p>
+</td><td colspan="1" rowspan="1"><p><code>"match_parent"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの高さ</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ラップコンテンツ<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/sportsImage"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:adjustViewBounds</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"真</code></p>
+</td></tr>
+</table>
+<p><code>adjustViewBounds</code>属性は、画像のアスペクト比を維持するために<code>ImageView</code>の境界を調整します。</p>
+<ol type="1" start="1">
+<li><code>title TextView</code>要素に以下の属性を追加します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_alignBottom</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@id/sportsImage"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>テーマ</p>
+</td><td colspan="1" rowspan="1"><p><code>"@style/ThemeOverlay.AppCompat.Dark"</code></p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li><code>newsTitle TextView要素に以下の属性を追加します。</code></li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_below</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@id/sportsImage"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>テキストカラー</p>
+</td><td colspan="1" rowspan="1"><p><code>"?android:textColorSecondary"</code></p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li><code>subTitle TextView要素に以下の属性を追加します。</code></li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_below</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@id/newsTitle"</code></p>
+</td></tr>
+</table>
+<p>上記の<code>textColor</code>属性<code>("?android:textColorSecondary</code>&#34;)のクエスチョンマークは、フレームワークが現在適用されているテーマからの値を適用することを意味します。この場合、この属性は「<code>Theme.AppCompat.Light.DarkActionBar</code>」テーマから継承されており、この属性はライトグレーの色として定義されており、小見出しによく使われています。</p>
+<p>2.6 Glideを使って画像を読み込む</p>
+<p>画像をダウンロードして <code>ImageView</code> を設定したら、次は <code>onBindViewHolder()</code> で <code>ImageView</code> に画像を読み込むように <code>SportsAdapter</code> を修正します。この方法を取ると、「Out of Memory」エラーでアプリがクラッシュすることに気づくでしょう。Android フレームワークは、<code>ImageView</code> の表示サイズに関係なく、フル解像度で毎回画像をメモリにロードしなければなりません。</p>
+<p>画像読み込み時のメモリ消費を減らす方法はいくつかありますが、最も簡単な方法は<a href="https://github.com/bumptech/glide" target="_blank">Glide の</a>ような画像読み込みライブラリを使用することです。Glide はバックグラウンド処理やその他の複雑な処理を使用して、画像の読み込み時に必要なメモリを削減します。また、目的の画像が読み込まれている間にプレースホルダ画像を表示するなどの便利な機能も備えています。</p>
+<p>注: アプリのメモリ消費量を削減する方法の詳細については、「<a href="https://developer.android.com/topic/performance/graphics/load-bitmap.html" target="_blank">Large Bitmapsを効率的にロードする」</a>を参照してください。</p>
+<ol type="1" start="1">
+<li>build.gradle (Module: app) ファイルを開き、依存関係セクションに以下の Glide 用の依存関係を追加します。</li>
+</ol>
+<p><code>実装 'com.github.bumptech.glide:glide:3.7.0'</code></p>
+<ol type="1" start="1">
+<li>SportsAdapter<code>を開き、ImageViewのViewHolderクラスに変数を追加します。</code></li>
+</ol>
+<p><code>private ImageView mSportsImage.</code></p>
+<ol type="1" start="1">
+<li><code>ViewHolder</code>クラスの<code>ViewHolder</code>コンストラクタで変数を初期化します。</li>
+</ol>
+<p><code>mSportsImage = itemView.findViewById(R.id.sportsImage)。</code></p>
+<ol type="1" start="1">
+<li><code>ViewHolder</code>クラスの<code>bindTo()</code>メソッドに以下のコードを追加して、<code>Sport</code>オブジェクトから画像リソースを取得し、Glideを使用して<code>ImageView</code>にロードします。</li>
+</ol>
+<p><code>Glide.with(mContext).load(currentSport.getImageResource()).into(mSportsImage).</code></p>
+<ol type="1" start="1">
+<li>アプリを実行すると、リストの項目に大胆なグラフィックが表示され、ユーザー体験をダイナミックでエキサイティングなものにしてくれるはずです。</li>
+</ol>
+<p>Glideで画像を読み込むのはこれだけです。Glideには他にもいくつかの機能があり、画像のサイズを変更したり、変換したり、様々な方法で画像を読み込むことができます。詳しくはGlideの<a href="https://github.com/bumptech/glide" target="_blank">GitHubページをご覧ください</a>。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3: CardViewをスワイプ、移動、クリックできるようにする" duration="0">
+        <p>ユーザーはアプリでカードを見ると、そのカードがどのように振る舞うのかを期待します。<a href="https://material.google.com/components/cards.html" target="_blank">マテリアルデザインでは、</a>以下のガイドラインを提供しています。</p>
+<ul>
+<li>カードは通常、スワイプで退会させることができます。</li>
+<li>カードのリストは、カードを長押ししてドラッグすることで並び替えることができます。</li>
+<li>カードをタップすると詳細が表示されます。</li>
+</ul>
+<p>これで、これらの動作をアプリに実装することができました。</p>
+<p>3.1 スワイプによる解雇の実装</p>
+<p>Android SDKには<a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html" target="_blank"><code>ItemTouchHelper</code></a>というクラスがあり、ユーザーがスワイプやドラッグ＆ドロップなどの様々なタッチアクションを行ったときに、<code>RecyclerView</code>のリスト項目に何が起こるかを定義するために使用されます。一般的なユースケースのいくつかは、<a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.SimpleCallback.html" target="_blank"><code>ItemTouchHelper.SimpleCallback</code></a>.<a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.SimpleCallback.html" target="_blank"><code>ItemTouchHelper.SimpleCallback</code></a> のメソッドのセットに実装されています。</p>
+<p><code>ItemTouchHelper.SimpleCallback</code>では、リスト項目のスワイプや移動でサポートされる方向を定義し、スワイプや移動の動作を実装することができます。</p>
+<p>以下のようにしてください。</p>
+<ol type="1" start="1">
+<li>MainActivityを開いて、最後にある<code>onCreate()</code>メソッドで、<code>initializeData()</code>メソッドの下に新しい<code>ItemTouchHelper</code>オブジェクトを作成します。その引数には、Item<code>TouchHelper.SimpleCallback</code>の新しいインスタンスを作成します。新しいItemTouchHelperを入力すると、サジェストが表示されます。サジェストメニューから「ItemTouchHelper.SimpleCallback{...}」を選択します。Android Studioでは、以下のように<code>onMove()</code>と<code>onSwiped()</code>という必要なメソッドを埋めていきます。</li>
+</ol>
+<p><code>ItemTouchHelper ヘルパー = new ItemTouchHelper(new)</code></p>
+<p><code>.SimpleCallback() {</code></p>
+<p>オーバーライド</p>
+<p><code>public boolean onMove(RecyclerView recyclerView.</code></p>
+<p><code>。ViewHolder viewHolder.</code></p>
+<p><code>.ViewHolder target) {</code></p>
+<p><code>false を返します。</code></p>
+<p><code>            }</code></p>
+<p>オーバーライド</p>
+<p><code>public void onSwiped(RecyclerView.ViewHolder viewHolder.</code></p>
+<p><code>int direction) {</code></p>
+<p><code>    }</code></p>
+<p><code>});</code></p>
+<p>必要なメソッドが自動的に追加されていない場合は、左マージンの赤い球根をクリックして、メソッドの実装を選択します。</p>
+<p><code>SimpleCallback</code> コンストラクタは赤で下線が引かれていますが、これは必要なパラメータをまだ提供していないからです。</p>
+<ol type="1" start="1">
+<li><code>現時点ではスワイプでの離脱しか実装していないので、対応している移動方向は0、対応しているスワイプ方向はItemTouchHelper.LEFTT | ItemTouchHelper.RIGHTで指定します。</code></li>
+</ol>
+<p><code>ItemTouchHelper ヘルパー = new ItemTouchHelper(new ItemTouchHelper)</code></p>
+<p><code>                .SimpleCallback(0, ItemTouchHelper.LEFT |)</code></p>
+<p><code>.RIGHT) {</code></p>
+<ol type="1" start="1">
+<li>ここで、<code>onSwiped()</code> で希望する動作を実装する必要があります。この場合、カードを左右にスワイプすると、リストからカードが削除されます。<code>remove()</code> をデータセット上で呼び出し、<code>ViewHolder</code> から位置を取得して適切なインデックスを渡します。</li>
+</ol>
+<p><code>mSportsData.remove(viewHolder.getAdapterPosition())。</code></p>
+<ol type="1" start="1">
+<li><code>RecyclerView</code>が削除を適切にアニメーションさせるためには、<code>notifyItemRemoved()</code>を呼び出し、再度ViewHolderから位置を取得して適切なインデックスを渡す必要があります。</li>
+</ol>
+<p><code>mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition())。</code></p>
+<ol type="1" start="1">
+<li><code>MainActivityのonCreate()メソッドの新しいItemTouchHelperオブジェクトの下で、ItemTouchHelperインスタンスのattachToRecyclerView()を呼び出して、それをRecyclerViewに追加します。</code></li>
+</ol>
+<p><code>helper.attachToRecyclerView(mRecyclerView)を使用しています。</code></p>
+<ol type="1" start="1">
+<li>あなたのアプリを実行して、あなたは今、それらを削除するには、リストの項目を左右にスワイプすることができます</li>
+</ol>
+<p>3.2 ドラッグ＆ドロップの実装</p>
+<p>同じ <code>SimpleCallback</code> を使用してドラッグ＆ドロップ機能を実装することもできます。<code>SimpleCallback</code> の最初の引数は、<code>ItemTouchHelper</code> がオブジェクトを移動するためにサポートしている方向を決定します。以下のようにします。</p>
+<ol type="1" start="1">
+<li>SimpleCallbackの第1引数を0からすべての方向を含むように変更します。</li>
+</ol>
+<p><code>ItemTouchHelper ヘルパー = new ItemTouchHelper(new ItemTouchHelper)</code></p>
+<p><code>.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT |)</code></p>
+<p><code>ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFTT | ItemTouchHelper.RIGHT) { {</code></p>
+<ol type="1" start="1">
+<li><code>onMove()</code>メソッドでは、渡された第2引数と第3引数(元のビューホルダーとターゲットのビューホルダーに対応)から元のインデックスとターゲットのインデックスを取得します。</li>
+</ol>
+<p><code>int from = viewHolder.getAdapterPosition().</code></p>
+<p><code>int to = target.getAdapterPosition().</code></p>
+<ol type="1" start="1">
+<li><code>Collections.swap()</code>を呼び出してデータセット内の項目を入れ替え、データセットと初期インデックスと最終インデックスを渡します。</li>
+</ol>
+<p><code>Collections.swap(mSportsData, from, to)。</code></p>
+<ol type="1" start="1">
+<li>項目が移動されたことをアダプタに通知し、新旧のインデックスを渡し、<code>return</code> 文を <code>true</code> に変更します。</li>
+</ol>
+<p><code>mAdapter.notifyItemMoved(from, to)。</code></p>
+<p>は真を返します。</p>
+<ol type="1" start="1">
+<li>アプリを起動します。リストのアイテムを左右にスワイプして削除したり、長押しで並び替えたりして、ドラッグ＆ドロップモードを有効にすることができるようになりました。</li>
+</ol>
+<p>3.3 DetailActivityレイアウトの実装</p>
+<p><a href="https://material.google.com/components/cards.html#cards-content" target="_blank">マテリアルデザインのガイドラインに</a>よると、カードはより詳細な情報への入り口を提供するために使用されます。スポーツの詳細情報を見るためにカードをタップしていることに気づくかもしれませんが、それはカードがどのような振る舞いをすることを期待しているからです。</p>
+<p>このセクションでは、任意のリスト項目が押されたときに起動される詳細アクティビティを追加します。この実用的な方法として、詳細アクティビティにはクリックしたリスト項目の名前と画像が含まれますが、一般的なプレースホルダの詳細テキストのみが含まれますので、各リスト項目のカスタム詳細を作成する必要はありません。</p>
+<ol type="1" start="1">
+<li>ファイル＞新規作成＞アクティビティ＞空のアクティビティと進み、新しいアクティビティを作成します。</li>
+<li>これを DetailActivity と呼び、すべてのデフォルトを受け入れます。</li>
+<li>新しく作成したactivity_detail.xmlレイアウトファイルを開き、以前の演習で行ったように、ルート<code>ViewGroup</code>を<code>RelativeLayout</code>に変更します。</li>
+<li><code>RelativeLayout から xmlns:app="http://schemas.android.com/apk/res-auto" ステートメントを削除します。</code></li>
+<li>list_item.xmlファイルから<code>TextView</code>と<code>ImageView</code>のすべての要素をactivity_detail.xmlファイルにコピーします。</li>
+<li><code>list_item.xml</code>のIDと区別するために、各<code>android:id</code>属性の参照先に&#34;Detail&#34;という単語を追加します。例えば、<code>ImageView</code> IDをsportsImageからsportsImageDetailに変更します。</li>
+<li>すべての<code>TextView</code>と<code>ImageView</code>要素において、<code>layout_below</code>のような相対配置のためのIDへのすべての参照を&#34;詳細&#34;IDを使用するように変更します。</li>
+<li><code>subTitleDetail TextView</code>では、プレースホルダテキスト文字列を削除し、詳細テキストの代わりに一般的なテキストの段落を貼り付けます（例えば、<a href="http://www.lipsum.com/" target="_blank">Lorem Ipsum</a>の数段落）。テキストを文字列リソースに抽出します。</li>
+<li><code>TextView</code>要素のパディングを16dpに変更する。</li>
+<li><code>RelativeLayout 全体を ScrollView でラップします。必要な layout_height と layout_width 属性を追加し、XMLNS:android="http://schemas.android.com/apk/res/android" 属性を ScrollView の最後に追加します。</code></li>
+<li><code>RelativeLayoutのlayout_height属性を"wrap_content"に変更します。</code></li>
+</ol>
+<p><code>activity_detail.xml</code>レイアウトの最初の2つの要素は、次のようになります。</p>
+<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
+<p><code><ScrollView xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="match_parent"></code></p>
+<p><code><RelativeLayout xmlns:tools="http://schemas.android.com/tools"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>tools:context="com.example.android.materialme.DetailActivity"></code></p>
+<p>3.4 詳細表示とクリックリスナーの実装</p>
+<p>以下の手順に従って詳細表示を実装し、リスナーをクリックします。</p>
+<ol type="1" start="1">
+<li>SportsAdapter <code>を開き、すでに RecyclerView.ViewHolder を継承している ViewHolder インナークラスを変更して View.OnClickListener も実装し、必要なメソッド</code> (<code>onClick() を実装します。</code>)</li>
+</ol>
+<p><code>class ViewHolder extends RecyclerView.ビューホルダー</code></p>
+<p>を実装しています。<code>OnClick</code>リスナー</p>
+<p><code>// ViewHolderの残りのコードです。</code></p>
+<p><code>//</code></p>
+<p>オーバーライド</p>
+<p><code>public void onClick(View view) {</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>ViewHolder</code> コンストラクタで <code>itemView</code> に <code>OnClickListener</code> を設定します。コンストラクタ全体は以下のようになります。</li>
+</ol>
+<p>スーパー<code>(itemView)</code>を使用しています。</p>
+<p><code>//</code>ビューを初期化する</p>
+<p><code>    mTitleText = itemView.findViewById(R.id.title)。</code></p>
+<p><code>    mInfoText = itemView.findViewById(R.id.subTitle).</code></p>
+<p><code>    mSportsImage = itemView.findViewById(R.id.sportsImage)。</code></p>
+<p><code>// ビュー全体にOnClickListenerを設定します。</code></p>
+<p><code>this)。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>onClick() メソッドで、getAdapterPosition() を使用してクリックされたアイテムの Sport オブジェクトを取得します。</code></li>
+</ol>
+<p><code>Sport currentSport = mSportsData.get(getAdapterPosition())。</code></p>
+<ol type="1" start="1">
+<li><code>同じメソッドで、DetailActivityを起動するIntentを追加し、Intentにエキストラとしてtitleとimage_resourceを入れ、新しいIntentを渡してmContext変数でstartActivity()を呼び出します。</code></li>
+</ol>
+<p><code>Intent detailIntent = new Intent(mContext, DetailActivity.class).</code></p>
+<p><code>detailIntent.putExtra("title", currentSport.getTitle())。</code></p>
+<p><code>detailIntent.putExtra("image_resource".</code></p>
+<p><code>                             currentSport.getImageResource())を使用しています。</code></p>
+<p><code>mContext.startActivity(detailIntent).</code></p>
+<ol type="1" start="1">
+<li>DetailActivity<code>を開き、onCreate()でImageViewとタイトルTextViewを初期化します。</code></li>
+</ol>
+<p><code>TextView sportsTitle = findViewById(R.id.titleDetail).</code></p>
+<p><code>ImageView sportsImage = findViewById(R.id.sportsImageDetail).</code></p>
+<ol type="1" start="1">
+<li>受信<code>Intent</code>からタイトルを取得し、それを<code>TextView</code>に設定します。</li>
+</ol>
+<p><code>sportsTitle.setText(getIntent().getStringExtra("title") )。</code></p>
+<ol type="1" start="1">
+<li>画像を<code>ImageView</code>に読み込むにはGlideを使用します。</li>
+</ol>
+<p><code>Glide.with(this).load(getIntent().getIntExtra("image_resource",0))</code></p>
+<p><code>. into(sportsImage)にしました。</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。リスト項目をタップすると<code>DetailActivity</code>が起動するようになりました。</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6. タスク4：FABを追加し、マテリアルデザインのカラーパレットを選択する" duration="0">
+        <p>マテリアルデザインの原則の1つは、アプリケーションやプラットフォーム間で一貫性のある要素を使用することで、ユーザーがパターンを認識し、その使用方法を理解できるようにすることです。そのような要素の1つである<a href="https://material.google.com/components/buttons-floating-action-button.html" target="_blank">フローティング アクション ボタン</a>（FAB）をすでに使用しています。FABは、UIの他の部分の上に浮かんでいる円形のボタンです。これは、特定のアクティビティで使用される可能性の高い特定のアクションをユーザーにアピールするために使用されます。このタスクでは、データセットを元の状態にリセットするFABを作成します。</p>
+<p>4.1 FABの追加</p>
+<p>フローティングアクションボタンは、<a href="https://developer.android.com/topic/libraries/support-library/index.html" target="_blank">デザインサポートライブラリの</a>一部です。</p>
+<ol type="1" start="1">
+<li>build.gradle (Module: app) ファイルを開き、依存関係セクションにデザインサポートライブラリ用の以下の行を追加します。</li>
+</ol>
+<p><code>実装 'com.android.support:design:26.1.0'</code></p>
+<ol type="1" start="1">
+<li>Project &gt; Androidペインのresフォルダを右クリック（またはControlキーを押しながらクリック）し、New &gt; Vector Assetを選択して、FAB用のアイコンを追加します。FAB は <code>RecyclerView</code> のコンテンツをリセットするので、更新アイコンは次のようにし ます。名前を ic_reset に変更し、Next をクリックし、Finish をクリックします。</li>
+<li>activity_main.xmlを開き、以下の属性を持つ<code>FloatingActionButton</code>を追加します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの幅</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ラップコンテンツ<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの高さ</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ラップコンテンツ<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_alignParentBottom</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"真</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_alignParentRight</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>真の</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_alignParentEnd</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>真の</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトマージン</p>
+</td><td colspan="1" rowspan="1"><p><code>"16dp"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:src</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@drawable/ic_reset"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>ティント</p>
+</td><td colspan="1" rowspan="1"><p><code>"@android:color/white"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>オンクリック</p>
+</td><td colspan="1" rowspan="1"><p>リセットスポーツ</p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li>MainActivityを開き、データをリセットするために<code>initializeData()</code>を呼び出すステートメントと共に<code>resetSports()</code>メソッドを追加します。</li>
+<li>アプリを実行します。これでFABをタップしてデータをリセットすることができます。</li>
+</ol>
+<p>アクティビティは構成が変更されると破棄されて再作成されるので、この実装ではデバイスを回転させるとデータがリセットされてしまいます。変更内容を永続的にするためには（データを並べ替えたり削除したりする場合のように）、<code>onSaveInstanceState()</code>を実装するか、変更内容を永続的なソース（データベースやSharedPreferencesのようなもので、他のレッスンで説明しています）に書き込む必要があります。</p>
+<p>4.2 マテリアルデザインパレットの選択</p>
+<p>Material Designでは、アプリのために少なくともこの3色を選ぶことをお勧めしています。</p>
+<ul>
+<li>原色です。これは、アプリバー（アプリのタイトルを含むバー）の色に自動的に使用されます。</li>
+<li>原色の濃い色。同じ色の濃い色合いのこと。特にアプリバーの上のステータスバーなどに使われています。</li>
+<li>アクセントカラー。原色とのコントラストが良い色。様々なハイライトに使われますが、FABのデフォルトカラーでもあります。</li>
+</ul>
+<p>アプリを実行したときに、FAB色とアプリバーの色がすでに設定されていることに気づいたかもしれません。このタスクでは、これらの色がどこに設定されているかを学びます。<a href="https://material.google.com/style/color.html#color-color-palette" target="_blank">マテリアルカラーガイドを</a>使用して、いくつかの色を選んで実験することができます。</p>
+<ol type="1" start="1">
+<li>Project &gt; Android ペインで、styles.xml ファイル（values ディレクトリにあります）に移動します。<code>AppTheme</code>スタイルでは、デフォルトで3つの色が定義されています：<code>colorPrimary</code>、<code>colorPrimaryDark</code>、および<code>colorAccent</code>。これらのスタイルは、<code>colors.xml</code>ファイルの値によって定義されます。</li>
+<li>そのような＃<code>607D8B</code>（ブルーグレーの色見本で）のようなあなたの原色として使用するために、<a href="https://material.google.com/style/color.html#color-color-palette" target="_blank">材料の</a>色<a href="https://material.google.com/style/color.html#color-color-palette" target="_blank">ガイド</a>から色を選択します。あなたはまだ適切なアクセントと暗い色を選ぶことができるように、それは色見本の300から700の範囲内でなければなりません。</li>
+<li>colors.xmlファイルを開き、選択した色に合わせて<code>colorPrimary</code>の16進数値を変更します。</li>
+<li>暗い色の原色として使用するために、同じ色の暗い色調を選びます。ここでも、<code>colorPrimaryDark</code>のcolors.xmlの16進数値を変更して一致させます。</li>
+<li>値がAで始まり、原色とのコントラストが良い色（ディープオレンジA200など）から、FABのアクセントカラーを選択します。colors.xmlの<code>colorAccent</code>の値を変更して一致させます。</li>
+<li>アプリを実行します。アプリバーとFABが新しいカラーパレットを反映して変更されました</li>
+</ol>
+<p>FABの色をテーマカラー以外に変更したい場合は、<code>app:backgroundTint</code>属性を使用します。これは <code>app:</code> 名前空間を使用し、Android Studio は名前空間を定義するためのステートメントを追加するように求めてくることに注意してください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。" duration="0">
+        <p>Android Studioのプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/MaterialMe" target="_blank">MaterialMe</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>コーディングチャレンジ1</p>
+<p>この課題は、MaterialMeアプリの2つの小さな改善で構成されています。</p>
+<ul>
+<li><code>Sport</code>オブジェクトに実際の詳細を追加し、<code>DetailActivity</code>に詳細を渡します。</li>
+<li>向きが変わってもアプリの状態が持続するようにする方法を実装します。</li>
+</ul>
+<p>コーディングチャレンジ2</p>
+<p>あなたのレイアウトの中央にグリッドに配置された4つの画像でアプリを作成します。最初の 3 つは異なる形状（正方形、円、線）のソリッドカラーの背景にし、4 つ目は<a href="https://design.google.com/icons/#ic_android" target="_blank">Android マテリアルデザインアイコン</a>にします。これらの画像は、以下のようにクリックに反応するようにしてください。</p>
+<ol type="1" start="1">
+<li>色のついたブロックの1つは、入力と終了の両方のトランジションに<a href="http://developer.android.com/reference/android/transition/Explode.html" target="_blank"><code>Explode</code></a>アニメーションを使用してアクティビティを再起動します。</li>
+<li>別の色のブロックからアクティビティを再起動し、今度は<a href="http://developer.android.com/reference/android/transition/Fade.html" target="_blank">フェード</a> トランジションを使用します。</li>
+<li>3つ目の色のついたブロックをタッチすると、その場でビューのアニメーションが始まります（回転など）。</li>
+<li>最後に、Androidのアイコンをタッチすると、Androidブロックが他のブロックと入れ替わる共有要素遷移を持つセカンダリアクティビティが開始されます。</li>
+</ol>
+<p>注：共有要素の遷移を実装するには、SDKレベルの最小値を21以上に設定する必要があります。</p>
+<p>チャレンジ2のソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TransitionsandAnimations" target="_blank">トランジションとアニメーション</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <ul>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html" target="_blank"><code>CardView</code>は</a>、画像やテキストなどのメディアが混在している情報を提示するのに適したレイアウトです。</li>
+<li><code>CardView</code>はAndroidサポートライブラリにあるUIコンポーネントです。</li>
+<li><code>CardView</code>は、テキストの子<code>View</code>要素だけのために設計されたわけではありません。</li>
+<li>画像はフル解像度で読み込まれるため、<code>ImageView</code>に直接画像を読み込むとメモリを消費します。アプリに画像を効率的に読み込むには、<a href="https://github.com/bumptech/glide" target="_blank">Glide</a> のような画像読み込みライブラリを使用します。</li>
+<li>Android SDKには<a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html" target="_blank"><code>ItemTouchHelper</code></a>というクラスがあり、アプリがUI内のタップ、スワイプ、ドラッグアンドドロップのイベントに関する情報を取得するのに役立ちます。</li>
+<li><a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank"><code>FloatingActionButton</code></a>（FAB）は、ユーザーが特定のアクションにフォーカスし、UI内で「フローティング」します。</li>
+<li>マテリアルデザインは、一貫性があり、直感的で遊び心のあるアプリケーションを作成するための指導原則です。</li>
+<li>Material Designによると、アプリの色は、原色、原色のダークカラー、アクセントカラーの3色を選ぶのが良いとされています。</li>
+<li>マテリアルデザインは、ユーザーエクスペリエンスを向上させるために、大胆なイメージと色の使用を促進します。また、<code>CardView</code>やFABウィジェットの使用など、プラットフォーム間での一貫性のある要素を促進します。</li>
+<li>マテリアルデザインを使用して、カードなどのUI要素に意味のある直感的なモーションを作成して、解雇や再配置が可能なカードを作成しましょう。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>関連するコンセプト文書は、「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-2-c-material-design/5-2-c-material-design.html" target="_blank">5.2：マテリアルデザイン」</a>に記載されている。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。" duration="0">
+        <p>Android Studioのドキュメント。</p>
+<ul>
+<li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
+<li><a href="https://developer.android.com/studio/write/vector-asset-studio.html" target="_blank">マルチデンシティベクターグラフィックを追加</a></li>
+<li><a href="http://developer.android.com/tools/help/image-asset-studio.html" target="_blank">Image Asset Studioでアプリのアイコンを作成</a></li>
+</ul>
+<p>Androidの開発者向けドキュメント。</p>
+<ul>
+<li><a href="http://developer.android.com/training/best-ui.html" target="_blank">ユーザーインターフェースとナビゲーション</a></li>
+<li><a href="http://developer.android.com/guide/topics/ui/layout/linear.html" target="_blank">リニアレイアウト</a></li>
+<li><a href="http://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank">フローティングアクションボタン</a></li>
+<li><a href="http://developer.android.com/guide/topics/resources/drawable-resource.html" target="_blank">描画可能なリソース</a></li>
+<li><a href="http://developer.android.com/guide/topics/graphics/view-animation.html" target="_blank">アニメーションを見る</a></li>
+<li><a href="https://developer.android.com/tools/support-library/index.html" target="_blank">サポートライブラリ</a></li>
+<li><a href="https://developer.android.com/guide/topics/graphics/drawable-animation.html" target="_blank">描画可能なグラフィックスをアニメートする</a></li>
+<li><a href="https://developer.android.com/topic/performance/graphics/load-bitmap.html" target="_blank">大規模ビットマップの効率的な読み込み</a></li>
+</ul>
+<p>マテリアルデザイン。</p>
+<ul>
+<li><a href="https://developer.android.com/design/material/index.html" target="_blank">Androidのためのマテリアルデザイン</a></li>
+<li><a href="http://www.materialpalette.com/" target="_blank">マテリアルデザインパレットジェネレーター</a></li>
+<li><a href="http://developer.android.com/training/material/lists-cards.html" target="_blank">RecyclerViewでリストを作成する</a></li>
+<li><a href="http://www.google.com/design/spec/layout/structure.html" target="_blank">アプリバー</a></li>
+<li><a href="http://developer.android.com/training/material/animations.html" target="_blank">カスタムアニメーションの定義</a></li>
+</ul>
+<p>Android開発者ブログ。<a href="http://android-developers.blogspot.com/2015/05/android-design-support-library.html" target="_blank">Androidデザインサポートライブラリ</a></p>
+<p>他にもあります。</p>
+<ul>
+<li><a href="https://github.com/bumptech/glide#glide" target="_blank">グライドのドキュメント</a></li>
+<li><a href="https://github.com/bumptech/glide" target="_blank">Glide GitHubページ</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

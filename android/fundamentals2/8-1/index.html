@@ -1,0 +1,1185 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 08.1:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="8-1"
+                  title="Android 開発者基礎講座 08.1:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、「codelab」と「practical」という用語を使い分けています。</p>
+<p>序章</p>
+<p>アプリがフォアグラウンドで実行されていなくても、アプリがユーザーに情報を表示したい場合があります。例えば、新しいコンテンツが利用可能になったことや、お気に入りのスポーツチームが試合でゴールを決めたことをユーザーに知らせたい場合があります。Androidの<a href="https://developer.android.com/guide/topics/ui/notifiers/notifications" target="_blank">通知フレームワークは、アプリがフォ</a>アグラウンドで動作していなくても、アプリがユーザーに通知する方法を提供します。</p>
+<p>通知とは、アプリの通常のUI以外でアプリがユーザーに表示するメッセージのことです。通知は、デバイスの通知領域（ステータスバー）にアイコンとして表示されます。通知の詳細を表示するには、ユーザーはステータスバーを下にスワイプするなどして通知ドロワを開きます。通知領域と通知ドロワーは、ユーザーがいつでも閲覧できるシステム制御領域です。</p>
+<p>Android 8.0以降の端末では、アプリに新しい通知が表示されると、アプリのアイコンに自動的にバッジが表示されます。バッジは通知ドットとも呼ばれます）。ユーザーがアプリアイコンを長押しすると、下のスクリーンショットのように、アプリアイコンの上に通知が表示されます。</p>
+<p>この実習では、ユーザーがアプリ内のボタンをタップしたときに通知をトリガーするアプリを作成します。ユーザーは通知を更新したり、キャンセルしたりすることができます。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>ボタンの <code>onClick()</code> メソッドを実装します。</li>
+<li>暗黙のインテントを作成します。</li>
+<li>カスタム放送を送信します。</li>
+<li>放送受信機を使用します。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>通知ビルダーを使って通知を作成する方法</li>
+<li>通知アクションに応答するために保留中のインテントを使用する方法。</li>
+<li>既存の通知を更新・解除する方法</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li>アプリ内のボタンをタップしたときに通知を送信するアプリを作成します。</li>
+<li>アプリ内のボタンや、通知の中にあるアクションボタンから通知を更新します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>Notify Me! は、以下のスクリーンショットに示す 3 つのボタンを使って、ユーザーが通知をトリガー、更新、キャンセルすることができるアプリです。アプリを作成しながら、通知スタイル、アクション、優先順位を試してみましょう。</p>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+</table>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1.基本的な通知を作成する" duration="0">
+        <p>1.1 プロジェクトの作成</p>
+<ol type="1" start="1">
+<li>Android Studioで、&#34;Notify Me!&#34;という名前の新しいプロジェクトを作成します。デフォルトのオプションを受け入れ、Empty Activityテンプレートを使用します。</li>
+<li><code>activity_main.xml</code>レイアウトファイルで、デフォルトの<code>TextView</code>を以下の属性を持つボタンに置き換えます。</li>
+</ol>
+<p><code><</code>ボタン</p>
+<p><code>="@+id/notify"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="Notify Me!</code></p>
+<p><code>="parent"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="親"</code></p>
+<p><code>="親" /></code></p>
+<p><code>MainActivity.javaファイルで以下の手順を実行します。</code></p>
+<ol type="1" start="1">
+<li>Notify Me!ボタンのメンバー変数を作成します。</li>
+</ol>
+<p><code>private Button button_notify.</code></p>
+<ol type="1" start="1">
+<li><code>sendNotification() メソッドのメソッドスタブを作成します。</code></li>
+</ol>
+<p><code>public void sendNotification() {} {}.</code></p>
+<ol type="1" start="1">
+<li><code>onCreate() メソッドで、</code>Notify Me! <code>ボタンを初期化し、そのための onClickListener を作成します。onClick メソッドから sendNotification() を呼び出します。</code></li>
+</ol>
+<p><code>button_notify = findViewById(R.id.notify)。</code></p>
+<p><code>button_notify.setOnClickListener(new View.OnClickListener() {</code></p>
+<p>オーバーライド</p>
+<p><code>public void onClick(View view) {</code></p>
+<p>       を使用しています。</p>
+<p><code>   }</code></p>
+<p><code>});</code></p>
+<p>1.2 通知チャネルを作成する</p>
+<p>Androidを搭載したデバイスの設定アプリでは、ユーザーは受信する通知を調整することができます。Android 8.0 (API レベル 26) からは、アプリの各通知をユーザーがカスタマイズ可能な<a href="https://developer.android.com/guide/topics/ui/notifiers/notifications.html#ManageChannels" target="_blank">通知チャネル</a>に割り当てることができます。</p>
+<ul>
+<li>各通知チャネルは、通知の種類を表します。</li>
+<li>コードでは、各通知チャネルで複数の通知をグループ化することができます。</li>
+<li>各通知チャネルに対して、アプリはチャネルの動作を設定し、その動作はチャネル内のすべての通知に適用されます。たとえば、アプリはチャンネルの通知を設定して、サウンドを再生したり、ライトを点滅させたり、振動させたりすることができます。</li>
+<li>アプリが通知チャネルに設定したどのような動作であっても、ユーザーはその動作を変更することができ、ユーザーはアプリの通知を完全にオフにすることができます。</li>
+</ul>
+<p>Android 8.0（APIレベル26）以上を搭載したAndroid搭載端末では、アプリで作成した通知チャンネルは、端末の設定アプリの「アプリの通知」の下に「カテゴリ」として表示されます。</p>
+<p>例えば、Android 8.0を実行しているデバイスの下のスクリーンショットでは、Notify Me！アプリには「マスコット通知」という1つの通知チャンネルがあります。</p>
+<p>Android 8.0（APIレベル26）をターゲットとしたアプリでは、ユーザーに通知を表示するために、少なくとも1つの通知チャネルを実装する必要があります。ローエンドのデバイスで通知を表示するには、通知チャネルを実装する必要はありません。しかし、以下のことを常に行うのが良い習慣です。</p>
+<ul>
+<li>最新の利用可能なSDKをターゲットにします。</li>
+<li>コードでデバイスのSDKバージョンを確認してください。SDK のバージョンが 26 以上の場合は、通知チャンネルをビルドします。</li>
+</ul>
+<p><code>targetSdkVersion</code>を25以下に設定している場合、Android 8.0（APIレベル26）以上でアプリを実行した場合、Android 7.1（APIレベル25）以下の端末と同様の動作をします。</p>
+<p>通知チャネルを作成します。</p>
+<ol type="1" start="1">
+<li><code>MainActivity</code> で、通知チャネル ID の定数を作成します。すべての通知チャネルは、パッケージ内で一意の ID と関連付けられていなければなりません。後でこのチャンネルIDを使用して、通知を投稿します。</li>
+</ol>
+<p><code>private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel".</code></p>
+<ol type="1" start="1">
+<li>Android システムでは、通知をユーザーに配信するために<a href="https://developer.android.com/reference/android/app/NotificationManager.html" target="_blank"><code>NotificationManager</code></a> クラスを使用します。<code>MainActivity.java</code>で、<code>NotificationManager</code>オブジェクトを格納するためのメンバ変数を作成します。</li>
+</ol>
+<p><code>private NotificationManager mNotifyManager.</code></p>
+<ol type="1" start="1">
+<li><code>MainActivity.javaで、createNotificationChannel()メソッドを作成し、メソッド内にNotificationManagerをインスタンス化します。</code></li>
+</ol>
+<p><code>public void createNotificationChannel()</code></p>
+<p><code>{</code></p>
+<p><code>     mNotifyManager = (NotificationManager)</code></p>
+<p><code>getSystemService(NOTIFICATION_SERVICE)を使用しています。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>createNotificationChannel()</code>メソッドで通知チャネルを作成します。通知チャネルはAPI 26以降でしか利用できないので、デバイスのAPIバージョンをチェックする条件を追加します。</li>
+</ol>
+<p><code>public void createNotificationChannel() { { {.</code></p>
+<p><code>mNotifyManager = (NotificationManager)</code></p>
+<p><code>       getSystemService(NOTIFICATION_SERVICE)を使用しています。</code></p>
+<p><code>if (android.os.Build.VERSION.SDK_INT >=</code></p>
+<p><code>                                  android.os.Build.VERSION_CODES.O)Build.VERSION_CODES.O) {.</code></p>
+<p><code>// NotificationChannelを作成します。</code></p>
+<p><code>     }</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>if 文の中で</code> <a href="https://developer.android.com/reference/android/app/NotificationChannel.html#NotificationChannel(java.lang.String,%2520java.lang.CharSequence,%2520int)" target="_blank"><code>NotificationChannel</code></a> <code>オブジェクトを構築し、チャンネル ID として PRIMARY_CHANNEL_ID を使用します。</code></li>
+<li>チャンネル名を設定します。名前は、デバイスのユーザーに見える設定アプリの通知カテゴリの下に表示されます。</li>
+<li>重要度を<a href="https://developer.android.com/reference/android/app/NotificationManager.html#IMPORTANCE_HIGH" target="_blank"><code>IMPORTANCE_HIGH</code></a> に設定します。(通知の重要度定数の完全なリストについては、<a href="https://developer.android.com/reference/android/app/NotificationManager.html" target="_blank"><code>NotificationManager</code> の</a>ドキュメントを参照してください)。</li>
+</ol>
+<p><code>// NotificationChannelを作成します。</code></p>
+<p><code>NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID.</code></p>
+<p><code>", NotificationManager</code></p>
+<p><code>       .importance_high)。</code></p>
+<ol type="1" start="1">
+<li><code>createNotificationChannel()</code>では、<code>if</code>文の中で、<code>notificationChannel</code>オブジェクトの初期設定を行います。例えば、通知のライトの色を設定したり、バイブレーションを有効にしたり、デバイスの設定アプリに表示される説明を設定したりすることができます。また、通知のアラート音を構成することもできます。</li>
+</ol>
+<p><code>notificationChannel.enableLights(true)。</code></p>
+<p><code>notificationChannel.setLightColor(Color.RED).</code></p>
+<p><code>notificationChannel.enableVibration(true)。</code></p>
+<p><code>notificationChannel.setDescription("マスコットからの通知")を表示します。</code></p>
+<p><code>mNotifyManager.createNotificationChannel(notificationChannel)。</code></p>
+<p>1.3 最初の通知を構築する</p>
+<p>通知は<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html" target="_blank"><code>NotificationCompat.Builder</code></a> クラスを使用して作成され、通知の内容と動作を設定することができます。通知には以下の要素を含めることができます。</p>
+<ul>
+<li>アイコン (必須) で、コード内で <code>setSmallIcon()</code> メソッドを使用して設定します。</li>
+<li><code>これは setContentTitle() で設定したものです。</code></li>
+<li><code>setContentText() で設定した詳細テキスト</code> (<code>オプション</code>)<code>。</code></li>
+</ul>
+<p>必要な通知アイコンを作成します。</p>
+<ol type="1" start="1">
+<li>Android Studioで「ファイル」→「新規作成」→「画像アセット」と進みます。</li>
+<li>アイコン タイプ] ドロップダウン リストから [通知アイコン] を選択します。</li>
+<li>クリップアートの項目の横にあるアイコンをクリックすると、通知用のマテリアルデザインのアイコンが選択できます。このアプリの場合は、Androidのアイコンを使用してください。</li>
+<li>リソース <code>ic_android</code> の名前を変更し、[次へ] と [完了] をクリックします。これにより、APIレベルごとに異なる解像度の描画可能なファイルが作成されます。</li>
+</ol>
+<p>通知を構築して表示するには</p>
+<ol type="1" start="1">
+<li>コードが将来的に通知を更新またはキャンセルできるように、通知を通知 ID と関連付ける必要があります。<code>MainActivity.java</code>で、通知IDの定数を作成します。</li>
+</ol>
+<p><code>private static final int NOTIFICATION_ID = 0.</code></p>
+<ol type="1" start="1">
+<li><code>MainActivity.javaで、onCreate()メソッドの最後に、createNotificationChannel()を呼び出します。このステップを怠ると、アプリがクラッシュします。</code></li>
+<li><code>MainActivity.java で、getNotificationBuilder() というヘルパー・メソッドを作成します。getNotificationCompat.Builder()は後で、NotificationCompat.Builderオブジェクトの中で使用します。</code>Android Studio<code>では、</code>return<code>文の欠落についてのエラーが表示されますが、すぐに修正します。</code></li>
+</ol>
+<p><code>private NotificationCompat.Builder getNotificationBuilder(){}。</code></p>
+<ol type="1" start="1">
+<li><code>getNotificationBuilder()</code> メソッドの中で、通知ビルダを作成してインスタンス化します。通知チャネル ID には <code>PRIMARY_CHANNEL_ID</code> を使用します。ポップアップ エラーが表示された場合は、<code>NotificationCompat</code> クラスが v4 サポート ライブラリからインポートされていることを確認してください。</li>
+</ol>
+<p><code>NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)。</code></p>
+<ol type="1" start="1">
+<li><code>getNotificationBuilder()</code>メソッドの中で、以下のようにタイトル、テキスト、アイコンをビルダーに追加します。最後に <code>Builder</code> オブジェクトを返します。</li>
+</ol>
+<p><code>NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNELID)</code></p>
+<p><code>       .setContentTitle("通知されました!)</code></p>
+<p><code>       .setContentText("これはあなたの通知テキストです。)</code></p>
+<p><code>       .setSmallIcon(R.drawable.ic_android)を使用しています。</code></p>
+<p><code>return notifyBuilder.</code></p>
+<p>これで、通知を送信する<code>sendNotification()</code>メソッドが完成しました。</p>
+<ol type="1" start="1">
+<li><code>MainActivity.javaのsendNotification()メソッドの中で、getNotificationBuilder()を使用してビルダーオブジェクトを取得します。</code></li>
+<li><code>NotificationManager で notify() を呼び出します。</code></li>
+</ol>
+<p><code>NotificationCompat.Builder = getNotificationBuilder()Builder notifyBuilder = getNotificationBuilder()。</code></p>
+<p><code>mNotifyManager.notify(NOTIFICATION_ID, notifyBuilder.build())を使用しています。</code></p>
+<ol type="1" start="1">
+<li>アプリを起動します。Notify Me! ボタンを押すと通知が発行され、ステータスバーにアイコンが表示されます。しかし、この通知には、タップしても何も起こらないという重要な機能がありません。この機能は次のタスクで追加します。</li>
+</ol>
+<p>1.4 コンテンツのインテントを追加して通知を解除する</p>
+<p>通知のためのコンテンツ・インテントは、このコースで使用したインテントと似ています。コンテンツ・インテントは、アクティビティを起動する明示的なインテント、アクションを実行する暗黙的なインテント、システム・イベントやカスタム・イベントをシステムに通知するブロードキャスト・インテントなどがあります。</p>
+<p>通知に使用される <code>Intent</code> との大きな違いは、<code>Intent</code> を <a href="https://developer.android.com/reference/android/app/PendingIntent.html" target="_blank"><code>PendingIntent</code></a> でラップしなければならないことです。<code>PendingIntent</code>を使うと、Androidの通知システムがコードに代わって割り当てられたアクションを実行することができます。</p>
+<p>このステップでは、ユーザーが通知をタップしたときに、アプリが<code>MainActivity</code>を起動するコンテンツ インテントを送信するようにアプリを更新します（アプリが開いていてアクティブな場合は、通知をタップしても効果はありません）。(アプリが開いていてアクティブな場合、通知をタップしても何の影響もありません)。</p>
+<ol type="1" start="1">
+<li><code>MainActivity.java の getNotificationBuilder() の先頭に、MainActivity を起動するための明示的なインテント・メソッドを作成します。</code></li>
+</ol>
+<p><code>Intent notificationIntent = new Intent(this, MainActivity.class).</code></p>
+<ol type="1" start="1">
+<li><code>getNotificationBuilder()の中で、notificationIntent宣言の後に、</code><a href="https://developer.android.com/reference/android/app/PendingIntent.html#getActivity(android.content.Context,%2520int,%2520android.content.Intent,%2520int)" target="_blank"><code>getActivity()</code></a><code>メソッドを使用してPendingIntentを取得します。requestCode に通知</code> ID <code>定数を渡し、</code><a href="https://developer.android.com/reference/android/app/PendingIntent.html#FLAG_UPDATE_CURRENT" target="_blank"><code>FLAG_UPDATE_CURRENT</code></a> <code>フラグを使用します。</code></li>
+</ol>
+<p><code>PendingIntent</code>を使用して他のアプリと通信することで、将来のある時点で事前に定義されたコードを実行するようにそのアプリに指示します。これは、他のアプリがあなたのアプリに代わってアクションを実行することができるようなものです。</p>
+<p><code>PendingIntent notificationPendingIntent = PendingIntent.getActivity(this.</code></p>
+<p><code>PendingIntent.FLAG_UPDATE_CURRENT)。</code></p>
+<ol type="1" start="1">
+<li><code>コンテンツ インテントを設定するには、NotificationCompat.Builder クラスの</code> <a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder#setcontentintent" target="_blank"><code>setContentIntent()</code></a> <code>メソッドを使用します。getNotificationBuilder() 内で、通知を構築しているコードで setContentIntent() を呼び出します。また、</code>auto-cancel <code>を true に設定します。</code></li>
+</ol>
+<p><code>.setContentIntent(notificationPendingIntent)</code></p>
+<p><code>.setAutoCancel(true)</code></p>
+<p>自動キャンセルを<code>true</code>に設定すると、ユーザーがタップしたときに通知を閉じます。</p>
+<ol type="1" start="1">
+<li>アプリを実行します。通知を送信するには、「Notify Me！」ボタンをタップします。ホームボタンをタップします。通知を表示し、それをタップします。アプリが<code>MainActivity</code>に戻ります。</li>
+<li>API 26以上のデバイスやエミュレータでアプリを実行している場合は、ホームボタンを押してアプリランチャーを開きます。アプリアイコンのバッジ（通知ドット）に注目してください。</li>
+</ol>
+<p>上のスクリーンショットでは</p>
+<ol type="1" start="1">
+<li>ステータスバーの通知</li>
+<li>アプリアイコンの通知ドット（API26以上のみ</li>
+</ol>
+<p>ユーザーがアプリのアイコンをタッチ＆ホールドすると、アイコンと一緒に通知がポップアップで表示されます。</p>
+<p>API 26以上のデバイスやエミュレータで動作している場合、作成した通知チャネルを表示する方法をご紹介します。</p>
+<ol type="1" start="1">
+<li>デバイスの設定アプリを開きます。</li>
+<li>検索バーにアプリ名&#34;Notify Me!&#34;を入力してください。</li>
+<li>Notify Me！＞アプリの通知＞マスコット通知を開きます。この設定を使用して、通知チャンネルをカスタマイズします。通知チャネルの説明は画面下部に表示されます。</li>
+</ol>
+<p>1.5 下位互換性のために通知に優先度とデフォルトを追加する</p>
+<p>注：このタスクは、ほとんどのAndroid搭載デバイスであるAndroid 7.1以下を実行しているデバイスに必要です。Android 8.0 以降を実行しているデバイスでは、通知チャネルを使用して通知の優先度とデフォルトを追加しますが、下位デバイスの下位互換性とサポートを提供するためのベストプラクティスです。</p>
+<p>ユーザーがアプリの「通知して！」ボタンをタップすると通知が発行されますが、ユーザーが目にするのは通知バーのアイコンだけです。ユーザーの注意を引くために、通知のデフォルトオプションを設定します。</p>
+<p>優先度は<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat#PRIORITY_MIN" target="_blank"><code>PRIORITY_MIN</code></a> (-2) から<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.html#PRIORITY_MAX" target="_blank"><code>PRIORITY_MAX</code></a> (2) までの整数値です。優先度の高い通知は、通知ドロワーで優先度の低い通知よりも上にソートされます。<code>HIGH</code> または <code>MAX</code> の優先度の高い通知は「ヘッドアップ」通知として配信され、ユーザーのアクティブな画面の上にドロップダウンします。すべての通知を<code>MAX</code>優先に設定するのは良い習慣ではないので、<code>MAX</code>は控えめに使いましょう。</p>
+<ol type="1" start="1">
+<li><code>getNotificationBuilder()</code>メソッドの中で、通知ビルダーオブジェクトに以下の行を追加して、通知の優先度を<code>high</code>に設定します。</li>
+</ol>
+<p><code>.setPriority(NotificationCompat.PRIORITY_HIGH)</code></p>
+<ol type="1" start="1">
+<li>通知のサウンド、バイブレーション、LEDカラーパターンをデフォルト値に設定します（ユーザーのデバイスにLEDインジケータがある場合）。</li>
+</ol>
+<p><code>getNotificationBuilder() の内部で、次の行を notifyBuilder オブジェクトに追加します。</code></p>
+<p><code>.setDefaults(NotificationCompat.DEFAULT_ALL)</code></p>
+<ol type="1" start="1">
+<li>変更内容を確認するには、アプリを終了してAndroid Studioから再度実行してください。変更内容が確認できない場合は、アプリをアンインストールして再度インストールしてください。</li>
+</ol>
+<p>注意: 優先度の高い通知は、優先度とデフォルトの両方が設定されていない限り、アクティブ画面の前にドロップダウンしません。優先度の設定だけでは十分ではありません。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：通知の更新またはキャンセル" duration="0">
+        <p>アプリが通知を発行した後、情報が変更されたり、無関係になった場合に通知を更新したり、キャンセルしたりできるのは便利です。</p>
+<p>このタスクでは、通知を更新してキャンセルする方法を学びます。</p>
+<p>2.1 更新ボタンとキャンセルボタンの追加</p>
+<ol type="1" start="1">
+<li><code>activity_maim.xml</code>レイアウトファイルで、Notify Me!ボタンのコピーを2つ作成します。デザインエディタで、新しいボタンを互いに重ならないように、親ボタンに拘束します。</li>
+<li>新しいボタンの<code>android:text</code>属性を&#34;Update Me!&#34;と&#34;Cancel Me!&#34;に変更しました。</li>
+<li>更新・キャンセルするボタンの<code>android:id</code>属性を変更します。</li>
+</ol>
+<p><code><</code>ボタン</p>
+<p><code>="@+id/notify"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="Notify Me!</code></p>
+<p><code>="@+id/update"</code></p>
+<p><code>="親"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="親" /></code></p>
+<p><code><</code>ボタン</p>
+<p><code>="@+id/update"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="Update Me!</code></p>
+<p><code>="@+id/cancel"</code></p>
+<p><code>="親"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="@+id/notify" /></code></p>
+<p><code><</code>ボタン</p>
+<p><code>="@+id/cancel"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>android:text="キャンセルしてください！"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="親"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="@+id/update" /></code></p>
+<ol type="1" start="1">
+<li>すべてのテキスト文字列をstring<code>.xml</code>に抽出します。</li>
+</ol>
+<p><code>MainActivity.javaファイルで以下の手順を実行します。</code></p>
+<ol type="1" start="1">
+<li>新しいボタンのそれぞれにメンバー変数を追加します。</li>
+</ol>
+<p><code>private Button button_cancel.</code></p>
+<p><code>private Button button_update.</code></p>
+<ol type="1" start="1">
+<li><code>onCreate()</code> メソッドの最後に、ボタン変数を初期化し、その <code>onClick</code> リスナーを設定します。Android Studio がエラーをスローした場合は、プロジェクトを再構築します。</li>
+</ol>
+<p><code>button_update = findViewById(R.id.update).</code></p>
+<p><code>button_update.setOnClickListener(new View.OnClickListener() {</code></p>
+<p>オーバーライド</p>
+<p><code>public void onClick(View view) {</code></p>
+<p><code>//</code>通知の更新</p>
+<p><code>   }</code></p>
+<p><code>});</code></p>
+<p><code>button_cancel = findViewById(R.id.cancel)。</code></p>
+<p><code>button_cancel.setOnClickListener(新しいView.OnClickListener() {</code></p>
+<p>オーバーライド</p>
+<p><code>public void onClick(View view) {</code></p>
+<p><code>//</code>通知をキャンセルする</p>
+<p><code>   }</code></p>
+<p><code>});</code></p>
+<ol type="1" start="1">
+<li>通知を更新およびキャンセルするためのメソッドを作成します。メソッドはパラメータを取らず、<code>void</code>を返します。</li>
+</ol>
+<p><code>public void updateNotification() {} {}。</code></p>
+<p><code>public void cancelNotification() {} {}.</code></p>
+<ol type="1" start="1">
+<li><code>更新ボタンのonCreate()メソッドでは、更新ボタンのonClickメソッドでupdateNotification()を呼び出します。キャンセルボタンのonClickメソッドでは、cancelNotification()を呼び出します。</code></li>
+</ol>
+<p>2.2 キャンセル・更新通知方法の実装</p>
+<p><code>通知をキャンセルするには、通知</code> ID <code>を渡して NotificationManager で cancel() を呼び出します。</code></p>
+<ol type="1" start="1">
+<li><code>MainActivity.javaのcancelNotification()メソッドの中に、以下の行を追加します。</code></li>
+</ol>
+<p><code>mNotifyManager.cancel(NOTIFICATION_ID).</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。</li>
+<li>通知を送信するには、「Notify Me！」ボタンをタップします。ステータスバーに通知アイコンが表示されます。</li>
+<li>私をキャンセル！」ボタンをタップします。通知がキャンセルされるはずです。</li>
+</ol>
+<p>通知の更新は、通知のキャンセルよりも複雑です。Androidの通知には、情報を凝縮できるスタイルが付属しています。例えば、Gmailアプリは、ユーザーが複数の未読メッセージを持っている場合、<code>InboxStyle</code>通知を使用して、情報を1つの通知に凝縮します。</p>
+<p>この例では、通知に画像を含めることができる<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.BigPictureStyle.html" target="_blank"><code>BigPictureStyle</code> を</a>使用するように通知を更新しています。</p>
+<ol type="1" start="1">
+<li><a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/blob/master/8_1_P_starter_image.zip" target="_blank">この画像を</a>ダウンロードして、通知に使用し、名前を <code>mascot_1</code> に変更してください。自分の画像を使用する場合は、縦横比が2:1、横幅が450dp以下であることを確認してください。</li>
+<li><code>mascot_1の画像をres/drawableフォルダに入れます。</code></li>
+<li><code>MainActivity.javaのupdateNotification()メソッドの中で、ドローアブルをビットマップに変換します。</code></li>
+</ol>
+<p><code>androidImage = BitmapFactory</code></p>
+<p><code>          .decodeResource(getResources(),R.drawable.mascot_1).</code></p>
+<ol type="1" start="1">
+<li><code>updateNotification() の内部で、getNotificationBuilder() メソッドを使用して NotificationCompat.Builder オブジェクトを取得します。</code></li>
+</ol>
+<p><code>NotificationCompat.Builder = getNotificationBuilder()Builder notifyBuilder = getNotificationBuilder()。</code></p>
+<ol type="1" start="1">
+<li><code>updateNotification()</code>の中で、<code>notifyBuilder</code>宣言の後に、通知のスタイルを変更し、画像とタイトルを設定します。</li>
+</ol>
+<p><code>notifyBuilder.setStyle(new NotificationCompat.BigPictureStyle()BigPictureStyle()</code></p>
+<p><code>               .bigPicture(androidImage)</code></p>
+<p><code>               .setBigContentTitle("通知が更新されました！" ))を使用しています。</code></p>
+<p>注: <strong><code>BigPictureStyle</code></strong></p>
+<p><strong> は </strong><a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Style.html" target="_blank"><strong><code>NotificationCompat.Style</code></strong></a> のサブクラスで、通知のための代替レイアウトを提供します。他の定義されたサブクラスについては、ドキュメントを参照してください。</p>
+<ol type="1" start="1">
+<li><code>updateNotification()の中で、通知スタイルを設定した後、通知をビルドし、NotificationManager上でnotify()を呼び出します。先ほどと同じ通知</code>ID<code>を渡します。</code></li>
+</ol>
+<p><code>mNotifyManager.notify(NOTIFICATION_ID, notifyBuilder.build())を使用しています。</code></p>
+<ol type="1" start="1">
+<li>アプリを起動します。更新ボタンをタップして、通知をもう一度確認します。通常の通知スタイルに戻すには、拡張された通知をピンチします。</li>
+</ol>
+<p>2.3 ボタンの状態を切り替える</p>
+<p>このアプリでは、通知の状態がアクティビティ内で追跡されないため、ユーザーは混乱してしまうことがあります。例えば、通知が表示されていないときに「キャンセル！」をタップしてしまうことがあります。</p>
+<p>通知の状態に応じてボタンを有効にしたり、無効にしたりすることで修正することができます。</p>
+<ul>
+<li>アプリを最初に起動した時には、まだ更新やキャンセルの通知がないので、「Notify Me！」ボタンだけが有効になっているはずです。</li>
+<li>通知が届いた後は、通知が届いているので、キャンセルボタンと更新ボタンを有効にし、通知ボタンを無効にする。</li>
+<li>通知が更新された後は、更新ボタンと通知ボタンを無効にし、キャンセルボタンだけを有効にしておく。</li>
+<li>通知がキャンセルされた場合、ボタンは初期状態に戻り、通知ボタンのみが有効になります。</li>
+</ul>
+<p>すべてのボタンのボタンの状態を切り替えるには、<code>MainActivity.java</code>で以下の手順を実行します。</p>
+<ol type="1" start="1">
+<li>ボタンの状態を切り替えるために、<code>setNotificationButtonState()</code> というユーティリティ・メソッドを追加しました。</li>
+</ol>
+<p><code>void setNotificationButtonState(Boolean isNotifyEnabled.</code></p>
+<p><code>Boolean isUpdateEnabled.</code></p>
+<p><code>Boolean isCancelEnabled) {</code></p>
+<p><code>   button_notify.setEnabled(isNotifyEnabled)。</code></p>
+<p><code>   button_update.setEnabled(isUpdateEnabled)。</code></p>
+<p><code>   button_cancel.setEnabled(isCancelEnabled).</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>関連する各メソッドの最後に、必要に応じてボタンを有効にしたり無効にしたりするための <code>setNotificationButtonState()</code> の呼び出しを追加します。</li>
+</ol>
+<p><code>onCreate()を使用しています。</code></p>
+<p><code>setNotificationButtonState(true, false, false)を設定します。</code></p>
+<p>を使用しています。</p>
+<p><code>setNotificationButtonState(false, true, true)を設定します。</code></p>
+<p><code>updateNotification() を使用しています。</code></p>
+<p><code>setNotificationButtonState(false, false, false, true)を設定します。</code></p>
+<p>を使用しています。</p>
+<p><code>setNotificationButtonState(true, false, false)を設定します。</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3：通知アクションボタンの追加" duration="0">
+        <p>時には、通知はユーザーからのインタラクションを必要とします。例えば、ユーザーはアラームをスヌーズしたり、テキストメッセージに返信したりするかもしれません。このようなタイプの通知が発生した場合、ユーザーはイベントに応答するために通知をタップするかもしれません。その後、Androidは関連するアクティビティをアプリにロードします。</p>
+<p>アプリを開かないようにするために、通知フレームワークでは、通知自体に直接通知アクションボタンを埋め込むことができます。</p>
+<p>アクションボタンには以下のコンポーネントが必要です。</p>
+<ul>
+<li>通知に配置されるアイコン。</li>
+<li>アイコンの横に配置されるラベル文字列。</li>
+<li>ユーザーが通知アクションをタップしたときに送信される <code>PendingIntent</code>。</li>
+</ul>
+<p>このタスクでは、通知にアクションボタンを追加します。アクションボタンを使用すると、ユーザーはアプリを開くことなく、通知内から通知を更新することができます。この通知の更新アクションは、アプリがフォアグラウンドまたはバックグラウンドで実行されているかどうかに関わらず動作します。</p>
+<p>3.1 updateNotification()を呼び出すブロードキャスト受信機の実装</p>
+<p>このステップでは、ユーザが通知内の更新通知アクション ボタンをタップしたときに <code>updateNotification()</code> メソッドを呼び出すブロードキャスト レシーバを実装します。</p>
+<ol type="1" start="1">
+<li><code>MainActivity.java</code>で、<code>BroadcastReceiver</code>のサブクラスをインナークラスとして追加します。<code>onReceive()</code>メソッドをオーバーライドします。空のコンストラクタを含めることを忘れないでください。</li>
+</ol>
+<p><code>public class NotificationReceiver extends BroadcastReceiver {</code></p>
+<p><code>public NotificationReceiver() {</code></p>
+<p><code>   }</code></p>
+<p>オーバーライド</p>
+<p><code>public void onReceive(Context context, Intent Intent) { { {.</code></p>
+<p><code>//</code> 通知を更新します。</p>
+<p><code>   }</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>NotificationReceiver の onReceive() メソッドで updateNotification() を呼び出します。</code></li>
+<li><code>MainActivity.java</code>で、ブロードキャストの更新通知アクションを表す一意の定数メンバ変数を作成します。変数の一意性を確保するために、変数の値の前にアプリのパッケージ名を付けてください。</li>
+</ol>
+<p><code>private static final String ACTION_UPDATE_NOTIFICATION =</code></p>
+<p><code>"。</code></p>
+<ol type="1" start="1">
+<li><code>MainActivity.java</code>で、レシーバーのメンバ変数を作成し、デフォルトのコンストラクタを使用して初期化します。</li>
+</ol>
+<p><code>private NotificationReceiver mReceiver = new NotificationReceiver().</code></p>
+<ol type="1" start="1">
+<li><code>ACTION_UPDATE_NOTIFICATION インテントを受信するには、onCreate() メソッドでブロードキャスト受信機を登録する。</code></li>
+</ol>
+<p><code>registerReceiver(mReceiver,new IntentFilter(ACTION_UPDATE_NOTIFICATION))を使用しています。</code></p>
+<ol type="1" start="1">
+<li>レシーバの登録を解除するには、アクティビティの <code>onDestroy()</code> メソッドをオーバーライドします。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>protected void onDestroy() {</code></p>
+<p><code>unregisterReceiver(mReceiver)の登録を解除します。</code></p>
+<p><code>.onDestroy()を使用しています。</code></p>
+<p><code>}</code></p>
+<p>注: 通知によって送信されるブロードキャストは、自分のアプリにのみ関係しており、<strong><code>LocalBroadcastManager</code></strong>で配信されるべきであるかのように見えるかもしれません。しかし、<strong><code>PendingIntent</code></strong></p>
+<p><strong>を</strong>使用すると、通知の配信の責任がAndroidフレームワークに委譲されます。Android ランタイムがブロードキャストを処理するため、<strong><code>LocalBroadcastManager</code></strong></p>
+<p><strong> を</strong>使用することはできません。</p>
+<p>3.2 更新アクションのアイコンを作成する</p>
+<p>更新アクション ボタンのアイコンを作成します。</p>
+<ol type="1" start="1">
+<li>Android Studioで、「ファイル」→「新規作成」→「画像アセット」を選択します。</li>
+<li>アイコンの種類] ドロップダウン リストで、[アクション バー] と [タブ アイコン] を選択します。</li>
+<li>クリップアートアイコンをクリックします。</li>
+<li>更新アイコンを選択し、[OK]をクリックします。 </li>
+<li>名前] フィールドで、アイコン <code>ic_update</code> に名前を付けます。</li>
+<li>次へ]をクリックし、[完了]をクリックします。</li>
+</ol>
+<p>Android 7.0から、通知にアイコンが表示されなくなりました。その代わり、ラベル自体にはより多くのスペースが与えられるようになりました。とはいえ、通知アクションのアイコンは必須で、古いバージョンのAndroidやAndroid Wearなどの端末では引き続き使用されています。</p>
+<p>3.3 通知に更新アクションを追加する</p>
+<p><code>MainActivity.javaのsendNotification()メソッド内で、以下の手順を実装します。</code></p>
+<ol type="1" start="1">
+<li><code>メソッドの最初に、カスタム更新アクション ACTION_UPDATE_NOTIFICATION を使用して Intent を作成します。</code></li>
+<li><code>getBroadcast()</code> を使用して <code>PendingIntent</code> を取得します。このペンディングインテントを送信して一度だけ使用するようにするには、<a href="https://developer.android.com/reference/android/app/PendingIntent.html#FLAG_ONE_SHOT" target="_blank"><code>FLAG_ONE_SHOT</code>を</a>設定します。</li>
+</ol>
+<p><code>Intent updateIntent = new Intent(ACTION_UPDATE_NOTIFICATION).</code></p>
+<p><code>PendingIntent updatePendingIntent = PendingIntent.getBroadcast</code></p>
+<p><code>          (this, NOTIFICATION_ID, updateIntent, PendingIntent.FLAG_ONE_SHOT)。</code></p>
+<ol type="1" start="1">
+<li><a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html#addaction_5" target="_blank"><code>addAction()</code></a> <code>メソッドを使用して、notifyBuilder 定義の後にアクションを NotificationCompat.Builder オブジェクトに追加します。アイコン、ラベル テキスト、および PendingIntent を渡します。</code></li>
+</ol>
+<p><code>notifyBuilder.addAction(R.drawable.ic_update, "Update Notification", updatePendingIntent)。</code></p>
+<ol type="1" start="1">
+<li>アプリを起動します。通知をタップし、ホームボタンを押します。通知を開き、通知更新ボタンをタップします。通知が更新されます。</li>
+</ol>
+<p>アプリを開かずに通知を更新できるようになりました</p>
+<p>6。</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/NotifyMe" target="_blank">NotifyMe</a></p>
+<p>7。</p>
+<p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>ボタンの有効化と無効化は、ユーザーがアプリの現在の状態でサポートされていないアクションを実行しないようにするための一般的な方法です。たとえば、ネットワークが利用できない場合にSyncボタンを無効にすることができます。</p>
+<p>NotifyMeアプリでは、ボタンの状態がアプリの状態と一致しない場合があります。この場合、アプリは通知がキャンセルされたことを知る方法がなく、ボタンの状態を変更する必要があります。</p>
+<p>別の保留中のインテントを作成して、ユーザーが通知を解除したことをアプリに知らせ、それに応じてボタンの状態を切り替えます。</p>
+<p>ヒント: ユーザーが通知を解除した場合に <code>Intent</code> を配信するメソッドについては<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html" target="_blank"><code>NotificationCompat.Builder</code></a> クラスをチェックアウトしてください。</p>
+<p>8。</p>
+<p>通知とは、アプリの通常のUI以外でユーザーに表示できるメッセージのことです。</p>
+<ul>
+<li>通知は、アプリが実行されていない場合でも、アプリがユーザーと対話するための方法を提供します。</li>
+<li>Androidが通知を発行すると、通知はまず端末の通知領域にアイコンとして表示されます。</li>
+<li><code>通知の</code>UI<code>とアクションを指定するには、NotificationCompat.Builderを使用します。</code></li>
+<li><code>通知を作成するには、NotificationCompat.Builder.build()を使用します。</code></li>
+<li>通知を発行するには、<code>NotificationManager.notify()</code> を使用して通知オブジェクトを Android ランタイムシステムに渡します。</li>
+<li>通知の更新やキャンセルを可能にするには、通知に通知IDを関連付けます。</li>
+<li>通知には、小さなアイコン (<code>setSmallIcon</code>(), required)、タイトル (<code>setContentTitle</code>())、詳細テキスト (<code>setContentText())</code> など、いくつかのコンポーネントを持たせることができます。</li>
+<li>通知には、保留中のインテント、拡張されたスタイル、優先度なども含めることができます。詳細は<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html" target="_blank"><code>NotificationCompat.Builder</code> を</a>参照してください。</li>
+</ul>
+<p>9。</p>
+<p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-8-alarms-and-schedulers/8-1-c-notifications/8-1-c-notifications.html" target="_blank">8.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-8-alarms-and-schedulers/8-1-c-notifications/8-1-c-notifications.html" target="_blank">通知にあります</a>。</p>
+<p>10。</p>
+<p>ガイド</p>
+<ul>
+<li><a href="https://developer.android.com/guide/topics/ui/notifiers/notifications.html" target="_blank">通知の概要</a></li>
+<li><a href="https://material.io/design/platform-guidance/android-notifications.html" target="_blank">通知のためのマテリアルデザイン仕様</a></li>
+<li><a href="https://developer.android.com/training/notify-user/channels.html" target="_blank">通知チャネルの作成と管理</a></li>
+</ul>
+<p>参考にしてください。</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html" target="_blank"><code>NotificationCompat.Builder</code></a></li>
+<li><a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Style.html" target="_blank">通知<code>Compat.</code>スタイル</a></li>
+</ul>
+<p>11。</p>
+<p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題を採点します。</li>
+</ul>
+<p>講師は、彼らが望むように少しまたは多くのようにこれらの提案を使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じるはずです。</p>
+<p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
+<p>アプリを構築して実行する</p>
+<p><a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/NotifyMe" target="_blank">NotifyMe アプリの</a>ソリューション コードを開きます。アプリ内の更新された通知を変更し、<code>BigPictureStyle</code>ではなく<a href="https://developer.android.com/reference/android/support/v4/app/NotificationCompat.InboxStyle.html" target="_blank"><code>InboxStyle</code>の</a>拡張レイアウトを使用するようにします。各行と要約テキストに偽の文字列データを使用します。</p>
+<p>注意：デバイスのAPIレベルによっては、通知が少し違って見える場合があります。</p>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>通知チャネルに当てはまるものをすべて選択します。</p>
+<ul>
+<li>通知チャネルを使用して、デバイスのステータスバーにユーザーへの通知を表示します。</li>
+<li>通知チャネルを使用して複数の通知をグループ化し、ユーザーが通知の動作を制御できるようにします。</li>
+<li>通知チャネルは、古い端末、Android 7.0 Nougat (API 24)以下を搭載している端末で利用可能です。</li>
+<li>通知チャネルは、Androidサポートライブラリパッケージではまだ利用できません。</li>
+</ul>
+<p>質問2</p>
+<p>通知ドロワーやデバイスのステータスバーに通知を表示するには、どのAPIを使用しますか？</p>
+<ul>
+<li><code>Notification.notify()</code></li>
+<li><code>NotificationManager.notify()</code></li>
+<li><code>NotificationCompact.notify()</code></li>
+<li><code>NotificationCompat.Builder.notify()</code></li>
+</ul>
+<p>質問3</p>
+<p>通知アクションを追加するときに必要ないコンポーネントはどれですか？</p>
+<ul>
+<li>アクションを表すアイコン</li>
+<li>アクションを説明するタイトル</li>
+<li>アクションボタンクリックイベントのリスナーをクリックします。</li>
+<li>ユーザーがアクションボタンをタップしたときに送信される <code>PendingIntent</code>。</li>
+</ul>
+<p>質問4</p>
+<p>通知にアクションボタンを追加するには、どのAPIを使用しますか？</p>
+<ul>
+<li><code>NotificationCompat.addActionButton()</code></li>
+<li><code>NotificationCompat.Builder.addAction()</code></li>
+<li><code>Notification.Builder.addActionButton()</code></li>
+<li><code>NotificationManager.addAction()</code></li>
+</ul>
+<p>質問5</p>
+<p>毎日ユーザーのデバイスに作品をダウンロードするアプリを作成したとします。その日の画像が利用可能になると、アプリはユーザーに通知を表示し、ユーザーは画像をダウンロードするか、ダウンロードをスキップすることができます。画像をダウンロードするサービスを開始するには、どの<code>PendingIntent</code>メソッドを使用しますか？</p>
+<ul>
+<li><code>Activity.startService()</code></li>
+<li><code>PendingIntent.getBroadcast()</code></li>
+<li><code>PendingIntent.getActivity()</code></li>
+<li><code>PendingIntent.getService()</code></li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っているかどうかを確認しましょう。</p>
+<ul>
+<li>ユーザーが通知の更新ボタンをタップすると、通知は、行の項目を表すテキストが複数列になった<code>InboxStyle</code>の通知になります。</li>
+<li>画面にはサマリーとタイトル・テキスト行があり、APIレベルに応じて位置が変わります。</li>
+<li><code>アプリは後方互換性のために NotificationCompat.InboxStyle クラスを使用しています。</code></li>
+</ul>
+<p>12。</p>
+<p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
+<p>Androidの基礎知識 08.1:通知</p>
+<p>1。</p>
+<p>この実践的なコードラボはユニット 3: Android Developer Fundamentals (Version 2) コースのバックグラウンドでの作業の一部です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、Codelabs for Android Developer Fundamentals (V2)を参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、Android Developer Fundamentals（第2版）をご覧ください。</li>
+</ul>
+<p>注：このコースでは、「codelab」と「practical」という用語を使い分けています。</p>
+<p>序章</p>
+<p>アプリがフォアグラウンドで実行されていなくても、アプリがユーザーに情報を表示したい場合があります。例えば、新しいコンテンツが利用可能になったことや、お気に入りのスポーツチームが試合でゴールを決めたことをユーザーに知らせたい場合があります。Androidの通知フレームワークは、アプリがフォアグラウンドで動作していなくても、アプリがユーザーに通知する方法を提供します。</p>
+<p>通知とは、アプリの通常のUI以外でアプリがユーザーに表示するメッセージのことです。通知は、デバイスの通知領域（ステータスバー）にアイコンとして表示されます。通知の詳細を表示するには、ユーザーはステータスバーを下にスワイプするなどして通知ドロワを開きます。通知領域と通知ドロワーは、ユーザーがいつでも閲覧できるシステム制御領域です。</p>
+<p>Android 8.0以降の端末では、アプリに新しい通知が表示されると、アプリのアイコンに自動的にバッジが表示されます。バッジは通知ドットとも呼ばれます）。ユーザーがアプリアイコンを長押しすると、下のスクリーンショットのように、アプリアイコンの上に通知が表示されます。</p>
+<p class="image-container"><img alt="Touch &amp; hold the Notify Me! app icon to view its notification details (only on Android 8.0 and higher)" style="width: 641.76px" src="img/18372f91a1eb5837.png"></p>
+<p>この実習では、ユーザーがアプリ内のボタンをタップしたときに通知をトリガーするアプリを作成します。ユーザーは通知を更新したり、キャンセルしたりすることができます。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>ボタンの onClick() メソッドを実装します。</li>
+<li>暗黙のインテントを作成します。</li>
+<li>カスタム放送を送信します。</li>
+<li>放送受信機を使用します。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>通知ビルダーを使って通知を作成する方法</li>
+<li>通知アクションに応答するために保留中のインテントを使用する方法。</li>
+<li>既存の通知を更新・解除する方法</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li>アプリ内のボタンをタップしたときに通知を送信するアプリを作成します。</li>
+<li>アプリ内のボタンや、通知の中にあるアクションボタンから通知を更新します。</li>
+</ul>
+<p>2。</p>
+<p>Notify Me! は、以下のスクリーンショットに示す 3 つのボタンを使って、ユーザーが通知をトリガー、更新、キャンセルすることができるアプリです。アプリを作成しながら、通知スタイル、アクション、優先順位を試してみましょう。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p class="image-container"><img alt="Preview for the Notify Me! App" style="width: 641.76px" src="img/a63581bd545c65d2.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img alt="Notification drawer" style="width: 641.76px" src="img/f2e3bcbe7a81541f.png"></p>
+</td></tr>
+</table>
+<p>3.タスク1.基本的な通知を作成する</p>
+<p>1.1 プロジェクトの作成</p>
+<ol type="1" start="1">
+<li>Android Studioで、&#34;Notify Me!&#34;という名前の新しいプロジェクトを作成します。デフォルトのオプションを受け入れ、Empty Activityテンプレートを使用します。</li>
+<li>activity_main.xmlレイアウトファイルで、デフォルトのTextViewを以下の属性を持つボタンに置き換えます。</li>
+</ol>
+<p>&lt;ボタン</p>
+<p>=&#34;@+id/notify&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;Notify Me!</p>
+<p>=&#34;parent&#34;</p>
+<p>=&#34;parent&#34;</p>
+<p>=&#34;親&#34;</p>
+<p>=&#34;親&#34; /&gt;</p>
+<p>MainActivity.javaファイルで以下の手順を実行します。</p>
+<ol type="1" start="1">
+<li>Notify Me!ボタンのメンバー変数を作成します。</li>
+</ol>
+<p>private Button button_notify.</p>
+<ol type="1" start="2">
+<li>sendNotification() メソッドのメソッドスタブを作成します。</li>
+</ol>
+<p>public void sendNotification() {} {}.</p>
+<ol type="1" start="3">
+<li>onCreate() メソッドで、Notify Me! ボタンを初期化し、そのための onClickListener を作成します。onClick メソッドから sendNotification() を呼び出します。</li>
+</ol>
+<p>button_notify = findViewById(R.id.notify)。</p>
+<p>button_notify.setOnClickListener(new View.OnClickListener() {</p>
+<p>オーバーライド</p>
+<p>public void onClick(View view) {</p>
+<p>       を使用しています。</p>
+<p>   }</p>
+<p>});</p>
+<p>1.2 通知チャネルを作成する</p>
+<p>Androidを搭載したデバイスの設定アプリでは、ユーザーは受信する通知を調整することができます。Android 8.0 (API レベル 26) からは、アプリの各通知をユーザーがカスタマイズ可能な通知チャネルに割り当てることができます。</p>
+<ul>
+<li>各通知チャネルは、通知の種類を表します。</li>
+<li>コードでは、各通知チャネルで複数の通知をグループ化することができます。</li>
+<li>各通知チャネルに対して、アプリはチャネルの動作を設定し、その動作はチャネル内のすべての通知に適用されます。たとえば、アプリはチャンネルの通知を設定して、サウンドを再生したり、ライトを点滅させたり、振動させたりすることができます。</li>
+<li>アプリが通知チャネルに設定したどのような動作であっても、ユーザーはその動作を変更することができ、ユーザーはアプリの通知を完全にオフにすることができます。</li>
+</ul>
+<p>Android 8.0（APIレベル26）以上を搭載したAndroid搭載端末では、アプリで作成した通知チャンネルは、端末の設定アプリの「アプリの通知」の下に「カテゴリ」として表示されます。</p>
+<p>例えば、Android 8.0を実行しているデバイスの下のスクリーンショットでは、Notify Me！アプリには「マスコット通知」という1つの通知チャンネルがあります。</p>
+<p class="image-container"><img alt="b4ad33b85806f6ae.png" style="width: 641.76px" src="img/b4ad33b85806f6ae.png"></p>
+<p>Android 8.0（APIレベル26）をターゲットとしたアプリでは、ユーザーに通知を表示するために、少なくとも1つの通知チャネルを実装する必要があります。ローエンドのデバイスで通知を表示するには、通知チャネルを実装する必要はありません。しかし、以下のことを常に行うのが良い習慣です。</p>
+<ul>
+<li>最新の利用可能なSDKをターゲットにします。</li>
+<li>コードでデバイスのSDKバージョンを確認してください。SDK のバージョンが 26 以上の場合は、通知チャンネルをビルドします。</li>
+</ul>
+<p>targetSdkVersionを25以下に設定している場合、Android 8.0（APIレベル26）以上でアプリを実行した場合、Android 7.1（APIレベル25）以下の端末と同様の動作をします。</p>
+<p>通知チャネルを作成します。</p>
+<ol type="1" start="1">
+<li>MainActivity で、通知チャネル ID の定数を作成します。すべての通知チャネルは、パッケージ内で一意の ID と関連付けられていなければなりません。後でこのチャンネルIDを使用して、通知を投稿します。</li>
+</ol>
+<p>private static final String PRIMARY_CHANNEL_ID = &#34;primary_notification_channel&#34;.</p>
+<ol type="1" start="2">
+<li>Android システムでは、通知をユーザーに配信するために NotificationManager クラスを使用します。MainActivity.javaで、NotificationManagerオブジェクトを格納するためのメンバ変数を作成します。</li>
+</ol>
+<p>private NotificationManager mNotifyManager.</p>
+<ol type="1" start="3">
+<li>MainActivity.javaで、createNotificationChannel()メソッドを作成し、メソッド内にNotificationManagerをインスタンス化します。</li>
+</ol>
+<p>public void createNotificationChannel()</p>
+<p>{</p>
+<p>     mNotifyManager = (NotificationManager)</p>
+<p>getSystemService(NOTIFICATION_SERVICE)を使用しています。</p>
+<p>}</p>
+<ol type="1" start="4">
+<li>createNotificationChannel()メソッドで通知チャネルを作成します。通知チャネルはAPI 26以降でしか利用できないので、デバイスのAPIバージョンをチェックする条件を追加します。</li>
+</ol>
+<p>public void createNotificationChannel() { { {.</p>
+<p>mNotifyManager = (NotificationManager)</p>
+<p>       getSystemService(NOTIFICATION_SERVICE)を使用しています。</p>
+<p>if (android.os.Build.VERSION.SDK_INT &gt;=</p>
+<p>                                  android.os.Build.VERSION_CODES.O)Build.VERSION_CODES.O) {.</p>
+<p>// NotificationChannelを作成します。</p>
+<p>     }</p>
+<p>}</p>
+<ol type="1" start="5">
+<li>if 文の中で NotificationChannel オブジェクトを構築し、チャンネル ID として PRIMARY_CHANNEL_ID を使用します。</li>
+<li>チャンネル名を設定します。名前は、デバイスのユーザーに見える設定アプリの通知カテゴリの下に表示されます。</li>
+<li>重要度を IMPORTANCE_HIGH に設定します。(通知の重要度定数の完全なリストについては、NotificationManager のドキュメントを参照してください)。</li>
+</ol>
+<p>// NotificationChannelを作成します。</p>
+<p>NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID.</p>
+<p>&#34;, NotificationManager</p>
+<p>       .importance_high)。</p>
+<ol type="1" start="8">
+<li>createNotificationChannel()では、if文の中で、notificationChannelオブジェクトの初期設定を行います。例えば、通知のライトの色を設定したり、バイブレーションを有効にしたり、デバイスの設定アプリに表示される説明を設定したりすることができます。また、通知のアラート音を構成することもできます。</li>
+</ol>
+<p>notificationChannel.enableLights(true)。</p>
+<p>notificationChannel.setLightColor(Color.RED).</p>
+<p>notificationChannel.enableVibration(true)。</p>
+<p>notificationChannel.setDescription(&#34;マスコットからの通知&#34;)を表示します。</p>
+<p>mNotifyManager.createNotificationChannel(notificationChannel)。</p>
+<p>1.3 最初の通知を構築する</p>
+<p>通知は NotificationCompat.Builder クラスを使用して作成され、通知の内容と動作を設定することができます。通知には以下の要素を含めることができます。</p>
+<ul>
+<li>アイコン (必須) で、コード内で setSmallIcon() メソッドを使用して設定します。</li>
+<li>これは setContentTitle() で設定したものです。</li>
+<li>setContentText() で設定した詳細テキスト (オプション)。</li>
+</ul>
+<p>必要な通知アイコンを作成します。</p>
+<ol type="1" start="1">
+<li>Android Studioで「ファイル」→「新規作成」→「画像アセット」と進みます。</li>
+<li>アイコン タイプ] ドロップダウン リストから [通知アイコン] を選択します。</li>
+<li>クリップアートの項目の横にあるアイコンをクリックすると、通知用のマテリアルデザインのアイコンが選択できます。このアプリの場合は、Androidのアイコンを使用してください。</li>
+<li>リソース ic_android の名前を変更し、[次へ] と [完了] をクリックします。これにより、APIレベルごとに異なる解像度の描画可能なファイルが作成されます。</li>
+</ol>
+<p>通知を構築して表示するには</p>
+<ol type="1" start="1">
+<li>コードが将来的に通知を更新またはキャンセルできるように、通知を通知 ID と関連付ける必要があります。MainActivity.javaで、通知IDの定数を作成します。</li>
+</ol>
+<p>private static final int NOTIFICATION_ID = 0.</p>
+<ol type="1" start="2">
+<li>MainActivity.javaで、onCreate()メソッドの最後に、createNotificationChannel()を呼び出します。このステップを怠ると、アプリがクラッシュします。</li>
+<li>MainActivity.java で、getNotificationBuilder() というヘルパー・メソッドを作成します。getNotificationCompat.Builder()は後で、NotificationCompat.Builderオブジェクトの中で使用します。Android Studioでは、return文の欠落についてのエラーが表示されますが、すぐに修正します。</li>
+</ol>
+<p>private NotificationCompat.Builder getNotificationBuilder(){}。</p>
+<ol type="1" start="4">
+<li>getNotificationBuilder() メソッドの中で、通知ビルダを作成してインスタンス化します。通知チャネル ID には PRIMARY_CHANNEL_ID を使用します。ポップアップ エラーが表示された場合は、NotificationCompat クラスが v4 サポート ライブラリからインポートされていることを確認してください。</li>
+</ol>
+<p>NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)。</p>
+<ol type="1" start="5">
+<li>getNotificationBuilder()メソッドの中で、以下のようにタイトル、テキスト、アイコンをビルダーに追加します。最後に Builder オブジェクトを返します。</li>
+</ol>
+<p>NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNELID)</p>
+<p>       .setContentTitle(&#34;通知されました!)</p>
+<p>       .setContentText(&#34;これはあなたの通知テキストです。)</p>
+<p>       .setSmallIcon(R.drawable.ic_android)を使用しています。</p>
+<p>return notifyBuilder.</p>
+<p>これで、通知を送信するsendNotification()メソッドが完成しました。</p>
+<ol type="1" start="1">
+<li>MainActivity.javaのsendNotification()メソッドの中で、getNotificationBuilder()を使用してビルダーオブジェクトを取得します。</li>
+<li>NotificationManager で notify() を呼び出します。</li>
+</ol>
+<p>NotificationCompat.Builder = getNotificationBuilder()Builder notifyBuilder = getNotificationBuilder()。</p>
+<p>mNotifyManager.notify(NOTIFICATION_ID, notifyBuilder.build())を使用しています。</p>
+<ol type="1" start="3">
+<li>アプリを起動します。Notify Me! ボタンを押すと通知が発行され、ステータスバーにアイコンが表示されます。しかし、この通知には、タップしても何も起こらないという重要な機能がありません。この機能は次のタスクで追加します。</li>
+</ol>
+<p>1.4 コンテンツのインテントを追加して通知を解除する</p>
+<p>通知のためのコンテンツ・インテントは、このコースで使用したインテントと似ています。コンテンツ・インテントは、アクティビティを起動する明示的なインテント、アクションを実行する暗黙的なインテント、システム・イベントやカスタム・イベントをシステムに通知するブロードキャスト・インテントなどがあります。</p>
+<p>通知に使用される Intent との大きな違いは、Intent を PendingIntent でラップしなければならないことです。PendingIntentを使うと、Androidの通知システムがコードに代わって割り当てられたアクションを実行することができます。</p>
+<p>このステップでは、ユーザーが通知をタップしたときに、アプリがMainActivityを起動するコンテンツ インテントを送信するようにアプリを更新します（アプリが開いていてアクティブな場合は、通知をタップしても効果はありません）。(アプリが開いていてアクティブな場合、通知をタップしても何の影響もありません)。</p>
+<ol type="1" start="1">
+<li>MainActivity.java の getNotificationBuilder() の先頭に、MainActivity を起動するための明示的なインテント・メソッドを作成します。</li>
+</ol>
+<p>Intent notificationIntent = new Intent(this, MainActivity.class).</p>
+<ol type="1" start="2">
+<li>getNotificationBuilder()の中で、notificationIntent宣言の後に、getActivity()メソッドを使用してPendingIntentを取得します。requestCode に通知 ID 定数を渡し、FLAG_UPDATE_CURRENT フラグを使用します。</li>
+</ol>
+<p>PendingIntentを使用して他のアプリと通信することで、将来のある時点で事前に定義されたコードを実行するようにそのアプリに指示します。これは、他のアプリがあなたのアプリに代わってアクションを実行することができるようなものです。</p>
+<p>PendingIntent notificationPendingIntent = PendingIntent.getActivity(this.</p>
+<p>PendingIntent.FLAG_UPDATE_CURRENT)。</p>
+<ol type="1" start="3">
+<li>コンテンツ インテントを設定するには、NotificationCompat.Builder クラスの setContentIntent() メソッドを使用します。getNotificationBuilder() 内で、通知を構築しているコードで setContentIntent() を呼び出します。また、auto-cancel を true に設定します。</li>
+</ol>
+<p>.setContentIntent(notificationPendingIntent)</p>
+<p>.setAutoCancel(true)</p>
+<p>自動キャンセルをtrueに設定すると、ユーザーがタップしたときに通知を閉じます。</p>
+<ol type="1" start="4">
+<li>アプリを実行します。通知を送信するには、「Notify Me！」ボタンをタップします。ホームボタンをタップします。通知を表示し、それをタップします。アプリがMainActivityに戻ります。</li>
+<li>API 26以上のデバイスやエミュレータでアプリを実行している場合は、ホームボタンを押してアプリランチャーを開きます。アプリアイコンのバッジ（通知ドット）に注目してください。</li>
+</ol>
+<p class="image-container"><img alt="ad490bf8e2f2df8f.png" style="width: 547.00px" src="img/ad490bf8e2f2df8f.png"></p>
+<p>上のスクリーンショットでは</p>
+<ol type="1" start="1">
+<li>ステータスバーの通知</li>
+<li>アプリアイコンの通知ドット（API26以上のみ</li>
+</ol>
+<p>ユーザーがアプリのアイコンをタッチ＆ホールドすると、アイコンと一緒に通知がポップアップで表示されます。</p>
+<p class="image-container"><img alt="f33dde6d6b55e222.png" style="width: 641.76px" src="img/f33dde6d6b55e222.png"></p>
+<p>API 26以上のデバイスやエミュレータで動作している場合、作成した通知チャネルを表示する方法をご紹介します。</p>
+<ol type="1" start="1">
+<li>デバイスの設定アプリを開きます。</li>
+<li>検索バーにアプリ名&#34;Notify Me!&#34;を入力してください。</li>
+<li>Notify Me！＞アプリの通知＞マスコット通知を開きます。この設定を使用して、通知チャンネルをカスタマイズします。通知チャネルの説明は画面下部に表示されます。</li>
+</ol>
+<p class="image-container"><img alt="bf4ba6388da2fab6.png" style="width: 641.76px" src="img/bf4ba6388da2fab6.png"></p>
+<p>1.5 下位互換性のために通知に優先度とデフォルトを追加する</p>
+<p>注：このタスクは、ほとんどのAndroid搭載デバイスであるAndroid 7.1以下を実行しているデバイスに必要です。Android 8.0 以降を実行しているデバイスでは、通知チャネルを使用して通知の優先度とデフォルトを追加しますが、下位デバイスの下位互換性とサポートを提供するためのベストプラクティスです。</p>
+<p>ユーザーがアプリの「通知して！」ボタンをタップすると通知が発行されますが、ユーザーが目にするのは通知バーのアイコンだけです。ユーザーの注意を引くために、通知のデフォルトオプションを設定します。</p>
+<p>優先度は PRIORITY_MIN (-2) から PRIORITY_MAX (2) までの整数値です。優先度の高い通知は、通知ドロワーで優先度の低い通知よりも上にソートされます。HIGH または MAX の優先度の高い通知は「ヘッドアップ」通知として配信され、ユーザーのアクティブな画面の上にドロップダウンします。すべての通知をMAX優先に設定するのは良い習慣ではないので、MAXは控えめに使いましょう。</p>
+<ol type="1" start="1">
+<li>getNotificationBuilder()メソッドの中で、通知ビルダーオブジェクトに以下の行を追加して、通知の優先度をhighに設定します。</li>
+</ol>
+<p>.setPriority(NotificationCompat.PRIORITY_HIGH)</p>
+<ol type="1" start="2">
+<li>通知のサウンド、バイブレーション、LEDカラーパターンをデフォルト値に設定します（ユーザーのデバイスにLEDインジケータがある場合）。</li>
+</ol>
+<p>getNotificationBuilder() の内部で、次の行を notifyBuilder オブジェクトに追加します。</p>
+<p>.setDefaults(NotificationCompat.DEFAULT_ALL)</p>
+<ol type="1" start="3">
+<li>変更内容を確認するには、アプリを終了してAndroid Studioから再度実行してください。変更内容が確認できない場合は、アプリをアンインストールして再度インストールしてください。</li>
+</ol>
+<p>注意: 優先度の高い通知は、優先度とデフォルトの両方が設定されていない限り、アクティブ画面の前にドロップダウンしません。優先度の設定だけでは十分ではありません。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：通知の更新またはキャンセル" duration="0">
+        <p>アプリが通知を発行した後、情報が変更されたり、無関係になった場合に通知を更新したり、キャンセルしたりできるのは便利です。</p>
+<p>このタスクでは、通知を更新してキャンセルする方法を学びます。</p>
+<p>2.1 更新ボタンとキャンセルボタンの追加</p>
+<ol type="1" start="1">
+<li>activity_maim.xmlレイアウトファイルで、Notify Me!ボタンのコピーを2つ作成します。デザインエディタで、新しいボタンを互いに重ならないように、親ボタンに拘束します。</li>
+<li>新しいボタンのandroid:text属性を&#34;Update Me!&#34;と&#34;Cancel Me!&#34;に変更しました。</li>
+<li>更新・キャンセルするボタンのandroid:id属性を変更します。</li>
+</ol>
+<p>&lt;ボタン</p>
+<p>=&#34;@+id/notify&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;Notify Me!</p>
+<p>=&#34;@+id/update&#34;</p>
+<p>=&#34;親&#34;</p>
+<p>=&#34;parent&#34;</p>
+<p>=&#34;親&#34; /&gt;</p>
+<p>&lt;ボタン</p>
+<p>=&#34;@+id/update&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;Update Me!</p>
+<p>=&#34;@+id/cancel&#34;</p>
+<p>=&#34;親&#34;</p>
+<p>=&#34;parent&#34;</p>
+<p>=&#34;@+id/notify&#34; /&gt;</p>
+<p>&lt;ボタン</p>
+<p>=&#34;@+id/cancel&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>=&#34;wrap_content&#34;</p>
+<p>android:text=&#34;キャンセルしてください！&#34;</p>
+<p>=&#34;parent&#34;</p>
+<p>=&#34;親&#34;</p>
+<p>=&#34;parent&#34;</p>
+<p>=&#34;@+id/update&#34; /&gt;</p>
+<ol type="1" start="4">
+<li>すべてのテキスト文字列をstring.xmlに抽出します。</li>
+</ol>
+<p>MainActivity.javaファイルで以下の手順を実行します。</p>
+<ol type="1" start="1">
+<li>新しいボタンのそれぞれにメンバー変数を追加します。</li>
+</ol>
+<p>private Button button_cancel.</p>
+<p>private Button button_update.</p>
+<ol type="1" start="2">
+<li>onCreate() メソッドの最後に、ボタン変数を初期化し、その onClick リスナーを設定します。Android Studio がエラーをスローした場合は、プロジェクトを再構築します。</li>
+</ol>
+<p>button_update = findViewById(R.id.update).</p>
+<p>button_update.setOnClickListener(new View.OnClickListener() {</p>
+<p>オーバーライド</p>
+<p>public void onClick(View view) {</p>
+<p>//通知の更新</p>
+<p>   }</p>
+<p>});</p>
+<p>button_cancel = findViewById(R.id.cancel)。</p>
+<p>button_cancel.setOnClickListener(新しいView.OnClickListener() {</p>
+<p>オーバーライド</p>
+<p>public void onClick(View view) {</p>
+<p>//通知をキャンセルする</p>
+<p>   }</p>
+<p>});</p>
+<ol type="1" start="3">
+<li>通知を更新およびキャンセルするためのメソッドを作成します。メソッドはパラメータを取らず、voidを返します。</li>
+</ol>
+<p>public void updateNotification() {} {}。</p>
+<p>public void cancelNotification() {} {}.</p>
+<ol type="1" start="4">
+<li>更新ボタンのonCreate()メソッドでは、更新ボタンのonClickメソッドでupdateNotification()を呼び出します。キャンセルボタンのonClickメソッドでは、cancelNotification()を呼び出します。</li>
+</ol>
+<p>2.2 キャンセル・更新通知方法の実装</p>
+<p>通知をキャンセルするには、通知 ID を渡して NotificationManager で cancel() を呼び出します。</p>
+<ol type="1" start="1">
+<li>MainActivity.javaのcancelNotification()メソッドの中に、以下の行を追加します。</li>
+</ol>
+<p>mNotifyManager.cancel(NOTIFICATION_ID).</p>
+<ol type="1" start="2">
+<li>アプリを実行します。</li>
+<li>通知を送信するには、「Notify Me！」ボタンをタップします。ステータスバーに通知アイコンが表示されます。</li>
+<li>私をキャンセル！」ボタンをタップします。通知がキャンセルされるはずです。</li>
+</ol>
+<p>通知の更新は、通知のキャンセルよりも複雑です。Androidの通知には、情報を凝縮できるスタイルが付属しています。例えば、Gmailアプリは、ユーザーが複数の未読メッセージを持っている場合、InboxStyle通知を使用して、情報を1つの通知に凝縮します。</p>
+<p>この例では、通知に画像を含めることができる BigPictureStyle を使用するように通知を更新しています。</p>
+<ol type="1" start="1">
+<li>この画像をダウンロードして、通知に使用し、名前を mascot_1 に変更してください。自分の画像を使用する場合は、縦横比が2:1、横幅が450dp以下であることを確認してください。</li>
+<li>mascot_1の画像をres/drawableフォルダに入れます。</li>
+<li>MainActivity.javaのupdateNotification()メソッドの中で、ドローアブルをビットマップに変換します。</li>
+</ol>
+<p>androidImage = BitmapFactory</p>
+<p>          .decodeResource(getResources(),R.drawable.mascot_1).</p>
+<ol type="1" start="4">
+<li>updateNotification() の内部で、getNotificationBuilder() メソッドを使用して NotificationCompat.Builder オブジェクトを取得します。</li>
+</ol>
+<p>NotificationCompat.Builder = getNotificationBuilder()Builder notifyBuilder = getNotificationBuilder()。</p>
+<ol type="1" start="5">
+<li>updateNotification()の中で、notifyBuilder宣言の後に、通知のスタイルを変更し、画像とタイトルを設定します。</li>
+</ol>
+<p>notifyBuilder.setStyle(new NotificationCompat.BigPictureStyle()BigPictureStyle()</p>
+<p>               .bigPicture(androidImage)</p>
+<p>               .setBigContentTitle(&#34;通知が更新されました！&#34; ))を使用しています。</p>
+<p>注: BigPictureStyle は NotificationCompat.Style のサブクラスで、通知のための代替レイアウトを提供します。他の定義されたサブクラスについては、ドキュメントを参照してください。</p>
+<ol type="1" start="6">
+<li>updateNotification()の中で、通知スタイルを設定した後、通知をビルドし、NotificationManager上でnotify()を呼び出します。先ほどと同じ通知IDを渡します。</li>
+</ol>
+<p>mNotifyManager.notify(NOTIFICATION_ID, notifyBuilder.build())を使用しています。</p>
+<ol type="1" start="7">
+<li>アプリを起動します。更新ボタンをタップして、通知をもう一度確認します。通常の通知スタイルに戻すには、拡張された通知をピンチします。</li>
+</ol>
+<p>2.3 ボタンの状態を切り替える</p>
+<p>このアプリでは、通知の状態がアクティビティ内で追跡されないため、ユーザーは混乱してしまうことがあります。例えば、通知が表示されていないときに「キャンセル！」をタップしてしまうことがあります。</p>
+<p>通知の状態に応じてボタンを有効にしたり、無効にしたりすることで修正することができます。</p>
+<ul>
+<li>アプリを最初に起動した時には、まだ更新やキャンセルの通知がないので、「Notify Me！」ボタンだけが有効になっているはずです。</li>
+<li>通知が届いた後は、通知が届いているので、キャンセルボタンと更新ボタンを有効にし、通知ボタンを無効にする。</li>
+<li>通知が更新された後は、更新ボタンと通知ボタンを無効にし、キャンセルボタンだけを有効にしておく。</li>
+<li>通知がキャンセルされた場合、ボタンは初期状態に戻り、通知ボタンのみが有効になります。</li>
+</ul>
+<p>すべてのボタンのボタンの状態を切り替えるには、MainActivity.javaで以下の手順を実行します。</p>
+<ol type="1" start="1">
+<li>ボタンの状態を切り替えるために、setNotificationButtonState() というユーティリティ・メソッドを追加しました。</li>
+</ol>
+<p>void setNotificationButtonState(Boolean isNotifyEnabled.</p>
+<p>Boolean isUpdateEnabled.</p>
+<p>Boolean isCancelEnabled) {</p>
+<p>   button_notify.setEnabled(isNotifyEnabled)。</p>
+<p>   button_update.setEnabled(isUpdateEnabled)。</p>
+<p>   button_cancel.setEnabled(isCancelEnabled).</p>
+<p>}</p>
+<ol type="1" start="2">
+<li>関連する各メソッドの最後に、必要に応じてボタンを有効にしたり無効にしたりするための setNotificationButtonState() の呼び出しを追加します。</li>
+</ol>
+<p>onCreate()を使用しています。</p>
+<p>setNotificationButtonState(true, false, false)を設定します。</p>
+<p>を使用しています。</p>
+<p>setNotificationButtonState(false, true, true)を設定します。</p>
+<p>updateNotification() を使用しています。</p>
+<p>setNotificationButtonState(false, false, false, true)を設定します。</p>
+<p>を使用しています。</p>
+<p>setNotificationButtonState(true, false, false)を設定します。</p>
+<p>5.タスク3：通知アクションボタンの追加</p>
+<p>時には、通知はユーザーからのインタラクションを必要とします。例えば、ユーザーはアラームをスヌーズしたり、テキストメッセージに返信したりするかもしれません。このようなタイプの通知が発生した場合、ユーザーはイベントに応答するために通知をタップするかもしれません。その後、Androidは関連するアクティビティをアプリにロードします。</p>
+<p>アプリを開かないようにするために、通知フレームワークでは、通知自体に直接通知アクションボタンを埋め込むことができます。</p>
+<p>アクションボタンには以下のコンポーネントが必要です。</p>
+<ul>
+<li>通知に配置されるアイコン。</li>
+<li>アイコンの横に配置されるラベル文字列。</li>
+<li>ユーザーが通知アクションをタップしたときに送信される PendingIntent。</li>
+</ul>
+<p>このタスクでは、通知にアクションボタンを追加します。アクションボタンを使用すると、ユーザーはアプリを開くことなく、通知内から通知を更新することができます。この通知の更新アクションは、アプリがフォアグラウンドまたはバックグラウンドで実行されているかどうかに関わらず動作します。</p>
+<p>3.1 updateNotification()を呼び出すブロードキャスト受信機の実装</p>
+<p>このステップでは、ユーザが通知内の更新通知アクション ボタンをタップしたときに updateNotification() メソッドを呼び出すブロードキャスト レシーバを実装します。</p>
+<ol type="1" start="1">
+<li>MainActivity.javaで、BroadcastReceiverのサブクラスをインナークラスとして追加します。onReceive()メソッドをオーバーライドします。空のコンストラクタを含めることを忘れないでください。</li>
+</ol>
+<p>public class NotificationReceiver extends BroadcastReceiver {</p>
+<p>public NotificationReceiver() {</p>
+<p>   }</p>
+<p>オーバーライド</p>
+<p>public void onReceive(Context context, Intent Intent) { { {.</p>
+<p>// 通知を更新します。</p>
+<p>   }</p>
+<p>}</p>
+<ol type="1" start="2">
+<li>NotificationReceiver の onReceive() メソッドで updateNotification() を呼び出します。</li>
+<li>MainActivity.javaで、ブロードキャストの更新通知アクションを表す一意の定数メンバ変数を作成します。変数の一意性を確保するために、変数の値の前にアプリのパッケージ名を付けてください。</li>
+</ol>
+<p>private static final String ACTION_UPDATE_NOTIFICATION =</p>
+<p>&#34;。</p>
+<ol type="1" start="4">
+<li>MainActivity.javaで、レシーバーのメンバ変数を作成し、デフォルトのコンストラクタを使用して初期化します。</li>
+</ol>
+<p>private NotificationReceiver mReceiver = new NotificationReceiver().</p>
+<ol type="1" start="5">
+<li>ACTION_UPDATE_NOTIFICATION インテントを受信するには、onCreate() メソッドでブロードキャスト受信機を登録する。</li>
+</ol>
+<p>registerReceiver(mReceiver,new IntentFilter(ACTION_UPDATE_NOTIFICATION))を使用しています。</p>
+<ol type="1" start="6">
+<li>レシーバの登録を解除するには、アクティビティの onDestroy() メソッドをオーバーライドします。</li>
+</ol>
+<p>オーバーライド</p>
+<p>protected void onDestroy() {</p>
+<p>unregisterReceiver(mReceiver)の登録を解除します。</p>
+<p>.onDestroy()を使用しています。</p>
+<p>}</p>
+<p>注: 通知によって送信されるブロードキャストは、自分のアプリにのみ関係しており、LocalBroadcastManagerで配信されるべきであるかのように見えるかもしれません。しかし、PendingIntentを使用すると、通知の配信の責任がAndroidフレームワークに委譲されます。Android ランタイムがブロードキャストを処理するため、LocalBroadcastManager を使用することはできません。</p>
+<p>3.2 更新アクションのアイコンを作成する</p>
+<p>更新アクション ボタンのアイコンを作成します。</p>
+<ol type="1" start="1">
+<li>Android Studioで、「ファイル」→「新規作成」→「画像アセット」を選択します。</li>
+<li>アイコンの種類] ドロップダウン リストで、[アクション バー] と [タブ アイコン] を選択します。</li>
+<li>クリップアートアイコンをクリックします。</li>
+<li>更新アイコンを選択し、[OK]をクリックします。<img alt="for the update action Button. Open File -&gt; New -&gt; Image Asset. Select Icon Type as Action Bar and Tab Icons click on the Clip Art icon and select update icon and name it ic_update. Click Next -&gt; Finish." style="width: 32.00px" src="img/2b965bb301c0ec60.png"></li>
+<li>名前] フィールドで、アイコン ic_update に名前を付けます。</li>
+<li>次へ]をクリックし、[完了]をクリックします。</li>
+</ol>
+<p>Android 7.0から、通知にアイコンが表示されなくなりました。その代わり、ラベル自体にはより多くのスペースが与えられるようになりました。とはいえ、通知アクションのアイコンは必須で、古いバージョンのAndroidやAndroid Wearなどの端末では引き続き使用されています。</p>
+<p>3.3 通知に更新アクションを追加する</p>
+<p>MainActivity.javaのsendNotification()メソッド内で、以下の手順を実装します。</p>
+<ol type="1" start="1">
+<li>メソッドの最初に、カスタム更新アクション ACTION_UPDATE_NOTIFICATION を使用して Intent を作成します。</li>
+<li>getBroadcast() を使用して PendingIntent を取得します。このペンディングインテントを送信して一度だけ使用するようにするには、FLAG_ONE_SHOTを設定します。</li>
+</ol>
+<p>Intent updateIntent = new Intent(ACTION_UPDATE_NOTIFICATION).</p>
+<p>PendingIntent updatePendingIntent = PendingIntent.getBroadcast</p>
+<p>          (this, NOTIFICATION_ID, updateIntent, PendingIntent.FLAG_ONE_SHOT)。</p>
+<ol type="1" start="3">
+<li>addAction() メソッドを使用して、notifyBuilder 定義の後にアクションを NotificationCompat.Builder オブジェクトに追加します。アイコン、ラベル テキスト、および PendingIntent を渡します。</li>
+</ol>
+<p>notifyBuilder.addAction(R.drawable.ic_update, &#34;Update Notification&#34;, updatePendingIntent)。</p>
+<ol type="1" start="4">
+<li>アプリを起動します。通知をタップし、ホームボタンを押します。通知を開き、通知更新ボタンをタップします。通知が更新されます。</li>
+</ol>
+<p>アプリを開かずに通知を更新できるようになりました</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。" duration="0">
+        <p>Android Studioプロジェクト。NotifyMe</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>ボタンの有効化と無効化は、ユーザーがアプリの現在の状態でサポートされていないアクションを実行しないようにするための一般的な方法です。たとえば、ネットワークが利用できない場合にSyncボタンを無効にすることができます。</p>
+<p>NotifyMeアプリでは、ボタンの状態がアプリの状態と一致しない場合があります。この場合、アプリは通知がキャンセルされたことを知る方法がなく、ボタンの状態を変更する必要があります。</p>
+<p>別の保留中のインテントを作成して、ユーザーが通知を解除したことをアプリに知らせ、それに応じてボタンの状態を切り替えます。</p>
+<p>ヒント: ユーザーが通知を解除した場合に Intent を配信するメソッドについては NotificationCompat.Builder クラスをチェックアウトしてください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>通知とは、アプリの通常のUI以外でユーザーに表示できるメッセージのことです。</p>
+<ul>
+<li>通知は、アプリが実行されていない場合でも、アプリがユーザーと対話するための方法を提供します。</li>
+<li>Androidが通知を発行すると、通知はまず端末の通知領域にアイコンとして表示されます。</li>
+<li>通知のUIとアクションを指定するには、NotificationCompat.Builderを使用します。</li>
+<li>通知を作成するには、NotificationCompat.Builder.build()を使用します。</li>
+<li>通知を発行するには、NotificationManager.notify() を使用して通知オブジェクトを Android ランタイムシステムに渡します。</li>
+<li>通知の更新やキャンセルを可能にするには、通知に通知IDを関連付けます。</li>
+<li>通知には、小さなアイコン (setSmallIcon(), required)、タイトル (setContentTitle())、詳細テキスト (setContentText()) など、いくつかのコンポーネントを持たせることができます。</li>
+<li>通知には、保留中のインテント、拡張されたスタイル、優先度なども含めることができます。詳細は NotificationCompat.Builder を参照してください。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>関連するコンセプトのドキュメントは8.1にあります。通知にあります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>ガイド</p>
+<ul>
+<li>通知の概要</li>
+<li>通知のためのマテリアルデザイン仕様</li>
+<li>通知チャネルの作成と管理</li>
+</ul>
+<p>参考にしてください。</p>
+<ul>
+<li>NotificationCompat.Builder</li>
+<li>通知Compat.スタイル</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題を採点します。</li>
+</ul>
+<p>講師は、彼らが望むように少しまたは多くのようにこれらの提案を使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じるはずです。</p>
+<p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
+<p>アプリを構築して実行する</p>
+<p>NotifyMe アプリのソリューション コードを開きます。アプリ内の更新された通知を変更し、BigPictureStyleではなくInboxStyleの拡張レイアウトを使用するようにします。各行と要約テキストに偽の文字列データを使用します。</p>
+<p class="image-container"><img alt="InboxStyle notification" style="width: 303.53px" src="img/ce0f16fd3d576634.png"></p>
+<p>注意：デバイスのAPIレベルによっては、通知が少し違って見える場合があります。</p>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>通知チャネルに当てはまるものをすべて選択します。</p>
+<ul>
+<li>通知チャネルを使用して、デバイスのステータスバーにユーザーへの通知を表示します。</li>
+<li>通知チャネルを使用して複数の通知をグループ化し、ユーザーが通知の動作を制御できるようにします。</li>
+<li>通知チャネルは、古い端末、Android 7.0 Nougat (API 24)以下を搭載している端末で利用可能です。</li>
+<li>通知チャネルは、Androidサポートライブラリパッケージではまだ利用できません。</li>
+</ul>
+<p>質問2</p>
+<p>通知ドロワーやデバイスのステータスバーに通知を表示するには、どのAPIを使用しますか？</p>
+<ul>
+<li>Notification.notify()</li>
+<li>NotificationManager.notify()</li>
+<li>NotificationCompact.notify()</li>
+<li>NotificationCompat.Builder.notify()</li>
+</ul>
+<p>質問3</p>
+<p>通知アクションを追加するときに必要ないコンポーネントはどれですか？</p>
+<ul>
+<li>アクションを表すアイコン</li>
+<li>アクションを説明するタイトル</li>
+<li>アクションボタンクリックイベントのリスナーをクリックします。</li>
+<li>ユーザーがアクションボタンをタップしたときに送信される PendingIntent。</li>
+</ul>
+<p>質問4</p>
+<p>通知にアクションボタンを追加するには、どのAPIを使用しますか？</p>
+<ul>
+<li>NotificationCompat.addActionButton()</li>
+<li>NotificationCompat.Builder.addAction()</li>
+<li>Notification.Builder.addActionButton()</li>
+<li>NotificationManager.addAction()</li>
+</ul>
+<p>質問5</p>
+<p>毎日ユーザーのデバイスに作品をダウンロードするアプリを作成したとします。その日の画像が利用可能になると、アプリはユーザーに通知を表示し、ユーザーは画像をダウンロードするか、ダウンロードをスキップすることができます。画像をダウンロードするサービスを開始するには、どのPendingIntentメソッドを使用しますか？</p>
+<ul>
+<li>Activity.startService()</li>
+<li>PendingIntent.getBroadcast()</li>
+<li>PendingIntent.getActivity()</li>
+<li>PendingIntent.getService()</li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っているかどうかを確認しましょう。</p>
+<ul>
+<li>ユーザーが通知の更新ボタンをタップすると、通知は、行の項目を表すテキストが複数列になったInboxStyleの通知になります。</li>
+<li>画面にはサマリーとタイトル・テキスト行があり、APIレベルに応じて位置が変わります。</li>
+<li>アプリは後方互換性のために NotificationCompat.InboxStyle クラスを使用しています。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer Fundamentals (Version 2)を参照してください。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

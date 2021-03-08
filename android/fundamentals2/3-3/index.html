@@ -1,0 +1,553 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 03.3:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="3-3"
+                  title="Android 開発者基礎講座 03.3:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a> Android Developer Fundamentals (Version 2) コースの一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、「codelab」と「practical」という用語を使い分けています。</p>
+<p>序章</p>
+<p>Android SDKには、いくつかのライブラリの集合体であるAndroidサポートライブラリが含まれています。これらのライブラリは、以下のようなAndroidフレームワークに組み込まれていない機能を提供します。</p>
+<ul>
+<li>フレームワークコンポーネントの下位互換バージョンで、Androidプラットフォームの古いバージョンで動作するアプリが、プラットフォームの新しいバージョンで利用可能になった機能をサポートできるようにします。</li>
+<li>追加のレイアウトとユーザーインターフェース要素</li>
+<li>TVデバイスやウェアラブルなど、さまざまなデバイスのフォームファクタをサポート</li>
+<li>マテリアルデザイン要素をサポートするコンポーネント</li>
+<li>パレットサポート、注釈、パーセンテージベースのレイアウト寸法、環境設定などのその他の機能</li>
+</ul>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>Android Studioプロジェクトを作成します。</li>
+<li>レイアウトエディタを使用して、<code>EditText</code>と<code>Button</code>要素を操作します。</li>
+<li>エミュレータとデバイスの両方で、Android Studioでアプリをビルドして実行します。</li>
+<li>Android Studioで「プロジェクト」→「Android」ペインを開きます。</li>
+<li><code>AndroidManifest.xml</code>、リソース、Javaファイル、Gradleファイルなど、Android Studioプロジェクトの主要なコンポーネントを検索します。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>Android StudioのインストールでAndroidサポートライブラリが利用可能であることを確認する方法</li>
+<li>アプリでサポートライブラリクラスを表示する方法</li>
+<li><code>compileSdkVersion、targetSdkVersion、minSdkVersionの値の違いの見分け方。</code></li>
+<li>あなたのコードで非推奨または利用できないAPIを認識する方法。</li>
+<li>Androidサポートライブラリの詳細。</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li>1つの<code>TextView</code>と1つの<code>Button</code>で新しいアプリを作成します。</li>
+<li>Android Support Repository（Android Support Libraryを含む）がAndroid Studioのインストールで利用可能であることを確認してください。</li>
+<li>アプリプロジェクトの<code>build.gradle</code>ファイルを見てみましょう。</li>
+<li>アプリがサポートしているAndroidのバージョンで利用できないクラスやメソッドの呼び出しを管理します。</li>
+<li>サポート ライブラリの互換性クラスを使用して、アプリの後方互換性を提供します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>この実習では、画面上に&#34;Hello World&#34;を表示する1つの<code>TextView</code>と、テキストの色を変更する1つの<code>Button</code>を持つHelloCompatと呼ばれるアプリを作成します。<code>color.xml</code>ファイル内のリソースとして定義されている20の色があり、各ボタンをクリックするたびにランダムにその色のうちの1つが選択されます。</p>
+<p>アプリのリソースから色の値を取得するメソッドは、Android フレームワークのバージョンによって変更されています。この例では、Android サポート ライブラリの <code>ContextCompat</code> クラスを使用しており、すべてのバージョンで動作するメソッドを使用することができます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1: サポートライブラリを使用するためにプロジェクトを設定する" duration="0">
+        <p>このタスクでは、HelloCompatアプリの新しいプロジェクトを設定し、レイアウトと基本的な動作を実装します。</p>
+<p>1.1 Androidサポートリポジトリが利用可能であることを確認する</p>
+<p>Androidサポートライブラリは、Android SDKの一部としてダウンロードされ、Android SDKマネージャで利用できます。Android Studioでは、サポートライブラリのローカルリポジトリであるAndroidサポートリポジトリを使用して、Gradleのビルドファイルからライブラリにアクセスします。このタスクでは、Androidサポートリポジトリがダウンロードされ、プロジェクトで利用可能であることを確認します。</p>
+<ol type="1" start="1">
+<li>Android Studioで、[ツール] &gt; [Android] &gt; [SDKマネージャー]を選択するか、SDKマネージャーのアイコンをクリックします。 </li>
+</ol>
+<p>Android SDK Default Preferences ペインが表示されます。</p>
+<ol type="1" start="1">
+<li>SDK Tools]タブをクリックし、下図のようにSupport Repositoryを展開します。</li>
+</ol>
+<ol type="1" start="1">
+<li>リストからAndroidサポートリポジトリを探します。</li>
+</ol>
+<p>ステータス] 列に [インストール済み] と表示されれば、設定は完了です。キャンセルをクリックします。</p>
+<p>インストールされていない」または「更新可能」と表示された場合は、「Android Support Repository」の横にあるチェックボックスをクリックします。チェックボックスの横にダウンロードアイコンが表示されます。OKをクリックします。</p>
+<ol type="1" start="1">
+<li>再度 OK をクリックし、サポートリポジトリがインストールされたら終了します。</li>
+</ol>
+<p>1.2 プロジェクトを設定して、build.gradleを調べる</p>
+<ol type="1" start="1">
+<li>HelloCompatという新しいプロジェクトを作成します。</li>
+</ol>
+<p>対象となるAndroidデバイスのページでは、API 15: Android 4.0.3 (IceCreamSandwich)が最小SDKとして選択されています。これまでのレッスンで学んだように、これはアプリがサポートするAndroidプラットフォームの最も古いバージョンです。</p>
+<ol type="1" start="1">
+<li>次へ」をクリックし、「空のアクティビティ」テンプレートを選択します。</li>
+<li>次へ]をクリックし、[レイアウトファイルの生成]と[後方互換性（App Compat）]オプションがチェックされていることを確認します。後者のオプションは、アプリが以前のバージョンのAndroidとの下位互換性を保証します。</li>
+<li>終了をクリックしてください。</li>
+</ol>
+<p>Explore build.gradle (Module:app)</p>
+<ol type="1" start="1">
+<li>Android Studioで、[プロジェクト] &gt; [Android] ペインが開いていることを確認します。</li>
+<li>Gradle Scriptsを展開し、build.gradle (Module: app)ファイルを開きます。</li>
+</ol>
+<p>プロジェクト全体(build.gradle (<code>Project: helpcompat)</code>用のbuild.gradleは、アプリモジュール用の<code>build.gradle</code>とは別のファイルであることに注意してください。build.gradle (<code>Module: app)</code> ファイル内の</p>
+<ol type="1" start="1">
+<li>ファイルの先頭近くの <code>compileSdkVersion</code> 行を探します。例えば、以下のようになります。</li>
+</ol>
+<p><code>compileSdkVersion 26</code></p>
+<p>コンパイルバージョンは、アプリがAndroid StudioでコンパイルされたAndroidフレームワークのバージョンです。新しいプロジェクトの場合、コンパイルバージョンは、インストールしたフレームワークAPIの最新のセットになります。この値は、Android Studio 自体と、古いまたは新しい API を使用している場合に Android Studio で取得する警告やエラーにのみ影響します。</p>
+<ol type="1" start="1">
+<li><code>数行下の defaultConfig セクションの minSdkVersion 行を探します。</code></li>
+</ol>
+<p><code>minSdkVersion 15</code></p>
+<p>最小バージョンは、アプリが動作する最も古いAndroid APIのバージョンです。これは、プロジェクトを作成したときにステップ1で選択したのと同じ番号です。Google Playストアでは、この番号を使用して、アプリが特定のユーザーのデバイスで実行できることを確認しています。また、Android Studioはこの番号を使用して、非推奨APIの使用を警告します。</p>
+<ol type="1" start="1">
+<li><code>defaultConfig セクションの targetSdkVersion 行を探します。例えば、以下のようになります。</code></li>
+</ol>
+<p><code>targetSdkVersion 26</code></p>
+<p>ターゲット バージョンは、アプリが設計およびテストされているAPIのバージョンを示します。AndroidプラットフォームのAPIがこの数字よりも高い場合（つまり、アプリが新しいデバイスで実行されている場合）、プラットフォームは、アプリが設計された方法で動作し続けるように互換性のある動作を有効にする場合があります。例えば、Android 6.0（API 23）では、新しいランタイム権限モデルが提供されています。アプリがより低いAPIレベルをターゲットにしている場合、プラットフォームは古いインストール時のパーミッションモデルにフォールバックします。</p>
+<p>ターゲットSDKはコンパイルSDKと同じ番号になることもありますが、アプリをテストしたAPIの最新バージョンを示す低い番号になることが多いです。</p>
+<ol type="1" start="1">
+<li>ファイルの最後近くにある build.gradle の依存関係のセクションを探してください。例えば</li>
+</ol>
+<p>依存関係</p>
+<p><code>    実装 fileTree(dir: 'libs', include: ['*.jar'] )</code></p>
+<p><code>    実装 'com.android.support:appcompat-v7:26.1.0'</code></p>
+<p>    インプリメンテーション</p>
+<p><code>'com.android.support.constraint:constraint-layout:1.0.2'</code></p>
+<p><code>    testImplementation 'junit:junit:4.12'</code></p>
+<p><code>    androidTestImplementation 'com.android.support.test:runner:1.0.1'</code></p>
+<p>    アンドロイドテストインプリメンテーション</p>
+<p><code>'com.android.support.test.espresso:espresso-core:3.0.1'</code></p>
+<p><code>}</code></p>
+<p>新しいプロジェクトの依存関係のセクションには、Espresso と JUnit でのテストを可能にするためのいくつかの依存関係と、v7 appcompat サポートライブラリが含まれています。プロジェクト内のこれらのライブラリのバージョン番号は、ここに示されているものとは異なるかもしれません。</p>
+<p>v7 appcompat サポートライブラリは、API 9 までの古いバージョンの Android の後方互換性を提供します。これには v4 compat ライブラリも含まれているので、両方を依存関係として追加する必要はありません。</p>
+<ol type="1" start="1">
+<li>必要に応じてバージョン番号を更新してください。</li>
+</ol>
+<p>ライブラリの現在のバージョン番号が、現在利用可能なライブラリのバージョン番号よりも低い場合、Android Studioはその行をハイライト表示し、新しいバージョンが利用可能であることを警告します（「A newer version of com.android.support:appcompat-v7 is available」）。バージョン番号を更新されたバージョンに編集します。</p>
+<p>ヒント：ハイライトラインの任意の場所をクリックして、<strong><code>Alt+Enter</code></strong></p>
+<p><strong>キー</strong>（Macの場合は<strong><code>Option+Return</code></strong></p>
+<p><strong>キー</strong>）を押すこともできます。メニューから <em>xx.xx.xx.x </em>に変更を選択します。</p>
+<ol type="1" start="1">
+<li><code>必要に応じて compileSdkVersion 番号を更新します。</code></li>
+</ol>
+<p>サポート・ライブラリのメジャー・バージョン番号（最初の番号）が <code>compileSdkVersion</code> と一致している必要があります。サポート・ライブラリのバージョンを更新する際には、<code>compileSdkVersion</code>も一致するように更新する必要があるかもしれません。</p>
+<ol type="1" start="1">
+<li>今すぐ同期」をクリックして、更新したGradleファイルをプロジェクトと同期します。</li>
+<li>必要に応じて、不足しているSDKプラットフォームファイルをインストールします。</li>
+</ol>
+<p><code>compileSdkVersion</code>を更新した場合は、SDKプラットフォームコンポーネントのインストールが必要になる場合があります。Install missing platform(s) and sync project をクリックして、このプロセスを開始します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：レイアウトとMainActivityの実装" duration="0">
+        <p>このタスクでは、<code>MainActivity</code> クラスのレイアウトと基本的な動作を実装します。</p>
+<p>2**.1 レイアウトや色を変更する***。</p>
+<p>このタスクでは、アプリの<code>activity_main.xml</code>レイアウトを変更します。</p>
+<ol type="1" start="1">
+<li>プロジェクト &gt; Android ペインで activity_main.xml を開きます。</li>
+<li>デザイン］タブ（まだ選択されていない場合）をクリックすると、レイアウトエディタが表示されます。</li>
+<li>レイアウトで「Hello World」テキストビューを選択し、「属性」ペインを開きます。</li>
+<li><code>TextView</code>属性を以下のように変更します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性フィールド</p>
+</td><td colspan="1" rowspan="1"><p>以下のように入力してください。</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>身分証明書</p>
+</td><td colspan="1" rowspan="1"><p>ハローテキストビュー</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>テキストスタイル</p>
+</td><td colspan="1" rowspan="1"><p>Ｂ（太字</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>テキストアラインメント</p>
+</td><td colspan="1" rowspan="1"><p>段落アイコンを中央に配置</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>テキストサイズ</p>
+</td><td colspan="1" rowspan="1"><p>百戦錬磨</p>
+</td></tr>
+</table>
+<p>これは、<code>id</code>を<code>hello_textview</code>に設定したテキストビューに<code>android:id</code>属性を追加し、テキストの配置を変更し、テキストを太字にし、テキストサイズを<code>100sp</code>に大きく設定します。</p>
+<ol type="1" start="1">
+<li><code>hello_textview</code>の<code>TextView</code>の下部からレイアウトの下部に伸びる制約を削除し、<code>TextView</code>がレイアウトの上部にスナップするようにして、以下のように上部余白に8(8dp)を選択します。</li>
+</ol>
+<ol type="1" start="1">
+<li>下図のように<code>Button</code>をレイアウトの一番下にドラッグして、レイアウトの左右と一番下に制約を加えます。</li>
+</ol>
+<ol type="1" start="1">
+<li>ボタンの属性ペインの layout_width 属性を match_constraint に変更します。</li>
+<li>ボタンの属性ペインの他の属性を以下のように変更します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性フィールド</p>
+</td><td colspan="1" rowspan="1"><p>以下のように入力してください。</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>身分証明書</p>
+</td><td colspan="1" rowspan="1"><p>カラーボタン</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>文章</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>色を変える</p>
+</td></tr>
+</table>
+<p>これでボタンは以下のようにレイアウトに表示されるはずです。</p>
+<ol type="1" start="1">
+<li>前回のレッスンでは、リテラルテキスト文字列から文字列リソースを抽出する方法を学びました。TextタブをクリックしてXMLコードに切り替え、<code>TextView</code>と<code>Button</code>で<code>"Hello Text!"</code>と<code>"Change Color"</code>の文字列を抽出し、それらの文字列リソース名を入力します。</li>
+<li><code>Buttonに以下のandroid:onClick属性を追加します。</code></li>
+</ol>
+<p><code>android:onClick="changeColor"</code></p>
+<ol type="1" start="1">
+<li>色を追加するには、[プロジェクト] &gt; [Android] ペインで res と values を展開し、colors.xml を開きます。</li>
+<li>以下のカラーリソースをファイルに追加します。</li>
+</ol>
+<p><code><color name="red"> #F44336</color</code></p>
+<p><code><color name="pink"> #E91E63</color</code></p>
+<p><code><color name="purple"> #9C27B0</color</code></p>
+<p><code><color name="deep_purple"> #673AB7</color</code></p>
+<p><code><color name="indigo"> #3F51B5</color</code></p>
+<p><code><color name="blue"> #2196F3</color</code></p>
+<p><code><color name="light_blue"> #03A9F4</color</code></p>
+<p><code><color name="シアン"> #00BCD4</color</code></p>
+<p><code><color name="ティール"> #009688</color</code></p>
+<p><code><color name="green"> #4CAF50</color</code></p>
+<p><code><color name="light_green"> #8BC34A</color</code></p>
+<p><code><color name="lime"> #CDDC39</color</code></p>
+<p><code><color name="yellow"> #FFEB3B</color</code></p>
+<p><code><color name="amber"> #FFC107</color</code></p>
+<p><code><color name="orange"> #FF9800</color</code></p>
+<p><code><color name="deep_orange"> #FF5722</color</code></p>
+<p><code><color name="brown"> #795548</color</code></p>
+<p><code><color name="gray"> #9E9E9E</color</code></p>
+<p><code><color name="blue_grey"> #607D8B</color</code></p>
+<p><code><color name="black"> #000000</color</code></p>
+<p>これらの色の値と名前は、<a href="https://material.google.com/style/color.html" target="_blank">マテリアルデザイン - スタイル - カラー</a>で定義されたAndroidアプリの推奨カラーパレットから来ています。コードはカラーRGB値を16進数で示しています。</p>
+<p>2**.2 MainActivity**に動作を追加する</p>
+<p>このタスクでは、プライベート変数を追加し、<code>onCreate()</code>と<code>onSaveInstanceState()</code>を実装して、プロジェクトのセットアップを終了します。</p>
+<ol type="1" start="1">
+<li>MainActivityを開きます。</li>
+<li>クラスの先頭に、<code>TextView</code>オブジェクトを保持するためのプライベート変数を追加します。</li>
+</ol>
+<p><code>private TextView mHelloTextView.</code></p>
+<ol type="1" start="1">
+<li>プライベート変数の直後に以下の色の配列を追加します。</li>
+</ol>
+<p><code>private String[] mColorArray = {"red", "pink", "purple", "deep_purple"。</code></p>
+<p><code>"</code>インディゴ<code>"</code>、<code>"</code>ブルー<code>"</code>、<code>"</code>ライトブルー<code>"</code>、<code>"</code>シアン<code>"</code>、<code>"</code>ティール<code>"</code>、<code>"</code>グリーン<code>"</code></p>
+<p><code>", "lime", "yellow", "mber", "orange", "deep_orange"。</code></p>
+<p><code>"BROWN", "GREY", "BLUE_GREY", "BLACK" }。</code></p>
+<p>各色名は、<code>color.xml</code>内の色リソースの名前に対応しています。</p>
+<ol type="1" start="1">
+<li><code>onCreate()</code> メソッドで <code>findViewById()</code> を使用して <code>TextView</code> インスタンスへの参照を取得し、そのプライベート変数に代入します。</li>
+</ol>
+<p><code>mHelloTextView = findViewById(R.id.hello_textview).</code></p>
+<ol type="1" start="1">
+<li>また、<code>onCreate()</code> で、保存されたインスタンスの状態があれば、それを復元します。</li>
+</ol>
+<p><code>//</code> 保存されたインスタンスの状態を復元します（テキストの色</p>
+<p><code>if (savedInstanceState != null) { (savedInstanceState != null)</code></p>
+<p><code>    mHelloTextView.setTextColor(savedInstanceState.getInt("color") )。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>テキストの色を保存するために、MainActivityにonSaveInstanceState()メソッドを追加します。</code></li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public void onSaveInstanceState(Bundle outState) {.</code></p>
+<p><code>super.onSaveInstanceState(outState)を保存します。</code></p>
+<p><code>//</code> 現在のテキストの色を保存します</p>
+<p><code>    outState.outState.putInt("color", mHelloTextView.getCurrentTextColor())。</code></p>
+<p><code>}</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク2のソリューションコード" duration="0">
+        <p>以下は、これまでのHelloCompatアプリのXMLレイアウトの解決コードと<code>MainActivity</code>クラスのコードスニペットです。</p>
+<p>XMLレイアウト</p>
+<p><code>activity_main.xml</code>ファイルのXMLレイアウトを以下に示します。ボタンの<code>android:onClick</code>属性の<code>changeColor</code>クリックハンドラは、まだ定義されていないので赤で下線が引かれています。次のタスクで定義します。</p>
+<p><code><android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
+<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
+<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>tools:context="com.example.android.myapplication.MainActivity"></code></p>
+<p><code><</code>テキストビュー</p>
+<p><code>android:id="@+id/hello_textview"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="8dp"</code></p>
+<p><code>android:text="@string/hello_world"</code></p>
+<p><code>="center"</code></p>
+<p><code>="100sp"</code></p>
+<p><code>="bold"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="親"</code></p>
+<p><code>="親" /></code></p>
+<p><code><</code>ボタン</p>
+<p><code>android:id="@+id/color_button"</code></p>
+<p><code>="0dp"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="8dp"</code></p>
+<p><code>android:text="@string/change_color"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="親"</code></p>
+<p><code>="changeColor"/></code></p>
+<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<p>主な活動</p>
+<p><code>MainActivity</code>クラスには、クラスの先頭に以下のプライベート変数が含まれています。</p>
+<p><code>// Hello Worldのテキストビューです。</code></p>
+<p><code>private TextView mHelloTextView.</code></p>
+<p><code>//</code> 色名の配列，これらは<code>color.xml</code>の色リソースと一致します．</p>
+<p><code>private String[] mColorArray = {"red", "pink", "purple", "deep_purple"。</code></p>
+<p><code>"</code>インディゴ<code>"</code>、<code>"</code>ブルー<code>"</code>、<code>"</code>ライトブルー<code>"</code>、<code>"</code>シアン<code>"</code>、<code>"</code>ティール<code>"</code>、<code>"</code>グリーン<code>"</code></p>
+<p><code>", "lime", "yellow", "mber", "orange", "deep_orange"。</code></p>
+<p><code>"BROWN", "GREY", "BLUE_GREY", "BLACK" }。</code></p>
+<p><code>MainActivity クラスには、以下の onCreate() メソッドと onSaveInstanceState() メソッドがあります。</code></p>
+<p>オーバーライド</p>
+<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
+<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
+<p><code>    setContentView(R.layout.activity_main)を使用しています。</code></p>
+<p><code>    mHelloTextView = findViewById(R.id.hello_textview).</code></p>
+<p><code>//</code> 保存されたインスタンスの状態を復元します（テキストの色</p>
+<p><code>if (savedInstanceState != null) { (savedInstanceState != null)</code></p>
+<p><code>        mHelloTextView.setTextColor(savedInstanceState.getInt("color") )。</code></p>
+<p><code>    }</code></p>
+<p><code>}</code></p>
+<p>オーバーライド</p>
+<p><code>public void onSaveInstanceState(Bundle outState) {.</code></p>
+<p><code>super.onSaveInstanceState(outState)を保存します。</code></p>
+<p><code>//</code> 現在のテキストの色を保存します</p>
+<p><code>    outState.outState.putInt("color", mHelloTextView.getCurrentTextColor())。</code></p>
+<p><code>}</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3: ボタンの動作を実装する" duration="0">
+        <p>HelloCompatアプリのChange Colorボタンは、<code>color.xml</code>リソースファイルから20色のうちの1つをランダムに選択し、テキストの色をその色に設定します。このタスクでは、ボタンクリックハンドラの動作を実装します。</p>
+<p>2.1 changeButton()クリックハンドラの追加</p>
+<ol type="1" start="1">
+<li>まだ開いていない場合は、activity_main.xmlを開きます。テキストタブをクリックしてXMLコードを表示します。</li>
+<li><code>Button要素内のandroid:onClick属性の「changeColor」をクリックします。</code></li>
+<li><code>Alt+Enter（</code>Mac<code>の場合はOption+Enter）を押して、</code>Create onClick<code>イベントハンドラを選択します。</code></li>
+<li>MainActivity を選択し、OK をクリックします。</li>
+</ol>
+<p>これは、<code>MainActivity</code>の<code>changeColor()</code>メソッドのプレースホルダメソッドのスタブを作成します。</p>
+<p><code>public void changeColor(View view) {</code></p>
+<p><code>}</code></p>
+<p>2.2 ボタンアクションの実装</p>
+<ol type="1" start="1">
+<li>MainActivityに切り替えます。</li>
+<li><code>changeColor()</code>メソッドでは、<code>Random</code>クラス(Javaクラス)を使って単純な乱数を生成することで、乱数オブジェクトを作成します。</li>
+</ol>
+<p><code>Random random = new Random()。</code></p>
+<ol type="1" start="1">
+<li>ランダムなインスタンスを使用して、<code>mColorArray</code> 配列からランダムな色を選択します。</li>
+</ol>
+<p><code>String colorName = mColorArray[random.nextInt(20)]。</code></p>
+<p>引数 20 を指定した <code>nextInt()</code> メソッドは、0 から 19 の間の別のランダムな整数を取得します。その整数を配列のインデックスとして使用して色名を取得します。</p>
+<ol type="1" start="1">
+<li>リソースから色名のリソース識別子（整数）を取得します。</li>
+</ol>
+<p><code>int colorResourceName = getResources().getIdentifier(colorName.</code></p>
+<p><code>"color", getApplicationContext().getPackageName().</code></p>
+<p>アプリがコンパイルされると、Android システムは XML ファイル内の定義を内部整数 ID を持つリソースに変換します。名前と値の両方に別々の ID があります。この行は、<code>colorName</code> 配列の色文字列を XML リソース ファイル内の対応する色名 ID と一致させます。<code>getResources()</code> メソッドは、アプリのすべてのリソースを取得します。<code>getIdentifier()</code> メソッドは、現在のパッケージ名のカラー リソース <code>("color</code>&#34;) のカラー名 (文字列) を検索します。</p>
+<ol type="1" start="1">
+<li>リソースから実際の色の整数値のIDを取得して<code>colorRes</code>変数に代入し、<code>getTheme()</code>メソッドを使って現在のアプリケーションコンテキストのテーマを取得します。</li>
+</ol>
+<p><code>int colorRes =</code></p>
+<p><code>   getResources().getColor(colorResourceName, this.getTheme())を使用しています。</code></p>
+<p><code>getResources()</code>メソッドはアプリのリソースのセットを取得し、<code>getColor()</code>メソッドはそれらのリソースから色名のIDで特定の色を取得します。ただし、<code>getColor()</code>では赤の下線が強調されています。</p>
+<p><code>getColor()</code>を指差すとAndroid Studioが報告してくる。&#34;Call requires API 23 (current min is 15)&#34; と報告されます。<code>minSdkVersion</code>が15なので、API 15以降に導入されたAPIを使用しようとすると、このメッセージが表示されます。アプリをコンパイルすることはできますが、このバージョンの <code>getColor()</code> は API 23 より前のデバイスでは使用できないため、ユーザーが [Change Color] ボタンをタップするとアプリがクラッシュします。</p>
+<p>この段階では、プラットフォームのバージョンをチェックして、アプリが実行されている場所に応じて適切なバージョンの <code>getColor()</code> を使用することができます。古いAndroid APIと新しいAndroid APIの両方を警告なしでサポートするより良い方法は、サポートライブラリの互換性クラスの1つを使用することです。</p>
+<ol type="1" start="1">
+<li><code>ContextCompat</code>クラスを使用するように<code>colorRes</code>の割り当て行を変更します。</li>
+</ol>
+<p><code>int colorRes = ContextCompat.getColor(this, colorResourceName).</code></p>
+<p><code>ContextCompat</code> には、アプリケーションのコンテキストとアプリのリソースにおける API の違いに対応するための多くの互換性メソッドが用意されています。<code>ContextCompat</code> の <code>getColor()</code> メソッドは、現在のコンテキスト (ここでは <code>Activity</code> インスタンス、<code>this</code>) と色の名前の 2 つの引数を取ります。</p>
+<p>サポート ライブラリでのこのメソッドの実装は、API の異なるバージョンでの実装の違いを隠しています。このメソッドは、コンパイルしたSDKや最小SDKのバージョンに関係なく、警告、エラー、クラッシュなしで呼び出すことができます。</p>
+<ol type="1" start="1">
+<li>テキストビューの色をカラーリソースIDに設定します。</li>
+</ol>
+<p><code>mHelloTextView.setTextColor(colorRes).</code></p>
+<ol type="1" start="1">
+<li>デバイスまたはエミュレータでアプリを実行し、「色の変更」ボタンをクリックします。</li>
+</ol>
+<p>色の変更ボタンは、以下のようにアプリ内のテキストの色を変更できるようになりました。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。" duration="0">
+        <p>メインアクティビティソリューション</p>
+<p><code>以下はMainActivityのchangeColor()クリックハンドラです。</code></p>
+<p><code>/**</code></p>
+<p><code>*</code> このメソッドは、色の変更ボタンのクリックを</p>
+<p><code>*</code> 色の配列からランダムな色を選択します。</p>
+<p><code>*</code></p>
+<p><code>*</code> クリックされたビュー</p>
+<p><code>*/</code></p>
+<p><code>public void changeColor(View view) {</code></p>
+<p><code>//</code> カラー配列（<code>20</code>色）からランダムな色名を取得します。</p>
+<p><code>Random random = new Random()。</code></p>
+<p><code>String colorName = mColorArray[random.nextInt(20)]。</code></p>
+<p><code>//</code> 色名に一致する色の識別子を取得します。</p>
+<p><code>int colorResourceName = getResources().getIdentifier(colorName.</code></p>
+<p><code>"color", getApplicationContext().getPackageName().</code></p>
+<p><code>//</code> リソースから色の<code>ID</code>を取得します。</p>
+<p><code>int colorRes = ContextCompat.getColor(this, colorResourceName).</code></p>
+<p><code>//</code> テキストの色を設定します。</p>
+<p><code>    mHelloTextView.setTextColor(colorRes).</code></p>
+<p><code>}</code></p>
+<p>Android Studioプロジェクト</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/HelloCompat" target="_blank">HelloCompat</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>課題。アプリが API 23 よりも古いバージョンの Android をサポートするデバイスで実行されている場合、<code>ContextCompat</code> for を使用してカラー リソースを取得するのではなく、<a href="https://developer.android.com/reference/android/os/Build.html" target="_blank"><code>Build</code></a> クラスの値のテストを使用して別の操作を実行します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>Androidサポートライブラリをインストールします。</p>
+<ul>
+<li>SDK マネージャーを使用して、Android サポート リポジトリをインストールします。ツール] &gt; [Android] &gt; [SDK マネージャー] を選択し、[SDK ツール] タブをクリックして、[サポート リポジトリ] を展開します。</li>
+<li>Androidサポートリポジトリのステータス欄に「インストール済み」と表示された場合は「キャンセル」を、「インストールされていない」または「更新可能」と表示された場合は「チェックボックス」をクリックします。チェックボックスの横にダウンロードアイコンが表示されます。OKをクリックします。</li>
+</ul>
+<p>Android は、異なる API バージョンに対してアプリがどのように動作するかを示すために、3 つのディレクティブを使用しています。</p>
+<ul>
+<li><code>minSdkVersion</code>: アプリがサポートする最小のAPIバージョン。</li>
+<li><code>compileSdkVersion</code>: アプリをコンパイルするAPIのバージョン。</li>
+<li><code>targetSdkVersion</code>: <code>アプリが設計された</code>API<code>のバージョン。</code></li>
+</ul>
+<p>プロジェクトの依存関係を管理するために</p>
+<ul>
+<li>プロジェクト &gt; Android ペインで Gradle Scripts を展開し、build.gradle (Module: app) ファイルを開きます。</li>
+<li>依存関係は依存関係セクションで追加できます。</li>
+</ul>
+<p><code>ContextCompat</code> クラスは、古い API レベルと新しい API レベルの両方のコンテキストとリソース関連のメソッドとの互換性のためのメソッドを提供します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>関連概念のドキュメントは「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-3-c-the-android-support-library/3-3-c-the-android-support-library.html" target="_blank">3.3: Androidサポートライブラリ」</a>にあります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>Android Studioのドキュメント。</p>
+<ul>
+<li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
+</ul>
+<p>Androidの開発者向けドキュメント。</p>
+<ul>
+<li><a href="https://developer.android.com/topic/libraries/support-library/" target="_blank">Androidサポートライブラリ</a>（紹介</li>
+<li><a href="https://developer.android.com/topic/libraries/support-library/setup.html" target="_blank">サポートライブラリの設定</a></li>
+<li><a href="https://developer.android.com/topic/libraries/support-library/features.html" target="_blank">サポートライブラリの機能</a></li>
+<li><a href="https://developer.android.com/training/basics/supporting-devices/platforms.html" target="_blank">異なるプラットフォームのバージョンをサポート</a></li>
+<li><a href="https://developer.android.com/reference/packages.html" target="_blank">パッケージインデックス</a> (android.support で始まるすべての API パッケージ)</li>
+</ul>
+<p>他にもあります。</p>
+<ul>
+<li><a href="https://medium.com/google-developers/picking-your-compilesdkversion-minsdkversion-targetsdkversion-a098a0341ebd#.toysiva92" target="_blank">compileSdkVersion、minSdkVersion、targetSdkVersion の選択</a></li>
+<li><a href="http://martiancraft.com/blog/2015/06/android-support-library/" target="_blank">Androidサポートライブラリを理解する</a></li>
+<li><a href="https://blog.egorand.me/all-the-things-compat/" target="_blank">すべてのものが一致している</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題を採点します。</li>
+</ul>
+<p>講師は、彼らが望むように少しまたは多くのようにこれらの提案を使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じるはずです。</p>
+<p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
+<p>アプリを実行する</p>
+<p>サポートライブラリを使用した実習で作成した<a href="https://drive.google.com/file/d/1ke_6jKU7IseP_mSHBA7gIJMxTp9UvY4I/view?usp=sharing" target="_blank">HelloCompat</a>アプリを開きます。</p>
+<ol type="1" start="1">
+<li>実際に色を変更する <code>changeColor()</code> メソッドの行にデバッガーのブレークポイントを設定します。</li>
+</ol>
+<p><code>int colorRes = ContextCompat.getColor(this, colorResourceName).</code></p>
+<ol type="1" start="1">
+<li>API バージョン 23 以降を実行しているデバイスまたはエミュレータで、デバッグ モードでアプリを実行します。ステップ イントゥ] をクリックして <code>getColor()</code> メソッドにステップインし、スタックの奥深くでメソッド呼び出しを追跡します。<code>ContextCompat</code> クラスがリソースから色を取得する方法を決定する方法、およびどの他のフレームワーク クラスを使用するかを調べます。</li>
+</ol>
+<p>クラスによっては、&#34;ソースコードがバイトコードと一致しない&#34;という警告が表示されることがあります。既知のソースファイルに戻るには Step Out をクリックするか、デバッガが勝手に戻るまで Step Into をクリックし続けてください。</p>
+<ol type="1" start="1">
+<li>API のバージョンが 23 よりも古いデバイスまたはエミュレータを実行している場合は、前のステップを繰り返します。フレームワークが色を取得するために取る異なるパスに注意してください。</li>
+</ol>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p><code>ContextCompat.getColor()</code> メソッドに最初に足を踏み入れたときに表示されるクラスはどれですか?1つ選んでください。</p>
+<ul>
+<li>主な活動</li>
+<li>コンテキストコンパット</li>
+<li><code>AppCompatActivity</code></li>
+<li>文脈</li>
+</ul>
+<p>質問2</p>
+<p>表示されるクラスで、ビルドバージョンがAPIバージョン23以降の場合に実行されるステートメントはどれか。1つ選んでください。</p>
+<ul>
+<li><code>return context.getColor(id)。</code></li>
+<li><code>return context.getResources().getColor(id).</code></li>
+<li><code>throw new IllegalArgumentException("permission is null")。</code></li>
+<li><code>return mResources == null ? super.getResources() : mResources.</code></li>
+</ul>
+<p>質問3</p>
+<p><code>ContextCompat.getColor()</code> メソッドを <code>getColor()</code> メソッドに戻すと、アプリを実行したときに何が起こりますか？1つ選んでください。</p>
+<ul>
+<li><code>minSdkVersion</code>が15の場合、コードエディタでは<code>getColor</code>という単語に赤で下線が引かれています。ポインタをその上に合わせると、Android Studio は「Call requires API 23 (current min is 15)」と報告します。</li>
+<li>API 23以降を使用しているエミュレータやデバイスでは、アプリはエラーなく動作します。</li>
+<li>エミュレータやデバイスがAPI 17を使用している場合、ユーザーが「Change Color」をタップするとアプリがクラッシュします。</li>
+<li>上記の全てを</li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>この宿題のために提出するアプリはありません。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,532 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 07.1:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="7-1"
+                  title="Android 開発者基礎講座 07.1:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、&#34;codelab&#34;と&#34;practical&#34;という用語を入れ替えて使用しています。</p>
+<p>序章</p>
+<p>スレッドとは、実行中のプログラムにおける独立した実行パスのことです。Android プログラムが起動されると、システムはメイン スレッドを作成し、<em>UI </em>スレッドとも呼ばれます。この UI スレッドは、アプリが Android UI ツールキットのコンポーネントとどのように相互作用するかを示します。</p>
+<p>アプリがファイルのダウンロード、データベースクエリの作成、メディアの再生、複雑な分析の計算などのリソース集約的なタスクを実行する必要がある場合があります。このような集中的な作業を行うと、UI スレッドがブロックされ、アプリがユーザーの入力に反応しなくなったり、画面に描画されなくなったりすることがあります。ユーザーはイライラしてアプリをアンインストールしてしまう可能性があります。</p>
+<p>ユーザーエクスペリエンス（UX）をスムーズに保つために、Android フレームワークでは、UI スレッドの外で作業を処理する<a href="http://developer.android.com/reference/android/os/AsyncTask.html" target="_blank"><code>AsyncTask</code></a> と呼ばれるヘルパークラスを提供しています。<code>AsyncTask</code> を使用して集中的な処理を別のスレッドに移すことで、UI スレッドの応答性を維持することができます。</p>
+<p>別のスレッドは呼び出し側のスレッドと同期していないため、非同期スレッドと呼ばれます。<code>AsyncTask</code>にはコールバックも含まれており、計算結果をUIスレッドに表示することができます。</p>
+<p>この実践編では、<code>AsyncTask</code>を使ってAndroidアプリにバックグラウンドタスクを追加する方法を学びます。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>アクティビティを作成します。</li>
+<li>アクティビティのレイアウトにテキストビューを追加します。</li>
+<li>プログラムでテキストビューのidを取得し、その内容を設定します。</li>
+<li><code>Button ビューとその onClick 機能を使用します。</code></li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>アプリのバックグラウンドでタスクを実行するために、アプリに<code>AsyncTask</code>を追加する方法。</li>
+<li>バックグラウンドタスクに<code>AsyncTask</code>を使うことの欠点。</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li><code>AsyncTask</code>を使ってバックグラウンドタスクを実行するシンプルなアプリを作成します。</li>
+<li>アプリを実行して、デバイスを回転させるとどうなるかを確認してください。</li>
+<li><code>TextView</code>メッセージの状態を保持するためのアクティビティインスタンスの状態を実装します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>1つの<code>TextView</code>と1つの<code>Button</code>を持つアプリを作成します。ユーザーがボタンをクリックすると、アプリはランダムな時間だけスリープ状態になり、スリープが解除されると<code>TextView</code>にメッセージが表示されます。完成したアプリは以下のようになります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3。タスク 1: SimpleAsyncTask プロジェクトをセットアップする" duration="0">
+        <p>SimpleAsyncTask UI には、<code>AsyncTask</code> を起動する <code>Button</code> と、アプリのステータスを表示する <code>TextView</code> があります。</p>
+<p>1.1 プロジェクトとレイアウトを作成する</p>
+<ol type="1" start="1">
+<li>Empty Activity テンプレートを使って SimpleAsyncTask という名前の新しいプロジェクトを作成します。他のすべてのオプションのデフォルトを受け入れます。</li>
+<li><code>activity_main.xml</code>レイアウトファイルを開きます。テキスト］タブをクリックします。</li>
+<li><code>トップレベル ConstraintLayout に layout_margin 属性を追加します。</code></li>
+</ol>
+<p><code>android:layout_margin="16dp"</code></p>
+<ol type="1" start="1">
+<li>Hello World!テキストビューに以下の属性を追加または修正します。文字列をリソースに展開します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/textView1</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>テキスト</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>仕事を始める準備ができました！<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>テキストサイズ</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>２４ＳＰ</p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li><code>app:layout_constraintRight_toRightOf属性とapp:layout_constraintTop_toTopOf属性を削除します。</code></li>
+<li><code>TextView</code>のすぐ下に<code>Button</code>要素を追加し、これらの属性を与えます。ボタンのテキストを文字列リソースに抽出します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/button"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの幅</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ラップコンテンツ<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>レイアウトの高さ</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ラップコンテンツ<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>テキスト</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>タスク開始</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_marginTop</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"24dp"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>オンクリック</p>
+</td><td colspan="1" rowspan="1"><p><code>"startTask"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>app:layout_constraintStart_toStartOf</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>おや</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>app:layout_constraintTop_toBottomOf</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/textView1"</code></p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li>ボタンの <code>onClick</code> 属性は黄色でハイライトされますが、これは MainActivity に <code>startTask()</code> メソッドがまだ実装されていないためです。ハイライトされたテキストにカーソルを置き、Alt + Enter（Macの場合はOption + Enter）を押し、「MainActivity」で「Create &#39;startTask(View) in &#39;MainActivity&#39;」を選択して、MainActivityにメソッドのスタブを作成します。</li>
+</ol>
+<p><code>activity_main.xmlのソリューションコードです。</code></p>
+<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
+<p><code><android.support.constraint.ConstraintLayout</code></p>
+<p><code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
+<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
+<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="16dp"</code></p>
+<p><code>=".MainActivity"></code></p>
+<p><code><</code>テキストビュー</p>
+<p><code>android:id="@+id/textView1"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>android:text="@string/ready_to_start"</code></p>
+<p><code>="24sp"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="親"/></code></p>
+<p><code><</code>ボタン</p>
+<p><code>="@+id/button"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="24dp"</code></p>
+<p><code>="startTask"</code></p>
+<p><code>android:text="@string/start_task"</code></p>
+<p><code>="parent"</code></p>
+<p><code>="@+id/textView1"/>.</code></p>
+<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2: AsyncTaskのサブクラスを作成する" duration="0">
+        <p><a href="http://developer.android.com/reference/android/os/AsyncTask.html" target="_blank"><code>AsyncTaskは</code></a>抽象クラスなので、使用するにはサブクラス化しなければなりません。この例では、<code>AsyncTask</code> は非常にシンプルなバックグラウンド タスクを実行します。実際のアプリでは、バックグラウンド タスクは、データベースの照会、インターネットへの接続、現在の囲碁チャンピオンに勝つための次の囲碁の手の計算など、あらゆる種類の作業を実行します。</p>
+<p><code>AsyncTask</code> サブクラスには、メインスレッドからの作業を実行するための以下のメソッドがあります。</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/os/AsyncTask.html#onPreExecute()" target="_blank"><code>onPreExecute()</code>を使用します</a>。このメソッドは UI スレッド上で実行され、タスクを設定するために使用されます (プログレスバーの表示など)。</li>
+<li><a href="https://developer.android.com/reference/android/os/AsyncTask.html#doInBackground(Params...)" target="_blank"><code>doInBackground()</code>を使用します</a>。ここでは、別スレッドで実行する作業を実行するコードを実装します。</li>
+<li><a href="https://developer.android.com/reference/android/os/AsyncTask.html#onProgressUpdate(Progress...)" target="_blank"><code>onProgressUpdate</code></a>()。これは UI スレッドで呼び出され、UI の進捗状況を更新するために使用されます (進捗バーを埋めるなど)</li>
+<li><a href="https://developer.android.com/reference/android/os/AsyncTask.html#onPostExecute(Result)" target="_blank"><code>onPostExecute</code></a>()。これもUIスレッド上で、<code>AsyncTask</code>の読み込みが終了した後に結果をUIに更新するために使用されます。</li>
+</ul>
+<p>注意: バックグラウンドスレッドやワーカースレッドとは、メインスレッドやUIスレッドではないスレッドのことです。</p>
+<p><code>AsyncTask</code> サブクラスを作成する際には、それが実行する作業についての情報、進捗状況を報告するかどうか、どのように報告するか、結果をどのような形式で返すかなどの情報を与えなければならない場合があります。<code>AsyncTask</code>サブクラスを作成する際には、これらのパラメータを使用して設定することができます。</p>
+<ul>
+<li>Params。<code>doInBackground()</code> オーバーライドメソッドの実行時にタスクに送信されるパラメータのデータ型。</li>
+<li>Progress（プログレス）。<code>onProgressUpdated()</code> オーバーライド・メソッドを使用して公開された進捗単位のデータ型。</li>
+<li>結果。<code>onPostExecute()</code> オーバーライド・メソッドによって配信される結果のデータ型。</li>
+</ul>
+<p>例えば、以下のクラス宣言を持つ <code>MyAsyncTask</code> という <code>AsyncTask</code> サブクラスは、以下のパラメータを取るかもしれません。</p>
+<ul>
+<li><code>doInBackground() のパラメータとしての文字列。</code></li>
+<li><code>onProgressUpdate() の整数で、ジョブの完了率を表します。</code></li>
+<li><code>onPostExecute()の結果を表すビットマップ。</code></li>
+</ul>
+<p><code>public クラス MyAsyncTask</code></p>
+<p><code>AsyncTask < String, Integer, Bitmap>{}を拡張します。</code></p>
+<p>このタスクでは、UIスレッドとは異なるスレッドで実行される作業を定義するために、<code>AsyncTask</code>サブクラスを使用します。</p>
+<p>2.1 AsyncTask のサブクラス</p>
+<p>このアプリでは、作成した <code>AsyncTask</code> サブクラスは、クエリ パラメータを必要とせず、進捗状況を公開しません。<code>doInBackground()</code> メソッドと <code>onPostExecute()</code> メソッドのみを使用します。</p>
+<ol type="1" start="1">
+<li><code>AsyncTask</code>を拡張し、3つの一般的な型のパラメータを取る<code>SimpleAsyncTask</code>という新しいJavaクラスを作成します。</li>
+</ol>
+<p>この <code>AsyncTask</code> は入力を必要としないので、パラメータは <code>Void</code> を使用します。進捗状況は公開されないので、進捗タイプに <code>Void</code> を使用します。<code>AsyncTask</code> の実行が完了したときに文字列で <code>TextView</code> を更新するため、結果の型には <code>String</code> を使用します。</p>
+<p><code>public class SimpleAsyncTask extends AsyncTask < Void, Void, String>{}.</code></p>
+<p>注意: 必要なメソッド <strong><code>doInBackground()</code></strong></p>
+<p><strong> が</strong>まだ実装されていないため、クラス宣言には赤で下線が引かれています。</p>
+<ol type="1" start="1">
+<li><code>クラスの先頭で、WeakReference<TextView>型のメンバ変数mTextViewを定義します。</code></li>
+</ol>
+<p><code>private WeakReference< TextView> mTextView.</code></p>
+<ol type="1" start="1">
+<li><code>AsyncTask</code>用のコンストラクタを実装し、<code>TextView</code>をパラメータとして受け取り、その<code>TextView</code>の新しい弱い参照を作成します。</li>
+</ol>
+<p><code>SimpleAsyncTask(TextView tv) { { { {.</code></p>
+<p><code>       mTextView = new WeakReference<>(tv).</code></p>
+<p><code>}</code></p>
+<p><code>AsyncTask</code>は、アクティビティのスリープが完了したら（<code>onPostExecute()</code>メソッドで）、アクティビティ内の<code>TextView</code>を更新する必要があります。そのため、クラスのコンストラクタは更新される<code>TextView</code>への参照を必要とします。</p>
+<p>弱い参照（<a href="https://developer.android.com/reference/java/lang/ref/WeakReference" target="_blank"><code>WeakReference</code></a>クラス）は何のためにあるのでしょうか？<code>AsyncTask</code>のコンストラクタに<code>TextView</code>を渡し、それをメンバ変数に格納すると、<code>TextView</code>への参照はアクティビティがガベージコレクションされないことを意味し、デバイスの設定変更のようにアクティビティが破棄されて再作成された場合でも、メモリがリークされます。これをリーキーコンテキストの作成と呼び、試してみるとAndroid Studioが警告してくれます。</p>
+<p>弱い参照は、必要に応じてその参照が保持するオブジェクトをガベージコレクションできるようにすることで、メモリリークを防ぎます。</p>
+<p>2.2 doInBackground() の実装</p>
+<p><code>doInBackground() メソッドは AsyncTask サブクラスに必要です。</code></p>
+<ol type="1" start="1">
+<li>ハイライトされたクラス宣言にカーソルを置き、Alt + Enter (Macの場合はOption + Enter)を押し、メソッドの実装を選択します。<code>doInBackground()</code> を選択し、OK をクリックします。以下のメソッドテンプレートがクラスに追加されます。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>protected String doInBackground(Void... voids) { { {.</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>0から10の間のランダムな整数を生成するコードを追加します。これはタスクが一時停止するミリ秒数です。これは一時停止する時間が少ないので、この数値に200を掛けて時間を延ばします。</li>
+</ol>
+<p><code>Random r = new Random().</code></p>
+<p><code>int n = r.nextInt(11).</code></p>
+<p><code>int s = n * 200.</code></p>
+<ol type="1" start="1">
+<li>トライ<code>/</code>キャッチブロックを追加して、スレッドをスリープ状態にします。</li>
+</ol>
+<p>試してみる</p>
+<p><code>Thread.sleep(s)。</code></p>
+<p><code>} catch (InterruptedException e) {catch (InterruptedException e)</code></p>
+<p><code>e.printStackTrace()。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>既存の<code>return</code>文を置き換えて、&#34;Awake at last after sleeping for <em>xx </em>milliseconds&#34;という文字列を返すようにします。</li>
+</ol>
+<p><code>return " " + s + "ミリ秒寝てようやく目が覚めました！"</code></p>
+<p>完全な <code>doInBackground()</code> メソッドは次のようになります。</p>
+<p>オーバーライド</p>
+<p><code>protected String doInBackground(Void... voids) { { {.</code></p>
+<p><code>// 0</code> から <code>10</code> の間の乱数を生成します．</p>
+<p><code>r = new Random().</code></p>
+<p><code>int n = r.nextInt(11).</code></p>
+<p><code>//</code> タスクの所要時間を十分に長くします。</p>
+<p><code>//</code> 実行中の携帯電話を回転させる時間</p>
+<p><code>int s = n * 200.</code></p>
+<p><code>//</code> ランダムな時間だけスリープします。</p>
+<p>試してみる</p>
+<p><code>Thread.sleep(s)。</code></p>
+<p><code>   } catch (InterruptedException e) {catch (InterruptedException e)</code></p>
+<p><code>       e.printStackTrace()。</code></p>
+<p><code>   }</code></p>
+<p><code>//</code> 文字列の結果を返します。</p>
+<p><code>return " " + s + "ミリ秒寝てようやく目が覚めました！"</code></p>
+<p><code>}</code></p>
+<p>2.3 onPostExecute()の実装</p>
+<p><code>doInBackground() メソッドが完了すると、戻り値は自動的に onPostExecute() コールバックに渡されます。</code></p>
+<ol type="1" start="1">
+<li><code>onPostExecute()</code>を実装し、<code>String</code>の引数を取り、その文字列をTextViewに表示します。</li>
+</ol>
+<p><code>   mTextView.get().setText(result).</code></p>
+<p><code>}</code></p>
+<p>このメソッドの <code>String</code> パラメータは、<code>AsyncTask</code> クラス定義の 3 番目のパラメータで定義したもので、<code>doInBackground()</code> メソッドが返すものです。</p>
+<p><code>mTextView</code>は弱い参照なので、その下にある<code>TextView</code>オブジェクトを取得するためには<code>get()</code>メソッドで参照し、その上で<code>setText()</code>を呼び出す必要があります。</p>
+<p>注意: <strong><code>onPostExecute()</code></strong>でUIを更新することができるのは、このメソッドがメインスレッドで実行されるからです。<strong><code>doInBackground()</code></strong> メソッドで新しい文字列で <strong><code>TextView</code></strong></p>
+<p><strong> を</strong>更新することはできません。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3：最終ステップの実施" duration="0">
+        <p>3.1 AsyncTaskを起動するメソッドを実装する</p>
+<p>アプリには、バックグラウンドで作業を実行する <code>AsyncTask</code> クラスが用意されています（シミュレートされた作業として <code>sleep()</code> を呼び出さなければ、そうなります）。これで、バックグラウンド タスクをトリガーするための「タスク開始」ボタンの onClick メソッドを実装できるようになりました。</p>
+<ol type="1" start="1">
+<li><code>MainActivity.javaファイルで、TextViewを格納するためのメンバ変数を追加します。</code></li>
+</ol>
+<p><code>private TextView mTextView.</code></p>
+<ol type="1" start="1">
+<li><code>onCreate()メソッドで、mTextViewをレイアウト内のTextViewに初期化します。</code></li>
+</ol>
+<p><code>mTextView = findViewById(R.id.textView1).</code></p>
+<ol type="1" start="1">
+<li><code>startTask()</code>メソッドで、&#34;Napping...&#34;というテキストを表示するように<code>TextView</code>を更新します。そのメッセージを文字列リソースに抽出します。</li>
+</ol>
+<p><code>mTextView.setText(R. string.napping)。</code></p>
+<ol type="1" start="1">
+<li><code>SimpleAsyncTask のインスタンスを作成し、TextView mTextView をコンストラクタに渡します。その SimpleAsyncTask インスタンスで execute() を呼び出します。</code></li>
+</ol>
+<p><code>new SimpleAsyncTask(mTextView).execute().</code></p>
+<p>注意: <strong><code>execute()</code></strong> メソッドでは、カンマで区切られたパラメータを渡し、システムから <strong><code>doInBackground()</code></strong> に渡されます。この <strong><code>AsyncTask</code></strong></p>
+<p><strong> には</strong>パラメータがないので、空欄のままにしておきます。</p>
+<p><code>MainActivity</code>のソリューションコードです。</p>
+<p><code>パッケージ com.example.android.simpleasynctask.</code></p>
+<p><code>import android.support.v7.app.AppCompatActivityをインポートします。</code></p>
+<p>インポート <code>android.os.</code>バンドルをインポートします。</p>
+<p><code>import android.view.ビューをインポートします。</code></p>
+<p>インポート <code>android.widget.</code>テキストビューをインポートしています。</p>
+<p><code>/**</code></p>
+<p><code>* SimpleAsyncTask アプリには、AsyncTask を起動するボタンが含まれています。</code></p>
+<p><code>*</code> 非同期スレッドでランダムな時間だけスリープします。</p>
+<p><code>*/</code></p>
+<p><code>public class MainActivity extends AppCompatActivity { public class MainActivity extends AppCompatActivity</code></p>
+<p><code>//</code> 結果を表示するテキストビュー</p>
+<p><code>private TextView mTextView.</code></p>
+<p>オーバーライド</p>
+<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
+<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
+<p><code>       setContentView(R.layout.activity_main)を使用しています。</code></p>
+<p><code>       mTextView = findViewById(R.id.textView1).</code></p>
+<p><code>   }</code></p>
+<p><code>public void startTask(View view) {</code></p>
+<p><code>//</code> テキストビューにメッセージを入れる</p>
+<p><code>       mTextView.setText(R. string.napping)。</code></p>
+<p><code>// AsyncTaskを起動します。</code></p>
+<p><code>new SimpleAsyncTask(mTextView).execute().</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p>3.2 onSaveInstanceState**()**の実装</p>
+<ol type="1" start="1">
+<li>アプリを起動し、タスクの開始ボタンをクリックします。アプリはどのくらいの時間昼寝しますか？</li>
+<li>もう一度「タスクの開始」ボタンをクリックし、アプリが昼寝している間に端末を回転させます。端末を回転させる前にバックグラウンドタスクが完了した場合は、もう一度試してみてください。</li>
+</ol>
+<p>注意: デバイスを回転させると、<strong><code>TextView</code></strong></p>
+<p><strong>は</strong>初期の内容にリセットされ、<strong><code>AsyncTask</code></strong></p>
+<p><strong>は</strong></p>
+<p><strong><code>TextView</code></strong>を更新できないようです。</p>
+<p>ここではいくつかのことが起こっています。</p>
+<ul>
+<li>デバイスを回転させると、<code>onDestroy()</code>を呼び出してから<code>onCreate()</code>を呼び出してアプリを再起動します。<code>AsyncTask</code>はアクティビティが破棄されても実行を続けますが、アクティビティのUIにレポートを返す機能を失います。その特定のTextViewも破壊されているため、渡されたTextViewを更新することはできません。</li>
+<li>アクティビティが破棄されると、<code>AsyncTask</code>はバックグラウンドで完了まで実行を続け、システムリソースを消費します。最終的にシステムはリソースを使い果たし、<code>AsyncTask</code>は失敗します。</li>
+<li><code>AsyncTask</code>がなくても、デバイスの回転はすべてのUI要素をデフォルトの状態にリセットします。</li>
+</ul>
+<p>これらの理由から、<code>AsyncTask</code>はアクティビティの破棄によって中断される可能性のあるタスクにはあまり適していません。これが非常に重要な場合には、<code>AsyncTaskLoader</code> と呼ばれる別のタイプのバックグラウンドクラスを使用することができます。</p>
+<p>テキストビューが初期の文字列にリセットされないようにするには、その状態を保存する必要があります。デバイスの回転などの設定変更に応じてアクティビティが破棄された場合に、TextViewの内容を保持するために、<code>onSaveInstanceState()</code>を実装します。</p>
+<p>注: <strong><code>AsyncTask</code></strong>のすべての用途で、回転時のビューの状態を処理する必要があるわけではありません。このアプリは結果を表示するために<strong><code>TextView</code></strong></p>
+<p><strong>を</strong>使用しているので、状態を保持しておくと便利です。ファイルをアップロードするなどの他のケースでは、UI内に永続的な情報を必要としない場合があるため、状態を保持することは重要ではありません。</p>
+<ol type="1" start="1">
+<li>クラスの先頭に、状態バンドル内の現在のテキストのキー用の定数を追加します。</li>
+</ol>
+<p><code>private static final String TEXT_STATE = "currentText".</code></p>
+<ol type="1" start="1">
+<li>MainActivityの<code>onSaveInstanceState()</code>メソッドをオーバーライドして、アクティビティが破棄されたときに<code>TextView</code>内のテキストを保持します。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>protected void onSaveInstanceState(Bundle outState) { {.</code></p>
+<p><code>super.onSaveInstanceState(outState)を保存します。</code></p>
+<p><code>//</code> テキストビューの状態を保存する</p>
+<p><code>        outState.putString(TEXT_STATE.</code></p>
+<p><code>            mTextView.getText().toString())を使用しています。</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>onCreate()</code>では、アクティビティが復元されたときに状態バンドルから<code>TextView</code>の値を取得します。</li>
+</ol>
+<p><code>// savedInstanceStateがあれば、TextViewを復元します。</code></p>
+<p><code>if(savedInstanceState!=null){</code></p>
+<p><code>mTextView.setText(savedInstanceState.getString(TEXT_STATE))。</code></p>
+<p>MainActivityのソリューションコードです。</p>
+<p><code>パッケージ android.example.com.simpleasynctask.</code></p>
+<p>インポート <code>android.os.</code>バンドルをインポートします。</p>
+<p><code>import android.support.v7.app.AppCompatActivityをインポートします。</code></p>
+<p><code>import android.view.ビューをインポートします。</code></p>
+<p>インポート <code>android.widget.</code>テキストビューをインポートしています。</p>
+<p><code>/**</code></p>
+<p><code>* SimpleAsyncTask アプリには、AsyncTask を起動するボタンが含まれています。</code></p>
+<p><code>*</code> 非同期スレッドでランダムな時間だけスリープします。</p>
+<p><code>*/</code></p>
+<p><code>public class MainActivity extends AppCompatActivity { public class MainActivity extends AppCompatActivity</code></p>
+<p><code>//</code>テキストビューの状態を保存するためのキー</p>
+<p><code>private static final String TEXT_STATE = "currentText".</code></p>
+<p><code>//</code> 結果を表示するテキストビュー</p>
+<p><code>private TextView mTextView = null.</code></p>
+<p><code>/**</code></p>
+<p><code>     *</code> アクティビティを初期化します。</p>
+<p><code>     *</code> 現在の状態データです。</p>
+<p><code>     */</code></p>
+<p>オーバーライド</p>
+<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
+<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
+<p><code>        setContentView(R.layout.activity_main)を使用しています。</code></p>
+<p><code>// mTextViewの初期化</code></p>
+<p><code>        mTextView = (TextView) findViewById(R.id.textView1).</code></p>
+<p><code>// savedInstanceStateがあれば、TextViewを復元します。</code></p>
+<p><code>if(savedInstanceState!=null){</code></p>
+<p><code>           mTextView.setText(savedInstanceState.getString(TEXT_STATE))。</code></p>
+<p><code>        }</code></p>
+<p><code>    }</code></p>
+<p><code>/**`</code></p>
+<p><code>     * タスク開始」ボタンの onCLick を処理します。AsyncTaskを起動します。</code></p>
+<p><code>     * UI</code>スレッドからの作業を実行します。</p>
+<p><code>     *</code></p>
+<p><code>     * クリックされたビュー（Button）。</code></p>
+<p><code>     */</code></p>
+<p><code>public void startTask (View view) { {.</code></p>
+<p><code>//</code> テキストビューにメッセージを入れる</p>
+<p><code>        mTextView.setText(R. string.napping)。</code></p>
+<p><code>// AsyncTaskを起動します。</code></p>
+<p><code>// AsyncTask</code>には、テキストビューを更新するコールバックがあります。</p>
+<p><code>new SimpleAsyncTask(mTextView).execute().</code></p>
+<p><code>    }</code></p>
+<p><code>/**</code></p>
+<p><code>     *</code> テキストビューの内容を保存し、設定変更時に復元します。</p>
+<p><code>     * @param outState</code> アクティビティの状態が保存されているバンドルです。</p>
+<p><code>     *</code> 自然破壊された場合。</p>
+<p><code>     */</code></p>
+<p>オーバーライド</p>
+<p><code>protected void onSaveInstanceState(Bundle outState) { {.</code></p>
+<p><code>super.onSaveInstanceState(outState)を保存します。</code></p>
+<p><code>//</code> テキストビューの状態を保存する</p>
+<p><code>        outState.putString(TEXT_STATE, mTextView.getText().toString())。</code></p>
+<p><code>    }</code></p>
+<p><code>}</code></p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/SimpleAsyncTask" target="_blank">SimpleAsyncTask</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>課題: <code>AsyncTask</code> クラスには、もう 1 つの便利なオーバーライドメソッド <code>onProgressUpdate()</code> があり、<code>AsyncTask</code> の実行中に UI を更新することができます。このメソッドを使用して、現在のスリープ時間で UI を更新します。<code>onProgressUpdate()</code>がどのように適切に実装されているかについては、<a href="https://developer.android.com/reference/android/os/AsyncTask" target="_blank"><code>AsyncTask</code>のドキュメント</a>を参照してください。<code>AsyncTask</code>のクラス定義で、<code>onProgressUpdate()</code>メソッドで使用するデータ型を指定する必要があることを覚えておいてください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。" duration="0">
+        <ul>
+<li><a href="http://developer.android.com/reference/android/os/AsyncTask.html" target="_blank"><code>AsyncTask</code>は</a>、集約的な処理を別のスレッドに移す抽象的なJavaクラスです。</li>
+<li><code>AsyncTask</code>を使用するにはサブクラス化する必要があります。</li>
+<li>UI スレッドでリソース集約的な作業を行うことは避けてください。</li>
+<li>UI の描画やユーザー入力への応答を伴わないコードは、UI スレッドから別のスレッドに移動してください。</li>
+<li><code>AsyncTaskには、</code><a href="https://developer.android.com/reference/android/os/AsyncTask.html#onPreExecute()" target="_blank"><code>onPreExecute</code></a>()<code>、</code><a href="https://developer.android.com/reference/android/os/AsyncTask.html#doInBackground(Params...)" target="_blank"><code>doInBackground</code></a>()<code>、</code><a href="https://developer.android.com/reference/android/os/AsyncTask.html#onPostExecute(Result)" target="_blank"><code>onPostExecute</code></a>()<code>、</code><a href="https://developer.android.com/reference/android/os/AsyncTask.html#onProgressUpdate(Progress...)" target="_blank"><code>onProgressUpdate()の</code></a>4<code>つの主要なメソッドがあります。</code></li>
+<li><code>doInBackground()</code> メソッドは、実際にワーカースレッド上で実行される唯一のメソッドです。<code>doInBackground()</code> メソッドで UI メソッドを呼び出してはいけません。</li>
+<li><code>AsyncTask</code>の他のメソッドはUIスレッドで実行され、UIコンポーネントのメソッドを呼び出すことができます。</li>
+<li>Android デバイスを回転させると、アクティビティが破棄されて再作成されます。これにより、<code>AsyncTask</code>のバックグラウンドスレッドからUIを切り離すことができます。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>関連する概念のドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-1-c-asynctask-and-asynctaskloader/7-1-c-asynctask-and-asynctaskloader.html" target="_blank">7.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-1-c-asynctask-and-asynctaskloader/7-1-c-asynctask-and-asynctaskloader.html" target="_blank">AsyncTask と AsyncTaskLoader にあります</a>。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>Androidの開発者向けドキュメント。</p>
+<ul>
+<li><a href="http://developer.android.com/guide/components/processes-and-threads.html" target="_blank">プロセスとスレッドの概要</a></li>
+<li><a href="http://developer.android.com/reference/android/os/AsyncTask.html" target="_blank">非同期タスク</a></li>
+</ul>
+<p>他のリソース。</p>
+<ul>
+<li><a href="https://realm.io/news/android-threading-background-tasks/" target="_blank">Android スレッディングとバックグラウンドタスク</a></li>
+</ul>
+<p>動画です。</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=qk5F6Bxqhr4" target="_blank">スレッディングパフォーマンス101</a></li>
+<li><a href="https://www.youtube.com/watch?v=jtlRNNhane0" target="_blank">宜しい 非同期タスク狩猟</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題を採点します。</li>
+</ul>
+<p>講師は、彼らが望むように少しまたは多くのようにこれらの提案を使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じるはずです。</p>
+<p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
+<p>アプリを構築して実行する</p>
+<p><a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/SimpleAsyncTask" target="_blank">SimpleAsyncTask</a> アプリを開きます。完了したスリープ時間のパーセンテージを表示する<a href="https://developer.android.com/reference/android/widget/ProgressBar.html" target="_blank">プログレスバーを</a>追加します。プログレスバーは、<code>AsyncTask</code> スレッドが 0 から 100 (パーセント) までの値でスリープすると塗りつぶされます。</p>
+<p>ヒント：睡眠時間をチャンクに分解する。</p>
+<p>ヘルプは<a href="http://developer.android.com/reference/android/os/AsyncTask.html" target="_blank"><code>AsyncTask</code> リファレンスを</a>参照してください。</p>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>プログレスバーの場合。</p>
+<ol type="1" start="1">
+<li>プログレスバーが表示できる値の範囲はどのようにして決めるのですか？</li>
+<li>プログレスバーの塗りつぶし量を変更するにはどうすればいいですか？</li>
+</ol>
+<p>質問2</p>
+<p>以下のように<code>AsyncTask</code>が定義されている場合。</p>
+<p><code>private class DownloadFilesTask extends AsyncTask<URL, Integer, Long>を継承します。</code></p>
+<ol type="1" start="1">
+<li>AsyncTask<code>でdoInBackground()に渡される値の型は？</code></li>
+<li>タスクの進捗状況を報告するコールバックに渡される値の型は？</li>
+<li>タスクが完了したときに実行されるコールバックに渡される値の型は何ですか？</li>
+</ol>
+<p>質問3</p>
+<p><code>AsyncTask</code>で実行された作業の進捗状況を報告するために、どのようなコールバックメソッドを実装し、<code>AsyncTask</code>のサブクラスでどのようなメソッドを呼び出すのでしょうか？</p>
+<ul>
+<li><code>publishProgress()を実装します。publishProgress()を呼び出します。</code></li>
+<li><code>publishProgress()を実装します。onProgressUpdate()を呼び出す。</code></li>
+<li><code>onProgressUpdate()を実装します。publishProgress()を呼び出します。</code></li>
+<li><code>onProgressUpdate()を実装します。onProgressUpdate()を呼び出します。</code></li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っているかどうかを確認しましょう。</p>
+<ul>
+<li>レイアウトには、値の範囲を決定するために適切な属性を設定する<code>ProgressBar</code>が含まれています。</li>
+<li><code>AsyncTask</code> は、総睡眠時間をチャンクに分割し、各チャンクの後にプログレスバーを更新します。</li>
+<li><code>AsyncTask</code>は適切なメソッドを呼び出し、プログレスバーを更新するための適切なコールバックを実装します。</li>
+<li><code>AsyncTask</code> は、どのビューを更新するかを知る必要があります。<code>AsyncTask</code> が内部クラスとして実装されているかどうかによって、ビューは <code>AsyncTask</code> のコンストラクタに渡されるか、アクティビティのメンバ変数として定義されます。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

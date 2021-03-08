@@ -1,0 +1,848 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 04.3:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="4-3"
+                  title="Android 開発者基礎講座 04.3:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、&#34;codelab&#34;と&#34;practical&#34;という用語を入れ替えて使用しています。</p>
+<p>序章</p>
+<p>アプリバー（アクションバーとも呼ばれる）は、各アクティビティ画面の上部にある専用スペースです。基本アクティビティのテンプレートからアクティビティを作成すると、Android Studioにはアプリバーが含まれています。</p>
+<p>アプリバーのオプションメニューは、通常、アプリ内の別のアクティビティへのナビゲーションなど、ナビゲーションのための選択肢を提供します。メニューはまた、設定やプロファイル情報を変更する方法など、アプリ自体の使用に影響を与える選択肢を提供する場合もありますが、これは通常は別のアクティビティで行われます。</p>
+<p>この実習では、下図のようにアプリ内のアプリバーとオプションメニューの設定について学びます。</p>
+<p>上の図では</p>
+<ol type="1" start="1">
+<li>アプリバー。アプリバーには、アプリのタイトル、オプションメニュー、オーバーフローボタンがあります。</li>
+<li>オプションメニューのアクションアイコン。最初の2つのオプションメニュー項目は、アプリバーにアイコンとして表示されます。</li>
+<li>オーバーフローボタン。オーバーフローボタン(縦3つのドット)は、より多くのオプションメニュー項目を表示するメニューを開きます。</li>
+<li>オプションのオーバーフローメニュー。オーバーフローボタンをクリックすると、オーバーフローメニューにさらに多くのオプションメニュー項目が表示されます。</li>
+</ol>
+<p>オプションメニューの項目は、オプションのオーバーフローメニューに表示されます（上図参照）。しかし、いくつかの項目をアイコンとしてアプリバーに配置することができます。オプションメニューにアプリバーを使用することで、他のAndroidアプリとの一貫性を持たせることができ、ユーザーはアプリの操作方法を素早く理解し、素晴らしい体験をすることができます。</p>
+<p>ヒント: 使い慣れた一貫したユーザーエクスペリエンスを提供するには、メニュー API を使用してユーザーアクションやその他のオプションをアクティビティに表示します。詳細は「<a href="http://developer.android.com/guide/topics/ui/menus.html" target="_blank">メニュー」を</a>参照してください。</p>
+<p>また、ユーザーの選択を要求するダイアログを表示するアプリを作成して、ユーザーに OK や Cancel をタップするように要求するアラートなどを表示することもできます。ダイアログとは、ディスプレイの上部に表示されたり、ディスプレイを埋め尽くしたりして、アクティビティの流れを中断するウィンドウのことです。Androidには、時間や日付を選択するためのピッカーと呼ばれる、すぐに使えるダイアログが用意されています。これらのダイアログを使用して、ユーザーが正しくフォーマットされ、ユーザーのローカルの時刻と日付に合わせて調整された有効な時刻や日付を選択できるようにすることができます。このレッスンでは、日付ピッカーを使用したアプリも作成します。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>Android Studioでアプリを作成して実行します。</li>
+<li>レイアウトエディタを使用してUI要素を作成し、編集します。</li>
+<li>XMLレイアウトコードを編集したり、Javaコードから要素にアクセスしたりすることができます。</li>
+<li>ボタンにクリックハンドラを追加します。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>オプションメニューにメニュー項目を追加する方法</li>
+<li>オプションメニューの項目にアイコンを追加する方法</li>
+<li>アプリバーに表示されるメニュー項目を設定する方法</li>
+<li>メニュー項目にクリックハンドラを追加する方法</li>
+<li>アラート用のダイアログを追加する方法</li>
+<li>デートピッカーを追加する方法</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li>前回の実践編から引き続き、ドロイドカフェプロジェクトに機能を追加します。</li>
+<li>オプションメニューにメニュー項目を追加します。</li>
+<li>アプリバーに表示されるメニュー項目のアイコンを追加します。</li>
+<li>メニュー項目のクリックをクリックイベントを処理するイベントハンドラに接続します。</li>
+<li>アラートダイアログを使用して、ユーザーの選択を要求します。</li>
+<li>日付入力には日付ピッカーを使用します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>前回の実習では、Basic Activityのテンプレートを使って下の図のようなDroid Cafeというアプリを作成しました。このテンプレートでは、画面上部のアプリバーにスケルトンのオプションメニューも用意されています。</p>
+<p>この演習では、<a href="https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat" target="_blank">v7 appcompat</a> サポート ライブラリの<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank">ツールバーを</a>アプリ バーとして使用します。この<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank">ツールバー</a>は、最も幅広いデバイスで動作し、アプリの開発に合わせて後からアプリ バーをカスタマイズすることができます。アプリ バーを使用するためのデザイン上の考慮事項の詳細については、マテリアル デザイン仕様の<a href="https://material.io/design/layout/responsive-layout-grid.html" target="_blank">レスポンシブ レイアウト グリッドを</a>参照してください。</p>
+<p>アラートダイアログを表示する新しいアプリを作成します。ダイアログはユーザーのワークフローを中断し、ユーザーに選択を要求します。</p>
+<p>また、日付ピッカーを表示する<code>Button</code>を提供し、選択した日付を文字列に変換して<code>Toast</code>メッセージに表示するアプリを作成します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1.オプションメニューに項目を追加する" duration="0">
+        <p>このタスクでは、前回の実践から<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeInput" target="_blank">DroidCafeInput</a>プロジェクトを開き、画面上部のアプリバーのオプションメニューにメニュー項目を追加します。</p>
+<p>1.1 コードを調べる</p>
+<p><a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeInput" target="_blank">DroidCafeInput</a>アプリを入力コントロールの使用法の実習から開き、res &gt; layoutフォルダ内の以下のレイアウトファイルを調べます。</p>
+<ul>
+<li>activity_main.xml。<code>MainActivity</code>のメインレイアウト、ユーザーが最初に見る画面。</li>
+<li>content_main.xmlに含まれています。<code>MainActivity</code>画面の内容のためのレイアウトで、(すぐにわかるように) activity_main.xml内に含まれています。</li>
+<li>activity_order.xmlです。入力コントロールの使用法の実習で追加した<code>OrderActivity</code>のレイアウトです。</li>
+</ul>
+<p>以下の手順に従ってください。</p>
+<ol type="1" start="1">
+<li>content_main.xmlを開き、テキストタブをクリックしてXMLコードを確認します。<code>ConstraintLayout</code> の <code>app:layout_behavior</code> は <code>@string/appbar_scrolling_view_behavior</code> に設定されており、上部のアプリ・バーに関連して画面がどのようにスクロールするかを制御します。 (この文字列リソースは <code>values.xml</code> という生成されたファイルで定義されており、編集してはいけません)。</li>
+</ol>
+<p>スクロール動作の詳細については、Android Developers Blog の<a href="http://android-developers.blogspot.com/2015/05/android-design-support-library.html" target="_blank">Android Design Support Library を</a>参照してください。スクロール メニューを含むデザイン プラクティスについては、マテリアル デザイン仕様の「<a href="https://material.io/design/components/app-bars-top.html#behavior" target="_blank">スクロール」を</a>参照してください。</p>
+<ol type="1" start="1">
+<li>activity_main.xmlを開き、Textタブをクリックすると、メインレイアウトのXMLコードが表示されます。<code>CoordinatorLayout</code>と<code>AppBarLayout</code>タグには、<code>android.support.design</code>（Android Design Support Library）を指定する完全修飾名が必要です。</li>
+</ol>
+<p><code>AppBarLayoutは、垂直LinearLayoutのようなものです。これは、ネイティブのActionBarの代わりにサポートライブラリの</code><a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank"><code>Toolbar</code></a><code>クラスを使用して、アプリバーを実装します。このレイアウト内のToolbarは</code>id <code>toolbarを持ち、AppBarLayoutと同様に完全修飾名</code>(<code>android.support.v7.widget</code>)<code>で指定されています。</code></p>
+<p>アプリバーは、ディスプレイの上部にあるセクションで、アクティビティのタイトルやナビゲーション、その他のインタラクティブな項目を表示することができます。ネイティブの <code>ActionBar</code> は、デバイスで実行されている Android のバージョンによって挙動が異なります。このため、オプションメニューを追加する場合は、<a href="https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat" target="_blank">v7 appcompat</a> サポートライブラリの<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank">ツールバーを</a>アプリバーとして使用する必要があります。<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank">ツールバーを</a>使用すると、最も幅広いデバイスで動作するアプリバーを簡単に設定でき、また、アプリの開発に合わせて後からアプリバーをカスタマイズする余地ができます。ツールバーには最新の機能が含まれており、サポートライブラリを使用できるすべてのデバイスで動作します。</p>
+<p>activity_main.xmlレイアウトはまた、content_main.xmlで定義されたレイアウト全体を含めるために<code>include layout</code>文を使用しています。このようにレイアウト定義を分離することで、レイアウトのツールバー定義とコーディネーターレイアウトから離れてレイアウトの内容を簡単に変更することができます。これは、レイアウトのフォーマットからコンテンツ（翻訳が必要な場合があります）を分離するためのベストプラクティスです。</p>
+<ol type="1" start="1">
+<li>アプリを実行します。画面上部のバーにアプリ名（Droid Cafe）が表示されていることに注目してください。また、右側にアクションのオーバーフローボタン（3つの縦のドット）が表示されています。オーバーフローボタンをタップすると、この時点では1つのメニューオプション「設定」しかないオプションメニューが表示されます。</li>
+</ol>
+<ol type="1" start="1">
+<li>AndroidManifest.xmlファイルを調べます。<code>.MainActivity</code>アクティビティは、<code>NoActionBar</code>テーマを使用するように設定されています。このテーマは、sty<code>les.xml</code>ファイルで定義されています（それを見るには、アプリ &gt; res &gt;values &gt; styles.xmlを開きます）。スタイルは別のレッスンでカバーされていますが、<code>NoActionBar</code>テーマは<code>windowActionBar</code>属性を<code>false</code>（ウィンドウアプリバーなし）に設定し、<code>windowNoTitle</code>属性を<code>true</code>（タイトルなし）に設定していることがわかります。これらの値が設定されているのは、アクションバーを使用するのではなく、<code>AppBarLayout</code>でアプリバーを定義しているからです。<code>NoActionBar</code> テーマの 1 つを使用すると、アプリがネイティブの <code>ActionBar</code> クラスを使用してアプリ バーを提供することができなくなります。</li>
+<li><code>AppCompatActivity</code>を継承し、<code>onCreate()</code>メソッドで始まり、コンテンツビューをact<code>ivity_main.xml</code>レイアウトに設定し、ツールバーをレイアウトで定義されたツールバーに設定します。その後、<a href="https://developer.android.com/reference/android/support/v7/app/AppCompatActivity.html#setSupportActionBar(android.support.v7.widget.Toolbar)" target="_blank"><code>setSupportActionBar()</code>を</a>呼び出してツールバーを渡し、ツールバーをアクティビティのアプリバーとして設定します。</li>
+</ol>
+<p>アプリへのアプリ バーの追加に関するベストプラクティスについては、「<a href="https://developer.android.com/training/appbar/index.html" target="_blank">アプリ バーの追加」</a>を参照してください。</p>
+<p>1.2 オプションメニューにメニュー項目を追加する</p>
+<p>オプションメニューに以下のメニュー項目を追加します。</p>
+<ul>
+<li>注文します。デザートの注文を表示するには、<code>OrderActivity</code>に移動します。</li>
+<li>ステータスを確認します。注文のステータスを確認します。</li>
+<li>お気に入り：お気に入りのデザートを表示します。</li>
+<li>お問い合わせ。カフェに連絡します。既存の「設定」項目は必要ないので、「設定」を「連絡」に変更します。</li>
+</ul>
+<p>Android は、メニュー項目を定義するための標準的な XML フォーマットを提供しています。<code>Activity</code> コードでメニューを作成する代わりに、メニューとそのすべてのメニュー項目を XML メニューリソースで定義することができます。そして、アクティビティの中でメニューリソースを膨らませることができます (メニューオブジェクトとして読み込む)。</p>
+<ol type="1" start="1">
+<li>Project &gt; Android ペインで res &gt; menu を展開し、menu_main.xml を開きます。テンプレートから提供されるメニュー項目は、<code>action_settings</code>（設定の選択肢）のみで、以下のように定義されています。</li>
+</ol>
+<p><code><</code>項目</p>
+<p><code>android:id="@+id/action_settings"</code></p>
+<p><code>="100"</code></p>
+<p><code>android:title="@string/action_settings"</code></p>
+<p><code>="never" /></code></p>
+<ol type="1" start="1">
+<li>action_<code>settings項目の以下の属性を変更して、action_contact項目にします（既存のandroid:orderInCategory属性は変更しないでください）。</code></li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/action_contact"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>タイトル</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>連絡先</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li>文字列リソース<code>action_contact</code>にハードコードされた文字列「<code>Contact</code>」を抽出します。</li>
+<li>&lt;menu&gt;ブロック内の<code><item></code>タグを使用して新しいメニュー項目を追加し、項目に以下の属性を与えます。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/action_order"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:orderInCategory</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"10"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>タイトル</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>注文</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td></tr>
+</table>
+<p><code>android:orderInCategory</code>属性は、メニュー項目がメニューに表示される順番を指定します。Contactの項目は100に設定されていますが、これは、上部ではなく下部に表示されるように指定するための大きな数字です。オーダーの項目を10に設定すると、コンタクトよりも上に表示され、メニューには他の項目のための十分なスペースが残されます。</p>
+<ol type="1" start="1">
+<li>文字列リソース<code>action_order</code>にハードコードされた文字列<code>"Order"</code>を抽出します。</li>
+<li>以下の属性で同じようにメニュー項目を2つ追加します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>ステータス項目属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/action_status"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:orderInCategory</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"20"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>タイトル</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>ステータス</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td></tr>
+</table>
+<table>
+<tr><td colspan="1" rowspan="1"><p>お気に入りのアイテム属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/action_favorites"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:orderInCategory</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"30"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>タイトル</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>お気に入り<code>"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li><code>リソースaction_statusに"Status"を、リソース</code>action<code>_favoritesに</code>&#34;<code>Favorites"を抽出します。</code></li>
+<li>ユーザーがどのメニュー項目を選択したかに応じて、アクションメッセージ付きのトーストメッセージが表示されます。strings.xmlを開き、これらのメッセージに以下の文字列名と値を追加します。</li>
+</ol>
+<p><code><string name="action_order_message"> 注文を選択しました。</code></p>
+<p><code><string name="action_status_message"> ステータスを選択しました。</code></p>
+<p><code><string name="action_favorites_message"> お気に入りを選択しました。</code></p>
+<p><code><string name="action_contact_message"> 連絡先を選択しました。</code></p>
+<ol type="1" start="1">
+<li>MainActivity<code>を開き、onOptionsItemSelected()メソッドのif文を変更して、</code>id <code>action_settingsを新しい</code>id action_<code>orderに置き換えます。</code></li>
+</ol>
+<p><code>if (id == R.id.action_order)</code></p>
+<p>アプリを起動し、下の図の左側に表示されているアクションオーバーフローのアイコンをタップすると、下の図の右側に表示されているオプションメニューが表示されます。このメニューから選択した項目に反応するコールバックをすぐに追加します。</p>
+<p>上の図では</p>
+<ol type="1" start="1">
+<li>アプリバーのオーバーフローアイコンをタップすると、オプションメニューが表示されます。</li>
+<li>オプションメニューはアプリバーからドロップダウンします。</li>
+</ol>
+<p>オプションメニューの項目の順序に注目してください。<code>android:orderInCategory</code>属性を使って、メニュー内のメニュー項目の優先順位を指定しました。Order項目は10で、Status(20)とFavorites(30)の後に続き、Contactは最後(100)になります。以下の表は、メニュー内の項目の優先度を示しています。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>メニュー項目</p>
+</td><td colspan="1" rowspan="1"><p>オーダーインカテゴリー属性</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>注文</p>
+</td><td colspan="1" rowspan="1"><p><code>10</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>ステータス</p>
+</td><td colspan="1" rowspan="1"><p><code>20</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>お気に入り</p>
+</td><td colspan="1" rowspan="1"><p><code>30</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>連絡先</p>
+</td><td colspan="1" rowspan="1"><p><code>100</code></p>
+</td></tr>
+</table>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：メニュー項目のアイコンを追加する" duration="0">
+        <p>可能な限り、ユーザーが最初にオーバーフローアイコンをクリックしなくてもクリックできるように、最も頻繁に使用されるアクションをアプリバーにアイコンで表示したいと思います。このタスクでは、メニュー項目の一部にアイコンを追加し、画面上部にあるアプリバーのメニュー項目の一部をアイコンとして表示します。</p>
+<p>この例では、オーダーとステータスアクションが最も頻繁に使用されると仮定します。お気に入り」アクションは時々使用され、「連絡先」は最も頻繁に使用されないアクションです。これらのアクションにアイコンを設定し、以下のように指定します。</p>
+<ul>
+<li>注文とステータスは常にアプリバーに表示されている必要があります。</li>
+<li>お気に入りはアプリバーに表示されているはずですが、合わない場合はオーバーフローメニューに表示されます。</li>
+<li>連絡先はアプリバーには表示されず、オーバーフローメニューにのみ表示されます。</li>
+</ul>
+<p>2.1 メニュー項目のアイコンを追加する</p>
+<p>アクションのアイコンを指定するには、クリック可能な画像を使用する実習で使用したのと同じ手順で、アイコンを画像アセットとして描画可能なフォルダに追加する必要があります。以下のようなアイコン（またはそれに近いもの）を使用したいと思います。</p>
+<ul>
+<li>注文します。クリック可能な画像の使用法（ic_shopping_cart.png）でフローティングアクションボタンに追加したのと同じアイコンを使用してください。</li>
+<li>状態です。</li>
+<li>好きなもの。</li>
+<li>コンタクトです。オーバーフローメニューにしか表示されないので、アイコンは必要ありません。</li>
+</ul>
+<p>ステータスとお気に入りのアイコンについては、次の手順に従います。</p>
+<ol type="1" start="1">
+<li>プロジェクト &gt; Android ペインで res を展開し、描画可能なフォルダを右クリック（または Control キーを押しながら）します。</li>
+<li>新規作成 &gt; イメージアセットを選択します。画像アセットの設定ダイアログが表示されます。</li>
+<li>ドロップダウンメニューでアクションバーとタブアイテムを選択します。</li>
+<li>ic_action_name を別の名前に変更します（ステータスアイコンの ic_status_info など）。</li>
+<li>クリップアート画像（Clipart:の横にあるAndroidロゴ）をクリックして、クリップアート画像をアイコンとして選択します。アイコンのページが表示されます。使いたいアイコンをクリックしてください。</li>
+<li>テーマ] ドロップダウンメニューから [HOLO_DARK] を選択します。これにより、アイコンが暗い色（または黒）の背景に対して白に設定されます。次へ] をクリックし、[完了] をクリックします。</li>
+</ol>
+<p>ヒント: 詳細については、「<a href="http://developer.android.com/tools/help/image-asset-studio.html" target="_blank">Image Asset Studioでアプリのアイコンを作成する</a>」を参照してください。</p>
+<p>2.2 アプリバーにメニュー項目をアイコンとして表示する</p>
+<p>メニュー項目をアイコンとしてアプリ・バーに表示するには、<code>menu_main.xml</code> の <code>app:showAsAction</code> 属性を使用します。属性の次の値は、アクションをアイコンとしてアプリ・バーに表示するかどうかを指定します。</p>
+<ul>
+<li><code>"</code>常に<code>"</code>とは常にアプリバーに表示されます。(十分なスペースがない場合、他のメニューアイコンと重なることがあります)</li>
+<li><code>"ifRoom"</code>です。部屋がある場合、アプリバーに表示されます。</li>
+<li><code>"never</code>&#34;。アプリバーには表示されず、そのテキストはオーバーフローメニューに表示されます。</li>
+</ul>
+<p>メニュー項目の一部をアイコンとして表示するには、以下の手順に従います。</p>
+<ol type="1" start="1">
+<li>もう一度menu_main.xmlを開き、最初の2つ（注文とステータス）は常に表示され、お気に入りの項目は余裕がある場合にのみ表示されるように、注文、ステータス、お気に入りの項目に以下の属性を追加します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p>注文項目属性</p>
+</td><td colspan="1" rowspan="1"><p>古い価値</p>
+</td><td colspan="1" rowspan="1"><p>新しい値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>アイコン</p>
+</td><td colspan="1" rowspan="1"><p>一人もいない</p>
+</td><td colspan="1" rowspan="1"><p><code>"@drawable/ic_shopping_cart"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>常日頃から</p>
+</td></tr>
+</table>
+<table>
+<tr><td colspan="1" rowspan="1"><p>ステータス項目属性</p>
+</td><td colspan="1" rowspan="1"><p>古い価値</p>
+</td><td colspan="1" rowspan="1"><p>新しい値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>アイコン</p>
+</td><td colspan="1" rowspan="1"><p>一人もいない</p>
+</td><td colspan="1" rowspan="1"><p><code>"@drawable/@drawable/ic_status_info"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>常日頃から</p>
+</td></tr>
+</table>
+<table>
+<tr><td colspan="1" rowspan="1"><p>お気に入りのアイテム属性</p>
+</td><td colspan="1" rowspan="1"><p>古い価値</p>
+</td><td colspan="1" rowspan="1"><p>新しい値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:</code>アイコン</p>
+</td><td colspan="1" rowspan="1"><p>一人もいない</p>
+</td><td colspan="1" rowspan="1"><p><code>"@drawable/ic_favorite"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>アプリ:showAsAction</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>一度も</p>
+</td><td colspan="1" rowspan="1"><p><code>"</code>イフルーム</p>
+</td></tr>
+</table>
+<ol type="1" start="1">
+<li>アプリを実行します。アプリバーに少なくとも2つのアイコンが表示されているはずです。(お気に入りと連絡先のオプションは、オーバーフローメニューに表示されます)。</li>
+<li>デバイスを水平方向に回転させるか、エミュレータで実行している場合は、左回転または右回転アイコンをクリックしてディスプレイを水平方向に回転させます。すると、下の図の右側に示すように、アプリバーに「注文」、「ステータス」、「お気に入り」の3つのアイコンが表示されます。</li>
+</ol>
+<p>アプリバーに収まるアクションボタンの数は？向きや画面の大きさによって異なります。上図の左側のように縦長の場合は、上図の右側のように横長の場合に比べて、ボタンの数が少なくなります。アクションボタンがメインアプリバーの幅の半分以上を占めない場合があります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3：選択したメニュー項目を処理する" duration="0">
+        <p>このタスクでは、どのメニュー項目がタップされたかについてのメッセージを表示するメソッドを追加し、どのメニュー項目がタップされたかを判断するために<a href="https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)" target="_blank"><code>onOptionsItemSelected``()</code></a> メソッドを使用します。</p>
+<p>3.1 メニューの選択肢を表示するメソッドを作成する</p>
+<ol type="1" start="1">
+<li>MainActivityを開きます。</li>
+<li>トーストメッセージを表示するための以下の方法（別のレッスンで）をまだ追加していない場合は、今すぐ追加してください。このメソッドは、メニューの選択ごとに実行するアクションとして使用します。(通常は、このレッスンの後半で示すように、別のアクティビティを開始するなど、メニュー項目ごとにアクションを実装します)</li>
+</ol>
+<p><code>public void displayToast(String message) { {.</code></p>
+<p><code>Toast.makeText(getApplicationContext(), message.</code></p>
+<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<p><code>}</code></p>
+<p>3.2 onOptionsItemSelected イベントハンドラを使用する</p>
+<p><code>onOptionsItemSelected()</code> メソッドは、オプション・メニューからの選択を処理します。どのメニュー項目が選択されたか、どのようなアクションを取るべきかを判断するために、スイッチケースブロックを追加します。</p>
+<ol type="1" start="1">
+<li>テンプレートによって提供される <code>onOptionsItemSelected()</code> メソッドを見つけます。このメソッドは、メニュー項目の<code>ID</code>を使用して、特定のメニュー項目がクリックされたかどうかを判断します。以下の例では、<code>id</code> は <code>action_order</code> です。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public boolean onOptionsItemSelected(MenuItem item) { { { {.</code></p>
+<p><code>int id = item.getItemId()。</code></p>
+<p><code>if (id == R.id.action_order) { (id == R.id.action_order)</code></p>
+<p>返します。</p>
+<p><code>        }</code></p>
+<p><code>return super.onOptionsItemSelected(item)。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>int id</code> 代入文と <code>if</code> 文を、メニュー項目の <code>id</code> に基づいて適切なメッセージを設定する以下のスイッチケースブロックで置き換えてください。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public boolean onOptionsItemSelected(MenuItem item) { { { {.</code></p>
+<p><code>switch (item.getItemId() {)</code></p>
+<p><code>case R.id.action_order.</code></p>
+<p><code>                displayToast(getString(R. string.action_order_message))を表示します。</code></p>
+<p>返します。</p>
+<p><code>case R.id.action_status.</code></p>
+<p><code>                displayToast(getString(R. string.action_status_message))。</code></p>
+<p>返します。</p>
+<p><code>case R.id.action_favorites.</code></p>
+<p><code>                displayToast(getString(R. string.action_favorites_message))。</code></p>
+<p>返します。</p>
+<p><code>case R.id.action_contact.</code></p>
+<p><code>                displayToast(getString(R. string.action_contact_message))を表示します。</code></p>
+<p>返します。</p>
+<p>は</p>
+<p><code>//</code> 何もしないで</p>
+<p><code>        }</code></p>
+<p><code>return super.onOptionsItemSelected(item)。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>アプリを実行してください。これで、どのメニュー項目を選択したかによって、下図の右側に示すように、画面上に別の<code>Toast</code>メッセージが表示されるはずです。</li>
+</ol>
+<p>上の図では</p>
+<ol type="1" start="1">
+<li>オプションメニューの[連絡先]項目を選択します。</li>
+<li>表示されるトーストのメッセージ。</li>
+</ol>
+<p>3.3 メニュー項目からアクティビティを開始する</p>
+<p>通常は、メニュー項目ごとにアクションを実装します。前回のタスクのスニペットを参考に、<code>action_order</code>の場合のコードを以下のように変更して、<code>OrderActivity</code>を起動します(クリッカブル画像を使うレッスンでフローティングアクションボタンに使ったのと同じコードを使います)。</p>
+<p><code>switch (item.getItemId() {)</code></p>
+<p><code>case R.id.action_order.</code></p>
+<p><code>Intent intent = new Intent(MainActivity.this, OrderActivity.class).</code></p>
+<p><code>        intent.putExtra(EXTRA_MESSAGE, mOrderMessage)。</code></p>
+<p><code>        startActivity(intent)。</code></p>
+<p>返します。</p>
+<p><code>// ...</code> 他のケースのためのコード</p>
+<p><code>}</code></p>
+<p>アプリを実行します。アプリバーのショッピングカートのアイコン（注文項目）をクリックすると、直接<code>OrderActivity</code>の画面に移動します。</p>
+<p>タスク3のソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeOptions" target="_blank">DroidCafeOptions</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>チャレンジ。コンテキストメニューを使用して、ユーザーが選択したビューに対してアクションを実行できるようにする。通常、アプリバーのオプションメニューには、別のアクティビティへのナビゲーションの選択肢がありますが、コンテキストメニューを使用して、ユーザーが現在のアクティビティ内でビューを変更できるようにします。</p>
+<p>両方のメニューは XML で記述されており、両方とも<a href="https://developer.android.com/reference/android/view/MenuInflater.html" target="_blank"><code>MenuInflater</code> を</a>使用して膨らませ、両方とも &#34;<a href="https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)" target="_blank"><code>on</code></a> item selected&#34; メソッドを使用しています。そのため、2つのメニューを構築して使用するテクニックは似ています。</p>
+<p>コンテキスト メニューは、下の図の左側に示すように、ユーザーがビュー上でタッチ＆ホールドを行うと、メニュー項目のフローティング リストとして表示されます。この課題では、3 つのオプションを表示するコンテキスト メニューを<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/ScrollingText" target="_blank">ScrollingText</a> アプリに追加します。下図に示すように、編集、共有、削除の 3 つのオプションを表示するためのコンテキスト メニューを ScrollingText アプリに追加します。メニューは、ユーザーが<code>TextView</code>をタッチ＆ホールドすると表示されます。その後、アプリは、図の右側に示すように、選択されたメニューオプションを示すトーストメッセージを表示します。</p>
+<p>ヒント</p>
+<p>コンテキストメニューはオプションメニューと似ていますが、2つの決定的な違いがあります。</p>
+<ul>
+<li>コンテキストメニューをビューに登録して、ビュー上でタッチ＆ホールドが発生したときにメニューが膨らむようにする必要があります。</li>
+<li>オプションメニューのコードは基本アクティビティのテンプレートで提供されていますが、コンテキストメニューの場合は自分でコードとメニューリソースを追加しなければなりません。</li>
+</ul>
+<p>この課題を解決するには、以下の一般的な手順に従ってください。</p>
+<ol type="1" start="1">
+<li>メニュー項目のXMLメニューリソースファイルを作成します。</li>
+</ol>
+<p>resフォルダを右クリックし、新規作成 &gt; Android Resource Directoryを選択します。リソースタイプのドロップダウンメニューでメニューを選択し、OKをクリックします。次に、新しいメニューフォルダを右クリックして、新規作成 &gt; メニューリソースファイルを選択し、menu_contextという名前を入力して、OKをクリックします。menu_contextを開き、オプションメニューと同じようにメニュー項目を入力します。</p>
+<ol type="1" start="1">
+<li><a href="https://developer.android.com/reference/android/app/Activity.html#registerForContextMenu(android.view.View)" target="_blank"><code>registerForContextMenu()</code></a>メソッドを使用して、ビューをコンテキストメニューに登録します。</li>
+</ol>
+<p><code>onCreate() メソッドで、TextView を登録します。</code></p>
+<p><code>TextView article_text = findViewById(R.id.article).</code></p>
+<p>記事の内容を変更するには、記事の内容を変更する必要があります。</p>
+<ol type="1" start="1">
+<li>メニューを膨らませるために、アクティビティの <a href="https://developer.android.com/reference/android/view/View.OnCreateContextMenuListener.html#onCreateContextMenu(android.view.ContextMenu,%2520android.view.View,%2520android.view.ContextMenu.ContextMenuInfo)" target="_blank"><code>onCreateContextMenu()</code></a> メソッドを実装します。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public void onCreateContextMenu(ContextMenu menu, View v.</code></p>
+<p><code>.ContextMenu.ContextMenu.ContextMenuInfoContextMenuInfo menuInfo){</code></p>
+<p><code>super.onCreateContextMenu(menu, v, menuInfo)。</code></p>
+<p><code>MenuInflater inflater = getMenuInflater().</code></p>
+<p><code>    inflater.inflate(R.menu.menu_context, menu)を使用しています。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>メニュー項目のクリックを処理するために、アクティビティに<a href="https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)" target="_blank"><code>onContextItemSelected()</code></a>メソッドを実装します。この場合、単純にメニューの選択でトーストを表示します。</li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public boolean onContextItemSelected(MenuItem item) { { {.</code></p>
+<p><code>switch (item.getItemId() {)</code></p>
+<p><code>case R.id.context_edit.</code></p>
+<p><code>                displayToast("編集した選択肢がクリックされました。)</code></p>
+<p>返します。</p>
+<p><code>case R.id.context_share.</code></p>
+<p><code>                displayToast("共有する選択をクリックしました。)</code></p>
+<p>返します。</p>
+<p><code>case R.id.context_delete.</code></p>
+<p><code>                displayToast("クリックした選択肢を削除します。)</code></p>
+<p>返します。</p>
+<p>は</p>
+<p><code>return super.onContextItemSelected(item)。</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。タップしてドラッグすると、以前と同じようにテキストがスクロールします。ただし、ロングタップするとコンテキストメニューが表示されます。</li>
+</ol>
+<p>チャレンジソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/ContextMenuScrollingText" target="_blank">ContextMenuScrollingText</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7.タスク4: ダイアログを使ってユーザーの選択を要求する" duration="0">
+        <p>ユーザーの選択を要求するダイアログを提供することができます。例えば、ユーザーが OK または Cancel をタップすることを要求するアラートなどです。ダイアログとは、ディスプレイの上部に表示されたり、ディスプレイを埋め尽くしたりして、アクティビティの流れを中断させるウィンドウのことです。</p>
+<p>例えば、警告ダイアログでは、ユーザーがそれを読んだ後に「続ける」をクリックすることを要求したり、正のボタン(OKやAcceptなど)をクリックして同意するか、負のボタン(Cancelなど)をクリックして同意しないかの選択をユーザーに与えたりすることができます。アラート用の標準ダイアログを表示するには <code>Dialog</code> クラスの<a href="https://developer.android.com/reference/android/app/AlertDialog.html" target="_blank"><code>AlertDialog</code></a> サブクラスを使います。</p>
+<p>ヒント: ダイアログの使用は控えめにしてください。デザインのベストプラクティスについては、ダイアログ<a href="https://www.google.com/design/spec/components/dialogs.html" target="_blank">のマテリアルデザインガイドを</a>参照してください。コード例については、Android 開発者向けドキュメントの<a href="https://developer.android.com/guide/topics/ui/dialogs.html" target="_blank">ダイアログを</a>参照してください。</p>
+<p>この実習では、標準的なアラートダイアログを起動するために <code>Button</code> を使用します。実際のアプリでは、何らかの条件に基づいて、またはユーザーが何かをタップしたことに基づいてアラートダイアログをトリガーすることがあります。</p>
+<p>4.1 アラートダイアログを表示するための新規アプリを作成する</p>
+<p>この演習では、OKボタンとキャンセルボタンを持つアラートを作成します。このアラートは、ユーザーがボタンをタップすることでトリガーされます。</p>
+<ol type="1" start="1">
+<li>Empty Activity テンプレートを基に Dialog For Alert という新しいプロジェクトを作成します。</li>
+<li>activity_main.xmlレイアウトファイルを開いて、レイアウトエディタを表示します。</li>
+<li><code>TextView</code>要素を編集してHello World!タップしてアラートをテストする：&#34;Hello World!&#34;の代わりに</li>
+<li>テキストビューの下にボタンを追加します。(オプション。余白を8dpに設定して、ボタンをテキストビューの下とレイアウトの側面に拘束します。)</li>
+<li>ボタンのテキストをアラートに設定します。</li>
+<li>テキストタブに切り替え、テキストビューとボタンのテキスト文字列を文字列リソースに抽出します。</li>
+<li>ボタンに<code>android:onClick</code>属性を追加して、クリックハンドラ<code>onClickShowAlert()</code>を呼び出すようにします。入力した後、クリックハンドラはまだ作成されていないので赤で下線が引かれています。</li>
+</ol>
+<p><code>android:onClick="onClickShowAlert"</code></p>
+<p>これで以下のようなレイアウトになりました。</p>
+<p>4.2 メインアクティビティにアラートダイアログを追加する</p>
+<p>ビルダー・デザイン・パターンを使用すると、多くの必須属性とオプション属性を持ち、ビルドに多くのパラメータを必要とするクラスからオブジェクトを簡単に作成することができます。このパターンがなければ、必須属性とオプション属性の組み合わせのコンストラクタを作成しなければなりません。ビルダーデザインパターンの詳細については、<a href="https://en.wikipedia.org/wiki/Builder_pattern" target="_blank">ビルダーパターンを</a>参照してください。</p>
+<p>ビルダークラスは通常、ビルドするクラスの静的メンバクラスです。<a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html" target="_blank"><code>AlertDialog.Builder</code> を</a>使用して、タイトルを設定するための<a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setTitle(int)" target="_blank"><code>setTitle</code></a>()、メッセージを設定するための<a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setMessage(int)" target="_blank"><code>setMessage()</code>、</a>ボタンを設定するための<a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setPositiveButton(int,%2520android.content.DialogInterface.OnClickListener)" target="_blank"><code>setPositiveButton()</code></a> および<a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setNegativeButton(int,%2520android.content.DialogInterface.OnClickListener)" target="_blank"><code>setNegativeButton()</code> を</a>使用して、標準のアラートダイアログを構築します。</p>
+<p>アラートを作成するには、<code>AlertDialog.Builder</code>のオブジェクトを作成する必要があります。アラートボタンのクリックハンドラ <code>onClickShowAlert()</code> を追加します。つまり、ユーザーが Alert ボタンをクリックしたときにのみダイアログが作成されるということです。このコーディングパターンはアラートをテストするために <code>Button</code> を使用する場合には論理的ですが、他のアプリでは <code>onCreate()</code> メソッドでダイアログを作成し、他のコードが常にダイアログをトリガーできるようにしたいかもしれません。</p>
+<ol type="1" start="1">
+<li>MainActivity <code>を開き、onClickShowAlert() メソッドの先頭を追加します。</code></li>
+</ol>
+<p><code>public void onClickShowAlert(View view) { { {.</code></p>
+<p><code>AlertDialog.Builder myAlertBuilder = new</code></p>
+<p><code>AlertDialog.ビルダー(MainActivity.)</code></p>
+<p><code>//</code> ダイアログのタイトルとメッセージを設定します。</p>
+<p><code>}</code></p>
+<p>入力したまま<code>AlertDialog.Builder</code>が認識されない場合は、赤い電球のアイコンをクリックして、サポートライブラリのバージョン(android.support.v7.app.AlertDialog)を選択して<code>Activity</code>にインポートします。</p>
+<ol type="1" start="1">
+<li>コメントの後に、アラートダイアログのタイトルとメッセージを <code>onClickShowAlert()</code> に設定するコードを追加します。</li>
+</ol>
+<p><code>//</code> ダイアログのタイトルとメッセージを設定します。</p>
+<p><code>myAlertBuilder.setTitle("Alert")。</code></p>
+<p><code>myAlertBuilder.setMessage("Click OK to continue, or Cancel to stop:")。</code></p>
+<p><code>//</code> ダイアログボタンを追加します。</p>
+<ol type="1" start="1">
+<li><code>上記の文字列を文字列リソースに展開して alert_title</code>, <code>alert_message とします。</code></li>
+<li><code>setPositiveButton() メソッドと setNegativeButton() メソッドを使用して、アラートに</code> OK <code>ボタンと</code> Cancel <code>ボタンを追加します。</code></li>
+</ol>
+<p><code>//</code> ダイアログボタンを追加します。</p>
+<p><code>myAlertBuilder.setPositiveButton("OK", new)</code></p>
+<p><code>.OnClickListener() {</code></p>
+<p><code>public void onClick(DialogInterface dialog, int which) {</code></p>
+<p><code>//</code> ユーザーが<code>OK</code>ボタンをクリックしました。</p>
+<p><code>Toast.makeText(getApplicationContext(), "Pressed OK".</code></p>
+<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<p><code>    }</code></p>
+<p><code>});</code></p>
+<p><code>myAlertBuilder.setNegativeButton("Cancel", new</code></p>
+<p><code>.OnClickListener() {</code></p>
+<p><code>public void onClick(DialogInterface dialog, int which) {</code></p>
+<p><code>//</code> ユーザーはダイアログをキャンセルしました。</p>
+<p><code>Toast.makeText(getApplicationContext(), "Pressed Cancel".</code></p>
+<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<p><code>    }</code></p>
+<p><code>});</code></p>
+<p><code>// AlertDialogを作成して表示します。</code></p>
+<p>ユーザーがアラートで OK または Cancel ボタンをタップした後、ユーザーの選択を取得してコードに使用することができます。この例では、トーストメッセージを表示しています。</p>
+<ol type="1" start="1">
+<li>OK と Cancel の文字列を <code>ok_button</code> と <code>cancel_button</code> として文字列リソースに抽出し、<code>Toast</code> メッセージの文字列を抽出します。</li>
+<li><code>onClickShowAlert()</code> メソッドの最後に、警告ダイアログを作成して表示する <code>show()</code> を追加します。</li>
+</ol>
+<p><code>// AlertDialogを作成して表示します。</code></p>
+<p><code>myAlertBuilder.show()。</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。</li>
+</ol>
+<p>下の図の左側に表示されているアラートボタンをタップすると、下図の中央に表示されているアラートダイアログが表示されます。ダイアログにはOKボタンとキャンセルボタンが表示され、下の図の右側のようにどちらを押したかを示すトーストメッセージが表示されます。</p>
+<p>タスク4のソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DialogForAlert" target="_blank">DialogForAlert</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8.タスク5：ユーザ入力にピッカーを使用する" duration="0">
+        <p>Android には、時刻や日付を選択するためのピッカーと呼ばれるダイアログが用意されています。これを使用することで、ユーザーが正しい時刻や日付を選択し、ユーザーのローカル時刻や日付に合わせて正しくフォーマットされていることを確認することができます。各ピッカーには、時間（時、分、午前/午後）または日付（月、日、年）の各部分を選択するためのコントロールが用意されています。ピッカーの設定については、<a href="http://developer.android.com/guide/topics/ui/controls/pickers.html" target="_blank">ピッ</a>カーを参照してください。</p>
+<p>このタスクでは、新しいプロジェクトを作成し、日付ピッカーを追加します。また、アクティビティ内の動作やUIの一部である<a href="https://developer.android.com/reference/android/support/v4/app/Fragment.html" target="_blank">フラグメントの</a>使用方法も学びます。これはメインアクティビティ内のミニアクティビティのようなもので、独自のライフサイクルを持ち、ピッカーを構築するために使用されます。すべての作業はあなたのために行われます。<code>Fragment</code> クラスについては、API ガイドの<a href="http://developer.android.com/guide/components/fragments.html" target="_blank">Fragments を</a>参照してください。</p>
+<p>ピッカーに<code>Fragment</code>を使う利点の一つは、日付と時刻を異なる方法で表示する様々なロケールのために、日付と時刻を管理するためのコードセクションを分離できることです。ピッカーを表示するための最良の方法は、<code>Fragment</code>のサブクラスである<a href="https://developer.android.com/reference/android/support/v4/app/DialogFragment.html" target="_blank"><code>DialogFragment</code>の</a>インスタンスを使用することです。<code>DialogFragment</code>はアクティビティウィンドウの上に浮かんでいるダイアログウィンドウを表示します。この演習では、ピッカーダイアログに<code>Fragment</code>を追加し、ダイアログのライフサイクルを管理するために<code>DialogFragment</code>を使用します。</p>
+<p>ヒント。ピッカーに<strong>フラグメントを</strong>使用するもう一つの利点は、携帯電話サイズのディスプレイでは基本的なダイアログを、大型ディスプレイではレイアウトの一部を埋め込むなど、異なるレイアウト構成を実装できることです。</p>
+<p>5.1 日付ピッカーを表示するアプリを新規作成する</p>
+<p>このタスクを開始するには、日付ピッカーを表示するボタンを提供するアプリを作成します。</p>
+<ol type="1" start="1">
+<li>Empty Activity テンプレートに基づいて、Picker For Date という名前の新しいプロジェクトを作成します。</li>
+<li>activity_main.xmlレイアウトファイルを開いて、レイアウトエディタを表示します。</li>
+<li><code>TextView</code>要素の&#34;Hello World!&#34;テキストをHello World!&#34;に編集します。日付を選択します。</li>
+<li>テキストビューの下にボタンを追加します。(オプション。(オプション: ボタンをテキストビューの下とレイアウトの側面に拘束し、余白を8dpに設定します。)</li>
+<li>ボタンのテキストを日付に設定します。</li>
+<li>テキストタブに切り替え、テキストビューとボタンの文字列を文字列リソースに抽出します。</li>
+<li><code>Button</code>に<code>android:onClick</code>属性を追加して、クリックハンドラ<code>showDatePicker()</code>を呼び出すようにします。入力後、クリックハンドラはまだ作成されていないので赤で下線が引かれています。</li>
+</ol>
+<p><code>android:onClick="showDatePicker"</code></p>
+<p>これで以下のようなレイアウトになるはずです。</p>
+<p>5.2 日付ピッカー用の新しいフラグメントの作成</p>
+<p>このステップでは、日付ピッカーのフラグメントを追加します。</p>
+<ol type="1" start="1">
+<li>アプリ &gt; java &gt; com.example.android.pickerfordateを展開し、MainActivityを選択します。</li>
+<li>ファイル] &gt; [新規作成] &gt; [フラグメント] &gt; [フラグメント（空白）] を選択し、フラグメントの名前を DatePickerFragment とします。3 つのチェックボックスをすべてオフにして、レイアウト XML の作成、フラグメント ファクトリー メソッドのインクルード、インターフェイス コールバックのインクルードを行わないようにします。標準ピッカーのレイアウトを作成する必要はありません。完了] をクリックします。</li>
+<li>DatePickerFragment <code>を開き、DatePickerFragment クラスの定義を編集して DialogFragment を拡張し、</code> <a href="https://developer.android.com/reference/android/app/DatePickerDialog.OnDateSetListener.html" target="_blank"><code>DatePickerDialog.OnDateSetListener を</code></a><code>実装して、リスナーを持つ標準の日付ピッカーを作成します。日付ピッカーのための DialogFragment の拡張については、</code><a href="http://developer.android.com/guide/topics/ui/controls/pickers.html" target="_blank"><code>ピッカー を</code></a><code>参照してください。</code></li>
+</ol>
+<p><code>public class DatePickerFragment extends DialogFragment</code></p>
+<p><code>実装しています。OnDateSetListener {</code></p>
+<p>DialogFragmentとDatePickerDialog.OnDateSetListenerを入力すると、Android Studioは自動的にいくつかのインポート文を先頭のインポートブロックに追加します。</p>
+<p><code>android.appをインポートします。DatePickerDialogをインポートします。</code></p>
+<p><code>import android.support.v4.app.DialogFragmentをインポートします。</code></p>
+<p>また、数秒後に左余白に赤い電球のアイコンが表示されます。</p>
+<ol type="1" start="1">
+<li>赤い電球のアイコンをクリックし、ポップアップメニューからメソッドの実装を選択します。ダイアログが表示され、既に<a href="https://developer.android.com/reference/android/app/DatePickerDialog.OnDateSetListener.html#onDateSet(android.widget.DatePicker,%2520int,%2520int,%2520int)" target="_blank"><code>onDateSet()</code> が</a>選択されていて、@オーバーライドの挿入オプションが選択されています。OK をクリックして、空の <code>onDateSet()</code> メソッドを作成します。このメソッドは、ユーザーが日付を設定したときに呼び出されます。</li>
+</ol>
+<p>空の<code>onDateSet()</code>メソッドを追加した後、Android Studioは自動的に上部のインポートブロックに以下のように追加します。</p>
+<p><code>import android.widget.DatePickerをインポートしています。</code></p>
+<p><code>onDateSet()</code> のパラメータは、<code>int i</code>、int <code>i1</code>、および <code>int i2</code> である必要があります。これらのパラメータの名前を、より読みやすいものに変更してください。</p>
+<p><code>public void onDateSet(DatePicker datePicker.</code></p>
+<p><code>int year, int month, int day)</code></p>
+<ol type="1" start="1">
+<li><code>空の public DatePickerFragment() パブリック コンストラクタを削除します。</code></li>
+<li><code>onCreateView() メソッド全体を Dialog を返す</code> <a href="https://developer.android.com/reference/android/app/DialogFragment.html#onCreateDialog(android.os.Bundle)" target="_blank"><code>onCreateDialog() に</code></a><code>置き換え、onCreateDialog() に @NonNull を付けて、戻り値 Dialog が</code> null <code>にできないことを示します。</code>Android Studio <code>では、まだ何も返さないので、メソッドの横に赤い電球が表示されます。</code></li>
+</ol>
+<p>＠ＮｏｎＮｕｌｌ</p>
+<p>オーバーライド</p>
+<p><code>public Dialog onCreateDialog(Bundle savedInstanceState) {.</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>onCreateDialog()</code>に以下のコードを追加して、<a href="https://developer.android.com/reference/java/util/Calendar.html" target="_blank"><code>Calendar</code></a>から年、月、日を初期化し、ダイアログとこれらの値をアクティビティに返すようにします。Calendar.getInstance()を入力する際に、インポート先をjava.util.Calendar.</li>
+</ol>
+<p><code>//</code> 現在の日付をピッカーのデフォルトの日付として使用します。</p>
+<p><code>最終的なカレンダー c = Calendar.getInstance().</code></p>
+<p><code>int year = c. get(Calendar.YEAR).</code></p>
+<p><code>int month = c. get(Calendar.MONTH).</code></p>
+<p><code>int day = c. get(Calendar.DAY_OF_MONTH).</code></p>
+<p><code>// DatePickerDialog</code>の新しいインスタンスを作成し、それを返します。</p>
+<p><code>新しい DatePickerDialog(getActivity(), this, year, month, day) を返します。</code></p>
+<p>5.4 メインアクティビティを変更する</p>
+<p><code>MainActivity.java</code>のコードの多くは同じままですが、<code>FragmentManager</code>のインスタンスを作成してFragmentを管理し、日付ピッカーを表示するメソッドを追加する必要があります。</p>
+<ol type="1" start="1">
+<li>MainActivityを開きます。</li>
+<li><code>日付ボタン用の showDatePickerDialog() ハンドラを追加します。これは、Fragment を自動的に管理し、ピッカーを表示するために</code> <a href="https://developer.android.com/reference/android/support/v4/app/FragmentActivity.html#getSupportFragmentManager()" target="_blank"><code>getSupportFragmentManager() を</code></a><code>使用して FragmentManager のインスタンスを作成します。Fragment クラスの詳細については</code> <a href="http://developer.android.com/guide/components/fragments.html" target="_blank">Fragments <code>を</code></a><code>参照ください。</code></li>
+</ol>
+<p><code>public void showDatePicker(View view) { { {.</code></p>
+<p><code>DialogFragment newFragment = new DatePickerFragment().</code></p>
+<p><code>        newFragment.show(getSupportFragmentManager(),"datePicker")。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>文字列リソースのデータピッカーに「<code>datePicker</code>」という文字列を抽出します。</li>
+<li>アプリを起動します。日付ボタンをタップすると、日付ピッカーが表示されるはずです。</li>
+</ol>
+<p>5.5 選択した日付を使用する</p>
+<p>このステップでは、日付を <code>MainActivity.java</code> に戻し、日付を <code>Toast</code> メッセージで表示できる文字列に変換します。</p>
+<ol type="1" start="1">
+<li>MainActivity <code>を開き、年、月、日を引数に取る空の processDatePickerResult() メソッドを追加します。</code></li>
+</ol>
+<p><code>public void processDatePickerResult(int year, int month, int day) { {.</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>以下のコードを <code>processDatePickerResult()</code> メソッドに追加して、月、日、年を別々の文字列に変換し、3 つの文字列をスラッシュ記号で連結します。</li>
+</ol>
+<p><code>文字列 month_string = Integer.toString(month+1)。</code></p>
+<p><code>文字列 day_string = Integer.toString(day)。</code></p>
+<p><code>文字列 year_string = Integer.toString(year)。</code></p>
+<p><code>文字列 dateMessage = (month_string +)</code></p>
+<p><code>"/" + day_string + "/" + year_string)。</code></p>
+<p>日付ピッカーが返す月の整数値は、1月は0からカウントを開始するので、1から始まる月を表示するには1を追加する必要があります。</p>
+<ol type="1" start="1">
+<li>上記のコードの後に以下を追加して、トーストメッセージを表示させます。</li>
+</ol>
+<p><code>Toast.makeText(this, "Date: " + dateMessage.</code></p>
+<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<ol type="1" start="1">
+<li>ハードコードされた文字列 <code>"Date: "</code> を <code>date</code> という名前の文字列リソースに抽出します。</li>
+<li>DatePickerFragment <code>を開き、以下を onDateSet() メソッドに追加して、MainActivity で processDatePickerResult() を呼び出し、年、月、日を渡します。</code></li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public void onDateSet(DatePicker datePicker.</code></p>
+<p><code>int year, int month, int day) {</code></p>
+<p><code>MainActivity activity = (MainActivity) getActivity()。</code></p>
+<p><code>    activity.processDatePickerResult(year, month, day)。</code></p>
+<p><code>}</code></p>
+<p><code>getActivity()</code>を使用します。これは、フラグメントで使用されると、そのフラグメントが現在関連付けられているアクティビティを返します。これが必要なのは、<code>MainActivity</code>のコンテキストがないと<code>MainActivity</code>のメソッドを呼び出すことができないからです（別のレッスンで学んだように、代わりにインテントを使用しなければなりません）。アクティビティはコンテキストを継承するので、メソッドを呼び出すためのコンテキストとして使用することができます(act<code>ivity.processDatePickerResult</code>のように)。</p>
+<ol type="1" start="1">
+<li>アプリを実行します。日付を選択すると、次の図の右側のように<code>Toast</code>メッセージに日付が表示されます。</li>
+</ol>
+<p>タスク5のソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/PickerForDate" target="_blank">PickerForDate</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>チャレンジしてください。日付ピッカーを追加するために学んだのと同じテクニックを使用して、時間ピッカーを実装した「Picker For Time」というアプリを作成します。</p>
+<p>ヒント。</p>
+<ul>
+<li><code>TimePickerDialog.OnTimeSetListenerを実装して、リスナー付きの標準タイムピッカーを作成します。</code></li>
+<li><code>onTimeSet() メソッドのパラメータを int i から int hourOfDay に、</code>int i<code>1 から int minute に変更します。</code></li>
+<li><a href="https://developer.android.com/reference/java/util/Calendar.html" target="_blank">カレンダー</a>から現在の時間と分を取得します。</li>
+</ul>
+<p><code>最終的なカレンダー c = Calendar.getInstance().</code></p>
+<p><code>int hour = c. get(Calendar.HOUR_OF_DAY).</code></p>
+<p><code>int minute = c. get(Calendar.MINUTE)。</code></p>
+<ul>
+<li><code>前のタスクの processDatePickerResult() と同様の processTimePickerResult() メソッドを作成して、時間要素を文字列に変換し、その結果を Toast メッセージに表示します。</code></li>
+</ul>
+<p>アプリを起動し、下図左側のように時刻ボタンをクリックします。図の中央のように時間ピッカーが表示されるはずです。時間を選択してOKをクリックします。画面下のToastメッセージに時間が表示されるはずです。</p>
+<p>チャレンジ2のソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/PickerForTime" target="_blank">PickerForTime</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>オプションメニューとアプリバーを提供します。</p>
+<ul>
+<li>基本アクティビティテンプレートを使ってアプリやアクティビティを起動し、アプリバー、オプションメニュー、フローティングアクションボタンを自動的に設定します。</li>
+<li>このテンプレートでは、<a href="https://developer.android.com/reference/android/support/design/widget/AppBarLayout.html" target="_blank"><code>AppBarLayout</code></a>レイアウトが埋め込まれた<a href="https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html" target="_blank"><code>CoordinatorLayout</code>レイアウトを</a>設定します。<code>AppBarLayout</code>は、垂直<code>LinearLayout</code>のようなものです。ネイティブの<code>ActionBar</code>ではなく、サポートライブラリの<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank"><code>Toolbar</code></a>クラスを使用して、アプリバーを実装しています。</li>
+<li><code>このテンプレートは、.MainActivity ActivityがNoActionBarテーマを使用するように設定されるように、AndroidManifest.xmlファイルを変更します。このテーマは、styles.xmlファイルで定義されています。</code></li>
+<li>テンプレートでは、<code>MainActivity</code> を <code>AppCompatActivity</code> を拡張するように設定し、<code>onCreate()</code> メソッドでコンテンツ ビューとツールバーを設定します。次に<a href="https://developer.android.com/reference/android/support/v7/app/AppCompatActivity.html#setSupportActionBar(android.support.v7.widget.Toolbar)" target="_blank"><code>setSupportActionBar()</code> を</a>呼び出してツールバーを渡し、ツールバーをアクティビティのアプリバーとして設定します。</li>
+<li><code>menu_main.xml</code>ファイルでメニュー項目を定義します。<code>android:orderInCategory</code>属性は、メニュー項目がメニューに表示される順番を指定します。</li>
+<li><a href="https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)" target="_blank"><code>onOptionsItemSelected``()</code></a> メソッドを使用して、どのメニュー項目がタップされたかを判断します。</li>
+</ul>
+<p>オプションメニュー項目のアイコンを追加します。</p>
+<ul>
+<li>プロジェクト &gt; Android ペインで res を展開し、描画可能なフォルダを右クリック（または Control キーを押しながらクリック）します。新規作成 &gt; イメージアセットを選択します。</li>
+<li>ドロップダウンメニューの「アクションバーとタブアイテム」を選択し、画像ファイルの名前を変更します。</li>
+<li>クリップアート画像をクリックして、クリップアート画像をアイコンとして選択します。アイコンを選択します。</li>
+<li>テーマ」ドロップダウンメニューから「HOLO_DARK」を選択します。</li>
+</ul>
+<p>アプリバーにメニュー項目をアイコンとして表示します。</p>
+<ul>
+<li><code>menu_main.xml内のapp:showAsAction属性を以下の値で使用します。</code></li>
+<li><code>"</code>常に<code>"</code>とは常にアプリバーに表示されます。(十分なスペースがない場合、他のメニューアイコンと重なることがあります)</li>
+<li><code>"ifRoom"</code>です。部屋がある場合、アプリバーに表示されます。</li>
+<li><code>"never</code>&#34;。アプリバーには表示されず、そのテキストはオーバーフローメニューに表示されます。</li>
+</ul>
+<p>アラートダイアログを使用します。</p>
+<ul>
+<li>ユーザーの選択を要求するためにダイアログを使用します。例えば、ユーザーが OK または Cancel をタップする必要があるアラートなどです。ユーザーのワークフローを中断させるので、ダイアログは控えめに使用してください。</li>
+<li>アラート用の標準ダイアログを表示するには、Dialogクラスの<a href="https://developer.android.com/reference/android/app/AlertDialog.html" target="_blank"><code>AlertDialog</code></a>サブクラスを使用します。</li>
+<li><a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html" target="_blank"><code>AlertDialog.Builder</code> を</a><code>使用して、タイトルを設定する</code> <a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setTitle(int)" target="_blank"><code>setTitle()、</code></a><code>メッセージを設定する</code> <a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setMessage(int)" target="_blank"><code>setMessage()、</code></a><code>ボタンを設定する</code> <a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setPositiveButton(int,%2520android.content.DialogInterface.OnClickListener)" target="_blank"><code>setPositiveButton()</code></a> <code>および</code> <a href="https://developer.android.com/reference/android/app/AlertDialog.Builder.html#setNegativeButton(int,%2520android.content.DialogInterface.OnClickListener)" target="_blank"><code>setNegativeButton() を</code></a><code>使用して標準のアラートダイアログを構築します。</code></li>
+</ul>
+<p>ユーザー入力にはピッカーを使用します。</p>
+<ul>
+<li>日付ピッカーや時間ピッカーなどのピッカーを作成するには、<a href="https://developer.android.com/reference/android/support/v4/app/Fragment.html" target="_blank"><code>Fragment</code></a> のサブクラスである<a href="https://developer.android.com/reference/android/support/v4/app/DialogFragment.html" target="_blank"><code>DialogFragment</code> を</a>使用します。</li>
+<li><code>DialogFragmentを作成し、</code><a href="https://developer.android.com/reference/android/app/DatePickerDialog.OnDateSetListener.html" target="_blank"><code>DatePickerDialog.OnDateSetListenerを</code></a><code>実装して、リスナーを持つ標準の日付ピッカーを作成します。このFragmentに</code><a href="https://developer.android.com/reference/android/app/DatePickerDialog.OnDateSetListener.html#onDateSet(android.widget.DatePicker,%2520int,%2520int,%2520int)" target="_blank"><code>onDateSet()を</code></a><code>インクルードします。</code></li>
+<li><code>onCreateView()</code> メソッドを、<code>Dialog</code> を返す<a href="https://developer.android.com/reference/android/app/DialogFragment.html#onCreateDialog(android.os.Bundle)" target="_blank"><code>onCreateDialog()</code> に</a>置き換えます。<a href="https://developer.android.com/reference/java/util/Calendar.html" target="_blank">カレンダー</a>から日付ピッカーの日付を初期化し、ダイアログとこれらの値をアクティビティに返します。</li>
+<li><a href="https://developer.android.com/reference/android/app/FragmentManager.html" target="_blank"><code>FragmentManager</code> の</a><code>インスタンスを</code> <a href="https://developer.android.com/reference/android/support/v4/app/FragmentActivity.html#getSupportFragmentManager()" target="_blank"><code>getSupportFragmentManager() を</code></a><code>使用して作成し、Fragment を管理し、日付ピッカーを表示します。</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。" duration="0">
+        <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-3-c-menus-and-pickers/4-3-c-menus-and-pickers.html" target="_blank">4.3</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-3-c-menus-and-pickers/4-3-c-menus-and-pickers.html" target="_blank">メニューとピッカーにあります</a>。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Learn more" duration="0">
+        <p>Android Studio documentation:</p>
+<ul>
+<li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio User Guide</a></li>
+<li><a href="http://developer.android.com/tools/help/image-asset-studio.html" target="_blank">Create App Icons with Image Asset Studio</a></li>
+</ul>
+<p>Android developer documentation:</p>
+<ul>
+<li><a href="https://developer.android.com/training/appbar/index.html" target="_blank">Add the app bar</a></li>
+<li><a href="http://developer.android.com/guide/topics/ui/menus.html" target="_blank">Menus</a></li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank"><code>Toolbar</code></a></li>
+<li><a href="https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat" target="_blank">v7 appcompat</a> support library</li>
+<li><a href="https://developer.android.com/reference/android/support/design/widget/AppBarLayout.html" target="_blank"><code>AppBarLayout</code></a></li>
+<li><a href="https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)" target="_blank"><code>onOptionsItemSelected``()</code></a></li>
+<li><a href="http://developer.android.com/reference/android/view/View.html" target="_blank"><code>View</code></a></li>
+<li><a href="https://developer.android.com/reference/android/view/MenuInflater.html" target="_blank"><code>MenuInflater</code></a></li>
+<li><a href="https://developer.android.com/reference/android/app/Activity.html#registerForContextMenu(android.view.View)" target="_blank"><code>registerForContextMenu()</code></a></li>
+<li><a href="https://developer.android.com/reference/android/view/View.OnCreateContextMenuListener.html#onCreateContextMenu(android.view.ContextMenu,%20android.view.View,%20android.view.ContextMenu.ContextMenuInfo)" target="_blank"><code>onCreateContextMenu()</code></a></li>
+<li><a href="https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)" target="_blank"><code>onContextItemSelected()</code></a></li>
+<li><a href="https://developer.android.com/guide/topics/ui/dialogs.html" target="_blank">Dialogs</a></li>
+<li><a href="https://developer.android.com/reference/android/app/AlertDialog.html" target="_blank"><code>AlertDialog</code></a></li>
+<li><a href="http://developer.android.com/guide/topics/ui/controls/pickers.html" target="_blank">Pickers</a></li>
+<li><a href="http://developer.android.com/guide/components/fragments.html" target="_blank">Fragments</a></li>
+<li><a href="https://developer.android.com/reference/android/support/v4/app/DialogFragment.html" target="_blank"><code>DialogFragment</code></a></li>
+<li><a href="https://developer.android.com/reference/android/app/FragmentManager.html" target="_blank"><code>FragmentManager</code></a></li>
+<li><a href="https://developer.android.com/reference/java/util/Calendar.html" target="_blank"><code>Calendar</code></a></li>
+</ul>
+<p>Material Design spec:</p>
+<ul>
+<li><a href="https://material.io/design/layout/responsive-layout-grid.html" target="_blank">Responsive layout grid</a></li>
+<li><a href="https://www.google.com/design/spec/components/dialogs.html" target="_blank">Dialogs</a></li>
+</ul>
+<p>Other:</p>
+<ul>
+<li>Android Developers Blog: <a href="http://android-developers.blogspot.com/2015/05/android-design-support-library.html" target="_blank">Android Design Support Library</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Builder_pattern" target="_blank">Builder pattern</a> in Wikipedia</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="13。Homework" duration="0">
+        <p>This section lists possible homework assignments for students who are working through this codelab as part of a course led by an instructor. It&#39;s up to the instructor to do the following:</p>
+<ul>
+<li>Assign homework if required.</li>
+<li>Communicate to students how to submit homework assignments.</li>
+<li>Grade the homework assignments.</li>
+</ul>
+<p>Instructors can use these suggestions as little or as much as they want, and should feel free to assign any other homework they feel is appropriate.</p>
+<p>If you&#39;re working through this codelab on your own, feel free to use these homework assignments to test your knowledge.</p>
+<h2 is-upgraded>Build and run an app</h2>
+<p>Open the <a href="https://drive.google.com/file/d/1G6yTRkmiUp24cPD5HsVzBt1GEn51c1BA/view?usp=sharing" target="_blank">DroidCafeOptions</a> app that you created in this lesson.</p>
+<ol type="1" start="1">
+<li>Add a Date button under the delivery options that shows the date picker.</li>
+<li>Show the user&#39;s chosen date in a <code>Toast</code> message.</li>
+</ol>
+<h2 is-upgraded>Answer these questions</h2>
+<h3 is-upgraded>Question 1</h3>
+<p>What is the name of the file in which you create options menu items? Choose one:</p>
+<ul>
+<li>menu.java</li>
+<li>menu_main.xml</li>
+<li>activity_main.xml</li>
+<li>content_main.xml</li>
+</ul>
+<h3 is-upgraded>Question 2</h3>
+<p>Which method is called when an options menu item is clicked? Choose one:</p>
+<ul>
+<li><code>onOptionsItemSelected(MenuItem item)</code></li>
+<li><code>onClick(View view)</code></li>
+<li><code>onContextItemSelected()</code></li>
+<li><code>onClickShowAlert()</code></li>
+</ul>
+<h3 is-upgraded>Question 3</h3>
+<p>Which of the following statements sets the title for an alert dialog? Choose one:</p>
+<ul>
+<li><code>myAlertBuilder.setMessage("Alert");</code></li>
+<li><code>myAlertBuilder.setPositiveButton("Alert");</code></li>
+<li><code>myAlertBuilder.setTitle("Alert");</code></li>
+<li><code>AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder("Alert");</code></li>
+</ul>
+<h3 is-upgraded>Question 4</h3>
+<p>Where do you create a <code>DialogFragment</code> for a date picker? Choose one:</p>
+<ul>
+<li>In the <code>onCreate()</code> method in the hosting <code>Activity</code>.</li>
+<li>In the <code>onCreateContextMenu()</code> method in <code>Fragment</code>.</li>
+<li>In the <code>onCreateView()</code> method in the extension of <code>DialogFragment</code>.</li>
+<li>In the <code>onCreateDialog()</code> method in the extension of <code>DialogFragment</code>.</li>
+</ul>
+<h2 is-upgraded>Submit your app for grading</h2>
+<h3 is-upgraded>Guidance for graders</h3>
+<p>Check that the app has the following features:</p>
+<ul>
+<li>The date picker is added as a <code>DialogFragment</code>.</li>
+<li>Clicking the Date button (refer to the left side of the figure below) in <code>OrderActivity</code> shows the date picker (refer to the center of the figure).</li>
+<li>Clicking the OK button in the date picker shows a <code>Toast</code> message in <code>OrderActivity</code> with the chosen date (refer to the right side of the figure).</li>
+</ul>
+<p class="image-container"><img alt="Including a date picker in the Droid Cafe app." style="width: 641.76px" src="img/f02fe599d668cabd.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="14。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,804 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 10.1A:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="10-1a"
+                  title="Android 開発者基礎講座 10.1A:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、「codelab」と「practical」という用語を使い分けています。</p>
+<p>序章</p>
+<p>Android オペレーティングシステムは、幅広いデバイスやフォームファクタで動作するアプリを構築するための強固な基盤を提供します。しかし、複雑なライフサイクルや推奨されるアプリ・アーキテクチャの欠如などの問題により、堅牢なアプリを作成することが困難になっています。<a href="https://developer.android.com/topic/libraries/architecture/index.html" target="_blank">Androidアーキテクチャ・コンポーネントは</a>、ライフサイクル管理やデータ永続化などの一般的なタスクのためのライブラリを提供し、<a href="https://developer.android.com/topic/libraries/architecture/guide.html" target="_blank">推奨アーキテクチャの</a>実装を容易にします。</p>
+<p>アーキテクチャ コンポーネントは、より少ないボイラプレート コードで、堅牢性、テスト可能性、保守性の高い方法でアプリを構成するのに役立ちます。</p>
+<p>推奨されるアーキテクチャコンポーネントは何ですか？</p>
+<p>アーキテクチャに関しては、まず全体像を見ることが大切です。用語を紹介するために、ここではアーキテクチャコンポーネントの概要と、それらがどのように連携して動作するかを簡単に説明します。それぞれのコンポーネントは、この実用的な方法で使用するにつれて、より詳しく説明されます。</p>
+<p>下図は、アーキテクチャ コンポーネントを使用するアプリの推奨アーキテクチャの基本形を示しています。アーキテクチャは、UI コントローラ、<code>LiveData</code> を提供する <code>ViewModel</code>、リポジトリ、Room データベースで構成されています。Room データベースは SQLite データベースによってバックアップされ、データ アクセス オブジェクト (DAO) を通してアクセスできます。各コンポーネントについては、以下で簡単に説明し、詳細については「アーキテクチャ コンポーネントの概念」の章、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html" target="_blank">10.1で説明</a>します。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html" target="_blank">Roomを使用してデータを格納します</a>。あなたは、この実用的なコンポーネントを実装します。</p>
+<p>すべての構成要素は相互に作用するため、この実習ではこれらの構成要素を参照することになるので、それぞれについて簡単に説明します。</p>
+<p>エンティティ（<em>Entity</em>）。アーキテクチャ コンポーネントのコンテキストでは、エンティティはデータベース テーブルを記述する注釈付きクラスです。</p>
+<p><em>SQLite </em>データベース。デバイス上では、データは SQLite データベースに保存されます。<a href="https://developer.android.com/training/data-storage/room/index.html" target="_blank">Room 永続性ライブラリは</a>、このデータベースを作成し、維持します。</p>
+<p><em>DAO: </em>データアクセスオブジェクトの略。SQL クエリを関数にマッピングしたもの。これまではヘルパークラスでクエリを定義する必要がありました。DAO を使用すると、コードが関数を呼び出し、残りの処理はコンポーネントが行います。</p>
+<p>ルームデータベース。SQLiteデータベースの上にあるデータベースレイヤーで、ヘルパークラスで処理していたありふれたタスクを処理します。RoomデータベースはDAOを使用して、呼び出された関数に基づいてSQLiteデータベースにクエリを発行します。</p>
+<p>リポジトリのこと。複数のデータソースを管理するために作成するクラス。リポジトリはRoomデータベースに加えて、Webサーバーなどのリモートデータソースを管理することができます。</p>
+<p><code>ViewModel</code>*:* UIにデータを提供し、リポジトリとUI間の通信センターとして機能します。バックエンドを UI から隠します。<code>ViewModel</code> インスタンスはデバイスの設定変更にも対応します。</p>
+<p><code>LiveData</code>*:*<a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank">オブザーバーパターン</a>に従う、つまり観測可能なデータホルダークラス。常に最新バージョンのデータを保持/キャッシュします。データが変更されたときに、そのオブザーバーに通知する。一般的にはUIコンポーネントが関連するデータを観測する。<code>LiveData</code>はライフサイクルを考慮しているため、観測活動やフラグメントの状態に応じて、観測の停止や再開を自動的に管理します。</p>
+<p>すでに知っておくべきこと</p>
+<p><a href="https://developer.android.com/studio/index.html" target="_blank">Android Studio 3.0以上</a>でアプリを作成・実行できること。特に、使いこなせること。</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code></a><code>とアダプタ</code></li>
+<li><a href="https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html" target="_blank">SQLite データベース</a>と SQLite クエリ言語</li>
+<li>スレッディング全般、特に<a href="https://developer.android.com/reference/android/os/AsyncTask.html" target="_blank"><code>AsyncTask</code></a></li>
+</ul>
+<p>身近な存在になるのに役立ちます。</p>
+<ul>
+<li>UIからデータを分離するソフトウェアアーキテクチャパターン。</li>
+<li><a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank">オブザーバー パターン</a>要約すると、オブザーバーパターンは、オブジェクト間の一対多の依存関係を定義します。オブジェクトがその状態を変更するたびに、オブジェクトのすべての依存関係が通知され、自動的に更新されます。メインのオブジェクトを「サブジェクト」と呼び、その依存関係を「オブザーバー」と呼びます。通常、サブジェクトはオブザーバのメソッドを呼び出すことでオブザーバに通知します。サブジェクトは、オブザーバがサブジェクトに「登録」されており、呼び出すメソッドを指定しているため、どのメソッドを呼び出すかを知っています。</li>
+</ul>
+<p>重要: この実践は、<a href="https://developer.android.com/topic/libraries/architecture/guide.html" target="_blank">アプリアーキテクチャのガイド</a>で定義されたアーキテクチャを実装し、アーキテクチャコンポーネントの概念の章、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html" target="_blank">10.1</a>で説明されています。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html" target="_blank">Room を使用してデータを保存します</a>。概念の章を読むことを強くお勧めします。</p>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>Android Architecture Componentsの一部を使ってアプリを設計・構築する方法。<a href="https://developer.android.com/topic/libraries/architecture/room.html" target="_blank">Room</a>、<a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html" target="_blank"><code>ViewModel</code></a>、<a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData.html" target="_blank"><code>LiveData</code>を</a>使用します。</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li><code>RecyclerViewに単語を表示するActivityでアプリを作成します。</code></li>
+<li>単語オブジェクトを表す<code>Entity</code>を作成します。</li>
+<li>DAO（データアクセスオブジェクト）内のJavaメソッドへのSQLクエリのマッピングを定義します。</li>
+<li><code>LiveData</code>を使用して、オブザーバーを介してUIに表示されるデータに変更を加えることができます。</li>
+<li>データをローカルに永続化するためのRoomデータベースをアプリに追加し、データベースを初期化します。</li>
+<li>データがどのように保存されているか、または取得されているかに不可知性のあるAPIを持つリポジトリクラスとしてのデータバックエンドを抽象化します。</li>
+<li><code>ViewModel</code> を使用して、すべてのデータ操作を UI から分離します。</li>
+<li>ユーザーが新しい単語を追加することができる第2のアクティビティを追加します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>この実習では、<a href="https://developer.android.com/topic/libraries/architecture/index.html" target="_blank">Android Architecture Componentsを</a>使ったアプリを作ります。RoomWordsSampleと呼ばれるアプリは、Roomデータベースに単語のリストを保存し、そのリストを <code>RecyclerView</code> に表示します。RoomWordsSampleアプリは基本的なものですが、十分に完成されているので、これをテンプレートとして使用してビルドすることができます。</p>
+<p>RoomWordsSampleアプリは以下のようなことをします。</p>
+<ul>
+<li>データベースと連携して単語を取得・保存し、データベースにいくつかの単語を事前に入力しておくことができます。</li>
+<li><code>MainActivityのRecyclerViewにあるすべての単語を表示します。</code></li>
+<li>ユーザーが<code>+</code> FABボタンをタップすると、2つ目のアクティビティが開きます。ユーザーが単語を入力すると、アプリはその単語をデータベースに追加し、リストを自動的に更新します。</li>
+</ul>
+<p>下のスクリーンショットを見ると、以下のようになっています。</p>
+<ul>
+<li>開始時のRoomWordsSampleアプリは、最初の単語のリストと一緒に</li>
+<li>言葉を添える活動</li>
+</ul>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+</table>
+<p>RoomWordsSample建築概要</p>
+<p>次の図は、導入部の概要図を反映しており、RoomWordsSample アプリのすべての部分を示しています。各ボックス（SQLite データベースを除く）は、作成したクラスを表しています。</p>
+<p>ヒント。ヒント: この図を印刷するか、別タブで開くと、コードを作成するときに参照できるようになります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1.RoomWordsSampleアプリの作成" duration="0">
+        <p>注：この実習では、必要に応じてメンバ変数の作成、クラスのインポート、値の抽出を行うことが期待されます。慣れ親しんでおくべきコードは提供されていますが、説明はしていません。</p>
+<p>1.1 Activityを1つにしてアプリを作成する</p>
+<p>Android Studioを開き、アプリを作成します。設定画面では、以下のようにします。</p>
+<ul>
+<li>アプリ名はRoomWordsSampleとします。</li>
+<li>Kotlin サポートを含む」と「C++ サポートを含む」のチェックボックスが表示されている場合は、両方のチェックを外してください。</li>
+<li>Phone &amp; Tablet のフォームファクタのみを選択し、SDK の最小値を API 14 以上に設定します。</li>
+<li>基本的な活動を選択します。</li>
+</ul>
+<p>1.2 Gradleファイルを更新する</p>
+<p>Android Studioでは、手動でアーキテクチャコンポーネントライブラリをGradleファイルに追加します。</p>
+<ol type="1" start="1">
+<li><code>以下のコードを build.gradle (Module: app) ファイルに追加してください。</code></li>
+</ol>
+<p><code>//</code> 部屋の構成要素</p>
+<p><code>実装 "android.arch.persistence.room:runtime:$rootProject.roomVersion"</code></p>
+<p><code>annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"</code></p>
+<p><code>androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"</code></p>
+<p><code>//</code> ライフサイクルコンポーネント</p>
+<p><code>実装 "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"</code></p>
+<p><code>アノテーションプロセッサ"android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"</code></p>
+<ol type="1" start="1">
+<li><code>build.gradle (Project: RoomWordsSample) ファイルに、ファイルの最後にバージョン番号を追加します。</code></li>
+</ol>
+<p>エクステリア</p>
+<p><code>   roomVersion = '1.1.1.1'</code></p>
+<p><code>   archLifecycleVersion = '1.1.1.1'</code></p>
+<p><code>}</code></p>
+<p>重要: ルームライブラリとライフサイクルライブラリには最新のバージョン番号を使用してください。最新のバージョン番号を確認するには</p>
+<ol type="1" start="1">
+<li><a href="https://developer.android.com/topic/libraries/architecture/adding-components.html" target="_blank">プロジェクトへのコンポーネントの追加</a> ページで、コンポーネントのエントリを探します。</li>
+<li>バージョン番号は、コンポーネントの<strong>依存関係</strong>定義の最初に定義されます。例えば、以下の定義のRoomのバージョン番号は1.1.1です: <strong><code>def room_version = "1.1.1"</code></strong></li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：Wordエンティティの作成" duration="0">
+        <p>下の図は、このタスクで実装するコンポーネントがハイライトされた完全なアーキテクチャ図です。すべてのタスクにはこのようなダイアグラムがあり、現在のコンポーネントがアプリの全体的な構造の中でどこに収まっているかを理解し、コンポーネントがどのように接続されているかを確認するのに役立ちます。</p>
+<p>このアプリのデータは単語であり、各単語はデータベース内のエンティティによって表現されます。このタスクでは、<code>Word</code>クラスを作成し、Roomがそのクラスからデータベーステーブルを作成できるように注釈を付けます。下図は<code>word_table</code>データベーステーブルを示しています。このテーブルには、主キーとしても機能する1つの単語列と、&#34;Hello&#34;と&#34;World&#34;のためにそれぞれ1つずつの2つの行があります。</p>
+<p>2.1 Wordクラスの作成</p>
+<ol type="1" start="1">
+<li><code>Word</code>というクラスを作成します。</li>
+<li>単語の文字列を引数に取るコンストラクタを追加します。パラメータが決して <code>null</code> にならないように <code>@NonNull</code> <a href="https://developer.android.com/reference/android/support/annotation/package-summary.html" target="_blank"><code>アノテーションを</code></a>追加します。</li>
+<li>単語を返す<code>getWord()</code>という&#34;ゲッター&#34;メソッドを追加します。Roomは、オブジェクトをインスタンス化できるように、エンティティクラスに&#34;ゲッター&#34;メソッドを必要とします。</li>
+</ol>
+<p><code>public class Word {</code></p>
+<p><code>String mWord.</code></p>
+<p><code>public Word(@NonNull String word) {this.mWord = word;} }</code></p>
+<p><code>public String getWord(){return this.mWord;}。</code></p>
+<p><code>}</code></p>
+<p>2.2 Word クラスのアノテーション</p>
+<p><code>Word</code>クラスをRoomデータベースにとって意味のあるものにするには、注釈を付ける必要があります。アノテーションは、<code>Word</code>クラスの各部分がデータベース内のエントリとどのように関係しているかを特定します。Roomはこの情報を使用してコードを生成します。</p>
+<p>以下の手順で、以下のようなアノテーションを使用します。</p>
+<ul>
+<li>各 <code>@Entity</code> クラスは、テーブル内のエンティティを表します。クラス宣言に注釈を付けて、クラスがエンティティであることを示します。テーブルの名前をクラスの名前とは異なるものにしたい場合は、テーブルの名前を指定します。</li>
+<li>すべてのエンティティには主キーが必要です。物事をシンプルにするために、RoomWordsSampleアプリ内の各単語はそれ自体が主キーとして機能します。ユニーク キーを自動生成する方法については、以下のヒントを参照してください。</li>
+<li><code>NonNull</code> パラメータ、フィールド、またはメソッドの戻り値が決して <code>NULL</code> にならないことを示します。主キーは常にこのアノテーションを使用する必要があります。このアノテーションは、行内の必須フィールドに使用します。</li>
+<li><code>@ColumnInfo(name = "word")</code> テーブル内のカラムの名前を指定し、カラム名をメンバ変数の名前とは別の名前にしたい場合に指定します。</li>
+<li>データベースに格納されているすべてのフィールドは、パブリックか&#34;ゲッター&#34;メソッドを持たなければなりません。このアプリは、メンバー変数を直接公開するのではなく、<code>getWord()</code>の&#34;ゲッター&#34;メソッドを提供します。</li>
+</ul>
+<p>アノテーションの完全なリストについては、<a href="https://developer.android.com/reference/android/arch/persistence/room/package-summary.html" target="_blank">Roomパッケージの概要リファレンスを</a>参照してください。</p>
+<p>以下のコードのように、アノテーションで<code>Word</code>クラスを更新します。</p>
+<ol type="1" start="1">
+<li><code>クラス宣言に@Entity記法を追加し、tableNameを"word_table"に設定します。</code></li>
+<li><code>mWord メンバ変数を @PrimaryKey としてアノテーションします。mWord が @NonNull であることを要求し、列の名前を "word" とします。</code></li>
+</ol>
+<p>注：注釈を入力すると、Android Studioは必要なものをすべて自動でインポートします。</p>
+<p>ここに完全なコードがあります。</p>
+<p><code>@Entity(tableName = "word_table")</code></p>
+<p><code>public class Word {</code></p>
+<p>プライマリーキー</p>
+<p>＠ＮｏｎＮｕｌｌ</p>
+<p><code>name = "word")</code></p>
+<p><code>String mWord.</code></p>
+<p><code>public Word(@NonNull String word) {this.mWord = word;} }</code></p>
+<p><code>public String getWord(){return this.mWord;}。</code></p>
+<p><code>}</code></p>
+<p>アノテーションにエラーが出た場合は、以下のように手動でインポートします。</p>
+<p><code>import android.arch.persistence.room.ColumnInfoを使用しています。</code></p>
+<p><code>import android.arch.persistence.room.Entityを使用しています。</code></p>
+<p><code>import android.arch.persistence.room.PrimaryKeyを使用しています。</code></p>
+<p><code>import android.support.annotation.NonNullです。</code></p>
+<p>キーの自動生成に関するヒント。各エンティティに対して一意のキーを<a href="https://developer.android.com/reference/android/arch/persistence/room/PrimaryKey.html" target="_blank">自動生成する</a>には、一次整数キーに <strong><code>autoGenerate=true</code></strong> を追加して注釈を付けます。詳細は、「<a href="https://developer.android.com/training/data-storage/room/defining-data.html" target="_blank">Roomエンティティを使用したデータの定義」を</a>参照してください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3：DAOの作成" duration="0">
+        <p>データ・アクセス・オブジェクト (<a href="https://developer.android.com/reference/android/arch/persistence/room/Dao.html" target="_blank"><code>Dao)</code> は</a>アノテーション・クラスで、SQL クエリを指定し、メソッド呼び出しに関連付けます。コンパイラはSQLのエラーをチェックし、アノテーションからクエリを生成します。一般的なクエリについては、ライブラリは<code>@Insert</code>などの便利なアノテーションを提供しています。</p>
+<p>そのことに注意してください。</p>
+<ul>
+<li>DAOはインターフェイスまたは抽象クラスでなければなりません。</li>
+<li>RoomはDAOを使用して、コードのためのクリーンなAPIを作成します。</li>
+<li>デフォルトでは、すべてのクエリ（<code>@Query</code>）はメインスレッド以外のスレッドで実行されなければなりません。(これについては後ほど説明します。)挿入や削除などの操作については、提供されている便利なアノテーションを使用すると、Roomがスレッド管理を代行してくれます。</li>
+</ul>
+<p>3.1 DAOクラスの実装</p>
+<p>この実習のDAOは基本的なもので、すべての単語を取得し、単語を挿入し、すべての単語を削除するためのクエリを提供するだけです。</p>
+<ol type="1" start="1">
+<li>新しいインターフェースを作成し、<code>WordDao</code>と呼びます。</li>
+<li>クラス宣言に<code>@Dao</code>をアノテーションして、Room用のDAOクラスとしてクラスを識別します。</li>
+<li>一つの単語を挿入する方法を宣言します。</li>
+</ol>
+<p><code>void insert(Word word)。</code></p>
+<ol type="1" start="1">
+<li><code>insert()</code> メソッドに <code>@Insert</code> をアノテーションします。SQLを提供する必要はありません!(行の削除や更新のための<code>@</code><a href="https://developer.android.com/reference/android/arch/persistence/room/Delete.html" target="_blank"><code>Delete</code></a>や<code>@</code><a href="https://developer.android.com/reference/android/arch/persistence/room/Update.html" target="_blank"><code>Updateアノテーションもありますが、この</code></a>アプリの初期バージョンではこれらの操作は使用しません)。</li>
+<li>すべての単語を削除するメソッドを宣言します。</li>
+</ol>
+<p><code>void deleteAll()。</code></p>
+<ol type="1" start="1">
+<li>複数のエンティティを削除するための便利なアノテーションはないので、<code>deleteAll()</code>メソッドには汎用的な<code>@Query</code>をアノテーションします。SQL クエリを文字列パラメータとして <code>@Query</code> に指定します。<code>deleteAll()</code> メソッドを以下のようにアノテーションします。</li>
+</ol>
+<p><code>@Query("DELETE FROM word_table")</code></p>
+<ol type="1" start="1">
+<li>単語のリストを返す <code>getAllWords()</code> というメソッドを作成します。</li>
+</ol>
+<p><code>List< Word> getAllWords()。</code></p>
+<ol type="1" start="1">
+<li><code>getAllWords()</code> メソッドに、便利なようにアルファベット順にソートされた <code>word_table</code> のすべての単語を取得する SQL クエリをアノテーションします。</li>
+</ol>
+<p><code>@Query("SELECT * from word_table ORDER BY word ASC")</code></p>
+<p><code>WordDao</code>クラスの完成したコードは以下の通りです。</p>
+<p><code>彡(ﾟ)(ﾟ)(ﾟ)(ﾟ)o(ﾟ)o</code></p>
+<p><code>public interface WordDao{(ワードダオ)</code></p>
+<p>挿入してください</p>
+<p><code>void insert(Word word)。</code></p>
+<p><code>@Query("DELETE FROM word_table")</code></p>
+<p><code>void deleteAll()。</code></p>
+<p><code>@Query("SELECT * from word_table ORDER BY word ASC")</code></p>
+<p><code>List< Word> getAllWords()。</code></p>
+<p><code>}</code></p>
+<p>ヒントです。このアプリの場合、単語の順序付けは厳密には必要ありません。しかし、デフォルトでは、戻り順は保証されておらず、順序付けはテストを簡単にします。</p>
+<p>DAOの詳細については、「<a href="https://developer.android.com/training/data-storage/room/accessing-data.html" target="_blank">Room DAOを使用したデータへのアクセス」</a>を参照してください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。タスク4：LiveDataの使用" duration="0">
+        <p>データを表示したり、他の方法でデータを使用したりするとき、通常はデータが変化したときに何らかのアクションを起こしたいと考えます。つまり、データが変化したときに反応できるように、データを観察しなければなりません。</p>
+<p>データ観測のためのライフサイクルライブラリクラスである<code>LiveData</code>は、アプリがデータの変化に対応するのに役立ちます。メソッドの記述で<a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData.html" target="_blank"><code>LiveData</code></a> 型の戻り値を使用すると、Room はデータベースが更新されたときに <code>LiveData</code> を更新するために必要なすべてのコードを生成します。</p>
+<p>4.1 WordDaoでLiveDataを返す</p>
+<ul>
+<li><code>WordDao インターフェースで、getAllWords() メソッドのシグネチャを変更して、返される List<Word> が LiveData<> でラップされるようにします。</code></li>
+</ul>
+<p><code>@Query("SELECT * from word_table ORDER BY word ASC")</code></p>
+<p><code>LiveData< List< Word>> getAllWords()。</code></p>
+<p><a href="https://www.youtube.com/watch?v=jCw5ib0r9wg" target="_blank">Live</a><code>Data</code> のその他の使用方法については、LiveData のドキュメントを参照するか、この<a href="https://www.youtube.com/watch?v=jCw5ib0r9wg" target="_blank">アーキテクチャ コンポーネントを</a>参照してください。LiveData<a href="https://www.youtube.com/watch?v=jCw5ib0r9wg" target="_blank">とライフサイクルの</a>ビデオをご覧ください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。 タスク5：部屋のデータベースを追加する" duration="0">
+        <p>RoomはSQLiteデータベースの上にあるデータベースレイヤーです。Room は<a href="https://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper.html" target="_blank"><code>SQLiteOpenHelper</code> の</a>ようなデータベースヘルパークラスで処理していたありふれたタスクを処理します。</p>
+<ul>
+<li>ルームはDAOを使用して、そのデータベースにクエリを発行します。</li>
+<li>デフォルトでは、UIパフォーマンスの低下を避けるために、Roomはメインスレッドでデータベースクエリを発行することを許可していません。<a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData.html" target="_blank"><code>LiveData</code>は、</a>必要に応じてバックグラウンドスレッド上でクエリを非同期的に自動的に実行することで、このルールを適用します。</li>
+<li>RoomはSQLite文のコンパイル時のチェックを提供します。</li>
+<li><code>Room</code>クラスは抽象化して<code>RoomDatabase</code>を拡張する必要があります。</li>
+<li>通常、アプリ全体のRoomデータベースのインスタンスは1つだけで済みます。</li>
+</ul>
+<p>5.1 Roomデータベースの実装</p>
+<ol type="1" start="1">
+<li><a href="https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase.html" target="_blank"><code>RoomDatabase</code>を</a><code>継承した公開抽象クラスを作成し、WordRoomDatabaseと呼ぶ。</code></li>
+</ol>
+<p><code>public abstract class WordRoomDatabase extends RoomDatabase {} 公的な抽象クラス WordRoomDatabase extends RoomDatabase {}.</code></p>
+<ol type="1" start="1">
+<li>クラスをルーム・データベースにアノテーションします。データベースに属するエンティティを宣言します。(エンティティ・クラスまたはクラスをリストアップすると、データベース内に対応するテーブルが作成されます)。バージョン番号を設定します。exportSchema はスキーマのバージョンの履歴を保持します。データベースを移行するわけではないので、実用的には無効にすることができます。</li>
+</ol>
+<p><code>データベース(エンティティ = {Word.class}, バージョン = 1, exportSchema = false)</code></p>
+<ol type="1" start="1">
+<li>データベースで動作するDAOを定義します。それぞれの <code>@Dao</code> に対して抽象的な &#34;ゲッター&#34; メソッドを提供します。</li>
+</ol>
+<p><code>public abstract WordDao wordDao()。</code></p>
+<ol type="1" start="1">
+<li><code>WordRoomDatabase</code>を<a href="https://en.wikipedia.org/wiki/Singleton_pattern" target="_blank">シングルトン</a>として作成することで、データベースの複数のインスタンスを同時に開いてしまうのを防ぐことができます。以下にシングルトンを作成するコードを示します。</li>
+</ol>
+<p><code>private static WordRoomDatabase INSTANCE.</code></p>
+<p><code>public static WordRoomDatabase getDatabase(final Context context) { {.</code></p>
+<p><code>if (INSTANCE == null) {</code></p>
+<p><code>synchronized (WordRoomDatabase.class) { { {.</code></p>
+<p><code>if (INSTANCE == null) {</code></p>
+<p><code>//</code> ここにデータベースを作成します。</p>
+<p><code>}</code></p>
+<p><code>       }</code></p>
+<p><code>   }</code></p>
+<p>。</p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>上記のコードの<code>Create database here</code>コメントで指定された場所にデータベースを作成するコードを追加します。</li>
+</ol>
+<p>以下のコードは、Roomのデータベースビルダーを使用して、<code>WordRoomDatabase</code>クラスからアプリケーションコンテキストに<code>"word_database"</code>という名前の<a href="https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase.html" target="_blank"><code>RoomDatabas``e</code></a>オブジェクトを作成しています。</p>
+<p><code>//</code> ここにデータベースを作成します。</p>
+<p><code>INSTANCE = Room.databaseBuilder(context.getApplicationContext().</code></p>
+<p><code>.class, "word_database")</code></p>
+<p><code>       .build() を使用しています。</code></p>
+<ol type="1" start="1">
+<li>データベースの移行戦略を追加します。</li>
+</ol>
+<p>この実習では、エンティティやバージョン番号の更新は行いません。ただし、データベース スキーマを変更する場合は、バージョン番号を更新し、移行を処理する方法を定義する必要があります。あなたが作成しているようなサンプルアプリでは、データベースを破棄して再作成することは立派な移行戦略です。実際のアプリでは、非破壊的な移行戦略を実装する必要があります。<a href="https://medium.com/google-developers/understanding-migrations-with-room-f01e04b07929" target="_blank">Roomを使用した移行を理解するを</a>参照してください。</p>
+<p><code>build()</code> を呼び出す前に、以下のコードをビルダに追加します。</p>
+<p><code>//</code> マイグレーションの代わりにワイプとリビルドを行う</p>
+<p><code>//</code> 移行オブジェクトがない場合。</p>
+<p><code>//</code> 移行はこの実習には含まれていません。</p>
+<p><code>.fallbackToDestructiveMigration()</code></p>
+<p>以下は<code>WordRoomDatabase</code>クラス全体の完全なコードです。</p>
+<p><code>データベース(エンティティ = {Word.class}, バージョン = 1, exportSchema = false)</code></p>
+<p><code>public abstract class WordRoomDatabase extends RoomDatabase { public abstract class WordRoomDatabase extends RoomDatabase {.</code></p>
+<p><code>public abstract WordDao wordDao()。</code></p>
+<p><code>private static WordRoomDatabase INSTANCE.</code></p>
+<p><code>static WordRoomDatabase getDatabase(final Context context) { {.</code></p>
+<p><code>if (INSTANCE == null) {</code></p>
+<p><code>synchronized (WordRoomDatabase.class) { { {.</code></p>
+<p><code>if (INSTANCE == null) {</code></p>
+<p><code>                   INSTANCE = Room.databaseBuilder(context.getApplicationContext().</code></p>
+<p><code>.class, "word_database")</code></p>
+<p><code>//</code> マイグレーションの代わりにワイプとリビルドを行う</p>
+<p><code>//</code> 移行オブジェクトがない場合。</p>
+<p><code>//</code> 移行はこの実習には含まれていません。</p>
+<p><code>                           .fallbackToDestructiveMigration()</code></p>
+<p><code>                           .build() を使用しています。                 </code></p>
+<p><code>               }</code></p>
+<p><code>           }</code></p>
+<p><code>       }</code></p>
+<p>。</p>
+<p><code>   }</code></p>
+<p><code>}</code></p>
+<p>重要: Android Studio では、コードの貼り付け時やビルド処理中にエラーが発生する場合は、インポートにフルパッケージ名を使用していることを確認してください。<a href="https://developer.android.com/topic/libraries/architecture/adding-components.html" target="_blank">プロジェクトにコンポーネントを追加する」を</a>参照してください。次に、[ビルド] &gt; [プロジェクトのクリーン化] を選択します。次に、[ビルド] &gt; [プロジェクトの再構築] を選択し、再度ビルドします。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8.タスク6: リポジトリの作成" duration="0">
+        <p>リポジトリは、複数のデータソースへのアクセスを抽象化するクラスです。リポジトリはアーキテクチャ コンポーネント ライブラリの一部ではありませんが、コード分離とアーキテクチャのベストプラクティスとして提案されています。リポジトリ クラスはデータ操作を処理します。これは、アプリデータのためにアプリの残りの部分にクリーンなAPIを提供します。</p>
+<p>リポジトリはクエリスレッドを管理し、複数のバックエンドを使用できるようにします。最も一般的な例では、リポジトリはネットワークからデータを取得するか、ローカルデータベースにキャッシュされた結果を使用するかを決定するロジックを実装しています。</p>
+<p>6.1 リポジトリの実装</p>
+<ol type="1" start="1">
+<li><code>WordRepository</code>というパブリッククラスを作成します。</li>
+<li>DAOと単語リストのメンバー変数を追加します。</li>
+</ol>
+<p><code>private WordDao mWordDao.</code></p>
+<p><code>private LiveData< List< Word>> mAllWords.</code></p>
+<ol type="1" start="1">
+<li>データベースへのハンドルを取得し、メンバー変数を初期化するコンストラクタを追加します。</li>
+</ol>
+<p><code>WordRepository(アプリケーション・アプリケーション) { { { {.</code></p>
+<p>ような場合、「データベース」と「データベース」の間には、「データベース」と「データベース」が存在します。</p>
+<p><code>    mWordDao = db.wordDao()。</code></p>
+<p><code>    mAllWords = mWordDao.getAllWords()。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>キャッシュされた単語を <code>LiveData</code> として返す <code>getAllWords()</code> というラッパーメソッドを追加します。Room はすべてのクエリを別のスレッドで実行します。Observed <code>LiveData</code>は、データが変更されたときにオブザーバーに通知します。</li>
+</ol>
+<p><code>LiveData< List< Word>> getAllWords() {</code></p>
+<p><code>mAllWordsを返します。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>insert()</code> メソッドのラッパーを追加します。UI 以外のスレッドで <code>insert()</code> を呼び出すには <code>AsyncTask</code> を使用します。Room は、UI をブロックするようなメイン スレッドでのロングラン操作を行わないようにします。</li>
+</ol>
+<p><code>public void insert (Word word) { {.</code></p>
+<p><code>new insertAsyncTask(mWordDao).execute(word).</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>インナークラスとして<code>insertAsyncTask</code>を作成します。<code>AsyncTask</code>に慣れているはずなので、ここに<code>insertAsyncTask</code>のコードをコピーしておきます。</li>
+</ol>
+<p><code>private static class insertAsyncTask extends AsyncTask< Word, Void, Void> {.</code></p>
+<p><code>private WordDao mAsyncTaskDao.</code></p>
+<p><code>        mAsyncTaskDao = dao.</code></p>
+<p><code>    }</code></p>
+<p>オーバーライド</p>
+<p><code>protected Void doInBackground(final Word... params) { [保護された Void doInBackground(final Word... params)</code></p>
+<p><code>        mAsyncTaskDao.insert(params[0])。</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>    }</code></p>
+<p><code>}</code></p>
+<p>以下は<code>WordRepository</code>クラスの完全なコードです。</p>
+<p><code>public class WordRepository {</code></p>
+<p><code>private WordDao mWordDao.</code></p>
+<p><code>private LiveData< List< Word>> mAllWords.</code></p>
+<p><code>WordRepository(アプリケーション・アプリケーション) { { { {.</code></p>
+<p>ような場合、「データベース」と「データベース」の間には、「データベース」と「データベース」が存在します。</p>
+<p><code>       mWordDao = db.wordDao()。</code></p>
+<p><code>       mAllWords = mWordDao.getAllWords()。</code></p>
+<p><code>   }</code></p>
+<p><code>LiveData< List< Word>> getAllWords() {</code></p>
+<p><code>mAllWordsを返します。</code></p>
+<p><code>   }</code></p>
+<p><code>public void insert (Word word) { {.</code></p>
+<p><code>new insertAsyncTask(mWordDao).execute(word).</code></p>
+<p><code>   }</code></p>
+<p><code>private static class insertAsyncTask extends AsyncTask< Word, Void, Void> {.</code></p>
+<p><code>private WordDao mAsyncTaskDao.</code></p>
+<p><code>           mAsyncTaskDao = dao.</code></p>
+<p><code>       }</code></p>
+<p>オーバーライド</p>
+<p><code>protected Void doInBackground(final Word... params) { [保護された Void doInBackground(final Word... params)</code></p>
+<p><code>           mAsyncTaskDao.insert(params[0])。</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>       }</code></p>
+<p><code>   }</code></p>
+<p><code>}</code></p>
+<p>注意: この単純な例では、リポジトリはあまり何もしません。より複雑な実装については、GitHub の<a href="https://github.com/googlesamples/android-architecture-components/tree/master/BasicSample" target="_blank">BasicSample</a> コードを参照ください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。 タスク 7: ViewModel の作成" duration="0">
+        <p><code>ViewModel</code> は UI にデータを提供し、設定変更を乗り切る役割を持つクラスです。<code>ViewModel</code> はリポジトリと UI 間のコミュニケーション センターとして機能します。<code>ViewModel</code> は<a href="https://developer.android.com/topic/libraries/architecture/lifecycle.html" target="_blank">ライフサイクル ライブラリの</a>一部です。このトピックの入門ガイドは<a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html" target="_blank"><code>ViewModel</code> を</a>参照してください。</p>
+<p><code>ViewModel</code> はアプリの UI データをコンフィギュレーションの変更に耐えうる方法で保持します。アプリの UI データをアクティビティやフラグメント クラスから分離することで、単一責任の原則に従うことができます: アクティビティやフラグメントは画面へのデータの描画に責任を持ち、<code>ViewModel</code> は UI に必要なすべてのデータの保持と処理に責任を持ちます。</p>
+<p><code>ViewModel</code> では、UI が使用または表示する変更可能なデータに <code>LiveData</code> を使用します。</p>
+<p>7.1 WordViewModelの実装</p>
+<ol type="1" start="1">
+<li><a href="https://developer.android.com/reference/android/arch/lifecycle/AndroidViewModel.html" target="_blank"><code>AndroidViewModel</code>を</a><code>継承したWordViewModelというクラスを作成します。</code></li>
+</ol>
+<p>警告。</p>
+<ul>
+<li><strong><code>ViewModel</code></strong> インスタンスにコンテキストを渡さない</li>
+<li><strong><code>Activity</code></strong><code>、</code><strong><code>Fragment</code></strong><code>、</code><strong><code>View の</code></strong><code>インスタンスやそれらの </code><strong><code>Context を ViewModel </code></strong><code>に保存しないでください。</code></li>
+</ul>
+<p>アクティビティはデバイスが回転した時など、<code>ViewModel</code> のライフサイクルの間に何度も破棄されたり作成されたりすることがあります。アクティビティへの参照を <code>ViewModel</code> に保存すると、破棄されたアクティビティを指す参照が生成されてしまいます。これはメモリリークです。アプリケーションのコンテキストが必要な場合は、この実践例のように<a href="https://developer.android.com/reference/android/arch/lifecycle/AndroidViewModel.html" target="_blank"><code>AndroidViewModel</code>を</a>使用します。 &lt;/div&gt; &lt;/div</p>
+<p><code>public class WordViewModel extends AndroidViewModel {}.</code></p>
+<ol type="1" start="1">
+<li>リポジトリへの参照を保持するためのプライベートメンバー変数を追加します。</li>
+</ol>
+<p><code>private WordRepository mRepository.</code></p>
+<ol type="1" start="1">
+<li>単語のリストをキャッシュするためのプライベート<code>LiveData</code>メンバ変数を追加します。</li>
+</ol>
+<p><code>private LiveData< List< Word>> mAllWords.</code></p>
+<ol type="1" start="1">
+<li><code>WordRepository</code>への参照を取得し、<code>WordRepository</code>からすべての単語のリストを取得するコンストラクタを追加します。</li>
+</ol>
+<p><code>public WordViewModel (Application application) { {</code></p>
+<p>スーパー<code>(</code>アプリケーション<code>)</code>を使用しています。</p>
+<p><code>       mRepository = new WordRepository(application).</code></p>
+<p><code>       mAllWords = mRepository.getAllWords()。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>すべての単語を取得する「ゲッター」メソッドを追加します。これにより、UIから実装を完全に隠すことができます。</li>
+</ol>
+<p><code>LiveData< List< Word>> getAllWords() { return mAllWords; } }</code></p>
+<ol type="1" start="1">
+<li>リポジトリの <code>insert</code>() メソッドを呼び出すラッパー <code>insert()</code> メソッドを作成します。このようにして、<code>insert()</code> の実装は UI から完全に隠されます。</li>
+</ol>
+<p><code>public void insert(Word word) { mRepository.insert(word); } } }</code></p>
+<p><code>WordViewModel</code>の完全なコードは以下の通りです。</p>
+<p><code>public class WordViewModel extends AndroidViewModel {.</code></p>
+<p><code>private WordRepository mRepository.</code></p>
+<p><code>private LiveData< List< Word>> mAllWords.</code></p>
+<p><code>public WordViewModel (Application application) { {</code></p>
+<p>スーパー<code>(</code>アプリケーション<code>)</code>を使用しています。</p>
+<p><code>       mRepository = new WordRepository(application).</code></p>
+<p><code>       mAllWords = mRepository.getAllWords()。</code></p>
+<p><code>   }</code></p>
+<p><code>LiveData< List< Word>> getAllWords() { return mAllWords; } }</code></p>
+<p><code>public void insert(Word word) { mRepository.insert(word); } } }</code></p>
+<p><code>}</code></p>
+<p><a href="https://www.youtube.com/watch?v=c9-057jC1ZA" target="_blank">詳細については</a>、<a href="https://www.youtube.com/watch?v=c9-057jC1ZA" target="_blank">アーキテクチャ コンポーネントを</a>ご覧ください。<a href="https://www.youtube.com/watch?v=c9-057jC1ZA" target="_blank"><code>ViewModel</code> の</a>ビデオをご覧ください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。タスク8：UIにXMLレイアウトを追加する" duration="0">
+        <p>次に、<code>RecyclerView</code>に表示するリストとアイテムのXMLレイアウトを追加します。</p>
+<p>この実践では、XMLでレイアウトを作成することに慣れていることを前提としているので、コードは提供されているだけです。</p>
+<p>8.1 スタイルの追加</p>
+<ol type="1" start="1">
+<li><code>colors.xml</code>の色を以下のように変更します。マテリアルデザインの色を使用する場合）。</li>
+</ol>
+<p><code><</code>リソース</p>
+<p><code><color name="colorPrimary"> #2196F3</color</code></p>
+<p><code><color name="colorPrimaryLight"> #64b5f6</color</code></p>
+<p><code><color name="colorPrimaryDark"> #1976D2</color</code></p>
+<p><code>name="colorAccent"> #FFFF9800</color</code></p>
+<p><code><color name="colorTextPrimary"> @android:color/white</color</code></p>
+<p><code><color name="colorScreenBackground"> #fff3e0</color</code></p>
+<p><code>name="colorTextHint"> #E0E0E0E0</color</code></p>
+<p><code></</code>リソース<code>> </</code>リソース</p>
+<ol type="1" start="1">
+<li><code>values/styles.xml</code>ファイルにテキスト・ビュー用のスタイルを追加します。</li>
+</ol>
+<p><code><style name="text_view_style">。</code></p>
+<p><code>   <item name="android:layout_width">match_parent</item>のようなものです。</code></p>
+<p><code>   <item name="android:layout_height">wrap_content</item>。</code></p>
+<p><code>   <item name="android:textAppearance"></code></p>
+<p><code>      @android:style/TextAppearance.Large</item>を使用しています。</code></p>
+<p><code>   <item name="android:background">@color/colorPrimaryLight</item>のようなものです。</code></p>
+<p><code>   <item name="android:layout_marginTop"> 8dp</item</code></p>
+<p><code>   <item name="android:layout_gravity">中央</item</code></p>
+<p><code>   <item name="android:padding"> 16dp</item>。</code></p>
+<p><code>   <item name="android:textColor">@color/colorTextPrimary</item>。</code></p>
+<p><code></style> </style</code></p>
+<p>8.2 アイテムレイアウトの追加</p>
+<ul>
+<li><code>layout/recyclerview_item.xmlレイアウトを追加します。</code></li>
+</ul>
+<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
+<p><code><LinearLayout xmlns:android=</code></p>
+<p><code>"http://schemas.android.com/apk/res/android"</code></p>
+<p><code>android:orientation="vertical" android:layout_width="match_parent"</code></p>
+<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
+<p><code>="wrap_content"></code></p>
+<p><code><</code>テキストビュー</p>
+<p><code>android:id="@+id/textView"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>style="@style/text_view_style"</code></p>
+<p><code>tools:text="プレースホルダテキスト" /></code></p>
+<p><code></LinearLayout> </LinearLayout</code></p>
+<p>8.3 RecyclerViewの追加</p>
+<ol type="1" start="1">
+<li><code>layout/content_main.xmlファイルで、ConstraintLayoutに背景色を追加します。</code></li>
+</ol>
+<p><code>android:background="@color/colorScreenBackground"</code></p>
+<ol type="1" start="1">
+<li><code>content_main.xmlファイルで、TextView要素を RecyclerView要素に置き換えます。</code></li>
+</ol>
+<p><code><android.support.v7.widget. RecyclerView</code></p>
+<p><code>android:id="@+id/recyclerview"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="wrap_content"</code></p>
+<p><code>="16dp"</code></p>
+<p><code>tools:listitem="@layout/recyclerview_item"</code></p>
+<p><code>/></code></p>
+<p>8.4 FAB のアイコンを修正する</p>
+<p>フローティング・アクション・ボタン（FAB）のアイコンは、利用可能なアクションに対応している必要があります。<code>layout/activity_main.xml</code>ファイルで、<code>FloatingActionButton</code>に<code>+</code>シンボルアイコンを与えます。</p>
+<ol type="1" start="1">
+<li>ファイル] &gt; [新規作成] &gt; [ベクターアセット]を選択します。</li>
+<li>素材アイコンを選択します。</li>
+<li>Icon:フィールドのAndroidロボットアイコンをクリックして、+（「追加」）アセットを選択します。</li>
+<li><code>layout/activity_main.xml ファイルの FloatingActionButton の srcCompat 属性を変更します。</code></li>
+</ol>
+<p><code>android:src="@drawable/ic_add_black_24dp"</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。タスク9: アダプタの作成と RecyclerView の追加" duration="0">
+        <p><code>RecyclerViewでデータを表示することになりますが、これはTextViewにデータを投げるよりも少し良いです。この実用的な方法は、</code> <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code></a>, RecyclerView<a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.LayoutManager.html" target="_blank"><code>.LayoutManager</code></a>,<a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.ViewHolder.html" target="_blank"><code>RecyclerView.ViewHolder</code></a>, RecyclerView.<a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html" target="_blank"><code>Adapter</code>がどの</a><code>ように動作するかを知っていることが前提です。</code></p>
+<p>9.1 WordListAdapter クラスの作成</p>
+<ul>
+<li><code>RecyclerView.Adapter</code> を継承するクラス <code>WordListAdapter</code> を追加します。このアダプタはデータをキャッシュし、それを使用して <code>RecyclerView</code> を生成します。インナー・クラス <code>WordViewHolder</code> は、1 つのリスト項目のビューを保持し、管理します。</li>
+</ul>
+<p>ここにコードがあります。</p>
+<p><code>public class WordListAdapter extends RecyclerView.Adapter< WordListAdapter.WordViewHolder> {</code></p>
+<p><code>private final LayoutInflater mInflater.</code></p>
+<p><code>private List< Word> mWords; // 単語のキャッシュコピー</code></p>
+<p><code>WordListAdapter(Context context) { mInflater = LayoutInflater.</code></p>
+<p>オーバーライド</p>
+<p><code>public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { { {.</code></p>
+<p><code>View itemView = mInflater.inflate(R.layout.s recyclerview_item, parent, false)。</code></p>
+<p><code>return new WordViewHolder(itemView).</code></p>
+<p><code>   }</code></p>
+<p>オーバーライド</p>
+<p><code>public void onBindViewHolder(WordViewHolder holder, int position) { { {.</code></p>
+<p><code>if (mWords != null) { (mWords != null)</code></p>
+<p><code>Word current = mWords. get(position).</code></p>
+<p><code>           holder.wordItemView.setText(current.getWord())を使用します。</code></p>
+<p><code>他にもあり       ます</code></p>
+<p><code>//</code> データがまだ準備できていない場合をカバーします。</p>
+<p><code>           holder.wordItemView.setText("No Word")。</code></p>
+<p><code>       }</code></p>
+<p><code>   }</code></p>
+<p><code>void setWords(List<Word> words){</code></p>
+<p><code>       mWords = words.</code></p>
+<p><code>       notifyDataSetChanged()を使用しています。</code></p>
+<p><code>   }</code></p>
+<p><code>// getItemCount()</code>は何度も呼び出され、最初に呼び出されたときに呼び出されます。</p>
+<p><code>// mWords</code>は更新されていません（初期状態では<code>null</code>であり、<code>null</code>を返すことができないことを意味します）。</p>
+<p>オーバーライド</p>
+<p><code>public int getItemCount() {</code></p>
+<p><code>if (mWords != null)</code></p>
+<p>返します。</p>
+<p><code>0</code>を返します。</p>
+<p><code>   }</code></p>
+<p><code>class WordViewHolder extends RecyclerView.ViewHolder {</code></p>
+<p><code>private final TextView wordItemView.</code></p>
+<p><code>private WordViewHolder(View itemView) { { {.</code></p>
+<p>スーパー<code>(itemView)</code>を使用しています。</p>
+<p><code>           wordItemView = itemView.findViewById(R.id.textView).</code></p>
+<p><code>       }</code></p>
+<p><code>   }</code></p>
+<p><code>}</code></p>
+<p>注意: アダプタの <strong><code>mWords</code></strong> 変数はデータをキャッシュします。次のタスクでは、データを自動的に更新するコードを追加します。</p>
+<p>注意: <strong><code>getItemCount()</code></strong> メソッドは、データがまだ準備できておらず、<strong><code>mWords</code></strong> がまだ <strong><code>null</code></strong> である可能性を考慮する必要があります。より洗練されたアプリでは、プレースホルダデータを表示したり、ユーザーにとって意味のある何か他のものを表示することができます。</p>
+<p>9.2 MainActivityに RecyclerViewを追加する</p>
+<ol type="1" start="1">
+<li><code>MainActivityのonCreate()メソッドに RecyclerViewを追加します。</code></li>
+</ol>
+<p><code>RecyclerView recyclerView = findViewById(R.id.s recyclerview).</code></p>
+<p><code>final WordListAdapter adapter = new WordListAdapter(this)。</code></p>
+<p><code>recyclerView.setAdapter(adapter)を使用しています。</code></p>
+<p><code>recyclerView.setLayoutManager(new LinearLayoutManager(this))。</code></p>
+<ol type="1" start="1">
+<li>アプリを実行して、アプリがコンパイルされて動くことを確認します。まだデータをフックアップしていないので、項目はありません。アプリは空のリサイクラービューを表示するはずです。  </li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。 タスク10：データベースにデータを入力する" duration="0">
+        <p>データベースにはまだデータがありません。2つの方法でデータを追加します。データベースを開いたときにデータを追加する方法と、単語を追加するためのアクティビティを追加する方法です。データベースを開くたびに、すべてのコンテンツが削除され、再配置されます。これは、通常はクリーンな状態で再起動したいサンプルアプリのための合理的なソリューションです。</p>
+<p>10.1 データベースへの入力のためのコールバックの作成</p>
+<p>アプリの起動時にすべてのコンテンツを削除してデータベースを再生成するには、<code>RoomDatabase.Callback</code>を作成し、<code>onOpen()</code>メソッドをオーバーライドします。UI スレッド上で Room データベース操作を行うことはできないので、<code>onOpen()</code> はデータベースにコンテンツを追加するための <code>AsyncTask</code> を作成して実行します。</p>
+<ol type="1" start="1">
+<li><code>WordRoomDatabase クラスに onOpen() コールバックを追加します。</code></li>
+</ol>
+<p><code>private static RoomDatabase.コールバック sRoomDatabaseCallback =</code></p>
+<p><code>新しい RoomDatabase.コールバック(){</code></p>
+<p>オーバーライド</p>
+<p><code>public void onOpen (@NonNull SupportSQLiteDatabase db){ {.</code></p>
+<p><code>super.onOpen(db)を使用しています。</code></p>
+<p><code>new PopulateDbAsync(INSTANCE).execute()。</code></p>
+<p><code>}</code></p>
+<p><code>};</code></p>
+<ol type="1" start="1">
+<li><code>AsycTask</code>を継承した内部クラス<code>PopulateDbAsync</code>を作成します。<code>doInBackground()</code> メソッドを実装して、すべての単語を削除し、新しい単語を作成します。これはデータベースの内容を削除し、単語の初期リストでデータベースを生成する<code>AsyncTask</code>のコードです。ご自由に自分の単語を使ってください!</li>
+</ol>
+<p><code>/**</code></p>
+<p><code>*</code> バックグラウンドでデータベースにデータを投入します。</p>
+<p><code>*/</code></p>
+<p><code>private static class PopulateDbAsync extends AsyncTask< Void, Void, Void> { { {.</code></p>
+<p><code>final WordDao mDao.</code></p>
+<p><code>String[]語句 = {"イルカ", "ワニ", "コブラ"}.</code></p>
+<p><code>PopulateDbAsync(WordRoomDatabase db) { PopulateDbAsync(WordRoomDatabase db)</code></p>
+<p><code>       mDao = db.wordDao()。</code></p>
+<p><code>   }</code></p>
+<p>オーバーライド</p>
+<p><code>//</code> 毎回クリーンなデータベースでアプリを起動します。</p>
+<p><code>//</code> データベースへの入力のみを行う場合は不要です。</p>
+<p><code>//</code> 最初に作成されたとき</p>
+<p><code>       mDao.deleteAll()。</code></p>
+<p><code>for (int i = 0; i <= words.length - 1; i++) {</code></p>
+<p><code>word = new Word(words[i]).</code></p>
+<p><code>           mDao.insert(word)。</code></p>
+<p><code>       }</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>.build()</code>を呼び出す直前に、<code>WordRoomDatabase</code>のデータベース構築シーケンスにコールバックを追加します。</li>
+</ol>
+<p><code>.addCallback(sRoomDatabaseCallback)</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="13。 タスク11：UIとデータを接続する" duration="0">
+        <p>データベースに単語の初期セットを入力するメソッドを作成したので、次はこれらの単語を <code>RecyclerView</code> に表示するコードを追加します。</p>
+<p>データベースの現在の内容を表示するために、<code>ViewModel</code> に <code>LiveData</code> を観測するオブザーバーを追加します。データが変更されるたびに (初期化時も含めて)、<code>onChanged()</code> コールバックが呼び出されます。この場合、<code>onChanged()</code> コールバックはアダプタの <code>setWord()</code> メソッドを呼び出して、アダプタのキャッシュされたデータを更新し、表示されたリストを更新します。</p>
+<p>11.1 言葉を表示する</p>
+<ol type="1" start="1">
+<li><code>MainActivity</code>では、すべてのアクティビティのインタラクションが<code>WordViewModel</code>のみとなるため、<a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html" target="_blank"><code>ViewModel</code>の</a>メンバ変数を作成します。</li>
+</ol>
+<p><code>private WordViewModel mWordViewModel.</code></p>
+<ol type="1" start="1">
+<li><code>onCreate() メソッドで ViewModelProviders クラスから ViewModel を取得します。</code></li>
+</ol>
+<p><code>mWordViewModel = ViewModelProviders.of(this).get(WordViewModel.class).</code></p>
+<p><a href="https://developer.android.com/reference/android/arch/lifecycle/ViewModelProviders.html" target="_blank"><code>ViewModelProviders を</code></a><code>使用して ViewModel を</code> UI <code>コントローラに関連付けることができます。アプリが最初に起動すると ViewModelProviders クラスが ViewModel を作成します。アクティビティが破棄されると、例えば設定の変更などにより ViewModel が保持されます。アクティビティが再作成されると、ViewModelProviders は既存の ViewModel を返します。</code><a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html" target="_blank"><code>ViewModel を</code></a><code>参照。</code></p>
+<ol type="1" start="1">
+<li>また、<code>onCreate()</code> で、<code>getAllWords()</code> が返す <code>LiveData</code> のオブザーバを追加します。アクティビティがフォアグラウンドにある間に観察されたデータが変化すると、<code>onChanged()</code>メソッドが呼び出され、アダプタにキャッシュされたデータが更新されます。この場合、アプリを開くと初期データが追加されるので、<code>onChanged()</code> メソッドが呼び出されることに注意してください。</li>
+</ol>
+<p><code>mWordViewModel.getAllWords().observe(this, new Observer< List< Word>() {)</code></p>
+<p>オーバーライド</p>
+<p><code>public void onChanged(@Nullable final List< Word> words) {.</code></p>
+<p><code>//</code> アダプタ内の単語のキャッシュされたコピーを更新します。</p>
+<p><code>アダプタ.setWords(words)を使用します。</code></p>
+<p><code>   }</code></p>
+<p><code>});</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。<code>RecyclerView</code>に単語の初期セットが表示されます。</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="14.タスク12：単語を追加するアクティビティを作成する" duration="0">
+        <p>ここで、ユーザーがFABを使って新しい単語を入力するためのアクティビティを追加します。新しいアクティビティのインターフェースはこんな感じになります。</p>
+<p>12.1 NewWordActivityの作成</p>
+<ol type="1" start="1">
+<li>これらの文字列リソースを <code>values/strings.xml</code> ファイルに追加します。</li>
+</ol>
+<p><code><string name="hint_word"> 単語... </string</code></p>
+<p><code><string name="button_save"> 保存</string</code></p>
+<p><code><string name="empty_not_saved"> 空なので保存されていない単語。 </string> </string>。</code></p>
+<ol type="1" start="1">
+<li><code>value/styles.xmlにボタンのスタイルを追加します。</code></li>
+</ol>
+<p><code><style name="button_style" parent="android:style/Widget.Material.Button"></code></p>
+<p><code>   <item name="android:layout_width">match_parent</item>のようなものです。</code></p>
+<p><code>   <item name="android:layout_height">wrap_content</item>。</code></p>
+<p><code>   <item name="android:background">@color/colorPrimaryDark</item>のようなものです。</code></p>
+<p><code>   <item name="android:textAppearance">@android:style/TextAppearance.Large</item>を使用しています。</code></p>
+<p><code>   <item name="android:layout_marginTop"></code> <code>16dp</item</code></p>
+<p><code>   <item name="android:textColor">@color/colorTextPrimary</item>。</code></p>
+<p><code></style> </style</code></p>
+<ol type="1" start="1">
+<li>Empty Activityテンプレートを使用して、<code>NewWordActivity</code>という新しいアクティビティを作成します。アクティビティがAndroidマニフェストに追加されたことを確認します。</li>
+</ol>
+<p><code><activity android:name=".NewWordActivity"></activity> </activity</code></p>
+<ol type="1" start="1">
+<li>レイアウトフォルダ内の<code>activity_new_word.xml</code>ファイルを更新します。</li>
+</ol>
+<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
+<p><code><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>="match_parent"</code></p>
+<p><code>android:background="@color/colorScreenBackground"</code></p>
+<p><code>="vertical"</code></p>
+<p><code>="24dp"></code></p>
+<p><code><</code>編集テキスト</p>
+<p><code>android:id="@+id/edit_word"</code></p>
+<p><code>style="@style/text_view_style"</code></p>
+<p><code>android:hint="@string/hint_word"</code></p>
+<p><code>="textAutoComplete" /></code></p>
+<p><code><</code>ボタン</p>
+<p><code>android:id="@+id/button_save"</code></p>
+<p><code>style="@style/button_style"</code></p>
+<p><code>android:text="@string/button_save" /></code></p>
+<p><code></LinearLayout> </LinearLayout</code></p>
+<ol type="1" start="1">
+<li><code>NewWordActivity</code> クラスを実装します。目標は、ユーザーが保存ボタンを押したときに、新しい単語が親アクティビティに送り返されるように <code>Intent</code> に入れられることです。</li>
+</ol>
+<p><code>ここにNewWordActivityアクティビティのコードがあります。</code></p>
+<p><code>public class NewWordActivity extends AppCompatActivity { { public class NewWordActivity extends AppCompatActivity { public class NewWordActivity extends AppCompatActivity</code></p>
+<p><code>public static final String EXTRA_REPLY =</code></p>
+<p><code>"。</code></p>
+<p><code>private EditText mEditWordView.</code></p>
+<p>オーバーライド</p>
+<p><code>public void onCreate(Bundle savedInstanceState) { { {.</code></p>
+<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
+<p><code>       setContentView(R.layout.activity_new_word).</code></p>
+<p><code>       mEditWordView = findViewById(R.id.edit_word)。</code></p>
+<p><code>final Button button = findViewById(R.id.button_save).</code></p>
+<p><code>       button.setOnClickListener(new View.OnClickListener() {</code></p>
+<p><code>public void onClick(View view) {</code></p>
+<p><code>Intent replyIntent = new Intent()。</code></p>
+<p><code>if (TextUtils.isEmpty(mEditWordView.getText()){</code></p>
+<p><code>                   setResult(RESULT_CANCELED, replyIntent)。</code></p>
+<p><code>他にもあり               ます</code></p>
+<p><code>文字列 word = mEditWordView.getText().toString()。</code></p>
+<p><code>                   replyIntent.putExtra(EXTRA_REPLY, word)。</code></p>
+<p><code>                   setResult(RESULT_OK, replyIntent).</code></p>
+<p><code>               }</code></p>
+<p><code>               を使用しています。</code></p>
+<p><code>           }</code></p>
+<p><code>       });</code></p>
+<p><code>   }</code></p>
+<p><code>}</code></p>
+<p>12.2 データベースに単語を挿入するコードを追加する</p>
+<ol type="1" start="1">
+<li><code>MainActivityで、NewWordActivityのonActivityResult()コールバックを追加します。アクティビティが RESULT_OK で返された場合、WordViewModel の insert() メソッドを呼び出して、返された単語をデータベースに挿入します。</code></li>
+</ol>
+<p><code>public void onActivityResult(int requestCode, int resultCode, int int Intent data) {.</code></p>
+<p><code>super.onActivityResult(requestCode, resultCode, data)を使用しています。</code></p>
+<p><code>if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) { { (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK)</code></p>
+<p><code>word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY))。</code></p>
+<p><code>       mWordViewModel.insert(word)。</code></p>
+<p>他にもあり   ます</p>
+<p><code>Toast.makeText(</code></p>
+<p><code>               のようになります。</code></p>
+<p><code>               R. string.empty_not_saved.</code></p>
+<p><code>Toast.LENGTH_LONG).show()。</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>不足しているリクエストコードを定義します。</li>
+</ol>
+<p><code>public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1.</code></p>
+<ol type="1" start="1">
+<li><code>MainActivity</code>で、ユーザーがFABをタップしたときに<code>NewWordActivity</code>を起動します。FABの<code>onClick()</code>クリックハンドラのコードを以下のコードに置き換えます。</li>
+</ol>
+<p><code>Intent intent = new Intent(MainActivity.this, NewWordActivity.class).</code></p>
+<p><code>startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)。</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。<code>NewWordActivity</code>でデータベースに単語を追加すると、UIが自動的に更新されます。</li>
+<li>リストに既に存在する単語を追加します。どうなりますか？アプリがクラッシュしますか？アプリは単語自体を主キーとして使用し、各主キーは一意でなければなりません。競合戦略を指定して、ユーザーが既存の単語を追加しようとしたときにどうするかをアプリに指示することができます。</li>
+<li><code>WordDao</code> インターフェースで、<code>insert()</code> メソッドのアノテーションを次のように変更します。</li>
+</ol>
+<p><code>@Insert(onConflict = OnConflictStrategy.IGNORE)</code></p>
+<p>その他の競合戦略については、<a href="https://developer.android.com/reference/android/arch/persistence/room/OnConflictStrategy.html" target="_blank"><code>OnConflictStrategy</code></a> リファレンスを参照してください。</p>
+<ol type="1" start="1">
+<li>もう一度アプリを実行して、すでに存在する単語を追加してみてください。どうなりましたか？</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

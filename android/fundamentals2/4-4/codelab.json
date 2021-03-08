@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-03-08T06:56:37Z",
+  "id": "4-4",
+  "duration": 0,
+  "title": "Android 開発者基礎講座 04.4: ユーザーナビゲーション",
+  "summary": "",
+  "source": "1fxYUDB030esyBWEoQC6aZfoQEZR-ZKIR5FC7SBJeCvE",
+  "theme": "android",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Android"
+  ],
+  "tags": [],
+  "url": "4-4"
+}

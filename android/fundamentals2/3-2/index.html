@@ -1,0 +1,395 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 03.2:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="3-2"
+                  title="Android 開発者基礎講座 03.2:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a> Android Developer Fundamentals (Version 2) コースの一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、「codelab」と「practical」という用語を使い分けています。</p>
+<p>序章</p>
+<p>コードをテストすることで、開発の初期段階でバグを発見することができます。アプリの規模が大きくなり複雑になるにつれて、テストを行うことでコードの堅牢性が向上します。コード内のテストを使用することで、アプリの小さな部分を分離して実行することができ、自動化と再現性のある方法でテストを行うことができます。</p>
+<p>Android Studio と Android テスティングサポートライブラリは、いくつかの異なる種類のテストとテストフレームワークをサポートしています。この実習では、Android Studio に組み込まれているテスト機能を調べ、ローカルのユニットテストの書き方と実行方法を学びます。</p>
+<p>ローカル・ユニット・テストは、コンパイルされ、Java 仮想マシン（JVM）を使用してローカル・マシン上で完全に実行されるテストです。ローカル・ユニット・テストを使用して、Android フレームワークや Android 搭載デバイス、エミュレータへのアクセスを必要としないアプリの部分、たとえば内部ロジックをテストします。また、ローカルユニットテストを使用して、フレームワークと同等の動作をするふりをする偽の（「モック」またはスタブ）オブジェクトを作成することができるアプリの部分をテストします。</p>
+<p>ユニットテストは、Javaの一般的なユニットテストフレームワークであるJUnitを使って書かれています。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>Android Studioプロジェクトを作成します。</li>
+<li>エミュレータとデバイスの両方で、Android Studioでアプリをビルドして実行します。</li>
+<li>Android Studioで「プロジェクト」→「Android」ペインを開きます。</li>
+<li><code>AndroidManifest.xml</code>、リソース、Javaファイル、Gradleファイルなど、Android Studioプロジェクトの主要なコンポーネントを検索します。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>Android Studioでテストを整理して実行する方法。</li>
+<li>ユニットテストとは何かを理解する。</li>
+<li>コードのユニットテストを書いてください。</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li>SimpleCalcアプリで初期テストを実行します。</li>
+<li>SimpleCalcアプリにテストを追加します。</li>
+<li>ユニットテストを実行して結果を確認します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>この実習では、前回の実習コードラボ(<a href="https://developer.android.com/codelabs/android-training-using-debugger" target="_blank">Androidの基礎3.1: デバッガ</a>)にあった<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>アプリを使用しています。そのアプリをそのまま修正してもいいですし、プロジェクトフォルダのコピーを取ってから進めてもいいでしょう。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク 1.CalculatorTestの探索と実行" duration="0">
+        <p>Android Studio 内で、アプリのコードと一緒にテスト (ユニットテストとインストルメンテッドテストの両方) を書いて実行します。すべての新しい Android プロジェクトには、テスト用の基本的なサンプルクラスが含まれています。</p>
+<p>このタスクでは、基本的なユニットテストクラスを含む SimpleCalc アプリに戻ります。</p>
+<p>1.1 ソースセットと CalculatorTest の探索</p>
+<p>ソース セットとは、プロジェクト内のコードの集合体で、異なるビルド ターゲットやアプリの他の「フレーバー」用のコードです。Android Studio がプロジェクトを作成すると、3 つのソース セットが作成されます。</p>
+<ul>
+<li>アプリのコードとリソースのメイン ソース セット。</li>
+<li>アプリのローカル ユニット テスト用の <code>(</code>テスト<code>)</code> ソース セット。ソースセットはパッケージ名の後に <code>(test)</code> と表示されます。</li>
+<li><code>(androidTest)</code> ソースセット。ソースセットはパッケージ名の後に <code>(androidTest)</code> と表示されます。</li>
+</ul>
+<p>このタスクでは、Android Studioでソースセットがどのように表示されるかを調べ、テストのためのGradleの設定を調べ、SimpleCalcアプリのユニットテストを実行します。</p>
+<p>注意<strong><code>: (androidTest)</code></strong></p>
+<p><strong> の</strong>ソースセットは、簡単にするためにこの例から削除されています。これについては、別のレッスンで詳しく説明します。</p>
+<ol type="1" start="1">
+<li>Android Studioで<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>プロジェクトを開いてください。</li>
+<li>プロジェクト] &gt; [Android] ペインを開き、アプリと Java フォルダを展開します。</li>
+</ol>
+<p>Android ビューの <code>java</code> フォルダには、アプリ内のすべてのソースセットがパッケージ名で一覧表示されます。この場合（以下に示すように）、アプリのコードは <code>com.android.example.SimpleCalc</code> ソース セットにあります。テスト コードはソース セットにあり、パッケージ名の後に <code>test</code> が括弧で囲まれています。</p>
+<ol type="1" start="1">
+<li>com.android.example.SimpleCalc（テスト）フォルダを展開します。</li>
+</ol>
+<p>このフォルダには、アプリのローカル ユニット テストを配置します。Android Studio は新しいプロジェクトのためにこのフォルダにサンプル テスト クラスを作成しますが、SimpleCalc のテスト クラスは CalculatorTest と呼ばれます。</p>
+<ol type="1" start="1">
+<li>CalculatorTestを開きます。</li>
+</ol>
+<p>コードを調べて、次のことに注意してください。</p>
+<ul>
+<li>インポートは <code>org.junit</code>, <code>org.hamcrest</code>, and <code>android.test</code> パッケージからのものだけです。Android フレームワーククラスに依存するものはありません。</li>
+<li><code>RunWith(JUnit4.class)</code> アノテーションは、このクラスのテストを実行するためのランナーを示します。テストランナーとは、テストを実行して結果をログに出力するためのライブラリやツール群のことです。より複雑な設定やインフラストラクチャの要件を持つテスト (Espresso など) では、異なるテストランナーを使用します。この例では、基本的な JUnit4 テストランナーを使用します。</li>
+<li><code>SmallTest</code> アノテーションは、このクラスのすべてのテストが依存関係を持たず、ミリ秒単位で実行されるユニットテストであることを示します。<code>SmallTest</code>、@<code>MediumTest</code>、および <code>@LargeTest</code> のアノテーションは、テストのグループを似たような機能のスイートに束ねることを容易にするための規約です。</li>
+<li><code>setUp()</code> メソッドは、テスト前に環境をセットアップするために使用され、<code>@Before</code> アノテーションを含みます。この場合、setup は <code>Calculator</code> クラスの新しいインスタンスを作成し、それを <code>mCalculator</code> メンバ変数に代入します。</li>
+<li><code>addTwoNumbers()</code> メソッドは実際のテストであり、<code>@Test</code> のアノテーションが付けられています。テストクラスの中で <code>@Test</code> のアノテーションを持つメソッドだけが、テストランナーにとってはテストとみなされます。慣習上、テストメソッドには &#34;test&#34; という単語は含まれないことに注意してください。</li>
+<li><code>addTwoNumbers()</code>の<code>1</code>行目は、<code>Calculator</code>クラスの<code>add()</code>メソッドを呼び出しています。テストできるのは、パブリックまたはパッケージで保護されたメソッドのみです。この場合、<code>Calculator</code>はパブリックメソッドを持つパブリッククラスなので、すべて問題ありません。</li>
+<li>2 行目はテストのアサーションです。アサーションとは、テストが通過するためには、評価して真でなければならない式のことです。この場合のアサーションは、add メソッドで得た結果 (1 + 1) が与えられた数 2 と一致するというものです。アサーションの作成方法については、この実習で後ほど詳しく説明します。</li>
+</ul>
+<p>1.2 Android Studioでテストを実行する</p>
+<p>このタスクでは、テストフォルダ内のユニットテストを実行し、成功したテストと失敗したテストの両方の出力を表示します。</p>
+<ol type="1" start="1">
+<li>Project &gt; Android ペインで、CalculatorTest を右クリック（または Control-click）し、「Run &#39;CalculatorTest&#39;」を選択します。</li>
+</ol>
+<p>必要に応じてプロジェクトがビルドされ、画面下部に CalculatorTest ペインが表示されます。ペインの上部には、利用可能な実行構成のドロップダウン リストも CalculatorTest に変わります。</p>
+<p>CalculatorTest クラスのすべてのテストが実行され、それらのテストが成功すると、ビューの上部にあるプログレスバーが緑色に変わります（この場合、現在は 1 つのテストしかありません）。(この場合、現在は 1 つのテストしかありません。) フッターのステータス メッセージも &#34;Tests Passed&#34; を報告します。</p>
+<ol type="1" start="1">
+<li>まだ開いていない場合は CalculatorTest を開き、<code>addTwoNumbers()</code> のアサーションを変更します。</li>
+</ol>
+<p><code>assertThat(resultAdd, is(equalTo(3d))）。)</code></p>
+<ol type="1" start="1">
+<li>画面上部の実行設定のドロップダウンメニューで、CalculatorTest を選択し（まだ選択されていない場合）、Run をクリックします 。</li>
+</ol>
+<p>テストは以前と同じように再び実行されますが、今度はアサーションが失敗します (3 は 1 + 1 には等しくありません)。実行ビューのプログレスバーが赤くなり、テストログにはテスト (アサーション) が失敗した場所とその理由が表示されます。</p>
+<ol type="1" start="1">
+<li><code>addTwoNumbers()</code> のアサーションを正しいテストに戻し、テストを再度実行して合格を確認します。</li>
+<li>実行設定のドロップダウンで、アプリを選択して通常通りにアプリを実行します。]</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2: CalculatorTestにユニットテストを追加する" duration="0">
+        <p>ユニット テストでは、メソッドやクラスなどのアプリ内のコードの小さな部分を取り、アプリの残りの部分から分離して、コードの小さな部分が期待通りに動作することをテストで確認します。通常、ユニットテストでは、さまざまな異なる入力を持つメソッドを呼び出し、そのメソッドが期待通りの動作をし、期待通りの戻り値を返すかどうかを検証します。</p>
+<p>このタスクでは、ユニットテストの構築方法について学びます。SimpleCalc アプリの <code>Calculator</code> ユーティリティメソッド用に追加のユニットテストを作成し、それらのテストを実行して、期待通りの出力が得られることを確認します。</p>
+<p>注意: ユニットテスト、テスト駆動開発、JUnit 4 API はいずれも大規模で複雑なトピックであり、このコースの対象外です。</p>
+<p>2.1 add() メソッドのテストの追加</p>
+<p><code>add()</code> メソッドが目にする可能性のあるすべての値をテストすることは不可能ですが、通常とは異なる入力をテストするのは良いアイデアです。例えば、<code>add()</code> メソッドが引数を取得した場合のことを考えてみましょう。</p>
+<ul>
+<li>負のオペランドを持つ</li>
+<li>浮動小数点数の場合</li>
+<li>例外的に大きな数字で</li>
+<li>異なる型のオペランド（floatとdoubleなど）を持つ</li>
+<li>オペランドがゼロの場合</li>
+<li>無限大のオペランドを持つ</li>
+</ul>
+<p>このタスクでは、異なる種類の入力をテストするために <code>add()</code> メソッドのユニットテストを追加します。</p>
+<ol type="1" start="1">
+<li><code>addTwoNumbersNegative() という名前の新しいメソッドを CalculatorTest に追加します。このスケルトンを使用します。</code></li>
+</ol>
+<p>テスト</p>
+<p><code>public void addTwoNumbersNegative() { { {.</code></p>
+<p><code>}</code></p>
+<p>このテストメソッドは <code>addTwoNumbers()</code> と似たような構造をしています。このメソッドには <code>@Test</code> というアノテーションが付けられており、これは単一のユニットテストであることを示しています。</p>
+<p>なぜ <code>addTwoNumbers()</code> にアサーションを追加しないのでしょうか?1 つのメソッドに複数のアサーションをグループ化すると、1 つのアサーションだけが失敗するとテストのデバッグが難しくなり、成功したテストが不明瞭になります。ユニットテストの一般的なルールは、個々のアサーションごとにテストメソッドを提供することです。</p>
+<ol type="1" start="1">
+<li>前と同じように、<code>CalculatorTest</code>ですべてのテストを実行します。</li>
+</ol>
+<p>テストウィンドウでは、<code>addTwoNumbers</code> と <code>addTwoNumbersNegative</code> の両方が左のパネルに利用可能な (そして合格した) テストとしてリストアップされています。<code>addTwoNumbersNegative</code>テストはコードを含んでいなくても合格します-何もしないテストは成功したテストとみなされます。</p>
+<ol type="1" start="1">
+<li><code>負のオペランドを持つ Calculator クラスの add() メソッドを呼び出すために addTwoNumbersNegative() に行を追加します。</code></li>
+</ol>
+<p><code>double resultAdd = mCalculator.add(-1d, 2d).</code></p>
+<p>各オペランドの後の <code>d</code> 記法は、これらが <code>double</code> 型の数値であることを示しています。<code>add()</code> メソッドは double パラメータで定義されているため、<code>float</code> や <code>int</code> でも動作します。型を明示的に示すことで、必要に応じて他の型を個別にテストすることができます。</p>
+<ol type="1" start="1">
+<li><code>assertThat()</code>でアサーションを追加します。</li>
+</ol>
+<p><code>assertThat(resultAdd, is(equalTo(1d)))。</code></p>
+<p><code>assertThat()</code> メソッドは、第一引数の式と第二引数の式が等しいことを主張する JUnit4 のアサーションです。古いバージョンの JUnit では、より特殊なアサーションメソッド (<code>assertEquals</code>()、<code>assertNull</code>()、<code>assertTrue()</code> など) を使用していましたが、 <code>assertThat()</code> の方が柔軟性が高く、デバッグがしやすく、読みやすい形式となっています。</p>
+<p><code>assertThat()</code>メソッドは、マッチャーと一緒に使用されます。マッチャーは、このアサーションの 2 番目のオペランドである <code>is(equalto()</code> で連結されたメソッド呼び出しです。Hamcrest フレームワークは、アサーションを構築する際に使用できるマッチャを定義しています。( &#34;Hamcrest&#34; は &#34;matcher&#34; のアナグラムです。) Hamcrest は、ほとんどの基本的なアサーションに対応する多くの基本的なマatcherを提供しています。また、より複雑なアサーション用に独自のカスタムマatcherを定義することもできます。</p>
+<p>この場合のアサーションは、<code>add()</code>操作の結果(-1 + 2)が1に等しいというものです。</p>
+<ol type="1" start="1">
+<li>浮動小数点数の<code>CalculatorTest</code>に新しいユニットテストを追加します。</li>
+</ol>
+<p>テスト</p>
+<p><code>public void addTwoNumbersFloats() { { {.</code></p>
+<p><code>double resultAdd = mCalculator.add(1.111f, 1.111d)。</code></p>
+<p><code>   assertThat(resultAdd, is(equalTo(2.222d)))。</code></p>
+<p><code>}</code></p>
+<p>ここでも、先ほどのテストメソッドと非常によく似たテストですが、<code>add()</code> の引数のひとつが <code>double</code> ではなく <code>float</code> 型であることが明示されています。add<code>()</code> メソッドは <code>double</code> 型のパラメータで定義されているので、<code>float</code> 型で呼び出すことができ、その数値は <code>double</code> に昇格します。</p>
+<ol type="1" start="1">
+<li>実行] をクリックして、すべてのテストを再度実行し ます。</li>
+</ol>
+<p>今回はテストが失敗して、プログレスバーが赤くなっています。ここがエラーメッセージの重要な部分です。</p>
+<p><code>java.lang.</code>アサーションエラーが発生しました。</p>
+<p><code>期待値：<2.222>です。</code></p>
+<p><code>     でしたが: < 2.2219999418258665>でした。</code></p>
+<p>浮動小数点数を使った算術は不正確で、昇格したことで精度が上がるという副作用がありました。テスト中の主張は技術的には誤りである：期待値と実際の値が一致しない。</p>
+<p>この問題が提起するのは、次のようなことです。<code>float</code> 引数を促進することで精度の問題がある場合、それはコードの問題なのでしょうか、それともテストの問題なのでしょうか？この特定のケースでは、SimpleCalcアプリからの<code>add()</code>メソッドへの両方の入力引数は常に<code>double</code>型になるので、これは任意の非現実的なテストです。しかし、アプリが<code>add()</code>メソッドへの入力が<code>double</code>または<code>float</code>のどちらかになるように書かれていて、精度だけを気にしている場合は、「十分に近い」が成功とカウントされるように、テストに小刻みな余地を与える必要があります。</p>
+<ol type="1" start="1">
+<li><code>assertThatat() メソッドを closeTo() マッチャを使用するように変更します。</code></li>
+</ol>
+<p><code>assertThat(resultAdd, is(closeTo(2.222, 0.01)))。</code></p>
+<p>マッチャーの選択をする必要があります。closeToを2回クリックして（式全体に下線が引かれるまで）、<code>Alt+Enter</code>（Macの場合は<code>Option+Return</code>）を押します。isCloseTo.closeTo (org.hamcrest.number)を選択します。</p>
+<ol type="1" start="1">
+<li>実行] をクリックして、すべてのテストを再度実行し ます。</li>
+</ol>
+<p>今回の試験は合格です。</p>
+<p><code>closeTo()</code> マッチャを使用すると、正確な等しさをテストするのではなく、特定のデルタ内で等しさをテストすることができます。この場合の <code>closeTo()</code> マッチャメソッドは、期待値とデルタの量という 2 つの引数をとります。上の例では、このデルタは精度の小数点以下 2 ポイントにすぎません。</p>
+<p>2.2 その他の計算方法の単体テストの追加</p>
+<p>前のタスクで学習したことを使って、電卓クラスのユニットテストを記入してください。</p>
+<ol type="1" start="1">
+<li>sub<code>()</code> メソッドをテストする <code>subTwoNumbers()</code> というユニットテストを追加します。</li>
+<li>与えられた計算の結果が負の数になる <code>sub()</code> メソッドをテストする <code>subWorksWithNegativeResults()</code> というユニットテストを追加します。</li>
+<li><code>mul()</code> メソッドをテストする <code>mulTwoNumbers()</code> というユニットテストを追加します。</li>
+<li>少なくとも 1 つの引数をゼロとして <code>mul()</code> メソッドをテストする <code>mulTwoNumbersZero()</code> というユニットテストを追加します。</li>
+<li><code>divTwoNumbers()</code> というユニット・テストを追加し、2 つの非ゼロ引数を持つ <code>div()</code> メソッドをテストします。</li>
+<li><code>divTwoNumbersZero() というユニット・テストを追加し、配当を 2 倍にしてゼロを除算器として div() メソッドをテストします。</code></li>
+</ol>
+<p>これらのテストはすべてパスするはずですが、<code>divTwoNumbersZero()</code>はゼロで割ると不正な引数例外が発生します。アプリを実行し、オペランド 2 としてゼロを入力し、div をクリックして割ると、結果はエラーになります。</p>
+<p>タスク2のソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/SimpleCalcTest" target="_blank">SimpleCalcTest</a></p>
+<p>次のコードスニペットは、このタスクのテストを示しています。</p>
+<p>テスト</p>
+<p><code>public void addTwoNumbers() { {.</code></p>
+<p><code>double resultAdd = mCalculator.add(1d, 1d)。</code></p>
+<p><code>   assertThat(resultAdd, is(equalTo(2d)))。</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void addTwoNumbersNegative() { { {.</code></p>
+<p><code>double resultAdd = mCalculator.add(-1d, 2d).</code></p>
+<p><code>   assertThat(resultAdd, is(equalTo(1d)))。</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void addTwoNumbersFloats() { { {.</code></p>
+<p><code>double resultAdd = mCalculator.add(1.111f, 1.111d)。</code></p>
+<p><code>assertThat(resultAdd, is(closeTo(2.222, 0.01)))。</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void subTwoNumbers() {</code></p>
+<p><code>double resultSub = mCalculator.sub(1d, 1d).</code></p>
+<p><code>   assertThat(resultSub, is(equalTo(0d))）。)</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void subWorksWithNegativeResult() { { {.</code></p>
+<p><code>double resultSub = mCalculator.sub(1d, 17d).</code></p>
+<p><code>   assertThat(resultSub, is(equalTo(-16d)))。</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void mulTwoNumbers() {</code></p>
+<p><code>double resultMul = mCalculator.mul(32d, 2d).</code></p>
+<p><code>   assertThat(resultMul, is(equalTo(64d))）。)</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void divTwoNumbers() {</code></p>
+<p><code>double resultDiv = mCalculator.div(32d,2d).</code></p>
+<p><code>   assertThat(resultDiv, is(equalTo(16d)))。</code></p>
+<p><code>}</code></p>
+<p>テスト</p>
+<p><code>public void divTwoNumbersZero() {</code></p>
+<p><code>double resultDiv = mCalculator.div(32d,0).</code></p>
+<p><code>   assertThat(resultDiv, is(equalTo(Double.POSITIVE_INFINITY)))。</code></p>
+<p><code>}</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>チャレンジ1.ゼロで割ることは、算数の特殊なケースであるため、常にテストする価値があります。ゼロによる除算をより優雅に処理できるようにアプリを変更するにはどうしたらよいでしょうか?この課題を達成するには、正しい動作を示すテストから始めます。</p>
+<p><code>CalculatorTest</code> から <code>divTwoNumbersZero()</code> メソッドを削除し、<code>divByZeroThrows()</code> という新しいユニット テストを追加します。このテストはパスし、その結果、ゼロによる除算がこの例外になることを示します。</p>
+<p><a href="https://developer.android.com/reference/java/lang/Exception.html" target="_blank">例外</a>ハンドラのコードの書き方を学んだ後、アプリはこの例外を優雅に処理することができるようになります。</p>
+<p>課題 2: コードのユニットをすべての外部依存関係から分離するのは難しいことがあります。コードをより簡単にテストできるように複雑な方法でコードを整理するのではなく、モックフレームワークを使用して、依存関係のふりをする偽のオブジェクト (「モック」) を作成することができます。<a href="http://mockito.org/" target="_blank">Mockito フレームワーク</a>について調べ、Android Studio で設定する方法を学びましょう。SimpleCalc の <code>calcButton()</code> メソッドのテストクラスを作成し、Mockito を使用して Android コンテキストをシミュレートしてテストを実行します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。" duration="0">
+        <p>Android Studioには、ローカルのユニットテストを実行するための機能が組み込まれています。</p>
+<ul>
+<li>ローカルのユニットテストは、ローカルマシンの JVM を使用します。Android フレームワークは使用しません。</li>
+<li>ユニットテストは、Javaの一般的なユニットテストフレームワークであるJUnitを使って書かれています。</li>
+<li>JUnitテストは、Android Studio Project &gt; Androidペインの<code>(test)</code>フォルダにあります。</li>
+<li><code>ローカルのユニットテストで必要なのは、以下のパッケージのみです</code>: <code>org.junit</code>, <code>org.hamcrest</code>, and <code>android.test.</code></li>
+<li><code>RunWith(JUnit4.class)</code> アノテーションは、テストランナーにこのクラスのテストを実行するように指示します。</li>
+<li><code>SmallTest</code>、@<code>MediumTest</code>、および <code>@LargeTest</code> のアノテーションは、似たようなテストグループを簡単に束ねることができるようにするための規約です。</li>
+<li><code>SmallTest</code> アノテーションは、クラス内のすべてのテストが依存性がなく、ミリ秒単位で実行されるユニットテストであることを示します。</li>
+<li>インスツルメンテッド・テストとは、Android を搭載したデバイスやエミュレータ上で実行するテストです。インスツルメンテッドテストは Android フレームワークにアクセスすることができます。</li>
+<li>テストランナーとは、テストを実行し、その結果をログに印刷できるようにするためのライブラリやツールのセットのことです。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。" duration="0">
+        <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-2-c-app-testing/3-2-c-app-testing.html" target="_blank">3.2: アプリのテスト</a>にあります。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>Android Studioのドキュメント。</p>
+<ul>
+<li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
+<li><a href="https://developer.android.com/studio/debug/am-logcat.html" target="_blank">ログの書き込みと表示</a></li>
+</ul>
+<p>Androidの開発者向けドキュメント。</p>
+<ul>
+<li><a href="https://developer.android.com/training/testing/index.html" target="_blank">テストのベストプラクティス</a></li>
+<li><a href="https://developer.android.com/training/testing/start/index.html" target="_blank">テストを始めるにあたって</a></li>
+<li><a href="https://developer.android.com/training/testing/unit-testing/local-unit-tests.html" target="_blank">ローカルユニットテストの構築</a></li>
+</ul>
+<p>他にもあります。</p>
+<ul>
+<li><a href="http://junit.org/junit4/" target="_blank">JUnit 4 ホームページ</a></li>
+<li><a href="http://junit.sourceforge.net/javadoc/org/junit/package-summary.html" target="_blank">JUnit 4 API リファレンス</a></li>
+<li><a href="https://www.tutorialspoint.com/java/lang/java_lang_math" target="_blank"><code>java.lang.Math</code></a></li>
+<li><a href="http://hamcrest.org/JavaHamcrest/" target="_blank">ジャワハムクレスト</a></li>
+<li><a href="http://mockito.org/" target="_blank">モッキートホームページ</a></li>
+<li>動画で見る<a href="https://www.youtube.com/watch?v=W8LJjfkTKik" target="_blank">Androidテストサポート - テストパターン</a></li>
+<li><a href="https://developer.android.com/codelabs/advanced-android-kotlin-training-testing-basics" target="_blank">AndroidテストCodelab</a></li>
+<li><a href="https://plus.sandbox.google.com/+AndroidDevelopers/posts/TPy1EeSaSg8" target="_blank">Android ツールのヒント：テストサイズのアノテーション</a></li>
+<li><a href="https://objectpartners.com/2013/09/18/the-benefits-of-using-assertthat-over-other-assert-methods-in-unit-tests/" target="_blank">ユニットテストで他のアサートメソッドよりも assertThat を使うメリット</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題を採点します。</li>
+</ul>
+<p>講師は、彼らが望むように少しまたは多くのようにこれらの提案を使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じるはずです。</p>
+<p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
+<p>アプリを構築して実行する</p>
+<p>デバッガを使った実践から<a href="https://drive.google.com/file/d/1w3YW_ke9avCarsZSu3THlzquUU0mOXyq/view?usp=sharing" target="_blank">SimpleCalc</a>アプリを開きます。レイアウトにPOWボタンを追加します。このボタンは、1番目のオペランドを2番目のオペランドの累乗まで上げて計算します。例えば、5と4のオペランドが与えられた場合、アプリは5を4の累乗、つまり625と計算します。</p>
+<p>電源ボタンの実装を書く前に、この計算を使ってどのようなテストをしたいかを考えてみましょう。この計算では、どのような異常な値が発生する可能性がありますか？</p>
+<ol type="1" start="1">
+<li>アプリの電卓クラスを更新して、<code>pow()</code>メソッドを含むようにします。ヒント:<a href="https://www.tutorialspoint.com/java/lang/java_lang_math" target="_blank"><code>java.lang.Math</code></a>クラスのドキュメントを参照してください。</li>
+<li>POWボタンを計算に接続するために<code>MainActivity</code>クラスを更新します。</li>
+</ol>
+<p>次に、<code>pow()</code> メソッドに対して以下のテストをそれぞれ書きます。テストを書くたびにテスト スイートを実行し、必要に応じてアプリの元の計算を修正します。</p>
+<ul>
+<li>正の整数のオペランドを持つテスト。</li>
+<li>負の整数を第一オペランドとするテスト。</li>
+<li>2番目のオペランドとして負の整数を持つテスト。</li>
+<li>第1のオペランドが0で、第2のオペランドが正の整数であるテスト。</li>
+<li>2番目のオペランドとして0を使用したテスト。</li>
+<li>1番目のオペランドを0、2番目のオペランドを-1としたテスト。(ヒント: <code>Double.POSITIVE_INFINITY</code>のドキュメントを参照してください。)</li>
+<li>第1のオペランドとして-0を、第2のオペランドとして任意の負の数を持つテスト。</li>
+</ul>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>ローカルユニットテストについて最もよく説明しているのはどれですか?1つ選びなさい。</p>
+<ul>
+<li>Androidを搭載したデバイスやエミュレータ上で実行されるテストで、Androidフレームワークにアクセスすることができます。</li>
+<li>自動化されたUIテスト手法を書けるようにするテスト</li>
+<li>Java Virtual Machine (JVM) を使用して、ローカル・マシン上で完全にコンパイルされ、実行されるテスト。</li>
+</ul>
+<p>質問2</p>
+<p>ソースセットは、関連するコードの集合体です。どのソースセットでユニットテストを見つけることができますか?1 つ選んでください。</p>
+<ul>
+<li>アプリ</li>
+<li><code>com.example.android.SimpleCalcTest</code></li>
+<li><code>com.example.android.SimpleCalcTest (テスト)</code></li>
+<li><code>com.example.android.SimpleCalcTest (androidTest)</code></li>
+</ul>
+<p>質問3</p>
+<p>メソッドを実際のテストとしてマークするために使用される注釈はどれか。一つ選びなさい。</p>
+<ul>
+<li><code>@RunWith(JUnit4.class)</code></li>
+<li>小規模テスト</li>
+<li>前に</li>
+<li>テスト</li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っているかどうかを確認しましょう。</p>
+<ul>
+<li>指数（「パワーオブ」）計算を提供するPOWボタンが表示されます。</li>
+<li><code>MainActivity</code>の実装には、POWボタンのクリックハンドラが含まれています。</li>
+<li><code>Calculator</code>の実装には、計算を行う<code>pow()</code>メソッドが含まれています。</li>
+<li><code>CalculatorTest()</code> メソッドには、負のオペランドと 0 のオペランド、およびオペランドとして 0 と -1 の場合のテストを実行する Calculator クラスの <code>pow()</code> メソッドのための別個のテストメソッドが含まれています。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

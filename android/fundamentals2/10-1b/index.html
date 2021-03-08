@@ -1,0 +1,447 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 10.1B:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="10-1b"
+                  title="Android 開発者基礎講座 10.1B:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクなど、講座の詳細については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals（第2版）を</a>ご覧ください。</li>
+</ul>
+<p>注：このコースでは、「codelab」と「practical」という用語を使い分けています。</p>
+<p>序章</p>
+<p>このコードラボ(実践編)は、<a href="https://developer.android.com/codelabs/android-training-livedata-viewmodel/#0" target="_blank">10.1 Part A: Room, LiveData, ViewModel に続きます</a>。このコードラボでは、データベース機能を実装するためにRoomライブラリが提供するAPIを使用することについて、より多くの練習をすることができます。データベースから特定の項目を削除する機能を追加します。このコードラボには、ユーザーが既存のデータを編集できるようにアプリを更新するコーディング課題も含まれています。</p>
+<p>すでに知っておくべきこと</p>
+<p><a href="https://developer.android.com/studio/index.html" target="_blank">Android Studio 3.0以上</a>でアプリを作成・実行できること。特に、以下のことに精通していること。</p>
+<ul>
+<li><code>RecyclerView</code>とアダプタを使用しています。</li>
+<li>エンティティクラス、データアクセスオブジェクト (DAO)、および <code>RoomDatabase</code> を使用して、Android の組み込み SQLite データベースにデータを保存および取得します。これらのトピックについては、<a href="https://developer.android.com/codelabs/android-training-livedata-viewmodel/#0" target="_blank">10.1 Part A: Room、LiveData、および ViewModel で</a>学習しました。</li>
+</ul>
+<p>あなたが学ぶこと</p>
+<ul>
+<li>データベースが空の場合にのみ、データをデータベースに入力する方法（ユーザーがデータに加えた変更を失わないようにするため）。</li>
+<li>Roomデータベースからデータを削除する方法</li>
+<li>既存のデータを更新する方法（チャレンジアプリを作る場合</li>
+</ul>
+<p>あなたがすること</p>
+<ul>
+<li>RoomWordsSampleアプリをアップデートし、アプリ終了時にデータを保持するようにしました。</li>
+<li>ユーザーがオプションメニュー項目を選択して、すべての単語を削除できるようにします。</li>
+<li>リスト内の項目をスワイプして特定の単語を削除できるようにします。</li>
+<li>任意で、コーディングチャレンジでは、ユーザーが既存の単語を更新できるようにアプリを拡張します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。" duration="0">
+        <p>前回のコードラボで作成したRoomWordsSampleアプリを拡張します。これまでのところ、このアプリは単語のリストを表示し、ユーザーは単語を追加することができます。アプリを閉じて再度開くと、アプリはデータベースを再初期化します。ユーザーが追加した単語は失われます。</p>
+<p>この実用的な方法では、既存のデータがない場合には、データベース内のデータを初期化するだけのアプリを拡張します。</p>
+<p>そして、すべてのデータを削除できるメニューを追加します。</p>
+<p>また、ユーザーが単語をスワイプしてデータベースから削除できるようにすることもできます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1：データベースが空の場合のみデータを初期化する" duration="0">
+        <p>前回の実践で作成したRoomWordsSampleアプリは、ユーザーがアプリを開くたびにデータを削除して再作成します。この動作は理想的ではありません。なぜなら、ユーザーはアプリを閉じたときに追加した単語をデータベースに残しておきたいからです。(前回の実践での解決コードは<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/RoomWordsSample" target="_blank">GitHub</a>にあります)</p>
+<p>このタスクでは、アプリを開いたときに、データベースにデータがない場合にのみ初期データセットが追加されるようにアプリを更新します。</p>
+<p>データベースにすでにデータが含まれているかどうかを検出するには、クエリを実行して1つのデータ項目を取得します。クエリが何も返さない場合は、データベースは空です。</p>
+<p>注: 本番環境のアプリでは、アプリの再起動時にデータを再初期化せずにすべてのデータを削除できるようにしたい場合があります。しかし、テスト目的では、すべてのデータを削除してから、アプリの起動時にデータを再初期化できると便利です。</p>
+<p>1.1 DAOにメソッドを追加して単一の単語を取得する</p>
+<p>現在、<code>WordDao</code> インターフェースには、すべての単語を取得するためのメソッドはありますが、単一の単語を取得するためのメソッドはありません。単一の単語を取得するメソッドは、必要なときにアプリが明示的にメソッドを呼び出すので、<code>LiveData</code>を返す必要はありません。</p>
+<ol type="1" start="1">
+<li><code>WordDao</code>インターフェースで、任意の単語を取得するメソッドを追加します。</li>
+</ol>
+<p><code>@Query("SELECT * from word_table LIMIT 1")</code></p>
+<p><code>Word[] getAnyWord()。</code></p>
+<p>ルームは、<code>getAnyWord()</code>メソッドが呼び出され、1つの単語を含む配列を返すときにデータベースクエリを発行します。これを実装するために追加のコードを書く必要はありません。</p>
+<p>1.2 初期化方法を更新してデータの有無を確認する</p>
+<p>データベースを初期化するメソッドで<code>getAnyWord()</code>メソッドを使用します。データがある場合はそのままにしておきます。データがない場合は、初期データセットを追加します。</p>
+<ol type="1" start="1">
+<li><code>PopulateDBAsyncはWordRoomDatbaseのインナークラスです。PopulateDBAsyncでは、doInBackground()メソッドを更新して、データを初期化する前にデータベースにワードがあるかどうかをチェックします。</code></li>
+</ol>
+<p>オーバーライド</p>
+<p><code>//</code> 単語がない場合は、単語の初期リストを作成します。</p>
+<p><code>if (mDao.getAnyWord().length < 1) { (mDao.getAnyWord().length < 1)</code></p>
+<p><code>for (int i = 0; i <= words.length - 1; i++) {</code></p>
+<p><code>word = new Word(words[i]).</code></p>
+<p><code>               mDao.insert(word)。</code></p>
+<p><code>           }</code></p>
+<p><code>       }</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>アプリを実行し、いくつかの新しい単語を追加します。アプリを閉じて再起動します。アプリを閉じて再度開いたときに単語が持続するようになっているので、追加した新しい単語が表示されるはずです。</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：すべての単語を削除する" duration="0">
+        <p>前回の実践では、データベースを開いたときに <code>deleteAll()</code> メソッドを使って、すべてのデータを消去しました。<code>deleteAll()</code> メソッドは、アプリの起動時にのみ <code>PopulateDbAsync</code> クラスから呼び出されていました。deleteAll<code>()</code> メソッドを <code>ViewModel</code> から利用できるようにして、アプリが必要なときにいつでもメソッドを呼び出すことができるようにします。</p>
+<p>ここでは、<code>Room</code>ライブラリを使用してデータベースと対話するメソッドを実装するための一般的な手順を説明します。</p>
+<ul>
+<li>メソッドをDAOに追加し、関連するデータベース操作をアノテーションします。<code>deleteAll()</code>メソッドについては、前回の実践ですでにこのステップを行っています。</li>
+<li><code>WordRepository</code>クラスにメソッドを追加します。バックグラウンドでメソッドを実行するコードを記述します。</li>
+<li><code>WordRepository</code>クラスのメソッドを呼び出すには、<code>WordViewModel</code>にメソッドを追加します。アプリの残りの部分は <code>WordViewModel</code> からメソッドにアクセスすることができます。</li>
+</ul>
+<p>2.1 WordDao インターフェースに deleteAll() を追加し、それに注釈を付けます。</p>
+<ol type="1" start="1">
+<li><code>WordDao</code>では、<code>deleteAll()</code>メソッドが定義されており、そのメソッドが実行されたときに実行されるSQLがアノテーションされていることを確認します。</li>
+</ol>
+<p><code>@Query("DELETE FROM word_table")</code></p>
+<p><code>void deleteAll()。</code></p>
+<p>2.2 WordRepository クラスに deleteAll() を追加します。</p>
+<p><code>WordRepository</code>に<code>deleteAll()</code>メソッドを追加し、バックグラウンドですべての単語を削除するための<code>AsyncTask</code>を実装します。</p>
+<ol type="1" start="1">
+<li><code>WordRepositoryで、deleteAllWordsAsyncTaskを内部クラスとして定義します。doInBackground()を実装し、</code>DAO<code>上でdeleteAll()を呼び出してすべての単語を削除します。</code></li>
+</ol>
+<p><code>private static class deleteAllWordsAsyncTask extends AsyncTask< Void, Void, Void> { { {.</code></p>
+<p><code>private WordDao mAsyncTaskDao.</code></p>
+<p><code>   deleteAllWordsAsyncTask(WordDao dao) { { { {.</code></p>
+<p><code>       mAsyncTaskDao = dao.</code></p>
+<p><code>   }</code></p>
+<p>オーバーライド</p>
+<p><code>protected Void doInBackground(Void... voids) { { {.</code></p>
+<p><code>mAsyncTaskDao.deleteAll()。</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>   }</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>WordRepository クラスで、定義した AsyncTask を呼び出す deleteAll() メソッドを追加します。</code></li>
+</ol>
+<p><code>public void deleteAll() {</code></p>
+<p><code>new deleteAllWordsAsyncTask(mWordDao).execute().</code></p>
+<p><code>}</code></p>
+<p>2.3 WordViewModelクラスにdeleteAll()を追加する</p>
+<p><code>deleteAll()メソッドをWordViewModelに追加してMainActivityで利用できるようにする。</code></p>
+<ol type="1" start="1">
+<li><code>WordViewModelクラスにdeleteAll()メソッドを追加します。</code></li>
+</ol>
+<p><code>public void deleteAll() {mRepository.deleteAll();} }mRepository.deleteAll(); }mRepository.deleteAll(); }.</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5.タスク3：すべてのデータを削除するためのオプションメニュー項目の追加" duration="0">
+        <p>次に、ユーザが<code>deleteAll()</code>を起動できるようにメニュー項目を追加します。</p>
+<p>注：アプリの生産版では、ユーザーが誤ってデータベース全体を消去しないようにセーフガードを提供する必要があります。ただし、アプリを開発している間は、テストデータをすばやくクリアできると便利です。これは、アプリを開いたときにアプリがデータを消去しない場合に特に当てはまります。</p>
+<p>3.1 すべてのデータを消去するメニューオプションの追加</p>
+<ol type="1" start="1">
+<li><code>menu_main.xml</code>で、メニューオプションのタイトルと<code>ID</code>を以下のように変更します。</li>
+</ol>
+<p><code><</code>項目</p>
+<p><code>android:id="@+id/clear_data"</code></p>
+<p><code>="100"</code></p>
+<p><code>android:title="@string/clear_all_data"</code></p>
+<p><code>="never" /></code></p>
+<ol type="1" start="1">
+<li><code>MainActivityでは、WordViewModelオブジェクト上でdeleteAll()メソッドを呼び出すためのonOptionsItemSelected()メソッドを実装します。</code></li>
+</ol>
+<p>オーバーライド</p>
+<p><code>public boolean onOptionsItemSelected(MenuItem item) { { { {.</code></p>
+<p><code>int id = item.getItemId()。</code></p>
+<p><code>if (id == R.id.clear_data) { { { { { { (id == R.id.clear_data)</code></p>
+<p><code>//</code> 確認のためだけに乾杯の音頭を追加する</p>
+<p><code>Toast.makeText(this, "Clearing the data....</code></p>
+<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<p><code>//</code> 既存のデータを削除します</p>
+<p><code>       mWordViewModel.deleteAll()。</code></p>
+<p>返します。</p>
+<p><code>   }</code></p>
+<p><code>return super.onOptionsItemSelected(item)。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li>アプリを実行します。オプション] メニューで [すべてのデータを消去] を選択します。すべての単語が消えるはずです。</li>
+<li>アプリを再起動してください。(端末やエミュレータから再起動してください。Android Studioからは再起動しないでください。) 最初の単語のセットが表示されているはずです。</li>
+</ol>
+<p>注意：データをクリアした後、Android Studioからアプリを再デプロイすると、初期データセットが再度表示されます。アプリを開くと、空のデータセットが表示されます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。 タスク4：単一の単語を削除する" duration="0">
+        <p>あなたのアプリでは、ユーザーは単語を追加したり、すべての単語を削除することができます。タスク4と5では、<code>RecyclerView</code>のアイテムをスワイプすることで単語を削除できるようにアプリを拡張します。</p>
+<p>繰り返しになりますが、ここでは<code>Room</code>ライブラリを使用してデータベースと対話するメソッドを実装するための一般的な手順を説明します。</p>
+<ul>
+<li>メソッドをDAOに追加し、関連するデータベース操作で注釈を付けます。</li>
+<li><code>WordRepository</code>クラスにメソッドを追加します。バックグラウンドでメソッドを実行するコードを記述します。</li>
+<li><code>WordRepository</code>クラスのメソッドを呼び出すには、<code>WordViewModel</code>にメソッドを追加します。アプリの残りの部分は <code>WordViewModel</code> からメソッドにアクセスすることができます。</li>
+</ul>
+<p>4.1 DAO に deleteWord() を追加してアノテーションを付けます。</p>
+<ol type="1" start="1">
+<li><code>WordDaoでは、deleteWord()メソッドを追加します。</code></li>
+</ol>
+<p>削除</p>
+<p><code>void deleteWord(Word word)。</code></p>
+<p>この操作は単一の行を削除するので、<code>@Delete</code>アノテーションだけでデータベースから単語を削除することができます。</p>
+<p>4.2 WordRepository クラスに deleteWord() を追加します。</p>
+<ol type="1" start="1">
+<li><code>WordRepositoryで、deleteWordAsyncTaskという別のAsyncTaskをインナークラスとして定義します。</code>DAO<code>上でdeleteWord()を呼び出して単語を削除するdoInBackground()を実装しています。</code></li>
+</ol>
+<p><code>private static class deleteWordAsyncTask extends AsyncTask< Word, Void, Void> {.</code></p>
+<p><code>private WordDao mAsyncTaskDao.</code></p>
+<p><code>       mAsyncTaskDao = dao.</code></p>
+<p><code>   }</code></p>
+<p>オーバーライド</p>
+<p><code>protected Void doInBackground(final Word... params) { [保護された Void doInBackground(final Word... params)</code></p>
+<p><code>       mAsyncTaskDao.deleteWord(params[0])。</code></p>
+<p><code>null</code>を返します。</p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>WordRepositoryで、定義したAsyncTaskを呼び出すためのdeleteWord()メソッドを追加します。</code></li>
+</ol>
+<p><code>public void deleteWord(Word word) {</code></p>
+<p><code>new deleteWordAsyncTask(mWordDao).execute(word).</code></p>
+<p><code>}</code></p>
+<p>4.3 WordViewModelクラスにdeleteWord()を追加する</p>
+<p><code>deleteWord() メソッドをアプリ内の他のクラス、特に MainActivity で利用できるようにするには、WordViewModel に追加します。</code></p>
+<ol type="1" start="1">
+<li><code>WordViewModelにdeleteWord()メソッドを追加します。</code></li>
+</ol>
+<p><code>public void deleteWord(Word word) {mRepository.deleteWord(word); }</code></p>
+<p>これでワードを削除するロジックが実装されました。まだ、アプリのUIから単語の削除操作を呼び出す方法はありません。次はそれを修正します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7.タスク5：ユーザーがスワイプで単語を離すことができるようにする" duration="0">
+        <p>このタスクでは、ユーザーが <code>RecyclerView</code> でアイテムをスワイプして削除できるようにする機能を追加します。</p>
+<p><code>RecyclerView</code>にスワイプ機能を実装するには、Androidサポートライブラリ(バージョン7以上)で提供されているItemTouchHelperクラスを使用します。<code>ItemTouchHelper</code>クラスには以下のメソッドがあります。</p>
+<ul>
+<li><code>onMove()</code> は、ユーザーがアイテムを移動したときに呼び出されます。このアプリでは、移動機能は実装しません。</li>
+<li><code>onSwipe()</code>は、ユーザーがアイテムをスワイプしたときに呼び出されます。スワイプされた単語を削除するためにこのメソッドを実装します。</li>
+</ul>
+<p>5.1 スワイプされたワードを検出するためにアダプタを有効にします。</p>
+<ol type="1" start="1">
+<li><code>WordListAdapter</code> で、指定した位置の単語を取得するメソッドを追加します。</li>
+</ol>
+<p><code>public Word getWordAtPosition (int position) { { {.</code></p>
+<p><code>戻り値 mWords.get(position)。</code></p>
+<p><code>}</code></p>
+<ol type="1" start="1">
+<li><code>MainActivityのonCreate()で、ItemTouchHelperを作成します。ItemTouchHelperをRecyclerViewにアタッチします。</code></li>
+</ol>
+<p><code>//</code> でアイテムをスワイプする機能を追加します。</p>
+<p><code>//</code> そのアイテムを削除するためのリサイクルビュー</p>
+<p>アイテムタッチヘルパーヘルパー <code>=</code> 新しいアイテムタッチヘルパー<code>(</code></p>
+<p><code>新しいItemTouchHelper.SimpleCallback(0.</code></p>
+<p><code>.LEFT | ItemTouchHelper.RIGHT) {</code></p>
+<p>オーバーライド</p>
+<p><code>public boolean onMove(RecyclerView recyclerView.</code></p>
+<p><code>。ViewHolder viewHolder.</code></p>
+<p><code>.ViewHolder target) {</code></p>
+<p><code>false を返します。</code></p>
+<p><code>           }</code></p>
+<p>オーバーライド</p>
+<p><code>public void onSwiped(RecyclerView.ViewHolder viewHolder.</code></p>
+<p><code>int direction) {</code></p>
+<p><code>int position = viewHolder.getAdapterPosition().</code></p>
+<p><code>Word myWord = adapter.getWordAtPosition(position)。</code></p>
+<p><code>Toast.makeText(MainActivity.this, "Deleleting " +.</code></p>
+<p><code>                       myWord.getWord(), Toast.LENGTH_LONG).show()。</code></p>
+<p><code>//</code> 単語を削除する</p>
+<p><code>               mWordViewModel.deleteWord(myWord)。</code></p>
+<p><code>            }</code></p>
+<p><code>       });</code></p>
+<p><code>helper.attachToRecyclerView(s recyclerView)を使用しています。</code></p>
+<p>.</p>
+<p>コードで気づくこと</p>
+<p><code>onSwiped() は、スワイプされた ViewHolder の位置を取得します。</code></p>
+<p><code>int position = viewHolder.getAdapterPosition().</code></p>
+<p>位置を指定すると、アダプタで定義した <code>getWordAtPosition()</code> メソッドを呼び出すことで、<code>ViewHolder</code> で表示されている単語を取得できます。</p>
+<p><code>Word myWord = adapter.getWordAtPosition(position)。</code></p>
+<p><code>WordViewModel上でdeleteWord()を呼び出して単語を削除します。</code></p>
+<p><code>mWordViewModel.deleteWord(myWord)。</code></p>
+<p>今すぐアプリを実行し、いくつかの単語を削除します。</p>
+<ol type="1" start="1">
+<li>アプリを実行してください。左右にスワイプして単語を削除できるようになっているはずです。</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/RoomWordsWithDelete" target="_blank">RoomWordsWithDelete</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>課題：アプリをアップデートして、ユーザーが単語をタップして編集し、変更内容を保存できるようにします。</p>
+<p>ヒント</p>
+<p>NewWordActivityに変更を加える</p>
+<p><code>NewWordActivity</code>に機能を追加して、新しい単語の追加や既存の単語の編集に使用できるようにすることができます。</p>
+<p>Wordで自動生成されたキーを使用する</p>
+<p><code>Word</code>エンティティクラスは、ワードフィールドをデータベースのキーとして使用します。しかし、データベース内の行を更新する場合、更新される項目を主キーにすることはできません。そのため、主キーとして使用するために自動生成された<code>id</code>を追加する必要があります。</p>
+<p><code>@PrimaryKey(autoGenerate = true)</code></p>
+<p><code>private int id.</code></p>
+<p>＠ＮｏｎＮｕｌｌ</p>
+<p><code>カラム情報(name = "word")</code></p>
+<p><code>private String mWord.</code></p>
+<p>のコンストラクタを追加します。</p>
+<p>取る言葉</p>
+<p>偶像</p>
+<p><code>id</code> と <code>word</code> をパラメータとするコンストラクタを <code>Word</code> エンティティクラスに追加します。この追加コンストラクタには <code>@Ignore</code> を使用してアノテーションを付けてください。</p>
+<p>無視してください</p>
+<p><code>public Word(int id, @NonNull String word) {</code></p>
+<p><code>this.id = id.</code></p>
+<p><code>this.mWord = word.</code></p>
+<p><code>}</code></p>
+<p>既存の<code>Word</code>を更新するには、このコンストラクタを使用して<code>Word</code>を作成します。<code>Room</code> は主キー (この場合は <code>id</code>) を使用してデータベース内の既存のエントリを検索し、更新できるようにします。</p>
+<p><code>WordDao</code>では、このように<code>update()</code>メソッドを追加します。</p>
+<p>更新</p>
+<p><code>void update(word...ワード)。</code></p>
+<p><code>WordRoomDatabase</code>では、データベースのテーブルスキーマが変更されたため、データベースのバージョン番号を増やす。</p>
+<p><code>データベース(エンティティ = {Word.class}, バージョン = 2, exportSchema = false)</code></p>
+<p>チャレンジソリューションコード</p>
+<p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/RoomWordsWithUpdate" target="_blank">RoomWordsWithUpdate</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。" duration="0">
+        <p>データベースのコードを書く</p>
+<ul>
+<li>データベース操作が実行されるたびに、データベース接続の開閉を行います。</li>
+<li>データアクセスオブジェクト（DAO）のメソッドを<code>@insert</code>、@<code>delete</code>、@<code>update</code>、<code>@query</code>のようにアノテーションします。</li>
+<li>単純な挿入、更新、削除の場合は、DAO内のメソッドに関連するアノテーションを追加するだけで十分です。</li>
+</ul>
+<p>例えば</p>
+<p>削除</p>
+<p><code>void deleteWord(Word word)。</code></p>
+<p>更新</p>
+<p><code>void update(word...ワード)。</code></p>
+<ul>
+<li>クエリや、すべての単語を削除するようなより複雑なデータベース・インタラクションの場合は、<code>@query</code>アノテーションを使用して、操作のためのSQLを提供します。</li>
+</ul>
+<p>例えば</p>
+<p><code>@Query("SELECT * from word_table ORDER BY word ASC")</code></p>
+<p><code>LiveData< List< Word>> getAllWords()。</code></p>
+<p><code>@Query("DELETE FROM word_table")</code></p>
+<p><code>void deleteAll()。</code></p>
+<p>アイテムタッチヘルパー</p>
+<ul>
+<li><code>RecyclerView</code>でアイテムをスワイプや移動できるようにするには、<code>ItemTouchHelper</code>クラスを使用します。</li>
+<li><code>onMove() と onSwipe() を実装します。</code></li>
+<li>ユーザーがどのアイテムを移動したか、あるいはスワイプしたかを識別するために、<code>RecylerView</code>用のアダプタにメソッドを追加することができます。このメソッドは位置を取得し、該当するアイテムを返します。メソッドは <code>onMove()</code> または <code>onSwipe()</code> の中で呼び出します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="11。" duration="0">
+        <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html" target="_blank">10.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html" target="_blank">Room、LiveData、ViewModel にあります</a>。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。" duration="0">
+        <p>エンティティ、データアクセスオブジェクト(DAO)、<code>ViewModel</code>。</p>
+<ul>
+<li><a href="https://developer.android.com/training/data-storage/room/defining-data.html" target="_blank">ルームエンティティを使用したデータの定義</a></li>
+<li><a href="https://developer.android.com/training/data-storage/room/accessing-data.html" target="_blank">Room DAOを使ってデータにアクセスする</a></li>
+<li><a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html" target="_blank">ビューモデル案内人</a></li>
+<li><a href="https://developer.android.com/reference/android/arch/persistence/room/Dao.html" target="_blank">どう参照</a></li>
+<li><a href="https://developer.android.com/reference/android/arch/lifecycle/ViewModel.html" target="_blank">ビューモデル参照</a></li>
+<li>あるエンティティのすべての可能なアノテーションを見るには、Androidリファレンスの<a href="https://developer.android.com/reference/android/arch/persistence/room/package-summary.html" target="_blank"><code>android.arch.persistence.room</code></a>に行き、左のナビにあるAnnotationsメニュー項目を展開します。  </li>
+</ul>
+<p>アイテムタッチヘルパーです。</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html" target="_blank">アイテムタッチヘルパー</a>参照</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="13。" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題を採点します。</li>
+</ul>
+<p>講師は、彼らが望むように少しまたは多くのようにこれらの提案を使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じるはずです。</p>
+<p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
+<p>アプリを構築して実行する</p>
+<p>データを保存する方法がいくつかあることがわかりましたね。正しい保存方法を選択するかどうかは、データがどれくらい大きいか、データがどれくらいの期間生き残る必要があるかによります。</p>
+<p>少なくとも 2 つの異なる場所に保存されているデータが、構成の変更やアプリの破壊にどのように生き残るかを示すアプリを作成します。文字列などの小さなデータを異なるデータ ストアに保存することで、これを行うことができます。</p>
+<ul>
+<li>アプリは、保存されていないデータがどうなるかを示す必要があります。</li>
+<li>アプリでは、<code>savedInstanceState</code>で保存されたデータ、<code>ViewModel</code>で<code>LiveData</code>を使用したデータ、ファイルやデータベースに保存されたデータがどうなるかをデモすることができました。</li>
+</ul>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>Android Architecture Componentsでは、DAOのためにいくつかの便利なアノテーションを提供しています。以下のうち、どれが利用できますか？該当するものをいくつでも選んでください。</p>
+<ul>
+<li><code>彡(ﾟ)(ﾟ)(ﾟ)(ﾟ)o(ﾟ)o</code></li>
+<li>挿入してください</li>
+<li>削除</li>
+<li>更新</li>
+<li>クエリー</li>
+<li>を選択します。</li>
+</ul>
+<p>質問2</p>
+<p>アーキテクチャコンポーネントを使用するメリットは何ですか？</p>
+<ul>
+<li>アーキテクチャ コンポーネントは、堅牢でテスト可能な方法でアプリを構造化するのに役立ちます。</li>
+<li>アーキテクチャ コンポーネントは、より良い UI を作成するのに役立ちます。</li>
+<li>アーキテクチャ コンポーネントは、アプリを構造化するためのシンプルで柔軟性のある実用的なアプローチを提供します。</li>
+<li>提供されているライブラリとアーキテクチャを使用すると、アプリの保守性が向上し、より少ない定型的なコードでメンテナンスが可能になります。</li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っているかどうかを確認しましょう。</p>
+<ul>
+<li>少なくとも2種類の方法でデータを保存します。</li>
+<li>異なるストレージオプションでデータがどのように異なる方法で保存されるかを示します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="14。" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

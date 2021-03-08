@@ -1,0 +1,451 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Android 開発者基礎講座 02.2:</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="2-2"
+                  title="Android 開発者基礎講座 02.2:"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1。" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
+<ul>
+<li>このコースのコードラボの完全なリストについては、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</li>
+<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</li>
+</ul>
+<p>注：このコースでは、「Codelab」と「実践」という用語を入れ替えて使用しています。</p>
+<p>序章</p>
+<p>この実習では、アクティビティの<em>ライフサイクル</em>について学びます。ライフサイクルとは、アクティビティが作成されてから破棄され、システムがリソースを回収するまでの全ライフサイクルの間、アクティビティの状態のセットのことです。ユーザーがアプリ内のアクティビティ間を移動すると（アプリへの出入りだけでなく）、アクティビティはライフサイクルの異なる状態の間で遷移します。</p>
+<p class="image-container"><img alt="Diagram of the App Lifecycle" style="width: 641.76px" src="img/f5408fd27bf0b74a.png"></p>
+<p>アクティビティのライフサイクルの各ステージには、対応するコールバック メソッドがあります：<code>onCreate()、</code> <code>onStart(</code>)、<code>onPause()</code>など。アクティビティの状態が変化すると、関連するコールバックメソッドが呼び出されます。これらのメソッドのうちの 1 つである<code>onCreate()</code> はすでに見たことがあります。<code>アクティビティ・クラス</code>のライフサイクル・コールバック・メソッドをオーバーライドすることで、ユーザーやシステムのアクションに応じて、アクティビティのデフォルトの動作を変更することができます。</p>
+<p>アクティビティの状態は、ユーザーがデバイスを縦から横に回転させたときなど、デバイスの設定変更に応じて変更することもできます。このような構成変更が発生すると、アクティビティは破棄されてデフォルト状態で再作成され、ユーザーはアクティビティに入力した情報を失う可能性があります。ユーザーを混乱させないためには、予期せぬデータの損失を防ぐためにアプリを開発することが重要です。この実習の後半では、構成の変更を実験し、デバイス構成の変更やその他のアクティビティのライフサイクルイベントに対応してアクティビティの状態を保持する方法を学びます。</p>
+<p>この実習では、TwoActivitiesアプリにロギング文を追加し、アプリを使用しながらアクティビティのライフサイクルの変化を観察します。その後、これらの変更に対応して作業を開始し、このような状況下でユーザー入力を処理する方法を探ります。</p>
+<p>すでに知っておくべきこと</p>
+<p>できるようになるはずです。</p>
+<ul>
+<li>Android Studioでアプリプロジェクトを作成して実行する。</li>
+<li>アプリにログステートメントを追加し、Logcatペインでそれらのログを表示する。</li>
+<li><code>アクティビティ</code>とイン<code>テント</code>を理解して作業し、それらを快適に操作できる。</li>
+</ul>
+<p>What you&#39;ll learn</p>
+<ul>
+<li>アクティビティ<code>の</code>ライフサイクルの仕組み。</li>
+<li>アクティビティ<code>が</code>開始、一時停止、停止、破棄されるとき。</li>
+<li>アクティビティ<code>の</code>変更に関連するライフサイクルコールバックメソッドについて。</li>
+<li>アクティビティ<code>の</code>ライフサイクル イベントをもたらすアクション（構成の変更など）の効果。</li>
+<li>ライフサイクル イベントをまたいで<code>Activity の</code>状態を保持する方法。</li>
+</ul>
+<p>What you&#39;ll do</p>
+<ul>
+<li>ロギング ステートメントを含む様々な<code>Activity</code>ライフサイクル コールバックを実装するために、前回の実践から TwoActivities アプリにコードを追加します。</li>
+<li>アプリが実行され、アプリ内の各<code>アクティビティ</code>と対話する際の状態の変化を観察します。</li>
+<li>ユーザーの行動やデバイス上の設定変更に応じて予期せず再作成された<code>アクティビティ</code>のインスタンス状態を保持するようにアプリを修正します。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2。アプリの概要" duration="0">
+        <p>この実習では、<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TwoActivities" target="_blank">TwoActivities</a>アプリを追加します。このアプリの見た目や動作は、前回のコードラボで行ったものとほぼ同じです。このアプリには2つの<code>Activity</code>の実装が含まれており、ユーザーはそれらの間で送信する機能を提供します。この実習でアプリに変更を加えても、目に見えるユーザーの動作には影響しません。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3.タスク1.TwoActivitiesにライフサイクルコールバックを追加する" duration="0">
+        <p>このタスクでは、これらのメソッドが呼び出されたときにlogcatにメッセージを出力するために、<code>Activity</code>のライフサイクルコールバックメソッドをすべて実装します。これらのログ メッセージにより、<code>アクティビティ</code>のライフサイクルがいつ状態を変更したか、また、ライフサイクルの状態の変更が実行中のアプリにどのように影響するかを確認することができます。</p>
+<p>1.1 (オプション) TwoActivities プロジェクトをコピーします。</p>
+<p>この実習では、前回の実習で作成した既存の<a href="https://github.com/google-developer-training/android-fundamentals/tree/master/TwoActivities" target="_blank">TwoActivities</a>プロジェクトを修正します。前回の TwoActivities プロジェクトをそのまま残したい場合は、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/appendix/appendix-utilities/appendix-utilities.html" target="_blank">付録の</a>手順に従ってください。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/appendix/appendix-utilities/appendix-utilities.html" target="_blank">ユーティリティ</a>」の手順に従って、プロジェクトのコピーを作成してください。</p>
+<p>1.2 MainActivityにコールバックを実装する</p>
+<ol type="1" start="1">
+<li>Android StudioでTwoActivitiesプロジェクトを開き、Project &gt; AndroidペインでMainActivityを開きます。</li>
+<li><code>onCreate()</code>メソッドで、以下のログ ステートメントを追加します。</li>
+</ol>
+<p><code>ログ.d(ログタグ, "-------");</code></p>
+<p><code>ログ.d(ログタグ, "オンクリエイト");</code></p>
+<ol type="1" start="3">
+<li><code>onStart()</code>コールバックのオーバーライドを追加します。</li>
+</ol>
+<p><code>コールバックのオーバーライドを追加します。</code></p>
+<p><code>公然</code> <code>ボイドオンスタート(){</code></p>
+<p><code>超.オンスタート();</code></p>
+<p><code>ログ.d(ログタグ, "オンスタート);</code></p>
+<p>ショートカットは、Android Studio の「コード」&gt;「メソッドを上書き」を選択します。クラスでオーバーライドできるメソッドがすべて表示されます。リストから 1 つ以上のコールバック・メソッドを選択すると、スーパークラスへの必要な呼び出しを含む、それらのメソッドの完全なテンプレートが挿入されます。</p>
+<ol type="1" start="4">
+<li><code>onStart()</code>メソッドをテンプレートとして使用して、<code>onPause()</code>、<code>onRestart</code>()、<code>onResume()、</code> <code>onStop()、</code>および<code>onDestroy()</code>ライフサイクル・コールバックを実装します。</li>
+</ol>
+<p>コールバックメソッドはすべて同じシグネチャを持っています (名前を除いて)。これらの他のコールバックメソッドを作成するために<code>onStart() を</code> コピー＆ペースト した場合、スーパークラスで正しいメソッドを呼び出すように内容を更新し、正しいメソッドをログに記録することを忘れないようにしてください。</p>
+<ol type="1" start="5">
+<li>アプリを実行します。</li>
+<li>Android Studioの下部にあるLogcatタブをクリックして、Logcatペインを表示します。<code>アクティビティの</code>開始時に遷移した 3 つのライフサイクル状態を示す 3 つのログ メッセージが表示されます。</li>
+</ol>
+<p><code>D/MainActivity: -------</code></p>
+<p><code>D/MainActivity: onCreate</code></p>
+<p><code>D/MainActivity: onStart</code></p>
+<p><code>D/MainActivity: onResume</code></p>
+<p>1.3 SecondActivityにライフサイクルコールバックを実装する</p>
+<p><code>MainActivity</code>にライフサイクルコールバックメソッドを実装したので、<code>SecondActivity</code>にも同じことをしてください。</p>
+<ol type="1" start="1">
+<li>SecondActivity を開きます。</li>
+<li>クラスの先頭に、<code>LOG_TAG</code>変数の定数を追加します。</li>
+</ol>
+<p><code>プライベート</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじログタグ = セカンドアクティビティ.クラス.getSimpleName();</code></p>
+<ol type="1" start="3">
+<li>ライフサイクルコールバックとログ文を2つ目の<code>Activity</code>に追加します。(<code>MainActivity</code>からコールバックメソッドをコピー＆ペーストすることができます)</li>
+<li><code>returnReply()</code>メソッドに、<code>finish()</code>メソッドの直前にログ文を追加します。</li>
+</ol>
+<p><code>ログ.d(ログタグ, "End SecondActivity");</code></p>
+<p>1**.4 アプリの実行時にログを監視する***。</p>
+<ol type="1" start="1">
+<li>アプリを実行します。</li>
+<li>Android Studioの下部にあるLogcatタブをクリックして、Logcatペインを表示します。</li>
+<li>検索ボックスに「アクティビティ」と入力します。Androidのログキャットは非常に長くてごちゃごちゃしていることがあります。各クラスの<code>LOG_TAG</code>変数には<code>MainActivity</code>または<code>SecondActivity の</code>いずれかの単語が含まれているため、このキーワードを使用すると、興味のあるものだけをログにフィルタリングすることができます。</li>
+</ol>
+<p class="image-container"><img alt="Log showing lifecycle states" style="width: 641.76px" src="img/57f779535002a170.png"></p>
+<p>アプリを使用して実験し、異なるアクションに反応して発生するライフサイクル イベントに注目してください。特に、以下のことを試してみてください。</p>
+<ul>
+<li>アプリを普通に使用する（メッセージを送信する、別のメッセージで返信する）。</li>
+<li>戻るボタンを使用して、2つ目の<code>アクティビティ</code>からメインの<code>アクティビティ</code>に戻る。</li>
+<li>アプリバーの上矢印を使用して、2つ目の<code>アクティビティ</code>から<code>メインアクティビティ</code>に戻ります。</li>
+<li>アプリ内の異なる時間に<code>メインアクティビティ</code>と2つ目のアクティビティの両方でデバイスを回転させ、ログと画面上で何が起こるかを観察します。</li>
+<li>概要ボタン（ホームの右にある四角いボタン）を押して、アプリを閉じます（×をタップ）。</li>
+<li>ホーム画面に戻り、アプリを再起動します。</li>
+</ul>
+<p>ヒント：エミュレータでアプリを実行している場合は、<code>Control+F11</code>または<code>Control+Function+F11</code>で回転をシミュレートできます。</p>
+<p>タスク1のソリューションコード</p>
+<p>以下のコードスニペットは、最初のタスクのソリューションコードを示しています。</p>
+<p>メインアクティビティ</p>
+<p>以下のコードスニペットは、<code>MainActivity</code> に追加されたコードを示していますが、クラス全体ではありません。</p>
+<p><code>onCreate()</code>メソッド。</p>
+<p><code>メソッドをオーバーライドします。</code></p>
+<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
+<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
+<p><code>セットコンテンツビュー(R.割り付け.アクティビティメイン);</code></p>
+<p><code>// onCreate() メソッドの開始をログに記録します。</code></p>
+<p><code>メソッドの開始をログに記録します。.d(ログタグ, "-------");</code></p>
+<p><code>ログ.d(ログタグ, "オンクリエイト");</code></p>
+<p><code>// すべてのビュー変数を初期化します。</code></p>
+<p><code>mMessageEditText =ファインドビューバイアイディー(R.偶像.エディットテキストメイン);</code></p>
+<p><code>mReplyHeadTextView =ファインドビューバイアイディー(R.偶像.テキストヘッダ返信);</code></p>
+<p><code>mReplyTextView =ファインドビューバイアイディー(R.偶像.テキストメッセージ返信);</code></p>
+<p>他のライフサイクルメソッド</p>
+<p><code>オーバーライドします。</code></p>
+<p><code>保護された</code> <code>ボイドオンスタート() {</code></p>
+<p><code>超.オンスタート();</code></p>
+<p><code>ログ.d(ログタグ, "オンスタート);</code></p>
+<p><code>オーバーライド</code></p>
+<p><code>保護された ボイドオンポーズ() {</code></p>
+<p><code>超.オンポーズ();</code></p>
+<p><code>ログ.d(ログタグ, "オンポーズ);</code></p>
+<p><code>オーバーライド</code></p>
+<p><code>保護された</code> <code>ボイドオンリスタート() {</code></p>
+<p><code>超.オン再起動();</code></p>
+<p><code>ログ.d(ログタグ, "onRestart");</code></p>
+<p><code>オーバーライド</code></p>
+<p><code>保護された</code> <code>ボイドオンレジュメ() {</code></p>
+<p><code>超.オンレジュメ();</code></p>
+<p><code>ログ.d(ログタグ, "オンレジュメ");</code></p>
+<p><code>オーバーライド</code></p>
+<p><code>保護された</code> <code>ボイドオンストップ() {</code></p>
+<p><code>超.オンストップ();</code></p>
+<p><code>ログ.d(ログタグ, "オンストップ);</code></p>
+<p><code>オーバーライド</code></p>
+<p><code>保護された ボイドオンデストロイ() {</code></p>
+<p><code>超.オンデストロイ();</code></p>
+<p><code>ログ.d(ログタグ, "オンデストロイ");</code></p>
+<p>セカンドアクティビティ</p>
+<p>以下のコードスニペットは、<code>SecondActivity</code> に追加されたコードを示していますが、クラス全体ではありません。</p>
+<p><code>SecondActivity</code>クラスの先頭にある</p>
+<p><code>プライベート</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじログタグ = セカンドアクティビティ.クラス.getSimpleName();</code></p>
+<p><em>のような </em><code>returnReply()</code> <em>メソッドを使用しています。</em></p>
+<p><code>パブリック</code> <code>ボイド返答(ビューみる) {</code></p>
+<p><code>ひもじ返事 =mReply.ゲットテキスト().文字列に変換します。();</code></p>
+<p><code>意図返信先 = 新しい</code> <code>意図();</code></p>
+<p><code>返信先.putExtra(エクストラリプライ,返事);</code></p>
+<p><code>設定結果(結果OK,返信先);</code></p>
+<p><code>ログ.d(ログタグ, "End SecondActivity");</code></p>
+<p><code>了();</code></p>
+<p><code>}</code></p>
+<p>他のライフサイクルメソッド。</p>
+<p>上記の<code>MainActivity</code>の場合と同じです。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4.タスク2：アクティビティのインスタンス状態の保存と復元" duration="0">
+        <p>システム リソースやユーザーの動作によっては、アプリ内の各<code>アクティビティ</code>が破壊されたり再構築されたりする頻度が、思ったよりもはるかに高くなることがあります。</p>
+<p>最後のセクションで、デバイスやエミュレータを回転させたときにこの動作に気づいたことがあるかもしれません。デバイスの回転は、デバイスの<em>設定変更</em>の一例です。回転は最も一般的なものですが、すべての設定変更は、現在の<code>アクティビティ</code>が破棄され、あたかも新しいものであるかのように再作成される結果となります。コードでこの動作を考慮していないと、設定変更が発生したときに<code>アクティビティ</code>のレイアウトがデフォルトの外観と初期値に戻ってしまい、ユーザーの場所、データ、またはアプリの進行状況が失われる可能性があります。</p>
+<p>各<code>アクティビティ</code>の状態は、キー/値のペアのセットとして <a href="https://developer.android.com/reference/android/os/Bundle.html" target="_blank"><code>バンドル</code></a>オブジェクトを使用して<code>い</code>ます。システムは、<code>アクティビティが</code>停止する直前にデフォルトの状態情報をインスタンス状態の<code>バンドル</code>に保存し、その<code>バンドルを</code>新しい<code>アクティビティインスタンス</code>に渡して復元します。</p>
+<p><code>アクティビティ</code>が予期せず破壊されたり再作成されたりしたときにデータが失われないようにするには、<code>onSaveInstanceState()</code>メソッドを実装する必要があります。システムは、アクティビティ<code>が</code>破壊されて再作成される可能性があるときに、<code>アクティビティ</code>上でこのメソッドを呼び出します (<code>onPause()</code>と<code>onStop()</code> の間)。</p>
+<p>インスタンス状態で保存されるデータは、現在のアプリ セッション中の特定の<code>アクティビティ</code>のこのインスタンスのみに固有のものです。新しいアプリ セッションを停止して再起動すると、アクティビティ<code>の</code>インスタンス状態は失われ、<code>アクティビティ</code>はデフォルトの外観に戻ります。アプリ セッション間でユーザー データを保存する必要がある場合は、共有環境設定またはデータベースを使用します。これらの両方については、後の実践で学びます。</p>
+<p>2.1 onSaveInstanceState()でアクティビティのインスタンス状態を保存する</p>
+<p>デバイスを回転させても、2つ目の<code>アクティビティ</code>の状態には全く影響しないことにお気づきかもしれません。これは、2 番目の<code>アクティビティの</code>レイアウトと状態が、それをアクティブにしたレイアウトと<code>Intent</code>から生成されるからです。<code>アクティビティ</code>が再作成されても、インテント<code>は</code>存在しており、そのイン<code>テント</code>内のデータは、第2の<code>アクティビティ</code>の<code>onCreate()</code>メソッドが呼ばれるたびに使用されます。</p>
+<p>さらに、各<code>アクティビティ</code>では、メッセージや返信用の<code>EditText</code>要素に入力したテキストは、デバイスを回転させても保持されていることに気づくかもしれません。これは、レイアウト内の一部の<code>View</code>要素の状態情報が設定変更をまたいで自動的に保存されるためで、<code>EditText</code>の現在の値はそのようなケースの一つです。</p>
+<p>ですから、あなたが興味を持っている<code>Activity</code>の状態は、メイン<code>Activity</code>の返信ヘッダーと返信テキストの<code>TextView</code>要素だけです。両方の<code>TextView</code>要素はデフォルトでは見えません。</p>
+<p>このタスクでは、<code>onSaveInstanceState()</code>を使って2つの<code>TextView</code>要素のインスタンス状態を保持するコードを追加します。</p>
+<ol type="1" start="1">
+<li>MainActivityを開きます。</li>
+<li><code>onSaveInstanceState()</code>のスケルトン実装を<code>アクティビティ</code>に追加するか、Code &gt; Override Methodsを使用してスケルトンオーバーライドを挿入します。</li>
+</ol>
+<p><code>のオーバーライドを挿入します。</code></p>
+<p><code>公然</code> <code>ボイドオンセーブインスタンス状態(バンドルアウトステート) {</code></p>
+<p><code>超.オンセーブインスタンス状態(アウトステート);</code></p>
+<ol type="1" start="3">
+<li>ヘッダが現在表示されているかどうかをチェックし、表示されている場合は、その表示状態を<code>putBoolean()</code>メソッドとキー<code>"reply_visible" を</code>使って state<code>Bundle</code>に入れます。</li>
+</ol>
+<p><code>もし (mReplyHeadTextView.視認性取得() == ビュー.目に見える) {</code></p>
+<p><code>アウトステート.putBoolean("返信可能", 真);</code></p>
+<p>2つ目の<code>アクティビティ</code>からの返信があるまでは、返信ヘッダーとテキストは見えないようになっていることを覚えておいてください。もしヘッダが表示されていれば、保存する必要のある返信データがあります。ヘッダーの実際のテキストは変更されないため、保存する必要はありません。</p>
+<ol type="1" start="4">
+<li>同じチェックの中で、返信テキストを<code>バンドル</code>に追加します。</li>
+</ol>
+<p><code>outState.置く文字列("返信文,mReplyTextView.ゲットテキスト().文字列に変換します。());</code></p>
+<p>ヘッダが表示されている場合は、返信メッセージ自体も表示されていると考えることができます。返信メッセージの現在の表示状態をテストしたり保存したりする必要はありません。メッセージの実際のテキストだけが、キー<code>"reply_text"</code>を持つ状態<code>バンドル</code>に入ります。</p>
+<p><code>アクティビティ</code>の作成後に変更される可能性のある<code>ビュー</code>要素のみの状態が保存されます。アプリ内の他の<code>View</code>要素（<code>EditText</code>、<code>Button</code>）は、いつでもデフォルトのレイアウトから再作成することができます。</p>
+<p><code>エディットテキスト</code>の内容など、一部の<code>ビュー</code>要素の状態はシステムによって保存されますのでご注意ください。</p>
+<p>2.2 onCreate()でアクティビティのインスタンス状態を復元する</p>
+<p><code>アクティビティ</code>のインスタンス状態を保存したら、<code>アクティビティを</code>再作成する際にそれを復元する必要があります。これは<code>onCreate()</code> で行うか、<code>アクティビティが</code>作成された後に<code>onStart() の</code>後に呼び出される<code>onRestoreInstanceState()</code>コールバックを実装することで行うことができます。</p>
+<p>ほとんどの場合、<code>アクティビティの</code>状態を復元するのに適した場所は<code>onCreate() の</code>中で、状態を含む UI をできるだけ早く利用できるようにします。すべての初期化が完了した後に<code>onRestoreInstanceState()</code>で行うと便利な場合もありますし、サブクラスがデフォルトの実装を使用するかどうかを決定できるようにする場合もあります。</p>
+<ol type="1" start="1">
+<li><code>onCreate()</code>メソッドで、<code>findViewById()</code> で<code>ビュー</code>変数を初期化した後、<code>savedInstanceState が</code>null でないことを確認するテストを追加します。</li>
+</ol>
+<p><code>// すべてのビュー変数を初期化します。</code></p>
+<p><code>mMessageEditText =ファインドビューバイアイディー(R.偶像.エディットテキストメイン);</code></p>
+<p><code>mReplyHeadTextView =ファインドビューバイアイディー(R.偶像.テキストヘッダ返信);</code></p>
+<p><code>mReplyTextView =ファインドビューバイアイディー(R.偶像.テキストメッセージ返信);</code></p>
+<p><code>// 状態を復元します。</code></p>
+<p><code>の場合 (セーブインスタンス状態 != ヌル) {</code></p>
+<p><code>}</code></p>
+<p><code>アクティビティが</code>作成されると、システムは状態の<code>バンドル</code>を唯一の引数として<code>onCreate()</code>に渡します。最初に onCreate()<code>が</code>呼び出されてアプリが起動すると、<code>Bundle は</code> <code>null</code>になります。以後の<code>onCreate(</code>) の呼び出しでは、<code>onSaveInstanceState()</code> で保存したデータを含むバンドルが生成されます。</p>
+<ol type="1" start="2">
+<li>このチェックの中で、<code>"reply_visible"という</code>キーで<code>Bundle</code>から現在の可視性(trueかfalse)を取得します。</li>
+</ol>
+<p><code>もし (セーブインスタンス状態 != ヌル) {</code></p>
+<p><code>ブーリアンイズビジブル =</code></p>
+<p><code>セーブインスタンス状態.ゲットブーリアン("返信可能");</code></p>
+<ol type="1" start="3">
+<li>前の行の下に、isVisible変数のテストを追加します。</li>
+</ol>
+<p><code>もし (イズビジブル) {</code></p>
+<p><code>}</code></p>
+<p>状態の<code>バンドル</code>に<code>reply_visible</code>キーがある場合（したがって<code>isVisible</code>が<code>true</code>）、状態を復元する必要があります。</p>
+<ol type="1" start="4">
+<li><code>isVisible</code>テストの中で、ヘッダを可視化します。</li>
+</ol>
+<p><code>mReplyHeadTextView.セット可視性(ビュー.目に見える);</code></p>
+<ol type="1" start="5">
+<li><code>reply_text"</code>キーを持つ<code>バンドル</code>から返信用テキストメッセージを取得し、その文字列を表示するように返信用<code>テキストビューを</code>設定します。</li>
+</ol>
+<p><code>mReplyTextView.セットテキスト(セーブインスタンス状態.取得文字列("返信文));</code></p>
+<ol type="1" start="6">
+<li>返信<code>テキストビューも</code>表示するようにします。</li>
+</ol>
+<p><code>mReplyTextView.セット可視性(ビュー.目に見える);</code></p>
+<ol type="1" start="7">
+<li>アプリを実行してください。デバイスまたはエミュレータを回転させて、<code>アクティビティ</code>が再作成された後も返信メッセージが画面上に残るようにしてみてください。</li>
+</ol>
+<p>タスク2のソリューションコード</p>
+<p>以下のコードスニペットは、このタスクのソリューションコードを示しています。</p>
+<p>メインアクティビティ</p>
+<p>以下のコードスニペットは、<code>MainActivity</code>に追加されたコードを示していますが、クラス全体ではありません。</p>
+<p><code>onSaveInstanceState()</code>メソッド。</p>
+<p><code>メソッドをオーバーライドします。</code></p>
+<p><code>公然</code> <code>ボイドオンセーブインスタンス状態(バンドルアウトステート) {</code></p>
+<p><code>超.オンセーブインスタンス状態(アウトステート);</code></p>
+<p><code>// 見出しが表示されている場合は、メッセージを保存する必要があります。</code></p>
+<p><code>// それ以外の場合はデフォルトのレイアウトを使用しています。</code></p>
+<p><code>もし (mReplyHeadTextView.視認性取得() == ビュー.目に見える) {</code></p>
+<p><code>アウトステート.putBoolean("返信可能", 真);</code></p>
+<p><code>アウトステート.置く文字列("返信文,</code></p>
+<p><code>mReplyTextView.ゲットテキスト().文字列に変換します。());</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>onCreate()</code>メソッド。</p>
+<p><code>メソッドをオーバーライドします。</code></p>
+<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
+<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
+<p><code>セットコンテンツビュー(R.割り付け.アクティビティメイン);</code></p>
+<p><code>ログ.d(ログタグ, "-------");</code></p>
+<p><code>ログ.d(ログタグ, "オンクリエイト");</code></p>
+<p><code>// すべてのビュー変数を初期化します。</code></p>
+<p><code>mMessageEditText =ファインドビューバイアイディー(R.偶像.エディットテキストメイン);</code></p>
+<p><code>mReplyHeadTextView =ファインドビューバイアイディー(R.偶像.テキストヘッダ返信);</code></p>
+<p><code>mReplyTextView =ファインドビューバイアイディー(R.偶像.テキストメッセージ返信);</code></p>
+<p><code>// 保存した状態を復元します。</code></p>
+<p><code>// 何が保存されるかについては onSaveInstanceState() を参照してください。</code></p>
+<p><code>もし (セーブインスタンス状態 != ヌル) {</code></p>
+<p><code>ブーリアンイズビジブル =</code></p>
+<p><code>セーブインスタンス状態.ゲットブーリアン("返信可能");</code></p>
+<p><code>// ヘッダービューとメッセージビューの両方を表示します。isVisible が</code></p>
+<p><code>// false またはバンドルにない場合は、デフォルトのレイアウトを使用します。</code></p>
+<p><code>もし (イズビジブル) {</code></p>
+<p><code>mReplyHeadTextView.セット可視性(ビュー.目に見える);</code></p>
+<p><code>mReplyTextView.セットテキスト(セーブインスタンス状態 .取得文字列("返信文));</code></p>
+<p><code>mReplyTextView.セット可視性(ビュー.目に見える);</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p>完成したプロジェクトです。</p>
+<p>Android Studioプロジェクト。 <a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TwoActivitiesLifecycle" target="_blank">TwoActivitiesLifecycle</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5。" duration="0">
+        <p>注意:コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
+<p>課題。ユーザーが構築するリストのためのメインアクティビティと、一般的な買い物アイテムのリストのための2番目のアクティビティを持つシンプルな買い物リストアプリを作成します。</p>
+<ul>
+<li>メインアクティビティには、構築するリストが含まれており、10個の空の<code>TextView</code>要素で構成されている必要があります。</li>
+<li>メインアクティビティのアイテム追加ボタンは、一般的なショッピングアイテム（チーズ、米、リンゴなど）のリストを含む2つ目のアクティビティを起動します。アイテムを表示するには<code>Button</code>要素を使用します。</li>
+<li>アイテムを選択するとメインアクティビティに戻り、選択したアイテムを含む空の<code>TextView</code>を更新します。</li>
+</ul>
+<p>ある<code>アクティビティ</code>から別のアクティビティに情報を渡すために<code>Intent</code>を使用します。ユーザーがデバイスを回転させたときに、ショッピングリストの現在の状態が保存されるようにしてください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6。" duration="0">
+        <ul>
+<li>アクティビティのライフサイクルは、<code>アクティビティ</code>が最初に作成されたときに始まり、Android システムがその<code>アクティビティ</code>のリソースを回収したときに終了する、アクティビティが移行する状態のセットです。</li>
+<li>ユーザーが 1 つの<code>アクティビティ</code>から別のアクティビティに移動したり、アプリの内部と外部を移動したりすると、各<code>アクティビティは</code> <code>アクティビティ</code>ライフサイクルの状態の間を移動します。</li>
+<li><code>アクティビティ</code>ライフサイクルの各ステートには、対応するコールバック メソッドがあり、<code>アクティビティ</code>クラスでオーバーライドできます。</li>
+<li>ライフサイクル・メソッドは、<code>onCreate()、</code> <code>onStart</code>()、<code>onPause()、</code> <code>onRestart</code>()、<code>onResume()、</code> <code>onStop()</code>、<code>onDestroy()</code> です。</li>
+<li>ライフサイクル コールバック メソッドをオーバーライドすることで、<code>アクティビティが</code>その状態に遷移したときに発生する動作を追加することができます。</li>
+<li>Android Studio のCode &gt; Override で、スケルトン・オーバーライド・メソッドをクラスに追加できます。</li>
+<li>回転などのデバイス設定の変更により、<code>アクティビティは</code>破棄され、あたかも新しいものであるかのように再作成されます。</li>
+<li>アクティビティ<code>の</code>状態の一部は、<code>EditText</code>要素の現在の値を含めて、設定変更時に保存されます。他のすべてのデータについては、明示的に自分で保存する必要があります。</li>
+<li>アクティビティ<code>の</code>インスタンス状態は、<code>onSaveInstanceState()</code>メソッドで保存します。</li>
+<li>インスタンス状態のデータは、単純なキー/値のペアとして<code>Bundle</code>に保存されます。データをBundleに入れたり、<code>Bundle</code>からデータを取り出したりするには<code>Bundle</code>メソッドを使用します。</li>
+<li>インスタンス状態の復元は、好ましい方法である<code>onCreate()</code>で行うか、<code>onRestoreInstanceState(</code>)で行います。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7。" duration="0">
+        <p>関連する概念のドキュメントは2<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-2-c-activity-lifecycle-and-state/2-2-c-activity-lifecycle-and-state.html" target="_blank">.2.</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-2-c-activity-lifecycle-and-state/2-2-c-activity-lifecycle-and-state.html" target="_blank">アクティビティのライフサイクルと状態を</a>参照してください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8。" duration="0">
+        <p>Android Studio のドキュメント。</p>
+<ul>
+<li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio の紹介</a></li>
+</ul>
+<p>Androidの開発者向けドキュメント。</p>
+<ul>
+<li><a href="http://developer.android.com/guide/components/fundamentals.html" target="_blank">アプリケーションの基礎</a></li>
+<li><a href="http://developer.android.com/guide/components/activities.html" target="_blank">活動内容</a></li>
+<li><a href="https://developer.android.com/guide/components/activities/activity-lifecycle" target="_blank">アクティビティのライフサイクルを理解する</a></li>
+<li><a href="http://developer.android.com/guide/components/intents-filters.html" target="_blank">インテントとインテントフィルター</a></li>
+<li><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html" target="_blank">設定変更の処理</a></li>
+<li><a href="http://developer.android.com/reference/android/app/Activity.html" target="_blank"><code>活動内容</code></a></li>
+<li><a href="http://developer.android.com/reference/android/content/Intent.html" target="_blank"><code>意図</code></a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9。" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
+<ul>
+<li>必要に応じて宿題を割り当てる。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題の割り当てを評価します。</li>
+</ul>
+<p>インストラクターは、これらの提案を少しでも多くのように使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じる必要があります。</p>
+<p>あなた自身でこのコードラボを介して作業している場合は、あなたの知識をテストするためにこれらの宿題の割り当てを使用して自由に感じています。</p>
+<p>アプリをビルドして実行する</p>
+<ol type="1" start="1">
+<li>カウンターの<code>TextView</code>、カウンターをインクリメントする<code>Button</code>、<code>EditTextを</code>保持するレイアウトでアプリを作成します。下のスクリーンショットを例として参照してください。 レイアウトを正確に複製する必要はありません。</li>
+<li>カウンターをインクリメントする<code>Button</code>にクリックハンドラを追加します。</li>
+<li>アプリを実行し、カウンターをインクリメントします。<code>EditText</code>にテキストを入力します。</li>
+<li>デバイスを回転させます。カウンターはリセットされますが、<code>EditText</code>はリセットされないことに注意してください。</li>
+<li><code>onSaveInstanceState()を</code>実装して、アプリの現在の状態を保存します。</li>
+<li><code>onCreate(</code>)を更新してアプリの状態を復元します。</li>
+<li>デバイスを回転させたときにアプリの状態が保存されるようにしてください。</li>
+</ol>
+<p class="image-container"><img alt="ebaf84570af6dd46.png" style="width: 641.76px" src="img/ebaf84570af6dd46.png"></p>
+<p>これらの質問に答えてください。</p>
+<p>質問1</p>
+<p><code>onSaveInstanceState()を</code>実装する前に宿題アプリを実行すると、デバイスを回転させるとどうなりますか？1つ選択してください。</p>
+<ul>
+<li><code>EditText</code>には入力したテキストは含まれなくなりますが、カウンターは保存されます。</li>
+<li>カウンタは 0 にリセットされ、<code>編集テキストに</code>は入力したテキストは含まれなくなります。</li>
+<li>カウンタは 0 にリセットされますが、<code>編集テキスト</code>の内容は保存されます。</li>
+<li>カウンタと<code>編集テキスト</code>の内容は保存されます。</li>
+</ul>
+<p>質問2</p>
+<p>デバイスの設定変更(回転など)が発生したときに呼び出される<code>アクティビティ</code>のライフサイクルメソッドは何ですか? 1つ選んでください。</p>
+<ul>
+<li>Android は<code>onStop() を</code>呼び出すことで、すぐに<code>Activity を</code>シャットダウンします。コードは<code>アクティビティ</code>を再起動する必要があります。</li>
+<li>Android は<code>onPause</code>()、<code>onStop</code>()、<code>onDestroy()</code> を呼び出してアクティビティ<code>を</code>シャットダウンします。<code>Activity</code> を再起動する必要があります。</li>
+<li>Android は<code>onPause</code>()、on<code>Stop()、</code> <code>onDestroy(</code>) を呼び出してアクティビティ<code>を</code>シャットダウンした後、<code>onCreate()、</code> <code>onStart</code>()、<code>onResume()</code> を呼び出してアクティビティを再起動します。</li>
+<li>Androidはすぐに<code>onResume(</code>)を呼び出します。</li>
+</ul>
+<p>質問3</p>
+<p><code>アクティビティの</code>ライフサイクルの中で、<code>onSaveInstanceState()が</code>呼び出されるのはいつですか？1つ選んでください。</p>
+<ul>
+<li>onSaveInstanceState()<code>は</code> <code>onStop()</code>メソッドの前に呼び出されます。</li>
+<li><code>onSaveInstanceState</code>() は<code>onResume(</code>) メソッドの前に呼び出されます。</li>
+<li>onSaveInstanceState()<code>は</code> <code>onCreate(</code>) メソッドの前に呼び出されます。</li>
+<li>onSaveInstanceState()<code>は</code>、<code>onDestroy</code>()メソッドの前に呼び出されます。</li>
+</ul>
+<p>質問4</p>
+<p>アクティビティ<code>が</code>終了または破棄される前にデータを保存するために使用する<code>アクティビティ</code>のライフサイクルの方法はどれが最適ですか？1つ選んでください。</p>
+<ul>
+<li><code>onPause()</code>または<code>onStop()</code></li>
+<li><code>onResume()</code>または<code>onCreate()</code></li>
+<li><code>onDestroy()</code></li>
+<li><code>onStart()</code>または<code>onRestart()</code></li>
+</ul>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っていることを確認してください。</p>
+<ul>
+<li>カウンター、そのカウンターをインクリメントする<code>ボタン</code>、<code>編集テキスト</code>が表示されます。</li>
+<li>ボタン<code>を</code>クリックすると、カウンターが1インクリメントされます。</li>
+<li>デバイスを回転させると、カウンターと<code>エディットテキストの</code>両方の状態が保持されます。</li>
+<li><code>MainActivity.java</code>の実装では、カウンタの値を保存するために<code>onSaveInstanceState()</code>メソッドを使用しています。</li>
+<li><code>onCreate()</code>の実装は、<code>outState</code> <code>バンドル</code>の存在をテストします。 その<code>バンドル</code>が存在する場合、カウンタの値は復元され、<code>テキストビュー</code>に保存されます。</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="10。Next codelab" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Anroid Developer Fundamentals (V2)</a>を参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
