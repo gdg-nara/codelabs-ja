@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 02.2:</title>
+  <title>Android 開発者基礎講座 02.2:  Activity lifecycle and state</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="2-2"
-                  title="Android 開発者基礎講座 02.2:"
+                  title="Android 開発者基礎講座 02.2:  Activity lifecycle and state"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>このコースのコードラボの完全なリストについては、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</li>
@@ -309,7 +309,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。" duration="0">
+      <google-codelab-step label="5。コーディングの課題" duration="0">
         <p>注意:コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。ユーザーが構築するリストのためのメインアクティビティと、一般的な買い物アイテムのリストのための2番目のアクティビティを持つシンプルな買い物リストアプリを作成します。</p>
 <ul>
@@ -322,7 +322,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。概要" duration="0">
         <ul>
 <li>アクティビティのライフサイクルは、<code>アクティビティ</code>が最初に作成されたときに始まり、Android システムがその<code>アクティビティ</code>のリソースを回収したときに終了する、アクティビティが移行する状態のセットです。</li>
 <li>ユーザーが 1 つの<code>アクティビティ</code>から別のアクティビティに移動したり、アプリの内部と外部を移動したりすると、各<code>アクティビティは</code> <code>アクティビティ</code>ライフサイクルの状態の間を移動します。</li>
@@ -340,13 +340,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。関連コンセプト" duration="0">
         <p>関連する概念のドキュメントは2<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-2-c-activity-lifecycle-and-state/2-2-c-activity-lifecycle-and-state.html" target="_blank">.2.</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-2-c-activity-lifecycle-and-state/2-2-c-activity-lifecycle-and-state.html" target="_blank">アクティビティのライフサイクルと状態を</a>参照してください。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。詳細はこちら" duration="0">
         <p>Android Studio のドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio の紹介</a></li>
@@ -365,7 +365,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を割り当てる。</li>

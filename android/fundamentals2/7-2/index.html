@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 07.2:</title>
+  <title>Android 開発者基礎講座 07.2: AsyncTaskとAsyncTaskLoader</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="7-2"
-                  title="Android 開発者基礎講座 07.2:"
+                  title="Android 開発者基礎講座 07.2: AsyncTaskとAsyncTaskLoader"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -64,7 +64,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p><code>EditTextとButtonを含むアプリを作ります。</code></p>
 <ul>
 <li>ユーザーは<code>EditText</code>に本の名前を入力してボタンをタップします。</li>
@@ -803,14 +803,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Coding challenge" duration="0">
         <p>注：すべてのコーディング課題は任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: Books API をさらに詳しく調べて、EPUB 形式でダウンロード可能な書籍に結果を制限する検索パラメータを見つけてください。リクエストにパラメータを追加して、結果を表示します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Summary" duration="0">
         <ul>
 <li>ネットワークに接続するタスクは、UIスレッド上で実行すべきではありません。UIスレッド上でネットワーク接続やファイルアクセスを試みると、Androidランタイムは通常例外を発生させます。</li>
 <li>Google Booksにプログラムでアクセスするには、Books Search APIを使用します。Google Books への API リクエストは URL の形式で、レスポンスは JSON 文字列です。</li>
@@ -846,13 +846,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Related concepts" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-2-c-internet-connection/7-2-c-internet-connection.html" target="_blank">7.2: インターネット接続</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/training/basics/network-ops/connecting.html" target="_blank">ネットワークに接続する</a></li>
@@ -865,7 +865,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -943,6 +943,13 @@
 <li>必要なローダコールバックメソッドをインプリメントします。</li>
 <li>Webページのソースを<code>TextView</code>で取得した結果をScrollViewで表示します。(同じアクティビティでやってもいいし、新しいアクティビティを始めてもいい)</li>
 </ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 
 
       </google-codelab-step>

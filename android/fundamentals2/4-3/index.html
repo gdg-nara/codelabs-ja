@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.3:</title>
+  <title>Android 開発者基礎講座 04.3: Menus and pickers</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-3"
-                  title="Android 開発者基礎講座 04.3:"
+                  title="Android 開発者基礎講座 04.3: Menus and pickers"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -78,7 +78,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。アプリ概要" duration="0">
         <p>前回の実習では、Basic Activityのテンプレートを使って下の図のようなDroid Cafeというアプリを作成しました。このテンプレートでは、画面上部のアプリバーにスケルトンのオプションメニューも用意されています。</p>
 <p>この演習では、<a href="https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat" target="_blank">v7 appcompat</a> サポート ライブラリの<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank">ツールバーを</a>アプリ バーとして使用します。この<a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank">ツールバー</a>は、最も幅広いデバイスで動作し、アプリの開発に合わせて後からアプリ バーをカスタマイズすることができます。アプリ バーを使用するためのデザイン上の考慮事項の詳細については、マテリアル デザイン仕様の<a href="https://material.io/design/layout/responsive-layout-grid.html" target="_blank">レスポンシブ レイアウト グリッドを</a>参照してください。</p>
 <p>アラートダイアログを表示する新しいアプリを作成します。ダイアログはユーザーのワークフローを中断し、ユーザーに選択を要求します。</p>
@@ -409,7 +409,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>チャレンジ。コンテキストメニューを使用して、ユーザーが選択したビューに対してアクションを実行できるようにする。通常、アプリバーのオプションメニューには、別のアクティビティへのナビゲーションの選択肢がありますが、コンテキストメニューを使用して、ユーザーが現在のアクティビティ内でビューを変更できるようにします。</p>
 <p>両方のメニューは XML で記述されており、両方とも<a href="https://developer.android.com/reference/android/view/MenuInflater.html" target="_blank"><code>MenuInflater</code> を</a>使用して膨らませ、両方とも &#34;<a href="https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)" target="_blank"><code>on</code></a> item selected&#34; メソッドを使用しています。そのため、2つのメニューを構築して使用するテクニックは似ています。</p>
@@ -658,7 +658,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。コーディングチャレンジ2" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>チャレンジしてください。日付ピッカーを追加するために学んだのと同じテクニックを使用して、時間ピッカーを実装した「Picker For Time」というアプリを作成します。</p>
 <p>ヒント。</p>
@@ -680,7 +680,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。要約" duration="0">
         <p>オプションメニューとアプリバーを提供します。</p>
 <ul>
 <li>基本アクティビティテンプレートを使ってアプリやアクティビティを起動し、アプリバー、オプションメニュー、フローティングアクションボタンを自動的に設定します。</li>
@@ -721,7 +721,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。関連コンセプト" duration="0">
         <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-3-c-menus-and-pickers/4-3-c-menus-and-pickers.html" target="_blank">4.3</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-3-c-menus-and-pickers/4-3-c-menus-and-pickers.html" target="_blank">メニューとピッカーにあります</a>。</p>
 
 

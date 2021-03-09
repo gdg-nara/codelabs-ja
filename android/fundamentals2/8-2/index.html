@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 08.2:</title>
+  <title>Android 開発者基礎講座 08.2: アラームマネージャー</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="8-2"
-                  title="Android 開発者基礎講座 08.2:"
+                  title="Android 開発者基礎講座 08.2: アラームマネージャー"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -60,7 +60,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>Stand Up！」は、15分ごとに立ち上がって歩き回ることをリマインドしてくれるアプリです。これは、15分が経過したことを知らせる通知を使用しています。このアプリには、アラームのオンとオフを切り替えることができるトグルボタンが含まれています。</p>
 
 
@@ -370,13 +370,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/StandUp" target="_blank">スタンドアップ</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p><code>AlarmManager</code> クラスは、通常の目覚まし時計、つまり朝に目を覚ますような目覚まし時計も扱います。API 21 以降のデバイスでは、アラームマネージャの <code>getNextAlarmClock()</code> を呼び出すことで、この種のアラームクロックの次の情報を得ることができます。</p>
 <p>トーストメッセージを表示するボタンをアプリに追加します。トーストには、ユーザーが設定した次の目覚まし時計の時刻が表示されます。</p>
@@ -384,7 +384,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Summary" duration="0">
         <ul>
 <li><code>AlarmManager</code>では、リアルタイムクロックや起動からの経過時間に基づいてタスクをスケジュールすることができます。</li>
 <li><code>AlarmManager</code>は、定期的なアラームと1回限りのアラームの両方の様々なタイプを提供します。</li>
@@ -397,13 +397,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-8-alarms-and-schedulers/8-2-c-alarms/8-2-c-alarms.html" target="_blank">8.2.アラームにあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/training/scheduling/alarms.html" target="_blank">リピートアラームのスケジュール</a></li>
@@ -418,7 +418,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -450,7 +450,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。" duration="0">
+      <google-codelab-step label="12。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

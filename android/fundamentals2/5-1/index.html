@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 05.1:</title>
+  <title>Android 開発者基礎講座 05.1: Drawables, styles, and themes</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="5-1"
-                  title="Android 開発者基礎講座 05.1:"
+                  title="Android 開発者基礎講座 05.1: Drawables, styles, and themes"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -67,10 +67,12 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>スコアキーパーアプリは、2つのボタン要素と2つのテキストビュー要素で構成されています。</p>
 <table>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"><p class="image-container"><img alt="The Scorekeeper app in Day Mode" style="width: 225.00px" src="img/6ff1e098bf0726f4.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img alt="The Scorekeeper app in Night Mode showing the Day Mode choice in the menu" style="width: 240.00px" src="img/aecc7b88c34acd94.png"></p>
+</td></tr>
 </table>
 
 
@@ -841,13 +843,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Solution code" duration="0">
         <p>Android Studio プロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/Scorekeeper" target="_blank">スコアキーパー</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>チャレンジしてみてください。今のところ、ボタンは押されても見た目が変わらないので、直感的には動作しません。Android には<a href="https://developer.android.com/reference/android/graphics/drawable/StateListDrawable.html" target="_blank"><code>StateListDrawable</code></a> と呼ばれる別のタイプの <code>Drawable</code> があり、オブジェクトの状態に応じて異なるグラフィックを使用することができます。</p>
 <p>今回の課題問題では、<code>ImageButton</code>の状態が「押された」ときに、<code>ImageButton</code>の背景をボーダーと同じ色に変更する<code>Drawable</code>リソースを作成してください。また、<code>ImageButton</code>要素内のテキストの色を、ボタンが「押された」ときに白になるようなセレクタに設定しておくとよいでしょう。</p>
@@ -855,7 +857,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Summary" duration="0">
         <ul>
 <li>描画可能な要素は、アプリの UI の外観を向上させます。</li>
 <li><a href="https://developer.android.com/reference/android/graphics/drawable/ShapeDrawable.html" target="_blank"><code>ShapeDrawable</code></a>は、XMLファイルで定義されたプリミティブな幾何学的形状です。<code>ShapeDrawable</code> を定義する属性には、色、形状、パディングなどがあります。</li>
@@ -872,13 +874,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Related concepts" duration="0">
         <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-1-c-drawables-styles-and-themes/5-1-c-drawables-styles-and-themes.html" target="_blank">5.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-1-c-drawables-styles-and-themes/5-1-c-drawables-styles-and-themes.html" target="_blank">Drawables, styles, and themes にあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Learn more" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -914,6 +916,69 @@
 <li><a href="https://romannurik.github.io/AndroidAssetStudio/index.html" target="_blank">Roman NurikさんのAndroidアセットスタジオ</a></li>
 <li><a href="https://github.com/bumptech/glide#glide" target="_blank">グライドのドキュメント</a></li>
 </ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Homework" duration="0">
+        <p>This section lists possible homework assignments for students who are working through this codelab as part of a course led by an instructor. It&#39;s up to the instructor to do the following:</p>
+<ul>
+<li>Assign homework if required.</li>
+<li>Communicate to students how to submit homework assignments.</li>
+<li>Grade the homework assignments.</li>
+</ul>
+<p>Instructors can use these suggestions as little or as much as they want, and should feel free to assign any other homework they feel is appropriate.</p>
+<p>If you&#39;re working through this codelab on your own, feel free to use these homework assignments to test your knowledge.</p>
+<h2 is-upgraded>Build and run an app</h2>
+<p>Create an app that displays an <code>ImageView</code> and plus and minus buttons, as shown below. The <code>ImageView</code> contains <a href="https://developer.android.com/reference/android/graphics/drawable/LevelListDrawable.html" target="_blank">a level list drawable</a> that is a battery level indicator. Tapping the plus or minus button changes the level of the indicator.</p>
+<p>Use the battery icons from the Vector Asset Studio to represent 7 different values for the battery level.</p>
+<p>The app should have the following properties:</p>
+<ul>
+<li>The plus button increments the level, causing the battery indicator to appear more full.</li>
+<li>The minus button decrements the level, causing the indicator to empty one level.</li>
+</ul>
+<p class="image-container"><img alt="Example battery indicator app" style="width: 380.47px" src="img/dd50333adcf47bf7.png"></p>
+<h2 is-upgraded>Answer these questions</h2>
+<h3 is-upgraded>Question 1</h3>
+<p>Which type of <code>Drawable</code> do you use to create a <code>Button</code> with a background that stretches properly to accommodate the text or image inside the <code>Button</code> so that it looks correct for different screen sizes and orientations? Choose one:</p>
+<ul>
+<li><code>LevelListDrawable</code></li>
+<li><code>TransitionDrawable</code></li>
+<li><code>StateListDrawable</code></li>
+<li><code>NinePatchDrawable</code></li>
+</ul>
+<h3 is-upgraded>Question 2</h3>
+<p>Which type of <code>Drawable</code> do you use to create a <code>Button</code> that shows one background when it is pressed and a different background when it is hovered over? Choose one:</p>
+<ul>
+<li><code>LevelListDrawable</code></li>
+<li><code>TransitionDrawable</code></li>
+<li><code>StateListDrawable</code></li>
+<li><code>NinePatchDrawable</code></li>
+</ul>
+<h3 is-upgraded>Question 3</h3>
+<p>Suppose you want to create an app that has a white background, dark text, and a dark action bar. Which base style does your application style inherit from? Choose one:</p>
+<ul>
+<li><code>Theme.AppCompat.Light</code></li>
+<li><code>Theme.AppCompat.Dark.NoActionBar</code></li>
+<li><code>Theme.AppCompat.Light.DarkActionBar</code></li>
+<li><code>Theme.AppCompat.NoActionBar</code></li>
+<li><code>Theme.NoActionBar</code></li>
+</ul>
+<h2 is-upgraded>Submit your app for grading</h2>
+<h3 is-upgraded>Guidance for graders</h3>
+<p>Check that the app has the following features:</p>
+<ul>
+<li>The buttons increment a count variable. The count variable sets the level on the <code>ImageView</code>, using the <code>setImageLevel()</code> method.</li>
+<li>The levels in the <a href="https://developer.android.com/reference/android/graphics/drawable/LevelListDrawable.html" target="_blank"><code>LevelListDrawable</code></a> go from 0 to 6.</li>
+<li>Before incrementing or decrementing the image level, the <code>onClick()</code> methods check to see whether the count variable is within the range of the <code>LevelListDrawable</code> (0 to 6). This way, the user can&#39;t set a level that doesn&#39;t exist.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="13。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 
 
       </google-codelab-step>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 09.1:</title>
+  <title>Android 開発者基礎講座 09.1: Shared preferences</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="9-1"
-                  title="Android 開発者基礎講座 09.1:"
+                  title="Android 開発者基礎講座 09.1: Shared preferences"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -65,7 +65,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>HelloSharedPrefsアプリは、レッスン1で作成したHelloToastアプリの別のバリエーションです。このアプリには、数字を増やすボタン、背景色を変更するボタン、数字と色をデフォルトにリセットするボタンがあります。このアプリでは、テーマとスタイルを使ってボタンを定義しています。</p>
 <p>スターターアプリからスタートし、メインアクティビティコードに共有環境設定を追加します。また、カウントと背景色の両方をデフォルトに設定するリセットボタンを追加し、環境設定ファイルをクリアします。</p>
 
@@ -279,20 +279,20 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。" duration="0">
+      <google-codelab-step label="5。Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/HelloSharedPrefs" target="_blank">HelloSharedPrefs</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。HelloSharedPrefsアプリを修正して、設定ファイルに状態を自動的に保存する代わりに、設定を変更、リセット、および保存するための2つ目のアクティビティを追加します。アプリに設定という名前のボタンを追加して、そのアクティビティを起動します。環境設定を変更するためのトグルボタンとスピナー、環境設定の保存とクリアのための保存とリセットボタンを含めます。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Summary" duration="0">
         <ul>
 <li><a href="https://developer.android.com/reference/android/content/SharedPreferences.html" target="_blank"><code>SharedPreferences</code></a>クラスは、アプリが少量のプリミティブデータをキーと値のペアとして保存することを可能にします。</li>
 <li>共有環境設定は、同じアプリの異なるユーザーセッション間で持続します。</li>
@@ -306,13 +306,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Related concept" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-9-preferences-and-settings/9-0-c-data-storage/9-0-c-data-storage.html" target="_blank">9.0: データストレージ</a>と<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-9-preferences-and-settings/9-1-c-shared-preferences/9-1-c-shared-preferences.html" target="_blank">9.1: 共有環境設定</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/guide/topics/data/data-storage" target="_blank">データとファイルストレージの概要</a></li>
@@ -329,7 +329,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -373,7 +373,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

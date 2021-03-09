@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.5:</title>
+  <title>Android 開発者基礎講座 04.5: RecyclerView</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-5"
-                  title="Android 開発者基礎講座 04.5:"
+                  title="Android 開発者基礎講座 04.5: RecyclerView"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの Unit 2: User experience の一部です。このコースでは、コードラボを順を追って学習することで、このコースを最大限に活用することができます。</p>
 <p>コースのコードラボの完全なリストについては、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
 <p>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer Fundamentals (Version 2)を参照してください。</p>
@@ -219,13 +219,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。Solution code" duration="0">
         <p>Android Studioプロジェクト。リサイクルビュー</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Coding challenges" duration="0">
         <p>注意: コーディングの課題はすべてオプションであり、後のレッスンの前提条件ではありません。</p>
 <p>課題1: オプションメニューを変更して、1つのオプションのみを表示するようにします。リセット。このオプションは、単語のリストを元の状態に戻し、何もクリックされておらず、余分な単語もない状態にします。</p>
 <p>課題 2: リストの各項目のクリック リスナーを作成するのは簡単ですが、データが多いとアプリのパフォーマンスが低下することがあります。これをより効率的に実装する方法を研究してください。これは高度な課題です。概念的に考えることから始めて、実装例を探します。</p>
@@ -233,7 +233,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Summary" duration="0">
         <p>RecyclerView は、アイテムのスクロール可能なリストを表示するためのリソース効率の高い方法です。</p>
 <p>各リスト項目のビューを作成するには、アダプタは、LayoutInflator を使用してリスト項目の XML レイアウト・リソースを膨らませます。</p>
 <p>LinearLayoutManager は RecyclerView のレイアウト・マネージャで、縦または横にスクロールするリストのアイテムを表示します。</p>
@@ -245,13 +245,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは、4.5: RecyclerViewです。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Learn more" duration="0">
         <p>Android Studio のドキュメントです。</p>
 <p>Android Studio ユーザーガイド</p>
 <p>Image Asset Studioでアプリのアイコンを作成</p>
@@ -274,7 +274,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
 <p>必要に応じて宿題を割り当てる。</p>
 <p>宿題の提出方法を学生に伝える。</p>
@@ -316,6 +316,13 @@
 <p>リスト項目をクリックすると、完全なレシピを表示するアクティビティが開始されます。</p>
 <p>AndroidManifest.xml ファイルでは、レシピ・ビューの Up ボタンをクリックすると、レシピのリストに戻るように親関係を定義しています。</p>
 <p>ViewHolderには、2つのTextView要素を持つレイアウトが含まれています。例えば、2つのTextView要素を持つLinearLayoutなどです。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 
 
       </google-codelab-step>

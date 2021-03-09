@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 05.2:</title>
+  <title>Android 開発者基礎講座 05.2: Cards and colors</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="5-2"
-                  title="Android 開発者基礎講座 05.2:"
+                  title="Android 開発者基礎講座 05.2: Cards and colors"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -63,7 +63,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>MaterialMeアプリは、デザインの実装が非常に悪い模擬スポーツニュースアプリです。デザインガイドラインを満たすように修正して、楽しいユーザー体験を作りましょう以下はMaterial Designの改善前と後のアプリのスクリーンショットです。</p>
 <table>
 <tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
@@ -526,13 +526,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Solution code" duration="0">
         <p>Android Studioのプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/MaterialMe" target="_blank">MaterialMe</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Coding challenges" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>コーディングチャレンジ1</p>
 <p>この課題は、MaterialMeアプリの2つの小さな改善で構成されています。</p>
@@ -555,7 +555,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Summary" duration="0">
         <ul>
 <li><a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html" target="_blank"><code>CardView</code>は</a>、画像やテキストなどのメディアが混在している情報を提示するのに適したレイアウトです。</li>
 <li><code>CardView</code>はAndroidサポートライブラリにあるUIコンポーネントです。</li>
@@ -572,13 +572,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Related concept" duration="0">
         <p>関連するコンセプト文書は、「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-2-c-material-design/5-2-c-material-design.html" target="_blank">5.2：マテリアルデザイン」</a>に記載されている。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Learn more" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -610,6 +610,67 @@
 <li><a href="https://github.com/bumptech/glide#glide" target="_blank">グライドのドキュメント</a></li>
 <li><a href="https://github.com/bumptech/glide" target="_blank">Glide GitHubページ</a></li>
 </ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Homework" duration="0">
+        <p>This section lists possible homework assignments for students who are working through this codelab as part of a course led by an instructor. It&#39;s up to the instructor to do the following:</p>
+<ul>
+<li>Assign homework if required.</li>
+<li>Communicate to students how to submit homework assignments.</li>
+<li>Grade the homework assignments.</li>
+</ul>
+<p>Instructors can use these suggestions as little or as much as they want, and should feel free to assign any other homework they feel is appropriate.</p>
+<p>If you&#39;re working through this codelab on your own, feel free to use these homework assignments to test your knowledge.</p>
+<h2 is-upgraded>Build and run an app</h2>
+<p>Open the <a href="https://drive.google.com/open?id=1wO19-TohG9PMMMZDA0BQKq22zlD7FsZh" target="_blank">MaterialMe</a> app.</p>
+<ol type="1" start="1">
+<li>Create a <a href="https://developer.android.com/training/transitions/start-activity#start-with-element" target="_blank">shared element transition</a> between the <code>MainActivity</code> and the <code>DetailActivity</code>, with the banner image for the sport as the shared element.</li>
+<li>Clicking on a list item in the MaterialMe app triggers the transition. The banner image from the card moves to the top of the screen in the detail view.</li>
+</ol>
+<h2 is-upgraded>Answer these questions</h2>
+<h3 is-upgraded>Question 1</h3>
+<p>Which color attribute in your style defines the color of the status bar above the app bar? Choose one:</p>
+<ul>
+<li><code>colorPrimary</code></li>
+<li><code>colorPrimaryDark</code></li>
+<li><code>colorAccent</code></li>
+<li><code>colorAccentDark</code></li>
+</ul>
+<h3 is-upgraded>Question 2</h3>
+<p>Which support library does the <code>FloatingActionButton</code> belong to? Choose one:</p>
+<ul>
+<li><code>v4 Support Library</code></li>
+<li><code>v7 Support Library</code></li>
+<li><code>Design Support Library</code></li>
+<li><code>Custom Button Support Library</code></li>
+</ul>
+<h3 is-upgraded>Question 3</h3>
+<p>In the <a href="https://material.google.com/style/color.html#color-color-palette" target="_blank">Material Design color palette</a>, which shade of a color should you use as the primary color for your <em>brand</em> in your app? Choose one:</p>
+<ul>
+<li>Any color shade that starts with <code>A</code>.</li>
+<li>Any color shade labeled <code>200</code>.</li>
+<li>Any color shade labeled <code>500</code>.</li>
+<li>Any color shade labeled <code>900</code>.</li>
+</ul>
+<h2 is-upgraded>Submit your app for grading</h2>
+<h3 is-upgraded>Guidance for graders</h3>
+<p>Check that the app has the following features:</p>
+<ul>
+<li>Window-content transitions are enabled in the app theme.</li>
+<li>A shared element transition is specified in the app style.</li>
+<li>The transition is defined as an XML resource.</li>
+<li>A common name is assigned to the shared elements in both layouts with the <code>android:transitionName</code> attribute.</li>
+<li>The code uses the <code>ActivityOptions.makeSceneTransitionAnimation()</code> method.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="13。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 
 
       </google-codelab-step>

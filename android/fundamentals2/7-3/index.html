@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 07.3:</title>
+  <title>Android 開発者基礎講座 07.3: Broadcast receivers</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="7-3"
-                  title="Android 開発者基礎講座 07.3:"
+                  title="Android 開発者基礎講座 07.3: Broadcast receivers"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -63,7 +63,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>PowerReceiverアプリは、デバイスが電源に接続されているとき、または電源から切断されたときにトーストメッセージを表示する<code>BroadcastReceiver</code>を登録します。また、アプリは、異なる乾杯メッセージを表示するカスタムブロードキャストを送受信します。</p>
 
 
@@ -247,13 +247,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。" duration="0">
+      <google-codelab-step label="5。Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/PowerReceiver" target="_blank">パワーレシーバー</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題:音楽プレーヤーアプリを開発している場合、アプリでは、ユーザが有線ヘッドセットを接続または切断したときに音楽を再生または一時停止する必要があるかもしれません。この機能を実装するには、有線ヘッドセットのイベントに応答するブロードキャストレシーバーが必要です。有線ヘッドセットが接続または切断されたときにトーストメッセージを表示するブロードキャストレシーバーを実装します。</p>
 <p>ヒント:<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_HEADSET_PLUG" target="_blank"><code>ACTION_HEADSET_PLUG</code></a>アクションに登録する必要があります。これはシステムブロードキャストアクションなので、静的に登録することはできません。代わりに、<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver,%2520android.content.IntentFilter)" target="_blank"><code>Context.registerReceiver()</code></a> でコンテキストを使用してレシーバーを動的に登録します。</p>
@@ -265,7 +265,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Summary" duration="0">
         <ul>
 <li>放送受信機は、Androidアプリの基本的なコンポーネントです。</li>
 <li>放送受信機は、システムから送信された放送やアプリから送信された放送を受信することができます。</li>
@@ -280,13 +280,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-3-c-broadcasts/7-3-c-broadcasts.html" target="_blank">7.3: ブロードキャスト</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/guide/components/intents-filters.html" target="_blank">インテントとインテントフィルター</a></li>
@@ -298,7 +298,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -357,7 +357,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

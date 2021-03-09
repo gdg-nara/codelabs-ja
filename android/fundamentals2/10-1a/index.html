@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 10.1A:</title>
+  <title>Android 開発者基礎講座 10.1A: Room, LiveData, and ViewModel</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="10-1a"
-                  title="Android 開発者基礎講座 10.1A:"
+                  title="Android 開発者基礎講座 10.1A: Room, LiveData, and ViewModel"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -80,7 +80,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>この実習では、<a href="https://developer.android.com/topic/libraries/architecture/index.html" target="_blank">Android Architecture Componentsを</a>使ったアプリを作ります。RoomWordsSampleと呼ばれるアプリは、Roomデータベースに単語のリストを保存し、そのリストを <code>RecyclerView</code> に表示します。RoomWordsSampleアプリは基本的なものですが、十分に完成されているので、これをテンプレートとして使用してビルドすることができます。</p>
 <p>RoomWordsSampleアプリは以下のようなことをします。</p>
 <ul>

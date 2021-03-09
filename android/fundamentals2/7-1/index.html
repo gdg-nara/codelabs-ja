@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 07.1:</title>
+  <title>Android 開発者基礎講座 07.1: AsyncTask</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="7-1"
-                  title="Android 開発者基礎講座 07.1:"
+                  title="Android 開発者基礎講座 07.1: AsyncTask"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -63,7 +63,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>1つの<code>TextView</code>と1つの<code>Button</code>を持つアプリを作成します。ユーザーがボタンをクリックすると、アプリはランダムな時間だけスリープ状態になり、スリープが解除されると<code>TextView</code>にメッセージが表示されます。完成したアプリは以下のようになります。</p>
 
 
@@ -417,14 +417,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: <code>AsyncTask</code> クラスには、もう 1 つの便利なオーバーライドメソッド <code>onProgressUpdate()</code> があり、<code>AsyncTask</code> の実行中に UI を更新することができます。このメソッドを使用して、現在のスリープ時間で UI を更新します。<code>onProgressUpdate()</code>がどのように適切に実装されているかについては、<a href="https://developer.android.com/reference/android/os/AsyncTask" target="_blank"><code>AsyncTask</code>のドキュメント</a>を参照してください。<code>AsyncTask</code>のクラス定義で、<code>onProgressUpdate()</code>メソッドで使用するデータ型を指定する必要があることを覚えておいてください。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Summary" duration="0">
         <ul>
 <li><a href="http://developer.android.com/reference/android/os/AsyncTask.html" target="_blank"><code>AsyncTask</code>は</a>、集約的な処理を別のスレッドに移す抽象的なJavaクラスです。</li>
 <li><code>AsyncTask</code>を使用するにはサブクラス化する必要があります。</li>
@@ -439,13 +439,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Related concept" duration="0">
         <p>関連する概念のドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-1-c-asynctask-and-asynctaskloader/7-1-c-asynctask-and-asynctaskloader.html" target="_blank">7.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-1-c-asynctask-and-asynctaskloader/7-1-c-asynctask-and-asynctaskloader.html" target="_blank">AsyncTask と AsyncTaskLoader にあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="http://developer.android.com/guide/components/processes-and-threads.html" target="_blank">プロセスとスレッドの概要</a></li>
@@ -464,7 +464,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -513,7 +513,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

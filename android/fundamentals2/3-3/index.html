@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 03.3:</title>
+  <title>Android 開発者基礎講座 03.3: Support libraries</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="3-3"
-                  title="Android 開発者基礎講座 03.3:"
+                  title="Android 開発者基礎講座 03.3: Support libraries"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a> Android Developer Fundamentals (Version 2) コースの一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -72,7 +72,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。アプリ概要" duration="0">
         <p>この実習では、画面上に&#34;Hello World&#34;を表示する1つの<code>TextView</code>と、テキストの色を変更する1つの<code>Button</code>を持つHelloCompatと呼ばれるアプリを作成します。<code>color.xml</code>ファイル内のリソースとして定義されている20の色があり、各ボタンをクリックするたびにランダムにその色のうちの1つが選択されます。</p>
 <p>アプリのリソースから色の値を取得するメソッドは、Android フレームワークのバージョンによって変更されています。この例では、Android サポート ライブラリの <code>ContextCompat</code> クラスを使用しており、すべてのバージョンで動作するメソッドを使用することができます。</p>
 
@@ -402,7 +402,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。ソリューションコード" duration="0">
         <p>メインアクティビティソリューション</p>
 <p><code>以下はMainActivityのchangeColor()クリックハンドラです。</code></p>
 <p><code>/**</code></p>
@@ -429,14 +429,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。アプリが API 23 よりも古いバージョンの Android をサポートするデバイスで実行されている場合、<code>ContextCompat</code> for を使用してカラー リソースを取得するのではなく、<a href="https://developer.android.com/reference/android/os/Build.html" target="_blank"><code>Build</code></a> クラスの値のテストを使用して別の操作を実行します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。要約" duration="0">
         <p>Androidサポートライブラリをインストールします。</p>
 <ul>
 <li>SDK マネージャーを使用して、Android サポート リポジトリをインストールします。ツール] &gt; [Android] &gt; [SDK マネージャー] を選択し、[SDK ツール] タブをクリックして、[サポート リポジトリ] を展開します。</li>
@@ -458,13 +458,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。関連コンセプト" duration="0">
         <p>関連概念のドキュメントは「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-3-c-the-android-support-library/3-3-c-the-android-support-library.html" target="_blank">3.3: Androidサポートライブラリ」</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -487,7 +487,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -537,6 +537,13 @@
 <p>アプリを提出して採点を受ける</p>
 <p>学年別ガイダンス</p>
 <p>この宿題のために提出するアプリはありません。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 
 
       </google-codelab-step>

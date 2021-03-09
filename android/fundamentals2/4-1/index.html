@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.1:</title>
+  <title>Android 開発者基礎講座 04.1: Clickable images</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-1"
-                  title="Android 開発者基礎講座 04.1:"
+                  title="Android 開発者基礎講座 04.1: Clickable images"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -66,7 +66,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。アプリ概要" duration="0">
         <p>この実習では、デザートオーダーアプリを模したBasic Activityテンプレートを使って、新規アプリを作成します。下の図のように、画像をタップすることでアクション（ここではトーストのメッセージを表示）を行うことができます。また、ショッピングカートのボタンをタップして次のアクティビティに進むこともできます。</p>
 
 
@@ -480,7 +480,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: DroidCafe アプリの <code>MainActivity</code> は、<code>OrderActivity</code> と呼ばれる 2 番目の <code>Activity</code> を起動します。アクティビティから別のアクティビティにデータを送信する方法を別のレッスンで学びました。<code>MainActivity</code>で選択したデザートの注文メッセージを<code>OrderActivity</code>レイアウトの上部にある新しい<code>TextView</code>に送信するようにアプリを変更します。</p>
 <ol type="1" start="1">
@@ -521,7 +521,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。要約" duration="0">
         <ul>
 <li>プロジェクトで画像を使用するには、プロジェクトのdrawableフォルダ（<em>project_name </em>&gt; app &gt; src &gt; main &gt; res &gt; drawable）に画像をコピーします。</li>
 <li><code>ImageView</code>を定義して、<code>ImageView</code>をレイアウトにドラッグし、そのImageView用の画像を選択して使用します。</li>
@@ -537,13 +537,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。関連コンセプト" duration="0">
         <p>関連するコンセプトのドキュメントは「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-1-c-buttons-and-clickable-images/4-1-c-buttons-and-clickable-images.html" target="_blank">4.1: ボタンとクリック可能な画像」</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -570,7 +570,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -623,7 +623,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

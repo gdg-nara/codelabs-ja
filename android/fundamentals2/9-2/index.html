@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 09.2:</title>
+  <title>Android 開発者基礎講座 09.2: アプリの設定</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="9-2"
-                  title="Android 開発者基礎講座 09.2:"
+                  title="Android 開発者基礎講座 09.2: アプリの設定"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -79,7 +79,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>Android Studioには、Settingsでオプションメニューを設定するためのショートカットが用意されています。Basic Activityのテンプレートを使ってスマホやタブレット用のAndroid Studioプロジェクトを開始すると、以下のように新規アプリにSettingsが含まれます。</p>
 <p>また、このテンプレートには右下に封筒のアイコンが付いたフローティングアクションボタンが付いています。このボタンは実用的ではないので無視しても構いません。</p>
 <p>基本アクティビティのテンプレートを使用してAppWithSettingsというアプリを作成し、ユーザーがオンまたはオフにできるトグルスイッチの設定を提供する設定アクティビティを追加します。</p>
@@ -604,7 +604,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。" duration="0">
+      <google-codelab-step label="5。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: DroidCafeWithSettings アプリはタブレットサイズの画面に設定を適切に表示しますが、アプリバーの [アップ] ボタンを押しても、電話サイズの画面の場合のようにユーザーを <code>MainActivity</code> に戻しません。これは、<code>Framment</code>-in <code>SettingsActivity</code>にある3つの<code>onOptionsItemSelected()</code>メソッドが原因です。これは、ユーザーが上ボタンをタップしたときに <code>SettingsActivity</code> を再起動するために以下を使用します。</p>
 <p><code>startActivity(new Intent(getActivity(), SettingsActivity.class).</code></p>
@@ -628,13 +628,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。Challenge solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeWithSettingsChallenge" target="_blank">DroidCafeWithSettingsChallenge</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Summary" duration="0">
         <p>ユーザーは、ナビゲーションドロワーなどのサイドナビゲーションや、アプリバーのオプションメニューで「設定」をタップすることで、アプリの設定に移動することを期待しています。</p>
 <p>アプリのユーザー設定を提供するには、設定用のアクティビティを提供します。</p>
 <ul>
@@ -678,13 +678,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Related concepts" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-9-preferences-and-settings/9-2-c-app-settings/9-2-c-app-settings.html" target="_blank">9.2: アプリの設定</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Learn more" duration="0">
         <p>Android Studio のドキュメントです。<a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio ユーザーガイド</a></p>
 <p>Androidの開発者向けドキュメント。</p>
 <ul>
@@ -707,7 +707,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -763,7 +763,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

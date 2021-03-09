@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 06.1:</title>
+  <title>Android 開発者基礎講座 06.1: Espresso for UI testingEspressoでUIテストをする</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="6-1"
-                  title="Android 開発者基礎講座 06.1:"
+                  title="Android 開発者基礎講座 06.1: Espresso for UI testingEspressoでUIテストをする"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -67,7 +67,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。App overview" duration="0">
         <p>ヒント。Android アプリのテストについては、「<a href="http://d.android.com/tools/testing/testing_android.html" target="_blank">アプリのテスト」を</a>参照してください。</p>
 <p>この実習では、前回のレッスンで使用した<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TwoActivities" target="_blank">TwoActivities</a> プロジェクトを修正します。テスト用のプロジェクトに Espresso を設定し、アプリの機能をテストします。</p>
 <p>TwoActivitiesアプリでは、下の図の左側に示すように、ユーザーはテキストフィールドにテキストを入力し、送信ボタンをタップすることができます。2つ目のアクティビティでは、下の図の右側に示すように、ユーザーは入力したテキストを表示します。</p>
@@ -524,7 +524,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code></a>の作成方法は別の実践で学びましたね。このアプリでは、「単語1」から「単語19」までの単語のリストをスクロールさせることができます。<code>FloatingActionButton</code>をタップすると、リストの中に新しい単語が表示されます（「＋単語20」）。</p>
 <p>アダプタビュー（スピナーなど）と同様に、 <code>RecyclerView</code> は実行時に子ビュー要素を動的に生成します。しかし、 <code>RecyclerView</code> はアダプタビューではないので、先ほどのスピナーでのタスクのように <code>onData()</code> を使ってリスト項目を操作することはできません。Espresso の観点から <code>RecyclerView</code> を複雑にしているのは、画面の外にある子ビューを <code>onView()</code> で見つけることができないことです。</p>
@@ -536,7 +536,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。Summary" duration="0">
         <p>Android StudioプロジェクトをテストするためにEspressoを設定する。</p>
 <ul>
 <li>Android Studioで、Androidサポートリポジトリを確認してインストールします。</li>
@@ -578,13 +578,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-6-testing-your-ui/6-1-c-ui-testing/6-1-c-ui-testing.html" target="_blank">6.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-6-testing-your-ui/6-1-c-ui-testing/6-1-c-ui-testing.html" target="_blank">UIテストにあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Learn more" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="http://d.android.com/tools/testing/testing_android.html" target="_blank">アプリのテスト</a></li>
@@ -620,7 +620,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -664,6 +664,13 @@
 <li>テストでは、アプリを昼間のモードから夜のモードに自動で切り替え、昼間のモードに戻してくれます。</li>
 <li>試験は複数回合格しています。</li>
 </ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="12。Next codelab" duration="0">
+        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
+<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 
 
       </google-codelab-step>

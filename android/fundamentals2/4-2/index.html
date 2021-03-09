@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.2:</title>
+  <title>Android 開発者基礎講座 04.2: Input controls</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-2"
-                  title="Android 開発者基礎講座 04.2:"
+                  title="Android 開発者基礎講座 04.2: Input controls"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank"> Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -69,7 +69,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。アプリ概要" duration="0">
         <p>この実習では、クリッカブル画像の使い方のレッスンからDroidCafeアプリに機能を追加していきます。</p>
 <p>アプリの<code>OrderActivity</code>では、<a href="https://developer.android.com/reference/android/widget/EditText.html" target="_blank"><code>EditText</code></a>要素の<a href="https://developer.android.com/reference/android/widget/TextView.html#attr_android:inputType" target="_blank"><code>android:inputType</code></a>属性を使って実験しています。人の名前と住所のための<code>EditText</code>要素を追加し、テキストを入力するときに提案を行う1行と複数行の要素を定義するために属性を使用します。また、電話番号を入力するためのテンキーを表示する<code>EditText</code>を追加します。</p>
 <p>他のタイプの入力コントロールには、ユーザーに選択肢を提供するインタラクティブな要素があります。DroidCafeにラジオボタンを追加して、複数のオプションから1つの配送オプションだけを選択できるようにします。また、電話番号のラベル（自宅、仕事、その他、カスタム）を選択するためのスピナー入力コントロールも提供しています。</p>
@@ -583,7 +583,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。" duration="0">
+      <google-codelab-step label="5。コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: DroidCafeInput アプリの配送選択用のラジオボタンが最初に非選択状態で表示され、デフォルトの配送選択がないことを意味します。ラジオボタンが最初に表示されたときに、そのうちの 1 つ (例えば <code>nextday</code>) がデフォルトとして選択されるように、ラジオボタンを変更します。</p>
 <p>ヒント: このタスクはレイアウトファイルの中で完全に行うことができます。別の方法として、アクティビティが最初に表示されたときにラジオボタンの1つを選択するコードを<code>OrderActivity</code>に書くことができます。</p>
@@ -710,7 +710,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。コーディングチャレンジ2" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題:電話番号をダイヤルするためのように、送信キーをタップしてキーボードから直接アクションを実行するコードを書きます。</p>
 <p>上の図では</p>
@@ -768,7 +768,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。概要" duration="0">
         <p>以下の<code>android:inputType</code>属性値は、オンスクリーンキーボードの外観に影響を与えます。</p>
 <ul>
 <li><code>textAutoCorrect</code>: <code>スペルの修正を提案します。</code></li>
@@ -798,13 +798,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。関連コンセプト" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-2-c-input-controls/4-2-c-input-controls.html" target="_blank">4.2: 入力コントロールにあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -831,7 +831,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。" duration="0">
+      <google-codelab-step label="11。宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>

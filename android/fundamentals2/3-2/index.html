@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 03.2:</title>
+  <title>Android 開発者基礎講座 03.2: Unit tests</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="3-2"
-                  title="Android 開発者基礎講座 03.2:"
+                  title="Android 開発者基礎講座 03.2: Unit tests"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。" duration="0">
+      <google-codelab-step label="1。ようこそ" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a> Android Developer Fundamentals (Version 2) コースの一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -63,7 +63,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。" duration="0">
+      <google-codelab-step label="2。アプリ概要" duration="0">
         <p>この実習では、前回の実習コードラボ(<a href="https://developer.android.com/codelabs/android-training-using-debugger" target="_blank">Androidの基礎3.1: デバッガ</a>)にあった<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>アプリを使用しています。そのアプリをそのまま修正してもいいですし、プロジェクトフォルダのコピーを取ってから進めてもいいでしょう。</p>
 
 
@@ -252,7 +252,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。" duration="0">
+      <google-codelab-step label="5。コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>チャレンジ1.ゼロで割ることは、算数の特殊なケースであるため、常にテストする価値があります。ゼロによる除算をより優雅に処理できるようにアプリを変更するにはどうしたらよいでしょうか?この課題を達成するには、正しい動作を示すテストから始めます。</p>
 <p><code>CalculatorTest</code> から <code>divTwoNumbersZero()</code> メソッドを削除し、<code>divByZeroThrows()</code> という新しいユニット テストを追加します。このテストはパスし、その結果、ゼロによる除算がこの例外になることを示します。</p>
@@ -262,7 +262,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。" duration="0">
+      <google-codelab-step label="6。要約" duration="0">
         <p>Android Studioには、ローカルのユニットテストを実行するための機能が組み込まれています。</p>
 <ul>
 <li>ローカルのユニットテストは、ローカルマシンの JVM を使用します。Android フレームワークは使用しません。</li>
@@ -279,13 +279,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。" duration="0">
+      <google-codelab-step label="7。関連コンセプト" duration="0">
         <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-2-c-app-testing/3-2-c-app-testing.html" target="_blank">3.2: アプリのテスト</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。" duration="0">
+      <google-codelab-step label="8。詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -313,7 +313,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。" duration="0">
+      <google-codelab-step label="9。宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -376,7 +376,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。" duration="0">
+      <google-codelab-step label="10。Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 
