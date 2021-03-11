@@ -6,7 +6,7 @@ Google Codelabs のリソースを GDG のチャプターがイベントで利�
 
 [Codelabs for Android Developer Fundamentals (準備中)](https://gdg-nara.github.io/codelabs-ja/android/fundamentals2/)
 
-## 更新方法
+## サイトの更新方法
 
 gh-pages ブランチに build したサイトを push します。
 
@@ -16,6 +16,20 @@ $ git fetch origin gh-pages
 $ git checkout gh-pages
 $ ./build_fundamentals.sh
 $ git push -u origin gh-pages
+```
+
+## 補足
+
+**gh-pages ブランチの更新方法
+
+```
+$ git branch
+　* gh-pages
+  　master
+$ git checkout master
+$ git pull
+$ git checkout gh-pages
+$ git merge master
 ```
 
 ## ライセンス
