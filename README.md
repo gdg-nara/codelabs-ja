@@ -8,28 +8,11 @@ Google Codelabs のリソースを GDG のチャプターがイベントで利�
 
 ## サイトの更新方法
 
-gh-pages ブランチに build したサイトを push します。
+プロジェクト直下にある `build_fundamentals.sh` を実行してください。
 
 ```
-$ git clone git@github.com:gdg-nara/codelabs-ja.git
-$ git fetch origin gh-pages
-$ git checkout gh-pages
+$ chmod 777 build_fundamentals.sh
 $ ./build_fundamentals.sh
-$ git push -u origin gh-pages
-```
-
-## 補足
-
-**gh-pages ブランチの更新方法**
-
-```
-$ git branch
-　* gh-pages
-  　master
-$ git checkout master
-$ git pull
-$ git checkout gh-pages
-$ git merge master
 ```
 
 ## ライセンス
