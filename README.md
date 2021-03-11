@@ -20,7 +20,7 @@ $ git push -u origin gh-pages
 
 ## 補足
 
-**gh-pages ブランチの更新方法
+**gh-pages ブランチの更新方法**
 
 ```
 $ git branch
