@@ -1,7 +1,6 @@
 #!/bin/zsh
 
-# gh-pages を初期化
-git push --delete origin gh-pages
+# local の gh-pages を初期化
 git branch -D gh-pages
 git checkout -b gh-pages
 
@@ -69,6 +68,9 @@ claat export 1SBYXrGO-oNuMypOA1yUsEwJRKPui8LFPKOL8itlw-7Q
 claat export 1LVC90OODzFzMU9xoJkfSyOqgUbzF9NADY3u2h0ZHm8E
 
 cd ../../
+
+# remote のgh-pages ブランチを削除
+git push --delete origin gh-pages
 
 # gh-pages ブランチに push
 commitTime=`date +%Y_%m%d_%H:%M`
