@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+git checkout gh-pages
+
 # Android fundamentals
 cd ./android/fundamentals2
 # 1-1
@@ -65,10 +67,12 @@ claat export 1LVC90OODzFzMU9xoJkfSyOqgUbzF9NADY3u2h0ZHm8E
 
 cd ../../
 
-# push
-#commitTime=`date +%Y_%m%d_%H:%M`
-#commitMessage="updated: ${commitTime}"
-#git add .
-#git commit -m ${commitMessage}
-#git push -u origin master
-#echo ${commitMessage}
+# gh-pages ブランチに push
+commitTime=`date +%Y_%m%d_%H:%M`
+commitMessage="updated: ${commitTime}"
+git add .
+git commit -m ${commitMessage}
+git push -u origin gh-pages
+echo ${commitMessage}
+
+git checkout master
