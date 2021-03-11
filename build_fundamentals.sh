@@ -1,6 +1,9 @@
 #!/bin/zsh
 
-git checkout gh-pages
+# gh-pages を初期化
+git push --delete origin gh-pages
+git branch -D gh-pages
+git checkout -b gh-pages
 
 # Android fundamentals
 cd ./android/fundamentals2
