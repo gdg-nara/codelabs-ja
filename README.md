@@ -11,8 +11,7 @@ Google Codelabs のリソースを GDG のチャプターがイベントで利�
 プロジェクト直下にある `build_fundamentals.sh` を実行してください。
 
 ```
-$ chmod 777 build_fundamentals.sh
-$ ./build_fundamentals.sh
+./build_fundamentals.sh
 ```
 
 ## ライセンス
