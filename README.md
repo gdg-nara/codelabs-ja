@@ -6,7 +6,7 @@ Google Codelabs のリソースを GDG のチャプターがイベントで利�
 
 [Codelabs for Android Developer Fundamentals (準備中)](https://gdg-nara.github.io/codelabs-ja/android/fundamentals2/)
 
-[Flutter 関連 (準備中)](./flutter/)
+[Flutter 関連 (準備中)](https://gdg-nara.github.io/codelabs-ja/flutter/)
 
 
 ## サイトの更新方法
