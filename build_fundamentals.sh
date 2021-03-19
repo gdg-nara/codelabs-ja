@@ -1,7 +1,6 @@
 #!/bin/zsh
 
-# local の gh-pages を初期化
-git branch -D gh-pages
+# local に gh-pages を作成
 git checkout -b gh-pages
 
 # Android fundamentals
@@ -69,6 +68,14 @@ claat export 1LVC90OODzFzMU9xoJkfSyOqgUbzF9NADY3u2h0ZHm8E
 
 cd ../../
 
+# Flutter
+cd ./flutter
+# Write your first Flutter app, part 1
+claat export 1DJcQdQzjzqtgV1-IxfDIRAa3Gijq8JMdZBVZuu-CUWU
+# Write your first Flutter app, part 2
+claat export 1vNptLrYEc-w3e65mnitX9KLkx_hQAjkLt1ugoCisoAE
+cd ../
+
 # remote のgh-pages ブランチを削除
 git push --delete origin gh-pages
 
@@ -81,3 +88,4 @@ git push -u origin gh-pages
 echo ${commitMessage}
 
 git checkout master
+git branch -D gh-pages
