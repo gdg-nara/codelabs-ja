@@ -11,10 +11,10 @@ Google Codelabs のリソースを GDG のチャプターがイベントで利�
 
 ## サイトの更新方法
 
-プロジェクト直下にある `build_fundamentals.sh` を実行してください。
+プロジェクト直下にある `build.sh` を実行してください。
 
 ```
-./build_fundamentals.sh
+./build.sh
 ```
 
 ## ライセンス
