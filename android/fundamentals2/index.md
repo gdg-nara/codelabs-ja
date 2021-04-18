@@ -10,7 +10,7 @@
 
 [1.2 パートB: レイアウトエディタ](./1-2b/)
 
-[1.3: テキスト表示とスクロール表示](./1-3/)
+[1.3: テキスト表示とスクロール表示](https://gdg-nara.github.io/codelabs-ja/android/fundamentals2/1-3/index.html)
 
 [1.4: 自分でできるようになる](./1-4/)
 
