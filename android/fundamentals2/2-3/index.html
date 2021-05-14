@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 02.3: Implicit intents</title>
+  <title>Android Developer Fundamentals 02.3: Implicit intents</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,12 +23,12 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="2-3"
-                  title="Android 開発者基礎講座 02.3: Implicit intents"
+                  title="Android Developer Fundamentals 02.3: Implicit intents"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
-        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
+      <google-codelab-step label="Welcome" duration="0">
+        <p><code>この実践的なコードラボは</code><a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank"><code>ユニット 1:</code></a><code>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</code></p>
 <ul>
 <li>コースのコードラボの完全なリストについては、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</li>
 <li>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</li>
@@ -73,14 +73,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2.アプリの概要" duration="0">
+      <google-codelab-step label="アプリの概要" duration="0">
         <p>このセクションでは、1つの<code>アクティビティ</code>とアクションの3つのオプションを持つ新しいアプリを作成します: Webサイトを開く、地図上の場所を開く、テキストのスニペットを共有します。すべてのテキストフィールドは編集可能ですが<code>（EditText</code>）、デフォルト値が含まれています。</p>
-<p class="image-container"><img alt="c107664df46af7f6.png" style="width: 641.76px" src="img/c107664df46af7f6.png"></p>
+<p class="image-container"><img alt="c107664df46af7f6.png" style="width: 239.35px" src="img/c107664df46af7f6.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3。プロジェクトとレイアウトを作成する" duration="0">
+      <google-codelab-step label="プロジェクトとレイアウトを作成する" duration="0">
         <p>この演習では、新しいレイアウトを持つ Implicit Intents という名前の新しいプロジェクトとアプリを作成します。</p>
 <p>1.1 プロジェクトの作成</p>
 <ol type="1" start="1">
@@ -94,65 +94,67 @@
 <ol type="1" start="1">
 <li>Project &gt;Android ペイン で app &gt; res &gt; values &gt; strings.xmlを開き、以下の文字列リソースを追加します。</li>
 </ol>
-<p><code><文字列</code> <code>名="edittext_uri">http://developer.android.com</文字列</code></p>
-<p><code><文字列</code> <code>名="button_uri">ウェブサイトを開く</文字列</code></p>
-<p><code><文字列</code> <code>名="edittext_loc">ゴールデンゲートブリッジ</文字列</code></p>
-<p><code><文字列</code> <code>名="button_loc">開設場所</文字列</code></p>
-<p><code><文字列</code> <code>名="edittext_share">\¶'Twas brillig and the slithy toves.</文字列</code></p>
-<p><code><文字列</code> <code>名="button_share">このテキストを共有する</文字列</code></p>
+<pre><code>&lt;string name=&#34;edittext_uri&#34;&gt;http://developer.android.com&lt;/string&gt;
+&lt;string name=&#34;button_uri&#34;&gt;Open Website&lt;/string&gt;
+
+&lt;string name=&#34;edittext_loc&#34;&gt;Golden Gate Bridge&lt;/string&gt;
+&lt;string name=&#34;button_loc&#34;&gt;Open Location&lt;/string&gt;
+
+&lt;string name=&#34;edittext_share&#34;&gt;\&#39;Twas brillig and the slithy toves&lt;/string&gt;
+&lt;string name=&#34;button_share&#34;&gt;Share This Text&lt;/string&gt;</code></pre>
 <ol type="1" start="2">
 <li>プロジェクト &gt; Android ペイン で res &gt; layout &gt; activity_main.xmlを開きます。テキストタブをクリックしてXMLコードに切り替えます。</li>
 <li>前回の実践で学んだように、<code>android.support.constraint.ConstraintLayout</code>を<code>LinearLayout</code>に変更します。</li>
 <li>android<code>:orientation</code>属性に値<code>"vertical"</code>を追加します。android:<code>padding</code>属性に値<code>"16dp"</code>を追加します。</li>
 </ol>
-<p><code><LinearLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>アンドロイド:オリエンテーション="たて</code></p>
-<p><code>アンドロイド:パディング="16dp"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.implicitintents.MainActivity"></code></p>
+<pre><code>&lt;LinearLayout xmlns:android=&#34;httgp://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    android:orientation=&#34;vertical&#34;
+    android:padding=&#34;16dp&#34;
+    tools:context=&#34;com.example.android.implicitintents.MainActivity&#34;&gt;</code></pre>
 <ol type="1" start="5">
-<li>Hello World」と表示している<code>TextView</code>を削除します。</li>
+<li>「Hello World」と表示している<code>TextView</code>を削除します。</li>
 <li>ウェブサイトを開くボタンのレイアウトにUI要素のセットを追加します。<code>EditText</code>要素と<code>Button</code>要素が必要です。これらの属性値を使用します。</li>
 </ol>
 <table>
 <tr><td colspan="1" rowspan="1"><p>EditText属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/website_edittext"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:レイアウトの幅</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_width</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"match_parent"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:レイアウトの高さ</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"ラップコンテンツ"</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"wrap_content"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキスト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@string/edittext_uri"</code></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>ボタン属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/open_website_button"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:レイアウトの幅</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"ラップコンテンツ"</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_width</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"wrap_content"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:レイアウトの高さ</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"ラップコンテンツ"</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"wrap_content"</code></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p><code>android:layout_marginBottom</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"24dp"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキスト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@string/button_uri"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:オンクリック</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"オープンサイト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:onClick</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"openWebsite"</code></p>
 </td></tr>
 </table>
 <p><code>android:onClick</code>属性の値は、後続のタスクでコールバック・メソッドを定義するまで、赤で下線が引かれたままになります。</p>
@@ -163,23 +165,23 @@
 <tr><td colspan="1" rowspan="1"><p>EditText属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/location_edittext"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキスト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@string/edittext_loc"</code></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>ボタン属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/open_location_button"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキスト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@string/button_loc"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:オンクリック</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"オープンロケーション"</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:onClick</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"openLocation"</code></p>
 </td></tr>
 </table>
 <p><code>android:onClick</code>属性の値は、後続のタスクでコールバック・メソッドを定義するまで赤で下線が引かれたままになります。</p>
@@ -190,76 +192,83 @@
 <tr><td colspan="1" rowspan="1"><p>EditText属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/share_edittext"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキスト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@string/edittext_share"</code></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>ボタン属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/share_text_button"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキスト</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@string/button_share"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:オンクリック</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"シェアテキスト"</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:onClick</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"shareText"</code></p>
 </td></tr>
 </table>
 <p>Android Studioのバージョンにもよりますが、<code>activity_main.xmlの</code>コードは以下のようになっているはずです。<code>android:onClick</code>属性の値は、後続のタスクでコールバック・メソッドを定義するまで赤で下線が引かれたままになります。</p>
-<p><code><LinearLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>アンドロイド:オリエンテーション="たて</code></p>
-<p><code>アンドロイド:パディング="16dp"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.implicitintents.MainActivity"></code></p>
-<p><code><編集テキスト</code></p>
-<p><code>アンドロイド:id="@+id/website_edittext"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:テキスト="@string/edittext_uri"/></code></p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/open_website_button"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="24dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_uri"</code></p>
-<p><code>アンドロイド:オンクリック="オープンサイト/></code></p>
-<p><code><編集テキスト</code></p>
-<p><code>アンドロイド:id="@+id/location_edittext"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:テキスト="@string/edittext_uri"/></code></p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/open_location_button"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="24dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_loc"</code></p>
-<p><code>アンドロイド:オンクリック="オープンロケーション"/></code></p>
-<p><code><編集テキスト</code></p>
-<p><code>アンドロイド:id="@+id/share_edittext"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:テキスト="@string/edittext_share"/></code></p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/share_text_button"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="24dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_share"</code></p>
-<p><code>アンドロイド:オンクリック="シェアテキスト"/></code></p>
-<p><code></LinearLayout> </LinearLayout</code></p>
+<pre><code>&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    android:orientation=&#34;vertical&#34;
+    android:padding=&#34;16dp&#34;
+    tools:context=&#34;com.example.android.implicitintents.MainActivity&#34;&gt;
+
+    &lt;EditText
+        android:id=&#34;@+id/website_edittext&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+         android:text=&#34;@string/edittext_uri&#34;/&gt;
+
+    &lt;Button
+        android:id=&#34;@+id/open_website_button&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+         android:layout_marginBottom=&#34;24dp&#34;
+        android:text=&#34;@string/button_uri&#34;
+        android:onClick=&#34;openWebsite&#34;/&gt;
+
+    &lt;EditText
+        android:id=&#34;@+id/location_edittext&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:text=&#34;@string/edittext_uri&#34;/&gt;
+
+    &lt;Button
+        android:id=&#34;@+id/open_location_button&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;24dp&#34;
+        android:text=&#34;@string/button_loc&#34;
+        android:onClick=&#34;openLocation&#34;/&gt;
+
+    &lt;EditText
+        android:id=&#34;@+id/share_edittext&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:text=&#34;@string/edittext_share&#34;/&gt;
+
+    &lt;Button
+        android:id=&#34;@+id/share_text_button&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;24dp&#34;
+        android:text=&#34;@string/button_share&#34;
+        android:onClick=&#34;shareText&#34;/&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="4。タスク2：ウェブサイトを開くボタンを実装する" duration="0">
+      <google-codelab-step label="タスク2：ウェブサイトを開くボタンを実装する" duration="0">
         <p>このタスクでは、レイアウトの最初のボタン、Open Websiteのためのオンクリックハンドラメソッドを実装します。このアクションは、暗黙のイン<code>テント</code>を使用して、その暗黙のイン<code>テント</code>を処理できる<code>アクティビティ</code>(Web ブラウザなど)に与えられた URI を送信します。</p>
 <p>2.1 openWebsite()の定義</p>
 <ol type="1" start="1">
@@ -267,65 +276,67 @@
 <li><code>Alt+Enter</code>（Macの場合は<code>Option+Enter</code>）を押し、「MainActivity」の中の「Create &#39;openWebsite(View)&#39;」を選択します。</li>
 </ol>
 <p><code>MainActivity</code>ファイルが開き、Android Studioが<code>openWebsite</code>()ハンドラ用のスケルトンメソッドを生成します。</p>
-<p><code>公開されている</code> <code>ボイドオープンサイト(ビューみる) {</code></p>
-<p><code>}</code></p>
+<pre><code>public void openWebsite(View view) {
+}</code></pre>
 <ol type="1" start="3">
 <li><code>MainActivity</code>では、WebサイトURIの<code>EditText</code>オブジェクトを保持するために、クラスの先頭にプライベート変数を追加します。</li>
 </ol>
-<p><code>プライベート</code> <code>編集テキストmWebsiteEditText;</code></p>
+<pre><code>private EditText mWebsiteEditText;</code></pre>
 <ol type="1" start="4">
 <li><code>MainActivityの</code> <code>onCreate()</code>メソッドで、<code>findViewById()を</code>使用して<code>EditText</code>インスタンスへの参照を取得し、そのプライベート変数に代入します。</li>
 </ol>
-<p><code>mWebsiteEditText =ファインドビューバイアイディー(R.偶像.ウェブサイト編集部);</code></p>
+<pre><code>mWebsiteEditText = findViewById(R.id.website_edittext);</code></pre>
 <p>2.2 openWebsite() にコードを追加する</p>
 <ol type="1" start="1">
 <li>新しい<code>openWebsite()</code>メソッドに、<code>EditText</code> の文字列値を取得するステートメントを追加します。</li>
 </ol>
-<p><code>の文字列値を取得するステートメントを追加します。url =mWebsiteEditText.ゲットテキスト().文字列に変換します。();</code></p>
+<pre><code>String url = mWebsiteEditText.getText().toString();</code></pre>
 <ol type="1" start="2">
 <li>その文字列を Uri オブジェクトにエンコードしてパースします。</li>
 </ol>
-<p><code>オブジェクトにエンコードしてパースします。ウェブページ = ウリ.パース(url);</code></p>
+<pre><code>Uri webpage = Uri.parse(url);</code></pre>
 <ol type="1" start="3">
 <li>Intent<code>.ACTION_VIEW</code>をアクション、URIをデータとした新しい<code>Intentを</code>作成します。</li>
 </ol>
-<p><code>を持つ新しいインテントを作成します。意図 = 新しい</code> <code>意図(意図.アクションビュー,ウェブページ);</code></p>
+<pre><code>Intent intent = new Intent(Intent.ACTION_VIEW, webpage);</code></pre>
 <p>この<code>Intent</code>コンストラクタは、明示的な<code>Intent を</code>作成する際に使用したものとは異なります。前のコンストラクタでは、現在のコンテキストと<code>Intent</code> を送信する特定のコンポーネント<code>(Activity</code>クラス) を指定しました。このコンストラクタでは、アクションとそのデータを指定します。アクションは<code>Intent</code>クラスによって定義され、<code>ACTION_VIEW</code>(与えられたデータを表示する)、ACT<code>ION_EDIT</code>(与えられたデータを編集する)、または<code>ACTION_DIAL</code>(電話番号をダイヤルする) を含むことができます。この場合、<code>Webpage</code>変数のURIで指定されたWebページを表示したいので、アクションは<code>ACTION_VIEW</code>になります。</p>
 <ol type="1" start="4">
 <li><code>resolveActivity()</code>メソッドと Android パッケージマネージャを使用して、暗黙の<code>Intent</code> を扱える<code>Activity</code>を探します。リクエストが正常に解決されたことを確認します。</li>
 </ol>
-<p><code>もし (意図.リゾルアクティビティ(ゲットパッケージマネージャ()) != ヌル) {</code></p>
-<p><code>}</code></p>
+<pre><code>if (intent.resolveActivity(getPackageManager()) != null) {
+}</code></pre>
 <p>デバイスにインストールされているアプリの<code>Intent</code>フィルタを使用して、<code>Intent</code>アクションとデータを一致させるこのリクエスト。リクエストを処理できる<code>Activity</code>が少なくとも1つあることを確認するために使用します。</p>
 <ol type="1" start="5">
 <li><code>if</code>文の中で<code>startActivity() を</code>呼び出して<code>Intent</code> を送信します。</li>
 </ol>
-<p><code>startActivity(意図);</code></p>
+<pre><code>startActivity(intent);</code></pre>
 <ol type="1" start="6">
 <li>イン<code>テントが</code>解決できなかった場合に<code>ログ</code>メッセージを表示するための<code>else</code>ブロックを追加します。</li>
 </ol>
-<p><code>} 然もなくば {</code></p>
-<p><code>ログ.d("暗黙のインテント, "これを扱うことはできません！");</code></p>
-<p><code>}</code></p>
+<pre><code>} else {
+   Log.d(&#34;ImplicitIntents&#34;, &#34;Can&#39;t handle this!&#34;);
+}</code></pre>
 <p><code>openWebsite()</code>メソッドは以下のようになるはずです。(わかりやすくするためにコメントを追加しました)</p>
-<p><code>公開されている</code> <code>ボイドオープンサイト(ビューみる) {</code></p>
-<p><code>// URLのテキストを取得します。</code></p>
-<p><code>文字列url =mWebsiteEditText.ゲットテキスト().文字列に変換します。();</code></p>
-<p><code>// URIをパースしてインテントを作成します。</code></p>
-<p><code>Uriウェブページ = ウリ.パース(url);</code></p>
-<p><code>意図意図 = 新しい</code> <code>意図(意図.アクションビュー,ウェブページ);</code></p>
-<p><code>// インテントを渡すアクティビティを見つけて、そのアクティビティを開始します。</code></p>
-<p><code>もし (意図.リゾルアクティビティ(ゲットパッケージマネージャ()) != ヌル) {</code></p>
-<p><code>スタートアクティビティ(意図);</code></p>
-<p><code>然もなくば {</code></p>
-<p><code>ログ.d("暗黙のインテント, "この意図を処理できない！");</code></p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<pre><code>public void openWebsite(View view) {
+   // Get the URL text.
+   String url = mWebsiteEditText.getText().toString();
+
+   // Parse the URI and create the intent.
+   Uri webpage = Uri.parse(url);
+   Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+   // Find an activity to hand the intent and start that activity.
+   if (intent.resolveActivity(getPackageManager()) != null) {
+       startActivity(intent);
+   } else {
+       Log.d(&#34;ImplicitIntents&#34;, &#34;Can&#39;t handle this intent!&#34;);
+   }
+}</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3：位置を開くボタンの実装" duration="0">
+      <google-codelab-step label="タスク3：位置を開くボタンの実装" duration="0">
         <p>このタスクでは、UI の 2 番目のボタン、Open Location 用のオンクリックハンドラメソッドを実装します。このメソッドは<code>openWebsite()</code>メソッドとほぼ同じです。違いは、地図の位置を示すために geo URI を使用することです。緯度と経度を含む geo URI を使用することもできますし、一般的な位置を示すクエリ文字列を使用することもできます。この例では後者を使用しています。</p>
 <p>3.1 openLocation() の定義</p>
 <ol type="1" start="1">
@@ -333,57 +344,59 @@
 <li><code>Alt+Enter</code>（Macの場合は<code>Option+Enter</code>）を押し、MainActivityで「Create &#39;openLocation(View)&#39;」を選択します。</li>
 </ol>
 <p>Android Studioは<code>MainActivity</code>で<code>openLocation</code>()ハンドラ用のスケルトンメソッドを生成します。</p>
-<p><code>公開されている</code> <code>ボイドオープンロケーション(ビューみる) {</code></p>
-<p><code>}</code></p>
+<pre><code>public void openLocation(View view) {
+}</code></pre>
 <ol type="1" start="3">
 <li><code>MainActivityの</code>上部にプライベート変数を追加して、Location URIの<code>EditText</code>オブジェクトを保持します。</li>
 </ol>
-<p><code>プライベート</code> <code>編集テキストmLocationEditText;</code></p>
+<pre><code>private EditText mLocationEditText;</code></pre>
 <ol type="1" start="4">
 <li><code>onCreate()</code>メソッドで<code>findViewByID() を</code>使用して<code>EditText</code>インスタンスへの参照を取得し、そのプライベート変数に代入します。</li>
 </ol>
-<p><code>mLocationEditText =ファインドビューバイアイディー(R.偶像.ロケーションエディットテキスト);</code></p>
+<pre><code>mLocationEditText = findViewById(R.id.location_edittext);</code></pre>
 <p>3.2 openLocation() にコードを追加する</p>
 <ol type="1" start="1">
 <li>新しい<code>openLocation()</code>メソッドに、<code>mLocationEditText</code> <code>EditText</code>の文字列値を取得するステートメントを追加します。</li>
 </ol>
-<p><code>の文字列値を取得するステートメントを追加します。ロコ =mLocationEditText.ゲットテキスト().文字列に変換します。();</code></p>
+<pre><code>String loc = mLocationEditText.getText().toString();</code></pre>
 <ol type="1" start="2">
 <li>その文字列を解析して、ジオ検索クエリを使用して Uri オブジェクトに変換します。</li>
 </ol>
-<p><code>Uriアドレスユリ = ウリ.パース("geo:0,0?q=" +ロコ);</code></p>
+<pre><code>Uri addressUri = Uri.parse(&#34;geo:0,0?q=&#34; + loc);</code></pre>
 <ol type="1" start="3">
 <li>Intent<code>.ACTION_VIEW</code>をアクション、locをデータとして、新しい<code>Intentを</code>作成します。</li>
 </ol>
-<p><code>を使用して、新しいインテントを作成します。意図 = 新しい</code> <code>意図(意図.アクションビュー,アドレスユリ);</code></p>
+<pre><code>Intent intent = new Intent(Intent.ACTION_VIEW, addressUri);</code></pre>
 <ol type="1" start="4">
 <li>イン<code>テント</code>を解決し、インテント<code>が</code>正常に解決されたことを確認します。そうであれば<code>startActivity() を</code>実行し、そうでなければエラーメッセージをログに記録します。</li>
 </ol>
-<p><code>もし (意図.リゾルアクティビティ(ゲットパッケージマネージャ()) != ヌル) {</code></p>
-<p><code>スタートアクティビティ(意図);</code></p>
-<p><code>然もなくば {</code></p>
-<p><code>ログ.d("暗黙のインテント, "この意図を処理できない！");</code></p>
-<p><code>}</code></p>
+<pre><code>if (intent.resolveActivity(getPackageManager()) != null) {
+   startActivity(intent);
+} else {
+   Log.d(&#34;ImplicitIntents&#34;, &#34;Can&#39;t handle this intent!&#34;);
+}</code></pre>
 <p><code>openLocation()</code>メソッドは以下のようになります (わかりやすくするためにコメントを追加しました)。</p>
-<p><code>公開されている</code> <code>ボイドオープンロケーション(ビューみる) {</code></p>
-<p><code>// 位置を示す文字列を取得します。入力は検証されません。</code></p>
-<p><code>// そのままロケーションハンドラに渡されます。</code></p>
-<p><code>文字列ロコ =mLocationEditText.ゲットテキスト().文字列に変換します。();</code></p>
-<p><code>// 場所を解析してインテントを作成します。</code></p>
-<p><code>Uriアドレスユリ = ウリ.パース("geo:0,0?q=" +ロコ);</code></p>
-<p><code>意図意図 = 新しい</code> <code>意図(意図.アクションビュー,アドレスユリ);</code></p>
-<p><code>// インテントを処理するアクティビティを見つけ、そのアクティビティを開始します。</code></p>
-<p><code>もし (意図.リゾルアクティビティ(ゲットパッケージマネージャ()) != ヌル) {</code></p>
-<p><code>スタートアクティビティ(意図);</code></p>
-<p><code>然もなくば {</code></p>
-<p><code>ログ.d("暗黙のインテント, "この意図を処理できない！");</code></p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<pre><code>public void openLocation(View view) {
+   // Get the string indicating a location. Input is not validated; it is
+   // passed to the location handler intact.
+   String loc = mLocationEditText.getText().toString();
+
+   // Parse the location and create the intent.
+   Uri addressUri = Uri.parse(&#34;geo:0,0?q=&#34; + loc);
+   Intent intent = new Intent(Intent.ACTION_VIEW, addressUri);
+
+   // Find an activity to handle the intent, and start that activity.
+   if (intent.resolveActivity(getPackageManager()) != null) {
+       startActivity(intent);
+   } else {
+       Log.d(&#34;ImplicitIntents&#34;, &#34;Can&#39;t handle this intent!&#34;);
+   }
+}</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6.タスク4: このテキストを共有するボタンを実装する" duration="0">
+      <google-codelab-step label="タスク4: このテキストを共有するボタンを実装する" duration="0">
         <p>共有アクションは、ユーザーがアプリ内のアイテムをソーシャルネットワークや他のアプリと簡単に共有する方法です。暗黙のイン<code>テント</code>を使用して独自のアプリで共有アクションを構築することもできますが、Androidでは <a href="http://developer.android.com/reference/android/support/v4/app/ShareCompat.IntentBuilder.html" target="_blank"><code>ShareCompat.IntentBuilder</code></a>ヘルパークラスを使用すると、共有の実装が簡単になります。<code>ShareCompat.IntentBuilder</code>を使用して<code>Intent を</code>作成し、ユーザーに共有先のアプリを選択させるためのセレクタを起動することができます。</p>
 <p>このタスクでは、<code>ShareCompat.IntentBuilder</code>クラスを使用して、テキスト編集でのテキストの共有を実装します。</p>
 <p>4.1 shareText()の定義</p>
@@ -392,34 +405,34 @@
 <li><code>Alt+Enter</code>（Macの場合は<code>Option+Enter</code>）を押して、MainActivityの中の「ShareText(View)を作成」を選択します。</li>
 </ol>
 <p>Android Studioでは、<code>MainActivity</code>で<code>shareText</code>()ハンドラ用のスケルトンメソッドを生成しています。</p>
-<p><code>公開されている</code> <code>ボイドシェアテキスト(ビューみる) {</code></p>
-<p><code>}</code></p>
+<pre><code>public void shareText(View view) {
+}</code></pre>
 <ol type="1" start="3">
 <li><code>MainActivityの</code>上部に<code>EditTextを</code>保持するためのプライベート変数を追加します。</li>
 </ol>
-<p><code>プライベート</code> <code>編集テキストm共有テキスト編集テキスト;</code></p>
+<pre><code>private EditText mShareTextEditText;</code></pre>
 <ol type="1" start="4">
 <li><code>onCreate()</code>では、<code>findViewById()を</code>使用して<code>EditText</code>インスタンスへの参照を取得し、そのプライベート変数に代入します。</li>
 </ol>
-<p><code>mShareTextEditText =ファインドビューバイアイディー(R.偶像.シェアエディットテキスト);</code></p>
+<pre><code>mShareTextEditText = findViewById(R.id.share_edittext);</code></pre>
 <p>4.2 shareText() にコードを追加する</p>
 <ol type="1" start="1">
 <li>新しい<code>shareText()</code>メソッドに、<code>mShareTextEditText</code> <code>EditText</code>の文字列値を取得するステートメントを追加します。</li>
 </ol>
-<p><code>の文字列値を取得するステートメントを追加します。書き出し =m共有テキスト編集テキスト.ゲットテキスト().文字列に変換します。();</code></p>
+<pre><code>String txt = mShareTextEditText.getText().toString();</code></pre>
 <ol type="1" start="2">
 <li>共有するテキストの MIME タイプを定義します。</li>
 </ol>
-<p><code>文字列マイムタイプ = "テキスト/プレーン";</code></p>
+<pre><code>String mimeType = &#34;text/plain&#34;;</code></pre>
 <ol type="1" start="3">
-<li>これらのメソッドを使用してShareComp<code>at.IntentBuilderを</code>呼び出します。</li>
+<li>これらのメソッドを使用して<code>ShareCompat.IntentBuilderを</code>呼び出します。</li>
 </ol>
-<p><code>以下のメソッドを使用してShareCompat.IntentBuilderを呼び出します。.IntentBuilder</code></p>
-<p><code>.から(此れ)</code></p>
-<p><code>.セットタイプ(マイムタイプ)</code></p>
-<p><code>.setChooserTitle("Share this text with.")</code></p>
-<p><code>.セットテキスト(書き出し)</code></p>
-<p><code>.スタートセレクタ();</code></p>
+<pre><code>ShareCompat.IntentBuilder
+           .from(this)
+           .setType(mimeType)
+           .setChooserTitle(&#34;Share this text with: &#34;)
+           .setText(txt)
+           .startChooser();</code></pre>
 <ol type="1" start="4">
 <li><code>.setChoosterTitle</code>の値を文字列リソースに展開します。</li>
 </ol>
@@ -428,7 +441,7 @@
 <tr><td colspan="1" rowspan="1"><p>メソッド</p>
 </td><td colspan="1" rowspan="1"><p>説明</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>から</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>from()</code></p>
 </td><td colspan="1" rowspan="1"><p>この<code>シェアインテント(this</code>)を起動する<code>アクティビティ</code>。</p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p><code>setType()</code></p>
@@ -446,23 +459,23 @@
 </table>
 <p>この形式は、ビルダーのすべてのセッターメソッドを 1 つのステートメントにまとめたもので、簡単に<code>Intent</code> を作成して起動することができます。このリストに追加のメソッドを追加することができます。</p>
 <p><code>shareText()</code>メソッドは、以下のようになるはずです。</p>
-<p><code>public</code> <code>ボイドシェアテキスト(ビューみる) {</code></p>
-<p><code>ひもじ書き出し =m共有テキスト編集テキスト.ゲットテキスト().文字列に変換します。();</code></p>
-<p><code>文字列マイムタイプ = "テキスト/プレーン";</code></p>
-<p><code>共有互換性.IntentBuilder</code></p>
-<p><code>.から(此れ)</code></p>
-<p><code>.セットタイプ(マイムタイプ)</code></p>
-<p><code>.setChooserTitle(R.文字列.テキストを共有する)</code></p>
-<p><code>.セットテキスト(書き出し)</code></p>
-<p><code>.スタートセレクタ();</code></p>
-<p><code>}</code></p>
-<p class="image-container"><img alt="c107664df46af7f6.png" style="width: 641.76px" src="img/c107664df46af7f6.png"></p>
+<pre><code>public void shareText(View view) {
+        String txt = mShareTextEditText.getText().toString();
+        String mimeType = &#34;text/plain&#34;;
+        ShareCompat.IntentBuilder
+                        .from(this)
+                        .setType(mimeType)
+                        .setChooserTitle(R.string.share_text_with)
+                        .setText(txt)
+                        .startChooser();
+}</code></pre>
+<p class="image-container"><img alt="c107664df46af7f6.png" style="width: 333.89px" src="img/c107664df46af7f6.png"></p>
 <p>4.3 アプリの実行</p>
 <ol type="1" start="1">
 <li>アプリを起動します。</li>
 <li>ウェブサイトを開く」ボタンをクリックして、<code>ボタンの</code>上の<code>EditText</code>にウェブサイトのURLを入力してブラウザを起動します。ブラウザとWebサイトは以下のように表示されるはずです。</li>
 </ol>
-<p class="image-container"><img alt="Clicking Open Website (left) to launch a browser showing the website (right)" style="width: 641.76px" src="img/f0f0a88aa7f5abdc.png"></p>
+<p class="image-container"><img alt="Clicking Open Website (left) to launch a browser showing the website (right)" style="width: 512.53px" src="img/f0f0a88aa7f5abdc.png"></p>
 <ol type="1" start="3">
 <li>位置情報を開くボタンをクリックすると、<code>ボタンの</code>上の<code>EditText</code>に位置情報が表示された地図が表示されます。位置情報を含む地図が以下のように表示されるはずです。</li>
 </ol>
@@ -477,7 +490,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7.タスク5: 暗黙のインテントの受信" duration="0">
+      <google-codelab-step label="タスク5: 暗黙のインテントの受信" duration="0">
         <p>ここまでで、他のアプリの<code>アクティビティを</code>起動するために暗黙のイン<code>テント</code>を使用するアプリを作成しました。このタスクでは、他のアプリから送信された暗黙のイン<code>テント</code>にアプリ内の<code>アクティビティ</code>が応答することを許可するという問題を逆から見てみましょう。</p>
 <p>アプリ内の<code>アクティビティ</code>は、明示的なイン<code>テント</code>があれば、アプリの内部からでも外部からでも常にアクティブにすることができます。<code>アクティビティ</code>が暗黙のイン<code>テント</code>を受信できるようにするには、アプリの<code>AndroidManifest.xml</code>ファイルにイン<code>テント</code> <em>フィルタを</em>定義して、<code>アクティビティが</code>どのタイプの暗黙のイン<code>テント</code>の処理に興味があるかを示します。</p>
 <p>デバイスにインストールされている特定のアプリとリクエストを一致させるために、Android システムはあなたの暗黙のインテント<code>を</code>、イン<code>テント</code>フィルタがそのアクションを実行できることを示す<code>アクティビティ</code>と一致させます。一致するアプリが複数インストールされている場合、ユーザーには、その<code>Intent</code> を処理するために使用するアプリを選択できるアプリセレクタが表示されます。</p>
@@ -500,14 +513,14 @@
 <tr><td colspan="1" rowspan="1"><p>属性</p>
 </td><td colspan="1" rowspan="1"><p>値</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:id</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
 </td><td colspan="1" rowspan="1"><p><code>"@+id/text_uri_message"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:テキストサイズ</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"18SP</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:textSize</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"18sp"</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>アンドロイド:textStyle</code></p>
-</td><td colspan="1" rowspan="1"><p><code>"大胆</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>android:textStyle</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"bold"</code></p>
 </td></tr>
 </table>
 <p>5.2 AndroidManifest.xmlを修正してIntentフィルタを追加する</p>
@@ -515,18 +528,18 @@
 <li><code>AndroidManifest.xml</code>ファイルを開きます。</li>
 <li><code>MainActivity</code>にはすでにこの<code>Intent</code>-filterがあることに注意してください。</li>
 </ol>
-<p><code><intent-filter></code></p>
-<p><code><アクション</code> <code>アンドロイド名="android.intent.action.MAIN"</code> <code>/></code></p>
-<p><code><カテゴリー</code> <code>アンドロイド名="android.intent.category.launcher"</code> <code>/></code></p>
-<p><code></intent-filter> </intent-filter</code></p>
+<pre><code>&lt;intent-filter&gt;
+   &lt;action android:name=&#34;android.intent.action.MAIN&#34; /&gt;
+   &lt;category android:name=&#34;android.intent.category.LAUNCHER&#34; /&gt;
+&lt;/intent-filter&gt;</code></pre>
 <p>デフォルトのプロジェクトマニフェストの一部であるこの<code>Intent</code>フィルターは、この<code>アクティビティが</code>アプリのメインエントリーポイントであること<code>（"android.intent.action.MAIN"</code>の<code>Intent</code>アクションを持っています）、そしてこの<code>アクティビティが</code>ランチャーのトップレベルアイテムとして表示されるべきであること（そのカテゴリは<code>"android.intent.category.LAUNCHER"</code>です）を示しています。</p>
 <ol type="1" start="3">
 <li>&lt;<code>activity>の</code>中に2つ目の<code><intent-filter>タグを</code>追加し、これらの要素を含みます。</li>
 </ol>
-<p><code><action</code> <code>アンドロイド名="android.intent.action.VIEW"</code> <code>/></code></p>
-<p><code><カテゴリー</code> <code>アンドロイド名="android.intent.category.DEFAULT"</code> <code>/></code></p>
-<p><code><カテゴリー</code> <code>アンドロイド名="android.intent.category.BROWSABLE"</code> <code>/></code></p>
-<p><code><データ</code> <code>アンドロイド:スキーム="http"</code> <code>アンドロイド:ホスト="developer.android.com"</code> <code>/></code></p>
+<pre><code>&lt;action android:name=&#34;android.intent.action.VIEW&#34; /&gt;
+&lt;category android:name=&#34;android.intent.category.DEFAULT&#34; /&gt;
+&lt;category android:name=&#34;android.intent.category.BROWSABLE&#34; /&gt;
+&lt;data android:scheme=&#34;http&#34; android:host=&#34;developer.android.com&#34; /&gt;</code></pre>
 <p>これらの行は、<code>アクティビティ</code>のための<code>Intent</code>フィルタを定義します。この<code>Intent</code>フィルタはこれらの要素を宣言します。</p>
 <table>
 <tr><td colspan="1" rowspan="1"><p>フィルタのタイプ</p>
@@ -553,66 +566,69 @@
 </table>
 <p><a href="https://developer.android.com/guide/topics/manifest/data-element.html" target="_blank">データ</a>フィルタは受け入れるリンクの種類と、それらの URI のホスト名の両方に制限があることに注意してください。受信機がリンクを受け付けることを希望する場合は、<code><data></code>要素を省略することができます。</p>
 <p><code>AndroidManifest.xml</code>の<code>application</code>セクションは以下のようになるはずです。</p>
-<p><code><アプリケーション</code></p>
-<p><code>アンドロイド:allowBackup="真</code></p>
-<p><code>アンドロイド:アイコン="@mipmap/ic_launcher"</code></p>
-<p><code>アンドロイド:ラベル="@string/app_name"</code></p>
-<p><code>android:roundIcon="@mipmap/ic_launcher_round"</code></p>
-<p><code>アンドロイド:サポートRtl="真</code></p>
-<p><code>アンドロイド:テーマ="@style/AppTheme"></code></p>
-<p><code><活動</code> <code>アンドロイド名=".MainActivity"></code></p>
-<p><code><intent-filter></code></p>
-<p><code><アクション</code> <code>アンドロイド名="android.intent.action.MAIN"</code> <code>/></code></p>
-<p><code><カテゴリー</code> <code>アンドロイド名="android.intent.category.launcher"</code> <code>/></code></p>
-<p><code></intent-filter> </intent-filter</code></p>
-<p><code><intent-filter></code></p>
-<p><code><アクション</code> <code>アンドロイド名="android.intent.action.VIEW"</code> <code>/></code></p>
-<p><code><カテゴリー</code> <code>アンドロイド名="android.intent.category.DEFAULT"</code> <code>/></code></p>
-<p><code><カテゴリー</code> <code>アンドロイド名="android.intent.category.BROWSABLE"</code> <code>/></code></p>
-<p><code><データ</code> <code>アンドロイド:スキーム="http"</code></p>
-<p><code>アンドロイド:ホスト="developer.android.com"</code> <code>/></code></p>
-<p><code></intent-filter> </intent-filter</code></p>
-<p><code></activity></code></p>
-<p><code></アプリケーション</code></p>
+<pre><code>&lt;application
+    android:allowBackup=&#34;true&#34;
+    android:icon=&#34;@mipmap/ic_launcher&#34;
+    android:label=&#34;@string/app_name&#34;
+    android:roundIcon=&#34;@mipmap/ic_launcher_round&#34;
+    android:supportsRtl=&#34;true&#34;
+    android:theme=&#34;@style/AppTheme&#34;&gt;
+    &lt;activity android:name=&#34;.MainActivity&#34;&gt;
+        &lt;intent-filter&gt;
+            &lt;action android:name=&#34;android.intent.action.MAIN&#34; /&gt;
+            &lt;category android:name=&#34;android.intent.category.LAUNCHER&#34; /&gt;
+        &lt;/intent-filter&gt;
+
+        &lt;intent-filter&gt;
+            &lt;action android:name=&#34;android.intent.action.VIEW&#34; /&gt;
+            &lt;category android:name=&#34;android.intent.category.DEFAULT&#34; /&gt;
+            &lt;category android:name=&#34;android.intent.category.BROWSABLE&#34; /&gt;
+            &lt;data android:scheme=&#34;http&#34; 
+                                android:host=&#34;developer.android.com&#34; /&gt;
+        &lt;/intent-filter&gt;
+    &lt;/activity&gt;
+&lt;/application&gt;</code></pre>
 <p>5.3 インテントの処理</p>
 <p><code>アクティビティの</code> <code>onCreate()</code>メソッドで、入力された<code>Intent</code>に含まれるデータや余分なものを処理します。この場合、入力される暗黙の<code>Intent</code>には、<code>Intent</code>データに格納されている URI があります。</p>
 <ol type="1" start="1">
 <li>MainActivity を開きます。</li>
 <li><code>onCreate(</code>) メソッドで、<code>アクティビティ</code>のアクティブ化に使用された受信<code>Intent</code>を取得します。</li>
 </ol>
-<p><code>Intent意図 =ゲットインテント();</code></p>
+<pre><code>Intent intent = getIntent();</code></pre>
 <ol type="1" start="3">
 <li><code>Intent</code>データを取得します。<code>Intent</code>データは常にURIオブジェクトです。</li>
 </ol>
-<p><code>オブジェクトです。ユリ =意図.ゲットデータ();</code></p>
+<pre><code>Uri uri = intent.getData();</code></pre>
 <ol type="1" start="4">
 <li><code>uri</code>変数が<code>null</code>でないことを確認します。そのチェックが通過した場合、そのURIオブジェクトから文字列を作成します。</li>
 </ol>
-<p><code>もし (ユリ != ヌル) {</code></p>
-<p><code>ひもじuri_string = "URI: " +ユリ.toString();</code></p>
-<p><code>}</code></p>
+<pre><code>if (uri != null) {
+   String uri_string = &#34;URI: &#34; + uri.toString();
+}</code></pre>
 <ol type="1" start="5">
 <li>上記の<code>"URI: "</code>部分を文字列リソース<code>(uri_label</code>)に展開します。</li>
 <li>同じ<code>if</code>ブロック内で、メッセージの<code>TextViewを</code>取得します。</li>
 </ol>
-<p><code>テキストビューテキストビュー =ファインドビューバイアイディー(R.偶像.テキスト百合メッセージ);</code></p>
+<pre><code>TextView textView = findViewById(R.id.text_uri_message);</code></pre>
 <ol type="1" start="7">
 <li>また、<code>if</code>ブロック内で、その<code>テキストビュー</code>のテキストをURIに設定します。</li>
 </ol>
-<p><code>に設定します。.セットテキスト(uri_string);</code></p>
+<pre><code>textView.setText(uri_string);</code></pre>
 <p><code>MainActivity</code>の<code>onCreate()</code>メソッドは以下のようになります。</p>
-<p><code>メソッドは次のようになるはずです。</code></p>
-<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
-<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
-<p><code>セットコンテンツビュー(R.割り付け.アクティビティメイン);</code></p>
-<p><code>意図意図 =ゲットインテント();</code></p>
-<p><code>ユリユリ =意図.ゲットデータ();</code></p>
-<p><code>もし (ユリ != ヌル) {</code></p>
-<p><code>ひもじuri_string =取得文字列(R.文字列.uri_label)</code></p>
-<p><code>+ユリ.toString();</code></p>
-<p><code>テキストビューテキストビュー =ファインドビューバイアイディー(R.偶像.テキスト百合メッセージ);</code></p>
-<p><code>テキストビュー.セットテキスト(uri_string);</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+        if (uri != null) {
+            String uri_string = getString(R.string.uri_label)
+                   + uri.toString();
+            TextView textView = findViewById(R.id.text_uri_message);
+            textView.setText(uri_string);
+        }
+}</code></pre>
 <p>5.4 両方のアプリを実行する</p>
 <p>暗黙のイン<code>テント</code>を受信した結果を表示するには、エミュレータまたはデバイス上で Implicit Intents Receiver アプリと Implicit Intents アプリの両方を実行します。</p>
 <ol type="1" start="1">
@@ -623,7 +639,7 @@
 <li>Implicit Intentsアプリを実行し、デフォルトのURIでWebサイトを開くをクリックします。</li>
 </ol>
 <p>アプリの選択画面が表示され、デフォルトのブラウザ（下の図ではChrome）を使用するか、Implicit Intents Receiverアプリを使用するかを尋ねてきます。Implicit Intents Receiver を選択し、Just Once をクリックします。Implicit Intents Receiver アプリが起動し、メッセージには元のリクエストの URI が表示されます。</p>
-<p class="image-container"><img alt="Choosing the browser for the implicit Intent" style="width: 641.76px" src="img/89b11282a092d7e2.png"></p>
+<p class="image-container"><img alt="Choosing the browser for the implicit Intent" style="width: 404.10px" src="img/89b11282a092d7e2.png"></p>
 <ol type="1" start="3">
 <li>戻る ボタンをタップして、別の URI を入力します。ウェブサイトを開くをクリックします。</li>
 </ol>
@@ -634,14 +650,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注意:すべてのコーディングチャレンジは任意であり、後のレッスンの前提条件ではありません。</p>
-<p>課題:以前の実践的な課題では、リストを表示する<code>アクティビティ</code>と、アイテムを選択する別の<code>アクティビティを</code>持つショッピングリストアプリビルダーを作成しました。買い物リストの<code>アクティビティ</code>に<code>EditText</code>と<code>Button</code>を追加して、地図上で特定のお店を見つけることができます。</p>
+<p>課題:以前の実践的な課題では、リストを表示するアクティビティと、アイテムを選択する別のアクティビティを持つショッピングリストアプリビルダーを作成しました。買い物リストのアクティビティにEditTextとButtonを追加して、地図上で特定のお店を見つけることができます。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。概要" duration="0">
+      <google-codelab-step label="概要" duration="0">
         <ul>
 <li>暗黙のイン<code>テント</code>を使用すると、アクションが分かっていても、そのアクションを処理する特定のアプリや<code>アクティビティ</code>が分からない場合に、<code>アクティビティ</code>をアクティブにすることができます。</li>
 <li>暗黙のインテント<code>を</code>受け取ることができる<code>アクティビティ</code>は、<code>AndroidManifest.xml</code>ファイル内で、1つ以上の<code>インテントアクション</code>とカテゴリにマッチする<code>インテントフィルタ</code>を定義する必要があります。</li>
@@ -652,15 +668,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連する概念のドキュメントは、2<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-3-c-implicit-intents/2-3-c-implicit-intents.html" target="_blank">.3: 暗黙の意図</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Learn more" duration="0">
-        <p>11。</p>
-<p>Androidの開発者向けドキュメント。</p>
+      <google-codelab-step label="Learn more" duration="0">
+        <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="http://developer.android.com/guide/components/fundamentals.html" target="_blank">アプリケーションの基礎</a></li>
 <li><a href="http://developer.android.com/guide/components/activities.html" target="_blank">活動内容</a></li>

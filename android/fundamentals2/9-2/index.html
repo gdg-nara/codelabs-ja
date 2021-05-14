@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 09.2: アプリの設定</title>
+  <title>Android Developer Fundamentals 09.2: アプリの設定</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="9-2"
-                  title="Android 開発者基礎講座 09.2: アプリの設定"
+                  title="Android Developer Fundamentals 09.2: アプリの設定"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -37,6 +37,7 @@
 <p>序章</p>
 <p>アプリには、ユーザーがアプリの機能や動作を変更できるようにする設定が含まれていることがよくあります。たとえば、一部のアプリでは、ユーザーがホームロケーション、測定のデフォルト単位、およびアプリ全体に適用されるその他の設定を設定することができます。ユーザーは一度ホームロケーションなどの設定を変更すると、戻って再度設定を変更する必要がほとんどないため、頻繁に設定にアクセスすることはありません。</p>
 <p>ユーザーは、下図左のようなナビゲーションドロワーや下図右のようなアプリバーのオプションメニューなどのサイドナビゲーションで「設定」をタップすることで、アプリの設定に移動することを想定しています。</p>
+<p class="image-container"><img alt="Navigating to Settings from a Navigation Drawer (left) or Options Menu (right)" style="width: 438.53px" src="img/2277d79849bb6656.png"></p>
 <p>上の図では</p>
 <ol type="1" start="1">
 <li>サイドナビゲーション（ナビゲーションドロワー）での設定</li>
@@ -79,24 +80,30 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>Android Studioには、Settingsでオプションメニューを設定するためのショートカットが用意されています。Basic Activityのテンプレートを使ってスマホやタブレット用のAndroid Studioプロジェクトを開始すると、以下のように新規アプリにSettingsが含まれます。</p>
+<p class="image-container"><img alt="App created from the Basic Activity template " style="width: 228.47px" src="img/6bc200e51bc56286.png"></p>
 <p>また、このテンプレートには右下に封筒のアイコンが付いたフローティングアクションボタンが付いています。このボタンは実用的ではないので無視しても構いません。</p>
 <p>基本アクティビティのテンプレートを使用してAppWithSettingsというアプリを作成し、ユーザーがオンまたはオフにできるトグルスイッチの設定を提供する設定アクティビティを追加します。</p>
+<p class="image-container"><img alt="Tapping Settings to navigate to the Settings Activity " style="width: 641.76px" src="img/3949a6ee63308db8.png"></p>
 <p>設定を読み取り、その値に基づいてアクションを実行するコードを追加します。簡単にするために、設定値の値でトーストメッセージを表示するアクションにします。</p>
 <p>2つ目のタスクでは、前回のレッスンで作成したDroidCafeOptionsUpアプリにAndroid Studioが提供する標準の設定アクティビティテンプレートを追加します。</p>
 <p>設定アクティビティテンプレートには、アプリ用にカスタマイズできる設定があらかじめ用意されており、スマホとタブレット用に異なるレイアウトを提供しています。</p>
 <ul>
 <li>電話」です。下図のように、一般的な設定の場合はGeneralなど、各設定グループのヘッダーリンクが付いたメインの設定画面。</li>
+</ul>
+<p class="image-container"><img alt="The options menu with Settings (left) and the main Settings screen (center) with General settings (right) on a phone" style="width: 641.76px" src="img/d10365e6f52e4b7d.png"></p>
+<ul>
 <li>タブレットの場合。下図のように、左（マスター）側に各グループのヘッダーリンク、右（詳細）側に設定グループを配置したマスター/詳細画面レイアウト。</li>
 </ul>
+<p class="image-container"><img alt="General Settings on a tablet in master/detail screens" style="width: 410.53px" src="img/e1c53b3718084b74.png"></p>
 <p>テンプレートをカスタマイズするには、ヘッダーの変更、タイトルの設定、説明文の設定、設定値の変更を行います。</p>
 <p>DroidCafeOptionsUpアプリは、前回のレッスンで基本アクティビティテンプレートから作成したもので、アプリバーに設定オプションを配置するためのオプションメニューを提供しています。1 つの設定のタイトル、説明、値、デフォルト値を変更することで、付属の設定アクティビティ テンプレートをカスタマイズします。ユーザーが設定を変更した後に設定の値を読み取り、その値を表示するコードを追加します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1.アプリにスイッチ設定を追加する" duration="0">
+      <google-codelab-step label="タスク1.アプリにスイッチ設定を追加する" duration="0">
         <p>このタスクでは、以下のことを行います。</p>
 <ul>
 <li>オプションメニューを提供するBasic Activityテンプレートをベースに、新規プロジェクトを作成します。</li>
@@ -140,12 +147,14 @@
 <ol type="1" start="1">
 <li>アプリを起動し、アプリバーのオーバーフローアイコンをタップすると、下図のようなオプションメニューが表示されます。オプションメニューの項目は「設定」のみです。</li>
 </ol>
+<p class="image-container"><img alt="Tapping the options menu " style="width: 477.08px" src="img/b8cda4bb38c18b38.png"></p>
 <ol type="1" start="1">
 <li>設定を含むXMLファイルを保持するために、新しいリソースディレクトリを作成する必要があります。Project &gt; Androidペインでresディレクトリを選択し、File &gt; New &gt; Android Resource Directoryを選択します。New Resource Directory ダイアログが表示されます。</li>
 <li>リソースの種類」ドロップダウン・メニューで、「xml」を選択します。ディレクトリ名が自動的に<code>xml</code>に変わります。OK］をクリックします。</li>
 <li><code>xml</code>フォルダは、resフォルダ内のProject &gt; Androidペインに表示されます。xmlを選択して、ファイル &gt; 新規作成 &gt; XMLリソースファイルを選択します（または、xmlを右クリックして新規作成 &gt; XMLリソースファイルを選択）。</li>
 <li>ファイル名フィールドにXMLファイルの名前、環境設定を入力し、OKをクリックします。<code>xml</code>フォルダ内に環境設定<code>.xml</code>ファイルが表示され、下図のようにレイアウトエディタが表示されます。</li>
 </ol>
+<p class="image-container"><img alt="Layout editor for preferences.xml" style="width: 550.53px" src="img/820f42836e4532b0.png"></p>
 <p>上の図では</p>
 <ol type="1" start="1">
 <li><code>xml ディレクトリ内の preferences.xml ファイル。</code></li>
@@ -155,6 +164,7 @@
 <ol type="1" start="1">
 <li>下図のように、左側のパレットペインからSwitchPreferenceをレイアウトの上部にドラッグします。</li>
 </ol>
+<p class="image-container"><img alt="Dragging a SwitchPreference into the Layout" style="width: 450.53px" src="img/d5cc4125efdf93c1.png"></p>
 <ol type="1" start="1">
 <li>レイアウトエディタの右側にある「属性」ペインの値を以下のように、下図のように変更します。</li>
 </ol>
@@ -164,16 +174,19 @@
 <li>タイトルを表示します。設定オプション</li>
 <li>要約: このオプションをオンまたはオフにする</li>
 </ul>
+<p class="image-container"><img alt="Dragging a SwitchPreference into the Layout" style="width: 439.67px" src="img/e24fb0b933d623e1.png"></p>
 <ol type="1" start="1">
 <li>レイアウトエディタの下部にある「テキスト」タブをクリックすると、XMLコードが表示されます。</li>
 </ol>
-<p><code><PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"></code></p>
-<p><code><SwitchPreference</code></p>
-<p><code>="true"</code></p>
-<p><code>android:key="example_switch"</code></p>
-<p><code>android:summary="このオプションをオンまたはオフにする"</code></p>
-<p><code>android:title="設定オプション" /></code></p>
-<p><code></PreferenceScreen> </PreferenceScreen</code></p>
+<pre><code>&lt;PreferenceScreen xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&gt;
+
+    &lt;SwitchPreference
+        android:defaultValue=&#34;true&#34;
+        android:key=&#34;example_switch&#34;
+        android:summary=&#34;Turn this option on or off&#34;
+        android:title=&#34;Settings option&#34; /&gt;
+&lt;/PreferenceScreen&gt;
+</code></pre>
 <ol type="1" start="1">
 <li><code>android:titleと</code>and<code>roid:summary属性値の文字列リソースを@string/switch_titleと@string/switch_summaryに抽出します。</code></li>
 </ol>
@@ -185,25 +198,25 @@
 <li><code>android:summary</code>：設定の下にテキストの要約が表示されます。</li>
 </ul>
 <p>1.3 SwitchPreferenceCompatの使用</p>
-<p><code>PreferenceFragmentCompat版のPreferenceFragmentを使用するためには、android.support.v7版のSwitchPreference（SwitchPreferenceCompat）も使用する必要があります。</code></p>
+<pre><code>implementation &#39;com.android.support:preference-v7:26.1.0&#39;</code></pre>
+<p>PreferenceFragmentCompat版のPreferenceFragmentを使用するためには、android.support.v7版のSwitchPreference（SwitchPreferenceCompat）も使用する必要があります。</p>
 <ol type="1" start="1">
 <li>プロジェクト &gt; Android ペインで、Gradle Scripts フォルダ内の build.gradle (Module: app) ファイルを開き、依存関係セクションに以下を追加します。</li>
 </ol>
-<p><code>実装 'com.android.support:preference-v7:26.1.0'</code></p>
 <p><code>上記のステートメントでは、PreferenceFragmentCompat版のPreferenceFragmentを使用するために、</code><a href="https://developer.android.com/reference/android/support/v7/preference/package-summary.html" target="_blank"><code>android.support.v7.preference</code></a><code>ライブラリを追加しています。</code></p>
 <ol type="1" start="1">
 <li>xml<code>フォルダ内の</code>preferences.xml<code>ファイルで、コード内の<SwitchPreference>を</code>&lt;<code>android.support.v7.preference.SwitchPreferenceCompat>に変更します。</code></li>
 </ol>
-<p><code><android.support.v7.preference.SwitchPreferenceCompat</code></p>
-<p><code>="true"</code></p>
-<p><code>android:key="example_switch"</code></p>
-<p><code>android:summary="@string/switch_summary"</code></p>
-<p><code>android:title="@string/switch_title" /></code></p>
+<pre><code>&lt;android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue=&#34;true&#34;
+        android:key=&#34;example_switch&#34;
+        android:summary=&#34;@string/switch_summary&#34;
+        android:title=&#34;@string/switch_title&#34; /&gt;</code></pre>
 <p>上の<code>SwitchPreferenceCompat</code>行では警告付きの黄色い電球のアイコンが表示されることがありますが、今のところは無視して大丈夫です。</p>
 <ol type="1" start="1">
 <li>valuesフォルダ内のstyles.xmlファイルを開き、以下の <code>preferenceTheme</code>項目を<code>AppTheme</code>宣言に追加します。</li>
 </ol>
-<p><code><item name="preferenceTheme"> @style/PreferenceThemeOverlay</item</code></p>
+<pre><code>&lt;item name=&#34;preferenceTheme&#34;&gt;@style/PreferenceThemeOverlay&lt;/item&gt;</code></pre>
 <p><code>PreferenceFragmentCompatを使用するためには、アプリのテーマにPreferenceThemeOverlayスタイルでpreferenceThemeも宣言する必要があります。</code></p>
 <p>1.4 設定用のアクティビティを追加する</p>
 <p>設定用の UI を提供する設定アクティビティを作成するには、アプリに Empty Activity を追加します。以下の手順に従ってください。</p>
@@ -225,108 +238,112 @@
 <li>ターゲットソースセットは main に設定する必要があります。</li>
 <li>完了をクリックします。結果は、<code>SettingsFragment</code>で以下のようなクラス定義になりました。</li>
 </ol>
-<p><code>public class SettingsFragment extends Fragment {</code></p>
-<p><code>public SettingsFragment() {</code></p>
-<p><code>//</code> 必要な空のパブリックコンストラクタ</p>
-<p><code>    }</code></p>
-<p>オーバーライド</p>
-<p><code>public View onCreateView(LayoutInflater inflater.</code></p>
-<p><code>ViewGroup container, Bundle savedInstanceState) { { {.</code></p>
-<p><code>TextView textView = new TextView(getActivity().</code></p>
-<p><code>        textView.setText(R. string.hello_blank_fragment)。</code></p>
-<p>返します。</p>
-<p><code>    }</code></p>
-<p><code>}</code></p>
+<pre><code>public class SettingsFragment extends Fragment {
+
+    public SettingsFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, 
+             ViewGroup container, Bundle savedInstanceState) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(R.string.hello_blank_fragment);
+        return textView;
+    }
+}</code></pre>
 <ol type="1" start="1">
 <li><code>SettingsFragment のクラス定義を編集して PreferenceFragmentCompat を拡張します。</code></li>
 </ol>
-<p><code>public class SettingsFragment extends PreferenceFragmentCompat { {.</code></p>
+<pre><code>public class SettingsFragment extends PreferenceFragmentCompat {</code></pre>
 <p>クラスの定義を上記の定義と一致するように変更すると、左マージンに赤い電球が表示されます。赤い電球をクリックして Implement methods を選択し、onCreatePreferences を選択します。Android Studioでは、以下のような<code>onCreatePreferences()</code>スタブが作成されます。</p>
-<p>オーバーライド</p>
-<p><code>public void onCreatePreferences(Bundle)</code></p>
-<p><code>                       savedInstanceState, String rootKey) { { {servedInstanceState, String rootKey</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+public void onCreatePreferences(Bundle 
+                       savedInstanceState, String rootKey) {
+}</code></pre>
 <p><code>Fragment</code>を拡張するために、Android Studioでは以下のようなimport文を追加しています。</p>
-<p><code>import android.support.v7.preference.PreferenceFragmentCompat.</code></p>
+<pre><code>import android.support.v7.preference.PreferenceFragmentCompat;</code></pre>
 <ol type="1" start="1">
 <li>フラグメント内の <code>onCreateView()</code> メソッド全体を削除します。</li>
 </ol>
 <p><code>onCreateView() を onCreatePreferences() に置き換えるのは、別の Fragment 画面を表示するのではなく、この SettingsFragment を既存の SettingsActivity に追加して環境設定を表示するためです。既存のアクティビティに追加することで、アクティビティの実行中にFragmentを追加したり削除したりすることが容易になります。環境設定フラグメントは、rootKey を使って PreferenceScreen にルートされます。</code></p>
 <p><code>Fragment</code>はそれ自体では表示されないので、<code>SettingsFragment</code>からも空のコンストラクタを削除しても問題ありません。</p>
-<p><code>public SettingsFragment() {</code></p>
-<p><code>//</code> 必要な空のパブリックコンストラクタ</p>
-<p><code>}</code></p>
+<pre><code>public SettingsFragment() {
+        // Required empty public constructor
+}</code></pre>
 <ol type="1" start="1">
 <li><code>前のステップで作成した preferences.xml 設定リソースをこのフラグメントに関連付ける必要があります。新しく作成した onCreatePreferences() スタブに、</code>XML <code>ファイル</code> (<code>R.xml.preferences) の</code> id <code>と PreferenceScreen のプリファレンスルートを識別するための rootKey を渡して</code> <a href="https://developer.android.com/reference/android/support/v7/preference/PreferenceFragmentCompat.html#setPreferencesFromResource(int,%2520java.lang.String)" target="_blank"><code>setPreferencesFromResource() の</code></a><code>呼び出しを追加します。</code></li>
 </ol>
+<pre><code>setPreferencesFromResource(R.xml.preferences, rootKey);</code></pre>
 <p><code>setPreferencesFromResource(R.xml.preferences, rootKey)を使用しています。</code></p>
-<p><code>onCreatePreferences() メソッドは次のようになります。</code></p>
-<p>オーバーライド</p>
-<p><code>public void onCreatePreferences(Bundle)</code></p>
-<p><code>                         savedInstanceState, String rootKey) { { {servedInstanceState, String rootKey</code></p>
-<p><code>    setPreferencesFromResource(R.xml.preferences, rootKey)を使用しています。</code></p>
-<p><code>}</code></p>
+<p>onCreatePreferences() メソッドは次のようになります。</p>
+<pre><code>@Override
+public void onCreatePreferences(Bundle 
+                         savedInstanceState, String rootKey) {
+    setPreferencesFromResource(R.xml.preferences, rootKey);
+}</code></pre>
 <p>1.6 SettingsActivityでフラグメントを表示する</p>
 <p><code>SettingsActivityでFragmentを表示するには、以下の手順に従います。</code></p>
 <ol type="1" start="1">
 <li>SettingsActivityを開きます。</li>
 <li>フラグメントがメインコンテンツとして表示されるように、<code>onCreate()</code>メソッドの最後に以下のコードを追加します。</li>
 </ol>
-<p><code>getSupportFragmentManager().beginTransaction()</code></p>
-<p><code>         .replace(android.R.id.content, new SettingsFragment()</code></p>
-<p><code>         .commit() を使用しています。</code></p>
+<pre><code>getSupportFragmentManager().beginTransaction()
+         .replace(android.R.id.content, new SettingsFragment())
+         .commit();</code></pre>
 <p>上のコードは、アクティビティにフラグメントを追加するための典型的なパターンを使用しており、フラグメントがアクティビティのメインコンテンツとして表示されます。</p>
 <ul>
 <li><code>クラスが Activity を継承し、Fragment が PreferenceFragment を継承している場合は</code> <a href="https://developer.android.com/reference/android/app/Fragment.html#getFragmentManager()" target="_blank"><code>getFragmentManager() を</code></a><code>使用します。</code></li>
 <li><code>クラスが AppCompatActivity を継承し、Fragment が PreferenceFragmentCompat を継承している場合は、</code><a href="https://developer.android.com/reference/android/support/v4/app/FragmentActivity.html#getSupportFragmentManager()" target="_blank"><code>getSupportFragmentManager() を</code></a><code>使用します。</code></li>
 </ul>
 <p><code>SettingsActivity の onCreate() メソッド全体が以下のようになるはずです。</code></p>
-<p>オーバーライド</p>
-<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
-<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
-<p><code>        getSupportFragmentManager().beginTransaction()</code></p>
-<p><code>               .replace(android.R.id.content, new SettingsFragment()</code></p>
-<p><code>               .commit() を使用しています。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSupportFragmentManager().beginTransaction()
+               .replace(android.R.id.content, new SettingsFragment())
+               .commit();
+}</code></pre>
 <p>1.7 設定メニュー項目を SettingsActivity に接続します。</p>
 <p>ユーザーがオプションメニューから設定を選択したときに、<code>MainActivity</code>から<code>SettingsActivity</code>を起動するためのイン<a href="https://developer.android.com/reference/android/content/Intent.html" target="_blank">テントを</a>使用します。</p>
 <ol type="1" start="1">
 <li>MainActivity を開き、オプション・メニューの設定のタップを処理する <code>onOptionsItemSelected()</code> メソッドの <code>if</code> ブロックを見つけます。</li>
 </ol>
-<p><code>if (id == R.id.action_settings) { (id == R.id.action_settings)</code></p>
-<p>返します。</p>
-<p><code>}</code></p>
+<pre><code>if (id == R.id.action_settings) {
+   return true;
+}</code></pre>
 <ol type="1" start="1">
 <li><code>SettingsActivityを起動するためのifブロックにIntentを追加します。</code></li>
 </ol>
-<p><code>if (id == R.id.action_settings) { (id == R.id.action_settings)</code></p>
-<p><code>Intent intent = new Intent(this, SettingsActivity.class).</code></p>
-<p><code>startActivity(intent)。</code></p>
-<p>返します。</p>
-<p><code>}</code></p>
+<pre><code>if (id == R.id.action_settings) {
+    Intent intent = new Intent(this, SettingsActivity.class);
+    startActivity(intent);
+    return true;
+}</code></pre>
 <ol type="1" start="1">
 <li><code>SettingsActivity</code>にアプリ・バーのUpナビゲーション・ボタンを追加するには、<code>AndroidManifest.xml</code>ファイル内の宣言を編集して、SettingsActivityの親を<code>MainActivity</code>として定義する必要があります。AndroidManifest.xmlを開き、<code>SettingsActivity</code>の宣言を見つけます。</li>
 </ol>
-<p><code><activity android:name=".SettingsActivity"></activity></code></p>
+<pre><code>&lt;activity android:name=&#34;.SettingsActivity&#34;&gt;&lt;/activity&gt;</code></pre>
 <p>宣言を以下のように変更します。</p>
-<p><code><activity android:name=".SettingsActivity"</code></p>
-<p><code>="設定"</code></p>
-<p><code>=".MainActivity"></code></p>
-<p><code><meta-data</code></p>
-<p><code>android:name="android.support.PARENT_ACTIVITY"</code></p>
-<p><code>=".MainActivity"/></code></p>
-<p><code></活動</code></p>
+<pre><code>&lt;activity android:name=&#34;.SettingsActivity&#34;
+            android:label=&#34;Settings&#34;
+            android:parentActivityName=&#34;.MainActivity&#34;&gt;
+            &lt;meta-data
+                android:name=&#34;android.support.PARENT_ACTIVITY&#34;
+                android:value=&#34;.MainActivity&#34;/&gt;
+&lt;/activity&gt;</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。下図左側のように、オプションメニューのオーバーフローアイコンをタップします。下図中央のように、設定をタップして設定画面を表示します。下図の右側に表示されている設定アクティビティのアプリバーの上ボタンをタップすると、メインアクティビティに戻ります。</li>
 </ol>
+<p class="image-container"><img alt="Tapping Settings to navigate to the Settings Activity " style="width: 442.53px" src="img/3949a6ee63308db8.png"></p>
 <p>1.8 共有環境設定にデフォルト値を保存する</p>
 <p>トグルスイッチ設定のデフォルト値は、すでに<code>android:defaultValue</code>属性に設定されていますが（このタスクのステップ1.2で）、ユーザーが最初にアプリを開いたときに、アプリは各設定のデフォルト値を<code>SharedPreferences</code>ファイルに保存しなければなりません。以下の手順に従って、トグルスイッチのデフォルト値を設定します。</p>
 <ol type="1" start="1">
 <li>MainActivityを開きます。</li>
 <li><code>FloatingActionButtonのコードの後のonCreate()メソッドの最後に以下を追加します。</code></li>
 </ol>
-<p><code>android.support.v7.preference.プリファレンスマネージャ</code></p>
-<p><code>            .setDefaultValues(this, R.xml.preferences, false)。</code></p>
+<pre><code>android.support.v7.preference.PreferenceManager
+            .setDefaultValues(this, R.xml.preferences, false);</code></pre>
 <p>上のコードでは、設定がデフォルト値で適切に初期化されるようにしています。<a href="https://developer.android.com/reference/android/preference/PreferenceManager.html#setDefaultValues(android.content.Context,%2520int,%2520boolean)" target="_blank"><code>PreferenceManager.setDefaultValues()</code></a> メソッドは 3 つの引数を取ります。</p>
 <ul>
 <li>このようなアプリの<a href="https://developer.android.com/reference/android/content/Context.html" target="_blank">コンテキスト</a>。</li>
@@ -340,24 +357,25 @@
 <ol type="1" start="1">
 <li>SettingsActivityを開き、値のキーを保持する静的な<code>String</code>変数を作成します。</li>
 </ol>
-<p>パブリックスタティックファイナルストリングス</p>
-<p><code>            KEY_PREF_EXAMPLE_SWITCH = "example_switch"。</code></p>
+<pre><code>public static final String 
+            KEY_PREF_EXAMPLE_SWITCH = &#34;example_switch&#34;;</code></pre>
 <ol type="1" start="1">
 <li>MainActivityを開き、<code>onCreate()</code>メソッドの最後に以下を追加します。</li>
 </ol>
-<p><code>SharedPreferences sharedPref = </code></p>
-<p><code>           android.support.v7.preference.プリファレンスマネージャ</code></p>
-<p><code>                      .getDefaultSharedPreferences(this)を使用しています。</code></p>
-<p><code>Boolean switchPref = sharedPref.getBoolean</code></p>
-<p><code>           (SettingsActivity.KEY_PREF_EXAMPLE_SWITCH, false)。</code></p>
-<p><code>Toast.makeText(this, switchPref.toString().</code></p>
-<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<pre><code>SharedPreferences sharedPref =   
+           android.support.v7.preference.PreferenceManager
+                      .getDefaultSharedPreferences(this);
+Boolean switchPref = sharedPref.getBoolean
+           (SettingsActivity.KEY_PREF_EXAMPLE_SWITCH, false);
+Toast.makeText(this, switchPref.toString(), 
+           Toast.LENGTH_SHORT).show();</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動して「設定」をタップすると「設定アクティビティ」が表示されます。</li>
 <li>下の図の左側のように、設定をタップするとオンからオフに切り替わります。</li>
 <li>設定アクティビティのUpボタンをタップして<code>MainActivity</code>に戻ります。<code>MainActivity</code>には、下の図の右側に示すように、設定値が表示された状態でトーストメッセージが表示されるはずです。</li>
 <li>これらの手順を繰り返して、設定を変更するとトーストのメッセージが変化します。</li>
 </ol>
+<p class="image-container"><img alt="Changing a setting and showing its new value " style="width: 441.82px" src="img/2e1efb942050d93c.png"> </p>
 <p>上記のコードスニペットでは、以下のように使用しています。</p>
 <ul>
 <li><code>android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this)を使用して、設定をSharedPreferencesオブジェクト</code>(<code>sharedPref</code>)<code>として取得します。</code></li>
@@ -372,16 +390,21 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：設定アクティビティのテンプレートを使用する" duration="0">
+      <google-codelab-step label="タスク2：設定アクティビティのテンプレートを使用する" duration="0">
         <p>複数の設定のサブ画面を構築する必要があり、タブレットサイズの画面を活用するだけでなく、タブレット用のAndroidの古いバージョンとの互換性を維持したい場合、Android Studioには、ショートカットとして「設定アクティビティ」テンプレートが用意されています。</p>
 <p>前のタスクでは、空の設定アクティビティと空のフラグメントを使用して、アプリに設定を追加する方法を学びました。タスク2では、Android Studioに付属の設定アクティビティテンプレートを使用して、アプリに設定を追加する方法を説明します。</p>
 <ul>
 <li>複数の設定をグループに分ける。</li>
 <li>設定とその値をカスタマイズします。</li>
 <li>下図のように、一般的な設定の場合は「General」などのように、設定グループごとにヘッダーリンクを設けたメイン設定画面を表示します。</li>
+</ul>
+<p class="image-container"><img alt="Main Settings screen with headers (left) and General settings (right) on a phone" style="width: 478.13px" src="img/6e098937c8e5cd3c.png"></p>
+<ul>
 <li>下図のように、左（マスタ）側に各グループのヘッダリンク、右（詳細）側に設定グループのヘッダリンクを表示して、マスタ／詳細画面のレイアウトを表示します。</li>
 </ul>
+<p class="image-container"><img alt="General Settings on a tablet in master/detail Screens" style="width: 424.53px" src="img/e1c53b3718084b74.png"></p>
 <p>前回の実習では、基本アクティビティのテンプレートを使って<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeOptionsUp" target="_blank">DroidCafeOptionsUp</a>というアプリを作成しましたが、これは以下のようにアプリバーにオプションメニューを提供します。</p>
+<p class="image-container"><img alt="The options menu in the app bar" style="width: 477.53px" src="img/377b25b1bb7fb8ff.png"> </p>
 <p>上の図の凡例。</p>
 <ol type="1" start="1">
 <li>アプリバー</li>
@@ -398,11 +421,13 @@
 <li>階層的親メニューの最後にある3つのドットをクリックして、表示されるSelect ActivityダイアログでProjectタブをクリックします（下図参照）。</li>
 <li>DroidCafeWithSettings &gt; app &gt; src &gt; main &gt; java &gt; com.example.android.droidcafeinputを展開し、下図のように親アクティビティとしてMainActivityを選択します。OKをクリックします。</li>
 </ol>
+<p class="image-container"><img alt="Choosing the hierarchical parent for the new Activity" style="width: 380.67px" src="img/1d368d5bfecaf352.png"></p>
 <p>親アクティビティとして <code>MainActivity</code> を選択すると、設定アクティビティの Up アプリバーボタンが <code>MainActivity</code> に戻るようになります。親アクティビティを選択すると、<code>AndroidManifest.xml</code>ファイルが自動的に更新され、アップボタンのナビゲーションがサポートされます。</p>
 <ol type="1" start="1">
 <li>終了をクリックしてください。</li>
 <li>プロジェクト &gt; Android ペインで、アプリ &gt; res &gt; xml フォルダを展開して、設定アクティビティ テンプレートによって作成された XML ファイルを確認します。</li>
 </ol>
+<p class="image-container"><img alt="XML files for the Settings Activity" style="width: 299.00px" src="img/b116762c5378c3e2.png"></p>
 <p>XMLファイルを開いて、必要な設定のために追加したり、カスタマイズしたりすることができます。</p>
 <ul>
 <li><code>pref_data_sync.xml。データと同期」設定のためのPreferenceScreenレイアウト。</code></li>
@@ -433,45 +458,48 @@
 <li>プロジェクト &gt; Android ペインで res フォルダを展開し、menu_main.xml ファイルを開きます。テキストタブをクリックしてXMLコードを表示します。</li>
 <li>新しいリソースID <code>action_settings</code>でSettingsと呼ばれる別のメニュー項目を追加します。</li>
 </ol>
-<p><code><</code>項目</p>
-<p><code>android:id="@+id/action_settings"</code></p>
-<p><code>="50"</code></p>
-<p><code>title="設定"</code></p>
-<p><code>="never" /></code></p>
+<pre><code>&lt;item
+    android:id=&#34;@+id/action_settings&#34;
+    android:orderInCategory=&#34;50&#34;
+    android:title=&#34;Settings&#34;
+    app:showAsAction=&#34;never&#34; /&gt;</code></pre>
 <p><code>app:showAsAction</code>属性に<code>"never"</code>を指定すると、設定はオーバーフローオプションメニューにのみ表示され、アプリバー自体には表示されません。<code>android:orderInCategory</code>属性に「<code>50</code>」を指定すると、設定が「お気に入り」（「<code>30</code>」に設定）の下に表示され、「連絡先」（「<code>100</code>」に設定）の上に表示されるようになります。</p>
 <ol type="1" start="1">
 <li><code>android:title</code>属性の「設定」の文字列リソースをリソース名「<code>settings</code>」に抽出します。</li>
 <li>MainActivityを開いて、オプション・メニューのアイテムのタップを処理する<code>onOptionsItemSelected()</code>メソッドの中にあるスイッチ・ケース・ブロックを見つけてください。以下に示すのは、最初のケース (<code>action_order</code>) を示すメソッドのスニペットです。</li>
 </ol>
-<p>オーバーライド</p>
-<p><code>public boolean onOptionsItemSelected(MenuItem item) { { { {.</code></p>
-<p><code>switch (item.getItemId() {)</code></p>
-<p><code>case R.id.action_order.</code></p>
-<p><code>Intent intent = new Intent(MainActivity.</code></p>
-<p><code>.class)</code>を使用しています。</p>
-<p><code>            intent.putExtra(EXTRA_MESSAGE, mOrderMessage)。</code></p>
-<p><code>            startActivity(intent)。</code></p>
-<p>返します。</p>
-<p><code>case R.id.action_status.</code></p>
-<p><code>// action_statusなどのコード...</code></p>
-<p><code>}</code></p>
-<p><code>return super.onOptionsItemSelected(item)。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+        case R.id.action_order:
+            Intent intent = new Intent(MainActivity.this, 
+                            OrderActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, mOrderMessage);
+            startActivity(intent);
+            return true;
+        case R.id.action_status:
+            // Code for action_status and other cases...
+        }
+
+    return super.onOptionsItemSelected(item);
+}</code></pre>
 <ol type="1" start="1">
 <li>上記のコードでは、最初のケースは、<code>OrderActivity</code>を起動するために<code>Intent</code>を使用していることに注意してください。<code>action_settings</code> の新しいケースを、<code>SettingsActivity</code> を起動するための同様の <code>Intent</code> コードを持つスイッチケースブロックに追加します (ただし、<code>intent.putExtra</code> は使用しません)。</li>
 </ol>
-<p><code>case R.id.action_settings.</code></p>
-<p><code>Intent settingsIntent = new Intent(this.</code></p>
-<p><code>.class)</code>を使用しています。</p>
-<p><code>    startActivity(settingsIntent)を使用しています。</code></p>
-<p>返します。</p>
+<pre><code>case R.id.action_settings:
+    Intent settingsIntent = new Intent(this, 
+                            SettingsActivity.class);
+    startActivity(settingsIntent);
+    return true;</code></pre>
 <ol type="1" start="1">
 <li>設定アクティビティのテンプレートが電話の画面サイズをどのように扱うかを確認できるように、電話またはエミュレータを使用してアプリを実行します。</li>
 <li>オプションメニューのオーバーフローアイコンをタップし、「設定」をタップすると、下図左側のように「設定アクティビティ」が表示されます。</li>
 <li>下図中央のように各設定ヘッダー（一般、通知、データ＆シンク）をタップすると、下図右側の「設定画面」の各子画面の設定グループが表示されます。</li>
 <li>設定アクティビティのUpボタンをタップすると<code>MainActivity</code>に戻ります。</li>
 </ol>
+<p class="image-container"><img alt="The options menu with Settings (left), the Settings Activity main screen (center), and General settings (right)" style="width: 559.53px" src="img/d10365e6f52e4b7d.png"></p>
 <p>設定アクティビティのテンプレートコードをそのまま使用しています。スマホやタブレットの画面サイズに合わせたレイアウトを提供するだけでなく、設定変更を聞いて、設定変更を反映させてサマリーを変更する機能を提供します。例えば、「メッセージに友達を追加する」の設定を変更した場合（選択肢は「常に」「可能な場合」「決して」）、設定の下のサマリーには、変更した選択肢が表示されます。</p>
+<p class="image-container"><img alt="The setting summary changes with the new value" style="width: 341.42px" src="img/50b6ef9595ad0911.png"></p>
 <p>一般的に、アプリ内の設定アクティビティをカスタマイズするためには、設定アクティビティのテンプレートコードを変更する必要はありません。テンプレートコードを変更することなく、設定のタイトル、サマリー、可能な値、デフォルト値をカスタマイズしたり、提供されているグループにさらに設定を追加したりすることができます。</p>
 <p>2.3 テンプレートが提供する設定をカスタマイズする</p>
 <p>設定アクティビティテンプレートで提供される設定をカスタマイズするには、<code>strings.xml</code>ファイル内の文字列および文字列配列リソースと、<code>xml</code>ディレクトリ内のファイル内の各設定のレイアウト属性を編集します。</p>
@@ -479,37 +507,42 @@
 <ol type="1" start="1">
 <li>res &gt; valuesフォルダを展開し、string.xmlファイルを開きます。内容を<code><!-- Data & Sync</code>の設定例 <code>--></code>コメントまでスクロールします。</li>
 </ol>
-<p><code><!</code></p>
-<p><code><string name="pref_header_data_sync"> データ &amp; sync</string> </string</code></p>
-<p><code><string name="pref_title_sync_frequency"> 同期周波数</string>。</code></p>
-<p><code><string-array name="pref_sync_frequency_titles">。</code></p>
-<p><code><項目>15分</項目</code></p>
-<p><code><項目>30分</項目</code></p>
-<p><code>> 1時間</項目</code></p>
-<p><code><項目> 3時間</項目</code></p>
-<p><code><</code>項目<code>>6</code>時間<code></</code>項目</p>
-<p><code>></code>絶対にない<code></</code>項目</p>
-<p><code></string-array>。</code></p>
-<p><code><string-array name="pref_sync_frequency_values">。</code></p>
-<p><code>item></code></p>
-<p><code>> 30</項目</code></p>
-<p><code>> 60</項目</code></p>
-<p><code>> 180</item</code></p>
-<p><code>> 360</item</code></p>
-<p><code>> -1</item</code></p>
-<p><code></string-array>。</code></p>
-<p><code><string-array name="list_preference_entries"></code></p>
-<p><code>></code>エントリー<code>1</</code>項目</p>
-<p><code>></code>エントリー<code>2</</code>項目</p>
-<p><code>></code>エントリー<code>3</</code>項目</p>
-<p><code></string-array>。</code></p>
-<p><code><string-array name="list_preference_entry_values">。</code></p>
-<p><code>> 1</item</code></p>
-<p><code>> 2</item</code></p>
-<p><code>> 3</item</code></p>
-<p><code></string-array>。</code></p>
-<p><code><string-array name="multi_select_list_preference_default_value" /></code></p>
-<p><code><string name="pref_title_system_sync_settings"> システム同期の設定</string>。</code></p>
+<pre><code>&lt;!-- Example settings for Data &amp; Sync --&gt;
+    &lt;string name=&#34;pref_header_data_sync&#34;&gt;Data &amp;amp; sync&lt;/string&gt;
+
+    &lt;string name=&#34;pref_title_sync_frequency&#34;&gt;Sync frequency&lt;/string&gt;
+    &lt;string-array name=&#34;pref_sync_frequency_titles&#34;&gt;
+        &lt;item&gt;15 minutes&lt;/item&gt;
+        &lt;item&gt;30 minutes&lt;/item&gt;
+        &lt;item&gt;1 hour&lt;/item&gt;
+        &lt;item&gt;3 hours&lt;/item&gt;
+        &lt;item&gt;6 hours&lt;/item&gt;
+        &lt;item&gt;Never&lt;/item&gt;
+    &lt;/string-array&gt;
+    &lt;string-array name=&#34;pref_sync_frequency_values&#34;&gt;
+        &lt;item&gt;15&lt;/item&gt;
+        &lt;item&gt;30&lt;/item&gt;
+        &lt;item&gt;60&lt;/item&gt;
+        &lt;item&gt;180&lt;/item&gt;
+        &lt;item&gt;360&lt;/item&gt;
+        &lt;item&gt;-1&lt;/item&gt;
+    &lt;/string-array&gt;
+
+    &lt;string-array name=&#34;list_preference_entries&#34;&gt;
+        &lt;item&gt;Entry 1&lt;/item&gt;
+        &lt;item&gt;Entry 2&lt;/item&gt;
+        &lt;item&gt;Entry 3&lt;/item&gt;
+    &lt;/string-array&gt;
+
+    &lt;string-array name=&#34;list_preference_entry_values&#34;&gt;
+        &lt;item&gt;1&lt;/item&gt;
+        &lt;item&gt;2&lt;/item&gt;
+        &lt;item&gt;3&lt;/item&gt;
+    &lt;/string-array&gt;
+
+    &lt;string-array name=&#34;multi_select_list_preference_default_value&#34; /&gt;
+
+    &lt;string name=&#34;pref_title_system_sync_settings&#34;&gt;System sync settings&lt;/string&gt;</code></pre>
 <ol type="1" start="1">
 <li><code>pref_header_data_sync</code>文字列リソースを編集し、<code>Data & sync</code>に設定します（&amp;はアンパサンドの<code>HTML</code>コードです）。値を Account (引用符なし) に変更します。</li>
 <li>これでリソース名をリファクタリングする必要があります（名前をリファクタリングしなくてもアプリは動作しますが、リファクタリングするとコードがわかりやすくなります）。pref_header_data_syncリソース名を右クリック（またはControlキーを押しながらクリック）し、「リファクタ」&gt;「名前の変更」を選択します。名前を pref_header_account に変更し、コメントや文字列で検索するオプションをクリックし、リファクタをクリックします。</li>
@@ -519,43 +552,43 @@
 <li><code>リファクタ</code> &gt; <code>文字列配列リソース名</code>p<code>ref_sync_frequency_titlesをpref_</code>market_titles<code>にリネームします。</code></li>
 <li><code>pref_market_titles</code> 文字列配列（<code>15</code>分、<code>30</code>分、<code>1</code>時間など）の各値を、度数ではなく、米国、カナダなどの市場のタイトルに変更します。</li>
 </ol>
-<p><code><string-array name="pref_market_titles"></code></p>
-<p><code><</code>項目<code>></code>アメリカ合衆国<code></</code>項目</p>
-<p><code><item> カナダ</item</code></p>
-<p><code><item> イギリス</item</code></p>
-<p><code>> インド</item</code></p>
-<p><code>> 日本</項目</code></p>
-<p><code>> その他</item</code></p>
-<p><code></string-array>。</code></p>
+<pre><code>&lt;string-array name=&#34;pref_market_titles&#34;&gt;
+        &lt;item&gt;United States&lt;/item&gt;
+        &lt;item&gt;Canada&lt;/item&gt;
+        &lt;item&gt;United Kingdom&lt;/item&gt;
+        &lt;item&gt;India&lt;/item&gt;
+        &lt;item&gt;Japan&lt;/item&gt;
+        &lt;item&gt;Other&lt;/item&gt;
+&lt;/string-array&gt;</code></pre>
 <ol type="1" start="1">
 <li><code>リファクタ</code> &gt; <code>文字列配列リソース名</code>p<code>ref_sync_frequency_valuesをpref_</code>market_values<code>にリネームします。</code></li>
 <li><code>pref_market_values</code> 文字列配列の各値 (<code>15</code>, <code>30</code>, <code>60</code>, など) を、上記の国に対応した市場省略形、例えば US, CA などの値に変更します。</li>
 </ol>
-<p><code><string-array name="pref_market_values"></code></p>
-<p><code>item></code></p>
-<p><code>> CA</item</code></p>
-<p><code>item></code></p>
-<p><code>> IN</item</code></p>
-<p><code>> JA0</item</code></p>
-<p><code>> -1</item</code></p>
-<p><code></string-array>。</code></p>
+<pre><code>&lt;string-array name=&#34;pref_market_values&#34;&gt;
+        &lt;item&gt;US&lt;/item&gt;
+        &lt;item&gt;CA&lt;/item&gt;
+        &lt;item&gt;UK&lt;/item&gt;
+        &lt;item&gt;IN&lt;/item&gt;
+        &lt;item&gt;JA0&lt;/item&gt;
+        &lt;item&gt;-1&lt;/item&gt;
+&lt;/string-array&gt;</code></pre>
 <ol type="1" start="1">
 <li><code>pref_title_system_sync_settings</code> 文字列リソースまでスクロールダウンし、リソース（システム同期設定に設定されている）をアカウント設定に編集します。</li>
 <li>リファクタ &gt; 文字列配列リソース名pref<code>_title_system_sync_settings</code>を<code>pref</code>_title_account_settingsにリネームします。</li>
 <li>pref_account.xmlファイルを開きます。このレイアウトの <code>ListPreference</code> は、先ほど変更した設定を定義しています。<code>android:entry</code>、android:<code>entryValues</code>、android:<code>title</code>属性の文字列リソースが、前の手順で与えた値に変更されたことに注意してください。</li>
 </ol>
-<p><code><ListPreference</code></p>
-<p><code>="180"</code></p>
-<p><code>android:entry="@array/pref_market_titles"</code></p>
-<p><code>android:entryValues="@array/pref_market_values"</code></p>
-<p><code>android:key="sync_frequency"</code></p>
-<p><code>="@null"</code></p>
-<p><code>="@null"</code></p>
-<p><code>android:title="@string/pref_title_account" /></code></p>
+<pre><code>&lt;ListPreference
+        android:defaultValue=&#34;180&#34;
+        android:entries=&#34;@array/pref_market_titles&#34;
+        android:entryValues=&#34;@array/pref_market_values&#34;
+        android:key=&#34;sync_frequency&#34;
+        android:negativeButtonText=&#34;@null&#34;
+        android:positiveButtonText=&#34;@null&#34;
+        android:title=&#34;@string/pref_title_account&#34; /&gt;</code></pre>
 <ol type="1" start="1">
 <li><code>android:defaultValue属性を</code>&#34;US&#34;<code>に変更します。</code></li>
 </ol>
-<p><code>android:defaultValue="US"</code></p>
+<pre><code>android:defaultValue=&#34;US&#34;</code></pre>
 <p>この設定環境設定のキー（<code>"sync_frequency</code>&#34;）は、Javaコードの他の場所にハードコードされているので、<code>android:key</code>属性を変更しないでください。代わりに、この例では、<code>"sync_frequency"</code>をこの設定のキーとして使い続けてください。実世界のアプリの設定を徹底的にカスタマイズする場合、コード全体でハードコードされたキーを変更するのに時間がかかるでしょう。</p>
 <p>注：なぜキーに文字列リソースを使用しないのですか？文字列リソースは複数言語のXMLファイルを使用して異なる言語にローカライズされる可能性があり、キー文字列が他の文字列と一緒に誤って翻訳され、アプリがクラッシュする可能性があるからです。</p>
 <p>2.4 設定のデフォルト値を設定するコードの追加</p>
@@ -564,12 +597,12 @@
 <li>MainActivityを開き、<code>onCreate()</code>メソッドを見つけます。</li>
 <li><code>onCreate() メソッドの最後に以下の PreferenceManager.setDefaultValues ステートメントを追加します。</code></li>
 </ol>
-<p><code>PreferenceManager.setDefaultValues(this.</code></p>
-<p><code>                R.xml.pref_general, false)。</code></p>
-<p><code>PreferenceManager.setDefaultValues(this.</code></p>
-<p><code>                R.xml.pref_notification, false)。</code></p>
-<p><code>PreferenceManager.setDefaultValues(this.</code></p>
-<p><code>                R.xml.pref_account, false)。</code></p>
+<pre><code>PreferenceManager.setDefaultValues(this, 
+                R.xml.pref_general, false);
+PreferenceManager.setDefaultValues(this, 
+                R.xml.pref_notification, false);
+PreferenceManager.setDefaultValues(this, 
+                R.xml.pref_account, false);</code></pre>
 <p>デフォルト値はすでに<code>android:defaultValue</code>属性でXMLファイルに指定されていますが、上記のステートメントは、<code>SharedPreferences</code>ファイルがデフォルト値で適切に初期化されていることを保証します。<code>setDefaultValues()</code>メソッドは3つの引数を取ります。</p>
 <ul>
 <li>このようなアプリの<a href="https://developer.android.com/reference/android/content/Context.html" target="_blank">コンテキスト</a>。</li>
@@ -580,34 +613,37 @@
 <ol type="1" start="1">
 <li><code>MainActivity onCreate()</code> メソッドの最後に以下のコードを追加します。前のステップで追加したコードの直後に追加することで、設定のデフォルトを設定することができます。</li>
 </ol>
-<p><code>SharedPreferences sharedPref = PreferenceManager</code></p>
-<p><code>                        .getDefaultSharedPreferences(this)を使用しています。</code></p>
-<p><code>String marketPref = sharedPref</code></p>
-<p><code>                        .getString("sync_frequency", "-1")。</code></p>
-<p><code>displayToast(marketPref)を表示します。</code></p>
+<pre><code>SharedPreferences sharedPref = PreferenceManager
+                        .getDefaultSharedPreferences(this);
+String marketPref = sharedPref
+                        .getString(&#34;sync_frequency&#34;, &#34;-1&#34;);
+displayToast(marketPref);</code></pre>
 <p><code>前のタスクで学んだように、PreferenceManager.getDefaultSharedPreferences(this) を使用して設定を SharedPreferences オブジェクト</code> (<code>marketPref</code>) <code>として取得します。次に getString() を使用して、キー</code> (<code>sync_frequency</code>) <code>を使用する設定の文字列値を取得し、それを marketPref に代入します。キーの値がない場合は、getString()メソッドでmarketPrefの設定値を-1に代入し、これは</code>pref_m<code>arket_values配列のOtherの値となります。</code></p>
 <ol type="1" start="1">
 <li>アプリを実行します。最初にアプリのメイン画面が表示されると、画面下にトーストのメッセージが表示されます。最初にアプリを実行すると、まだ設定を変更していないので、トーストに「-1」と表示されているはずです。</li>
 <li>オプションメニューの「設定」をタップし、設定画面の「アカウント」をタップします。マーケットをタップし、以下のようにカナダを選択します。</li>
 </ol>
+<p class="image-container"><img alt="Choosing Account (left) and changing the Market setting (right)" style="width: 590.00px" src="img/21550ea54831e04d.png"></p>
 <ol type="1" start="1">
 <li>アプリバーの「上」ボタンをタップすると設定画面に戻り、再度タップするとメイン画面に戻ります。</li>
 <li>Android Studioから再度アプリを起動します。<code>Toast</code>に「CA（カナダ用）」と表示され、マーケットの設定がカナダになっているはずです。</li>
 </ol>
+<p class="image-container"><img alt="Toast showing the Market setting (left) and the Account screen showing the Market setting (right)" style="width: 450.83px" src="img/7242fcdda1076ffd.png"></p>
 <p>これで設定アクティビティがアプリに統合されました。</p>
 <ol type="1" start="1">
 <li>今、タブレットまたはタブレットエミュレータ上でアプリを実行します。タブレットは物理的に大きな画面を持っているので、Androidランタイムは余分なスペースを利用します。タブレットでは、設定と詳細が同じ画面に表示されるので、ユーザーは設定を管理しやすくなります。</li>
 </ol>
+<p class="image-container"><img alt="Settings Activity on a tablet in horizontal orientation" style="width: 472.53px" src="img/95d7b39fa0cda927.png"></p>
 <p>タスク2のソリューションコード</p>
 <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeWithSettings" target="_blank">DroidCafeWithSettings</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: DroidCafeWithSettings アプリはタブレットサイズの画面に設定を適切に表示しますが、アプリバーの [アップ] ボタンを押しても、電話サイズの画面の場合のようにユーザーを <code>MainActivity</code> に戻しません。これは、<code>Framment</code>-in <code>SettingsActivity</code>にある3つの<code>onOptionsItemSelected()</code>メソッドが原因です。これは、ユーザーが上ボタンをタップしたときに <code>SettingsActivity</code> を再起動するために以下を使用します。</p>
-<p><code>startActivity(new Intent(getActivity(), SettingsActivity.class).</code></p>
+<pre><code>startActivity(new Intent(getActivity(), SettingsActivity.class));</code></pre>
 <p>上記は、設定ヘッダ（一般、通知、アカウント）が別画面（<code>SettingsActivity</code>）に表示されている電話画面での適切な動作です。設定を変更した後、ユーザーが「上」ボタンをタップすると、「<code>SettingsActivity</code>」の「Settings」ヘッダーに戻ります。さらに「アップ」ボタンをタップすると、ユーザーは<code>MainActivity</code>に戻ります。</p>
 <p>しかし、タブレットでは、ヘッダーは常に左ペインに表示されています（設定は右ペインにあります）。その結果、Upボタンをタップしても<code>MainActivity</code>には移動しません。</p>
 <p>タブレットサイズの画面で、<code>SettingsActivity</code>でUpボタンを正しく動作させる方法を見つけてください。</p>
@@ -616,10 +652,11 @@
 <li>600dp以上の画面サイズに対応するために、別の<code>dimens.xml</code>ファイルを追加します。アプリが特定のデバイス上で実行されると、dimens<code>.xml</code>ファイルの修飾子に基づいて適切な<code>dimens.xml</code>ファイルが選択されます。タブレットなどの大画面のデバイスを指定するために、横向きと画面サイズのサポートに関する実習で学んだように、「最小画面幅」の修飾子を600dp（<code>sw600dp</code>）に設定した別のd<code>imens.xml</code>ファイルを追加することができます。</li>
 <li>タブレット用に自動的に選択されるdimens.xml（<code>sw600dp</code>）ファイルの<code><resources></code>タグと&lt;/<code>resources></code>タグの間に、以下の<code>bool</code>リソースを追加します。</li>
 </ol>
-<p><code><bool name="isTablet"> true</bool> です。</code></p>
+<pre><code>&lt;bool name=&#34;isTablet&#34;&gt;true&lt;/bool&gt;</code></pre>
 <ol type="1" start="1">
 <li>標準の <code>dimens.xml</code> ファイルに以下の <code>bool</code> リソースを追加します。これは、アプリが大きくないデバイスで動作する場合に選択されます。</li>
 </ol>
+<pre><code>&lt;bool name=&#34;isTablet&#34;&gt;false&lt;/bool&gt;</code></pre>
 <p><code><bool name="isTablet"> false</bool> です。</code></p>
 <ol type="1" start="1">
 <li><code>SettingsActivity</code> では、3 つの <code>onOptionsItemSelected()</code> メソッドすべてに (各フラグメントに 1 つずつ) <code>if else</code> ブロックを追加して、<code>isTablet</code> が真であるかどうかをチェックします。もし真であれば、コードは Up ボタンアクションを <code>MainActivity</code> にリダイレクトすることができます。</li>
@@ -628,13 +665,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Challenge solution code" duration="0">
+      <google-codelab-step label="Challenge solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeWithSettingsChallenge" target="_blank">DroidCafeWithSettingsChallenge</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <p>ユーザーは、ナビゲーションドロワーなどのサイドナビゲーションや、アプリバーのオプションメニューで「設定」をタップすることで、アプリの設定に移動することを期待しています。</p>
 <p>アプリのユーザー設定を提供するには、設定用のアクティビティを提供します。</p>
 <ul>
@@ -678,13 +715,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Related concepts" duration="0">
+      <google-codelab-step label="Related concepts" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-9-preferences-and-settings/9-2-c-app-settings/9-2-c-app-settings.html" target="_blank">9.2: アプリの設定</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Studio のドキュメントです。<a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio ユーザーガイド</a></p>
 <p>Androidの開発者向けドキュメント。</p>
 <ul>
@@ -707,7 +744,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -724,6 +761,7 @@
 <li>ユーザーが選択した配送方法を、選択した市場の設定と同じ<code>Toast</code>メッセージに表示するようにします。</li>
 <li>追加クレジット：選択した配送方法を、<code>ListPreference</code>のタイトルの下に表示される設定概要テキストとして表示します。このテキストを有効にすると、更新のたびに変更されます。</li>
 </ol>
+<p class="image-container"><img alt="Delivery settings in the General settings screen" style="width: 462.67px" src="img/dd3c371af13401fe.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>DroidCafeWithSettings プロジェクトのどのファイルで <code>ListPreference</code> のエントリの配列と値の配列を定義していますか？1つ選んでください。</p>
@@ -763,7 +801,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

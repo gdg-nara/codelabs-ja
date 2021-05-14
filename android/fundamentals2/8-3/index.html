@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 08.3: JobScheduler</title>
+  <title>Android Developer Fundamentals 08.3: JobScheduler</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="8-3"
-                  title="Android 開発者基礎講座 08.3: JobScheduler"
+                  title="Android Developer Fundamentals 08.3: JobScheduler"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -64,8 +64,9 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>この実習では、Notification Schedulerというアプリを作成します。このアプリでは、ユーザが制約を選択してジョブをスケジュールすることで、<code>JobScheduler</code>フレームワークをデモします。そのジョブが実行されると、アプリは通知を投稿します。(このアプリでは、通知は実質的に「ジョブ」です。)</p>
+<p class="image-container"><img alt="Preview for the Notification Scheduler" style="width: 306.76px" src="img/cd843e845163afa3.png"> </p>
 <p><code>JobSchedulerを使用するには、</code><a href="https://developer.android.com/reference/android/app/job/JobService.html" target="_blank"><code>JobService</code></a><code>と</code><a href="https://developer.android.com/reference/android/app/job/JobInfo.html" target="_blank"><code>JobInfoを</code></a><code>使用する必要があります。</code></p>
 <ul>
 <li><code>JobInfo</code> オブジェクトには、ジョブを実行するトリガーとなる条件のセットが含まれています。</li>
@@ -75,7 +76,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="3。タスク1: JobServiceの実装" duration="0">
+      <google-codelab-step label="タスク1: JobServiceの実装" duration="0">
         <p>まずは、条件で決められた時間に実行するサービスを作成します。システムが自動的に<code>JobService</code>を実行してくれます。実装する必要があるのは、<code>onStartJob()</code>コールバックと<code>onStopJob()</code>コールバックのみです。</p>
 <p><code>onStartJob()コールバックについて。</code></p>
 <ul>
@@ -96,54 +97,62 @@
 <li>必要なメソッド、<code>onStartJob()</code>と<code>onStopJob()</code>を追加します。クラス宣言の横にある赤い電球をクリックして、「メソッドを実装」を選択し、「OK」を選択します。</li>
 <li><code>AndroidManfest.xmlファイルの<application>タグ内で、以下の権限でJobServiceを登録してください。</code></li>
 </ol>
-<p><code><</code>サービス</p>
-<p><code>android:name=".NotificationJobService"</code></p>
-<p><code>android:permission="android.permission.BIND_JOB_SERVICE"/></code></p>
+<pre><code>&lt;service
+   android:name=&#34;.NotificationJobService&#34;
+   android:permission=&#34;android.permission.BIND_JOB_SERVICE&#34;/&gt;</code></pre>
 <p>1.2 onStartJob()の実装</p>
 <p><code>NotificationJobService.javaで以下の手順を実装します。</code></p>
 <ol type="1" start="1">
 <li>ジョブ」通知の通知 アイコンとして使用する画像アセットを追加します。画像に <code>ic_job_running</code> という名前を付けます。</li>
 <li>通知マネージャのメンバ変数と通知チャネルIDの定数を宣言します。</li>
 </ol>
-<p><code>NotificationManager mNotifyManager.</code></p>
-<p><code>//</code> 通知チャンネルの<code>ID</code>です。</p>
-<p><code>private static final String PRIMARY_CHANNEL_ID =</code></p>
-<p><code>".</code></p>
+<pre><code>NotificationManager mNotifyManager;
+
+// Notification channel ID.
+private static final String PRIMARY_CHANNEL_ID =
+       &#34;primary_notification_channel&#34;;
+</code></pre>
 <ol type="1" start="1">
 <li><code>onStartJob()</code>メソッドの中で、通知チャネルを作成するメソッドを定義します。</li>
 </ol>
-<p><code>/**</code></p>
-<p><code>* OREO</code> 以上の通知チャネルを作成します。</p>
-<p><code>*/</code></p>
-<p><code>public void createNotificationChannel() { { {.</code></p>
-<p><code>//</code> 通知マネージャオブジェクトを定義します。</p>
-<p><code>   mNotifyManager =</code></p>
-<p><code>           (NotificationManager) getSystemService(NOTIFICATION_SERVICE)。</code></p>
-<p><code>//</code> 通知チャンネルは <code>OREO</code> 以上でのみ利用可能です。</p>
-<p><code>//</code> ということで、<code>SDK</code>のバージョンにチェックを入れておきます。</p>
-<p><code>if (android.os.Build.VERSION.SDK_INT >=</code></p>
-<p><code>           android.os.Build.VERSION_CODES.O)Build.VERSION_CODES.O) {.</code></p>
-<p><code>// すべてのパラメータを含む NotificationChannel を作成します。</code></p>
-<p><code>NotificationChannel notificationChannel = new NotificationChannel</code></p>
-<p><code>               (primary_channel_id.</code></p>
-<p><code>"</code>ジョブサービスのお知らせ<code>"</code></p>
-<p><code>NotificationManager.importance_high)を使用しています。</code></p>
-<p><code>       notificationChannel.enableLights(true)。</code></p>
-<p><code>       notificationChannel.setLightColor(Color.RED).</code></p>
-<p><code>       notificationChannel.enableVibration(true)。</code></p>
-<p><code>       通知チャネル.setDescription</code></p>
-<p><code>"               (「ジョブサービスからのお知らせ」)。</code></p>
-<p><code>mNotifyManager.createNotificationChannel(notificationChannel)。</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>/**
+* Creates a Notification channel, for OREO and higher.
+*/
+public void createNotificationChannel() {
+
+   // Define notification manager object.
+   mNotifyManager =
+           (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+   // Notification channels are only available in OREO and higher.
+   // So, add a check on SDK version.
+   if (android.os.Build.VERSION.SDK_INT &gt;=
+           android.os.Build.VERSION_CODES.O) {
+
+       // Create the NotificationChannel with all the parameters.
+       NotificationChannel notificationChannel = new NotificationChannel
+               (PRIMARY_CHANNEL_ID,
+                       &#34;Job Service notification&#34;,
+                       NotificationManager.IMPORTANCE_HIGH);
+
+       notificationChannel.enableLights(true);
+       notificationChannel.setLightColor(Color.RED);
+       notificationChannel.enableVibration(true);
+       notificationChannel.setDescription
+               (&#34;Notifications from Job Service&#34;);
+
+       mNotifyManager.createNotificationChannel(notificationChannel);
+   }
+} </code></pre>
 <ol type="1" start="1">
 <li><code>onStartJob()</code>内で、通知チャネルを作成するメソッドを呼び出します。アプリの<code>MainActivity</code>を起動する<code>PendingIntent</code>を作成します。このインテントは、通知のコンテンツ インテントです。</li>
 </ol>
-<p><code>//</code>通知チャネルの作成</p>
-<p>を使用しています。</p>
-<p><code>//</code>クリックしたときにアプリを起動する通知内容のインテントを設定する</p>
-<p><code>PendingIntent contentPendingIntent = PendingIntent.getActivity</code></p>
-<p><code>       (this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT).</code></p>
+<pre><code>//Create the notification channel
+createNotificationChannel();
+
+//Set up the notification content intent to launch the app when clicked
+PendingIntent contentPendingIntent = PendingIntent.getActivity
+       (this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);</code></pre>
 <ol type="1" start="1">
 <li><code>onStartJob()</code>では、以下の属性を持つ通知を構築して配信します。</li>
 </ol>
@@ -178,26 +187,30 @@
 <li>このアプリでは、すべての作業は<code>onStartJob()</code>コールバックで完了するため、onStartJob()が<code>false</code>を返すことを確認してください。</li>
 </ol>
 <p>ここに <code>onStartJob()</code> メソッドの完全なコードがあります。</p>
-<p>オーバーライド</p>
-<p><code>public boolean onStartJob(JobParameters jobParameters) { {.</code></p>
-<p><code>//</code>通知チャネルの作成</p>
-<p>   を使用しています。</p>
-<p><code>//</code>クリックしたときにアプリを起動する通知内容のインテントを設定する</p>
-<p><code>PendingIntent contentPendingIntent = PendingIntent.getActivity</code></p>
-<p><code>           (this, 0, new Intent(this, MainActivity.class).</code></p>
-<p><code>PendingIntent.FLAG_UPDATE_CURRENT)。</code></p>
-<p><code>.ビルダー = 新しい NotificationCompat.ビルダー</code></p>
-<p><code>           (this, PRIMARY_CHANNEL_ID)</code></p>
-<p><code>           .setContentTitle("Job Service")</code></p>
-<p><code>           .setContentText("Your Job ran to completion!")</code></p>
-<p><code>           .setContentIntent(contentPendingIntent)</code></p>
-<p><code>           .setSmallIcon(R.drawable.ic_job_running)</code></p>
-<p><code>           .setPriority(NotificationCompat.PRIORITY_HIGH)</code></p>
-<p><code>           .setDefaults(NotificationCompat.DEFAULT_ALL)</code></p>
-<p><code>           .setAutoCancel(true)。</code></p>
-<p><code>   mNotifyManager.notify(0, builder.build())。</code></p>
-<p><code>false を返します。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+public boolean onStartJob(JobParameters jobParameters) {
+
+   //Create the notification channel
+   createNotificationChannel();
+
+   //Set up the notification content intent to launch the app when clicked
+   PendingIntent contentPendingIntent = PendingIntent.getActivity
+           (this, 0, new Intent(this, MainActivity.class),
+                   PendingIntent.FLAG_UPDATE_CURRENT);
+
+   NotificationCompat.Builder builder = new NotificationCompat.Builder
+           (this, PRIMARY_CHANNEL_ID)
+           .setContentTitle(&#34;Job Service&#34;)
+           .setContentText(&#34;Your Job ran to completion!&#34;)
+           .setContentIntent(contentPendingIntent)
+           .setSmallIcon(R.drawable.ic_job_running)
+           .setPriority(NotificationCompat.PRIORITY_HIGH)
+           .setDefaults(NotificationCompat.DEFAULT_ALL)
+           .setAutoCancel(true);
+
+   mNotifyManager.notify(0, builder.build());
+   return false;
+}</code></pre>
 <ol type="1" start="1">
 <li><code>onStopJob()</code>が<code>true</code>を返すことを確認してください。ジョブが失敗した場合、ジョブを削除するのではなく、再スケジューリングしたいからです。</li>
 </ol>
@@ -205,7 +218,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：ジョブ条件の実装（JobInfo" duration="0">
+      <google-codelab-step label="タスク2：ジョブ条件の実装（JobInfo" duration="0">
         <p><code>JobService</code> ができたので、ジョブを実行するための基準を確認しましょう。これには、<code>JobInfo</code> コンポーネントを使用します。様々なネットワーク接続タイプとデバイスステータスを使用して、ジョブを実行するための一連のパラメータ化された条件を作成します。</p>
 <p>開始するには、このジョブが必要とするネットワークタイプを決定するために、ラジオボタンのグループを作成します。</p>
 <p>2.1 ネットワーク制約の実装</p>
@@ -217,18 +230,22 @@
 </ul>
 <p>アプリのレイアウトを作成する</p>
 <p>アプリのレイアウトには、ユーザーがネットワークの基準を選択するラジオボタンが含まれています。</p>
+<p class="image-container"><img alt="1ba0b4a44b4d4d28.png" style="width: 271.47px" src="img/1ba0b4a44b4d4d28.png"></p>
 <p><code>activity_main.xml</code>ファイルに以下の手順を実装します。必ずすべてのディメンションと文字列リソースを抽出してください。</p>
 <ol type="1" start="1">
 <li>ルートビュー要素を垂直の<code>LinearLayout</code>に変更し、レイアウトのパディングを<code>16dp</code>にします。いくつかのエラーが出るかもしれませんが、これは後で修正します。</li>
 </ol>
-<p><code><LinearLayout</code></p>
-<p><code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="vertical"</code></p>
-<p><code>="16dp"></code></p>
-<p><code>.... </code></p>
-<p><code></LinearLayout> </LinearLayout</code></p>
+<pre><code>&lt;LinearLayout 
+
+xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+   android:layout_width=&#34;match_parent&#34;
+   android:layout_height=&#34;match_parent&#34;
+   android:orientation=&#34;vertical&#34;
+   android:padding=&#34;16dp&#34;&gt;
+
+....
+
+&lt;/LinearLayout&gt;</code></pre>
 <ol type="1" start="1">
 <li>テキストビューを以下の属性を持つように変更します。</li>
 </ol>
@@ -349,76 +366,80 @@
 <ol type="1" start="1">
 <li><code>scheduleJob() メソッドで、</code>ID <code>で RadioGroup を見つけて、それを networkOptions という名前のインスタンス変数に保存します。</code></li>
 </ol>
-<p><code>RadioGroup networkOptions = findViewById(R.id.networkOptions).</code></p>
+<pre><code>RadioGroup networkOptions = findViewById(R.id.networkOptions);
+</code></pre>
 <ol type="1" start="1">
 <li><code>scheduleJob()</code> メソッドで、選択されたネットワーク ID を取得し、整数変数に保存します。</li>
 </ol>
-<p><code>int selectedNetworkID = networkOptions.getCheckedRadioButtonId().</code></p>
+<pre><code>int selectedNetworkID = networkOptions.getCheckedRadioButtonId();
+</code></pre>
 <ol type="1" start="1">
 <li><code>scheduleJob()</code>メソッドで、選択されたネットワーク・オプションのための整数変数を作成します。この変数をデフォルトのネットワーク・オプション（<code>NETWORK_TYPE_NONE</code>）に設定します。</li>
 </ol>
+<pre><code>int selectedNetworkOption = JobInfo.NETWORK_TYPE_NONE;</code></pre>
 <p><code>int selectedNetworkOption = JobInfo.NETWORK_TYPE_NONE.</code></p>
 <ol type="1" start="1">
 <li><code>scheduleJob()</code> メソッドで、選択されたネットワーク ID を持つ switch 文を作成します。可能な ID のそれぞれにケースを追加します。</li>
 <li><code>scheduleJob()</code> メソッドでは、ケースに応じて、選択したネットワーク・オプションに適切な <code>JobInfo</code> ネットワーク定数を割り当てます。</li>
 </ol>
-<p><code>switch(selectedNetworkID){</code></p>
-<p><code>case R.id.noNetwork.</code></p>
-<p><code>       selectedNetworkOption = JobInfo.NETWORK_TYPE_NONE.</code></p>
-<p>。</p>
-<p><code>case R.id.anyNetwork.</code></p>
-<p><code>       selectedNetworkOption = JobInfo.NETWORK_TYPE_ANY.</code></p>
-<p>。</p>
-<p><code>case R.id.wifiNetwork.</code></p>
-<p><code>       selectedNetworkOption = JobInfo.NETWORK_TYPE_UNMETERED.</code></p>
-<p>。</p>
-<p><code>}</code></p>
+<pre><code>switch(selectedNetworkID){
+   case R.id.noNetwork:
+       selectedNetworkOption = JobInfo.NETWORK_TYPE_NONE;
+       break;
+   case R.id.anyNetwork:
+       selectedNetworkOption = JobInfo.NETWORK_TYPE_ANY;
+       break;
+   case R.id.wifiNetwork:
+       selectedNetworkOption = JobInfo.NETWORK_TYPE_UNMETERED;
+       break;
+}</code></pre>
 <p>JobSchedulerとJobInfoオブジェクトの作成</p>
 <ol type="1" start="1">
 <li><code>JobSchedulerのメンバ変数を作成します。</code></li>
 </ol>
-<p><code>private JobScheduler mScheduler.</code></p>
+<pre><code>private JobScheduler mScheduler;</code></pre>
 <ol type="1" start="1">
 <li><code>scheduleJob()メソッド内では、getSystemService()を使用してmSchedulerを初期化します。</code></li>
 </ol>
-<p><code>mScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE)。</code></p>
+<pre><code>mScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);</code></pre>
 <ol type="1" start="1">
 <li><code>JOB_ID</code>のメンバ定数を作成し、<code>0</code>に設定します。</li>
 </ol>
-<p><code>private static final int JOB_ID = 0.</code></p>
+<pre><code>private static final int JOB_ID = 0;</code></pre>
 <ol type="1" start="1">
 <li><code>scheduleJob()メソッドの中で、Switchブロックの後に、</code><a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html" target="_blank"><code>JobInfo.Builder</code></a><code>オブジェクトを作成します。最初のパラメータはJOB_IDです。</code>2 <code>番目のパラメータは、作成した JobService の ComponentName です。ComponentName は、JobInfo オブジェクトと JobService を関連付けるために使用されます。</code></li>
 </ol>
-<p><code>ComponentName serviceName = new ComponentName(getPackageName().</code></p>
-<p><code>.class.getName().</code></p>
-<p><code>ジョブ情報を作成します。Builder Builder = new JobInfo.Builder(JOB_ID, serviceName)。</code></p>
+<pre><code>ComponentName serviceName = new ComponentName(getPackageName(),
+       NotificationJobService.class.getName());
+JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, serviceName);</code></pre>
 <ol type="1" start="1">
 <li><code>JobInfo.Builder オブジェクトで setRequiredNetworkType() を呼び出します。選択したネットワークオプションを渡します。</code></li>
 </ol>
-<p><code>.setRequiredNetworkType(selectedNetworkOption).</code></p>
+<pre><code>.setRequiredNetworkType(selectedNetworkOption);</code></pre>
 <ol type="1" start="1">
 <li><code>JobScheduler オブジェクトで schedule() を呼び出します。build() メソッドを使用して、JobInfo オブジェクトを渡します。</code></li>
 </ol>
-<p><code>JobInfo myJobInfo = builder.build()。</code></p>
-<p><code>mScheduler.scheduler.schedule(myJobInfo)。</code></p>
+<pre><code>JobInfo myJobInfo = builder.build();
+mScheduler.schedule(myJobInfo);</code></pre>
 <ol type="1" start="1">
 <li><code>Toast</code>メッセージを表示し、ジョブがスケジュールされていることをユーザーに知らせます。</li>
 </ol>
-<p><code>Toast.makeText(this, "Job Scheduled, job will run when " +.</code></p>
-<p><code>.", Toast.LENGTH_SHORT).show().</code></p>
+<pre><code>Toast.makeText(this, &#34;Job Scheduled, job will run when &#34; +
+       &#34;the constraints are met.&#34;, Toast.LENGTH_SHORT).show();</code></pre>
 <ol type="1" start="1">
 <li><code>cancelJobs()</code> メソッドで、<code>JobScheduler</code> オブジェクトが <code>null</code> であるかどうかをチェックします。そうでない場合は、そのオブジェクトの <code>cancelAll()</code> を呼び出して、保留中のジョブをすべて削除します。また、<code>JobScheduler</code> を <code>NULL</code> にリセットし、ジョブがキャンセルされたことをユーザに伝えるためのトーストメッセージを表示します。</li>
 </ol>
-<p><code>if (mScheduler!=null){</code></p>
-<p><code>   mScheduler.cancelAll()。</code></p>
-<p><code>   mScheduler = null。</code></p>
-<p><code>Toast.makeText(this, "Jobs cancelled", Toast.LENGTH_SHORT).show()。</code></p>
-<p><code>}</code></p>
+<pre><code>if (mScheduler!=null){
+   mScheduler.cancelAll();
+   mScheduler = null;
+   Toast.makeText(this, &#34;Jobs cancelled&#34;, Toast.LENGTH_SHORT).show();
+}</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。これで、ネットワーク制限のあるタスクを設定して、タスクの実行時間を確認することができます。この場合、タスクは通知を配信することです。通知を解除するには、ユーザーは通知をスワイプで遠ざけるか、タップしてアプリを開きます。</li>
 </ol>
 <p>ネットワークの制約を「<code>Any</code>」や「<code>Wifi</code>」に変更しないと、以下の例外でアプリがクラッシュすることに気づくかもしれません。</p>
-<p><code>java.lang.IllegalArgumentException.</code></p>
+<pre><code>java.lang.IllegalArgumentException: 
+   You&#39;re trying to build a job with no constraints, this is not allowed.</code></pre>
 <p>制約のないジョブを構築しようとすると、これは許されません。</p>
 <p>クラッシュが発生するのは、&#34;<code>No Network Required</code>&#34;条件がデフォルトであり、この条件は制約としてカウントされないためです。ジョブサービスを適切にスケジューリングするために、ジョブスケジューラは少なくとも1つの制約を必要とします。</p>
 <p>次のセクションでは、少なくとも1つの制約が設定されている場合は真、そうでない場合は偽の条件変数を作成します。条件が真の場合、アプリはタスクをスケジュールします。条件が<code>False</code>の場合、アプリは、ユーザーに制約を設定するように指示するトースト メッセージを表示します。</p>
@@ -428,26 +449,28 @@
 <ol type="1" start="1">
 <li><code>JobInfo.Builder</code>定義の後、<code>myJobInfo</code>定義の上に、<code>constraintSet</code>という名前のブール変数を作成します。この変数は、選択されたネットワークオプションがデフォルトではない場合に真となります。(デフォルトは <code>JobInfo.NETWORK_TYPE_NONE</code> です。)</li>
 </ol>
+<pre><code>boolean constraintSet = selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE;</code></pre>
 <p><code>boolean constraintSet = selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE.</code></p>
 <ol type="1" start="1">
 <li><code>constraintSet定義後、constraintSet変数を使用してif/elseブロックを作成します。</code></li>
 <li>ジョブをスケジュールし、トーストメッセージを表示するコードを<code>if</code>ブロックに移動します。</li>
 <li><code>constraintSet</code>が<code>false</code>の場合は、少なくとも1つの制約を設定するようにユーザーに伝えるトーストメッセージを表示します。文字列リソースの抽出を忘れないでください。</li>
 </ol>
-<p><code>if(constraintSet) {</code></p>
-<p><code>//</code>ジョブをスケジュールしてユーザに通知する</p>
-<p><code>JobInfo myJobInfo = builder.build()。</code></p>
-<p><code>   mScheduler.scheduler.schedule(myJobInfo)。</code></p>
-<p><code>Toast.makeText(this, "Job Scheduled, job will run when " +.</code></p>
-<p><code>.", Toast.LENGTH_SHORT).show().</code></p>
-<p><code>≪(注1) }else {</code></p>
-<p><code>Toast.makeText(this, "最低1つの制約を設定してください"。</code></p>
-<p><code>Toast.LENGTH_SHORT).show()。</code></p>
-<p><code>}</code></p>
+<pre><code>if(constraintSet) {
+   //Schedule the job and notify the user
+   JobInfo myJobInfo = builder.build();
+   mScheduler.schedule(myJobInfo);
+   Toast.makeText(this, &#34;Job Scheduled, job will run when &#34; +
+           &#34;the constraints are met.&#34;, Toast.LENGTH_SHORT).show();
+}else {
+   Toast.makeText(this, &#34;Please set at least one constraint&#34;,
+           Toast.LENGTH_SHORT).show();
+}</code></pre>
 <p>2.3 デバイスアイドルおよびデバイス充電制約の実装</p>
 <p><code>JobScheduler</code>を使用すると、デバイスが充電中になるまで、またはデバイスがアイドル状態（スクリーンオフやCPUがスリープ状態）になるまで、アプリに<code>JobService</code>の実行を待機させることができます。</p>
 <p>このセクションでは、アプリにスイッチを追加して、ジョブサービスの制約を切り替えます。</p>
 <p>新しい制約のUI要素を追加します。</p>
+<p class="image-container"><img alt="623e16d0c5cd11fb.png" style="width: 322.82px" src="img/623e16d0c5cd11fb.png"></p>
 <p><code>activity_main.xmlファイルに以下の手順を実装します。</code></p>
 <ol type="1" start="1">
 <li>ネットワークタイプのラベルに使用した<code>TextView</code>をコピーして、<code>RadioGroup</code>の下に貼り付けます。</li>
@@ -497,22 +520,24 @@
 <ol type="1" start="1">
 <li><code>スイッチ用の mDeviceIdle と mDeviceCharging というメンバ変数を作成します。onCreate()で変数を初期化します。</code></li>
 </ol>
-<p><code>//</code>ジョブオプションを設定するためのスイッチ</p>
-<p><code>private Switch mDeviceIdleSwitch.</code></p>
-<p><code>private Switch mDeviceChargingSwitch.</code></p>
+<pre><code>//Switches for setting job options
+private Switch mDeviceIdleSwitch;
+private Switch mDeviceChargingSwitch;</code></pre>
 <p><code>onCreate()を使用しています。</code></p>
-<p><code>mDeviceIdleSwitch = findViewById(R.id.idleSwitch).</code></p>
-<p><code>mDeviceChargingSwitch = findViewById(R.id.chargingSwitch).</code></p>
+<pre><code>mDeviceIdleSwitch = findViewById(R.id.idleSwitch);
+mDeviceChargingSwitch = findViewById(R.id.chargingSwitch);</code></pre>
 <ol type="1" start="1">
 <li><code>scheduleJob()</code> メソッドで、以下の呼び出しを追加します。これらの呼び出しは、ビルダーオブジェクトの作成中に、<code>Switch</code>ビューでのユーザの選択に基づいて、<code>JobInfo.Builder</code>に制約を設定します。</li>
 </ol>
-<p><code>.setRequiresDeviceIdle(mDeviceIdleSwitch.isChecked()</code></p>
-<p><code>.setRequiresCharging(mDeviceChargingSwitch.isChecked())。</code></p>
+<pre><code>.setRequiresDeviceIdle(mDeviceIdleSwitch.isChecked())
+.setRequiresCharging(mDeviceChargingSwitch.isChecked());</code></pre>
 <ol type="1" start="1">
 <li>新しい制約を考慮して <code>constraintSet</code> を設定するコードを更新します。</li>
 </ol>
-<p><code>boolean constraintSet = (selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE)</code></p>
-<p><code>|| mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked()。</code></p>
+<pre><code>boolean constraintSet = (selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE)
+       || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked();
+
+</code></pre>
 <ol type="1" start="1">
 <li>追加の制約を加えてアプリを実行します。ジョブが実行されたことを示す通知が送信されるタイミングを確認するために、スイッチのさまざまな組み合わせを試してみてください。</li>
 </ol>
@@ -527,6 +552,7 @@
 <p>ここまでは、フレームワークがいつタスクを実行するかを正確に知る方法はありません。システムは効率的なリソース管理を考慮しているため、デバイスの状態によってはタスクが遅れる可能性があり、タスクが時間通りに実行されることを保証するものではありません。</p>
 <p><code>JobScheduler</code> APIには、以前のすべての制約を上書きするハードデッドラインを設定する機能が含まれています。</p>
 <p>タスクの実行期限を設定するための新しいUIを追加する</p>
+<p class="image-container"><img alt="48a34f6cbb7ecd6f.png" style="width: 273.47px" src="img/48a34f6cbb7ecd6f.png"></p>
 <p>このステップでは、<a href="https://developer.android.com/reference/android/widget/SeekBar.html" target="_blank">シークバー</a>を使用して、ユーザーがタスクの実行期限を0～100秒の間で設定できるようにします。ユーザーはシークバーを左右にドラッグして値を設定します。</p>
 <p><code>activity_main.xmlファイルに以下の手順を実装します。</code></p>
 <ol type="1" start="1">
@@ -613,50 +639,54 @@
 <ol type="1" start="1">
 <li><code>SeekBar</code>のメンバ変数を作成し、<code>onCreate()</code>で初期化します。</li>
 </ol>
+<pre><code>//Override deadline seekbar
+private SeekBar mSeekBar;</code></pre>
 <p><code>//</code>シークバーの期限をオーバーライド</p>
 <p><code>private SeekBar mSeekBar.</code></p>
 <p><code>onCreate()を使用しています。</code></p>
-<p><code>mSeekBar = findViewById(R.id.seekBar)。</code></p>
+<pre><code>mSeekBar = findViewById(R.id.seekBar);</code></pre>
 <ol type="1" start="1">
 <li><code>onCreate()</code>で、シーク・バーのプログレス・テキストビュー用の最終変数を作成して初期化します。(この変数は内部クラスからアクセスされます)。</li>
 </ol>
-<p><code>final TextView seekBarProgress = findViewById(R.id.seekBarProgress).</code></p>
+<pre><code>final TextView seekBarProgress = findViewById(R.id.seekBarProgress);</code></pre>
 <ol type="1" start="1">
 <li><code>onCreate()で、新しいOnSeekBarChangeListenerを渡してシークバー上でsetOnSeekBarChangeListener()を呼び出します。</code>(Android Studio<code>が必要なメソッドを生成してくれるはずです</code>)<code>。</code></li>
 </ol>
-<p><code>mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {</code></p>
-<p>オーバーライド</p>
-<p><code>public void onProgressChanged(SeekBar seekBar, int i, boolean b) {} {} onProgressChanged(SeekBar seekBar, int i, boolean b)</code></p>
-<p>オーバーライド</p>
-<p><code>public void onStartTrackingTouch(SeekBar seekBar) {} {} オントラッキングタッチを開始します。</code></p>
-<p>オーバーライド</p>
-<p><code>public void onStopTrackingTouch(SeekBar seekBar) {} {} public void onStopTrackingTouch(SeekBar seekBar)</code></p>
-<p><code>});</code></p>
+<pre><code>mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+   @Override
+   public void onProgressChanged(SeekBar seekBar, int i, boolean b) {}
+
+   @Override
+   public void onStartTrackingTouch(SeekBar seekBar) {}
+
+   @Override
+   public void onStopTrackingTouch(SeekBar seekBar) {}
+});</code></pre>
 <ol type="1" start="1">
 <li><code>onProgressChanged()</code>の第2引数は、シークバーの現在の値です。<code>onProgressChanged()</code> コールバックでは、整数値が <code>0</code> より大きいかどうかをチェックします（ユーザーが値を設定したことを意味します）。値が<code>0</code>より大きい場合は、シークバーの進捗ラベルを整数値に設定し、秒を示す秒の後に<code>s</code>を付けます。そうでなければ、テキストビューを<code>"Not Set"</code>と読むように設定します。</li>
 </ol>
-<p><code>if (i > 0){</code></p>
-<p><code>   seekBarProgress.setText(i + "s" )を表示します。</code></p>
-<p><code>≪(注1) }else {</code></p>
-<p><code>   seekBarProgress.setText("Not Set")。</code></p>
-<p><code>}</code></p>
+<pre><code>if (i &gt; 0){
+   seekBarProgress.setText(i + &#34; s&#34;);
+}else {
+   seekBarProgress.setText(&#34;Not Set&#34;);
+}</code></pre>
 <ol type="1" start="1">
 <li>オーバーライド期限は、シークバーの整数値が <code>0</code> より大きい場合にのみ設定する必要があります。 <code>scheduleJob()</code> メソッドで、シークバーの進行状況を格納するための <code>int</code> を作成します。また、シークバーの整数値が <code>0</code> より大きい場合に真となるブール変数も作成します。</li>
 </ol>
-<p><code>int seekBarInteger = mSeekBar.getProgress()。</code></p>
-<p><code>boolean seekBarSet = seekBarInteger > 0.</code></p>
+<pre><code>int seekBarInteger = mSeekBar.getProgress();
+boolean seekBarSet = seekBarInteger &gt; 0;</code></pre>
 <ol type="1" start="1">
 <li>ビルダー定義後の <code>scheduleJob()</code> メソッドで、<code>seekBarSet</code> が <code>true</code> の場合、<code>JobInfo.Builder</code> で <code>setOverrideDeadline()</code> を呼び出します。シークバーの整数値に1000を掛けた値を渡します。(パラメータはミリ秒単位で、ユーザーが秒単位で期限を設定したい場合)。</li>
 </ol>
-<p><code>if (seekBarSet) {</code></p>
-<p><code>      builder.setOverrideDeadline(seekBarInteger * 1000)。</code></p>
-<p><code>}</code></p>
+<pre><code>if (seekBarSet) {
+      builder.setOverrideDeadline(seekBarInteger * 1000);
+}</code></pre>
 <ol type="1" start="1">
 <li><code>可能な制約として seekBarSet の値を含めるように constraintSet を変更します。</code></li>
 </ol>
-<p><code>boolean constraintSet = selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE</code></p>
-<p><code>       || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked()</code></p>
-<p><code>|| seekBarSet.</code></p>
+<pre><code>boolean constraintSet = selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE
+       || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked()
+       || seekBarSet;</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。ユーザーは、ジョブサービスが実行されなければならないハードデッドラインを秒単位で設定できるようになりました!</li>
 </ol>
@@ -664,13 +694,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/NotificationScheduler" target="_blank">NotificationScheduler</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: これまで、ジョブサービスのタスクは単に通知を配信していましたが、ジョブスケジューラは通常、天気の更新やデータベースとの同期など、より堅牢なバックグラウンドタスクに使用されていました。バックグラウンドタスクは、プログラム的にも機能的にもより複雑になる可能性があるため、タスクが完了したときにフレームワークに通知する仕事は開発者に任されています。幸いなことに、開発者は <code>jobFinished()</code> を呼び出すことでこれを行うことができます。</p>
 <p>この課題では、タスクが完了した後に <code>jobFinished()</code> を呼び出す必要があります。</p>
@@ -683,7 +713,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li><code>JobScheduler</code>は、バックグラウンドサービスをインテリジェントに実行するための柔軟なフレームワークを提供します。</li>
 <li><code>JobScheduler</code>はAPI 21以上のデバイスでのみ利用可能です。</li>
@@ -701,13 +731,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連する概念のドキュメントは「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-8-alarms-and-schedulers/8-3-c-efficient-data-transfer/8-3-c-efficient-data-transfer.html" target="_blank">8.3: 効率的なデータ転送」</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/reference/android/app/job/JobScheduler.html" target="_blank">ジョブスケジューラ</a></li>
@@ -720,7 +750,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -737,6 +767,7 @@
 <li>ダウンロード」は1日1回、スマホがアイドル状態でも電源とWi-Fiに接続されているとき、またはボタンをタップしたときに行われます。</li>
 </ul>
 <p>ヒント :<code>JobService</code> クラスを内部クラスとして定義します。そうすることで、Download Nowボタンと<code>JobService</code>が同じメソッドを呼び出して通知を配信することができます。</p>
+<p class="image-container"><img alt="JobScheduler delivers a notification based on phone status" style="width: 267.94px" src="img/40accdd2a0095688.png"></p>
 <p>注意：デバイスのAPIレベルによっては、通知が少し違って見える場合があります。</p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
@@ -756,7 +787,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

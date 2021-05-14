@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.2: Input controls</title>
+  <title>Android Developer Fundamentals 04.2: Input controls</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-2"
-                  title="Android 開発者基礎講座 04.2: Input controls"
+                  title="Android Developer Fundamentals 04.2: Input controls"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank"> Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -69,15 +69,16 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。アプリ概要" duration="0">
+      <google-codelab-step label="アプリ概要" duration="0">
         <p>この実習では、クリッカブル画像の使い方のレッスンからDroidCafeアプリに機能を追加していきます。</p>
 <p>アプリの<code>OrderActivity</code>では、<a href="https://developer.android.com/reference/android/widget/EditText.html" target="_blank"><code>EditText</code></a>要素の<a href="https://developer.android.com/reference/android/widget/TextView.html#attr_android:inputType" target="_blank"><code>android:inputType</code></a>属性を使って実験しています。人の名前と住所のための<code>EditText</code>要素を追加し、テキストを入力するときに提案を行う1行と複数行の要素を定義するために属性を使用します。また、電話番号を入力するためのテンキーを表示する<code>EditText</code>を追加します。</p>
 <p>他のタイプの入力コントロールには、ユーザーに選択肢を提供するインタラクティブな要素があります。DroidCafeにラジオボタンを追加して、複数のオプションから1つの配送オプションだけを選択できるようにします。また、電話番号のラベル（自宅、仕事、その他、カスタム）を選択するためのスピナー入力コントロールも提供しています。</p>
+<p class="image-container"><img alt="The DroidCafe app with text input controls in OrderActivity." style="width: 189.92px" src="img/c97b83b2b1641618.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1.テキスト入力属性の実験" duration="0">
+      <google-codelab-step label="タスク1.テキスト入力属性の実験" duration="0">
         <p><a href="https://developer.android.com/reference/android/widget/EditText.html" target="_blank"><code>EditText編集</code></a>可能なテキストフィールドをタッチすると、カーソルがテキストフィールドに配置され、自動的にオンスクリーンキーボードが表示され、ユーザーがテキストを入力できるようになります。</p>
 <p>編集可能なテキストフィールドは、プレーンテキスト、電子メール アドレス、電話番号、パスワードなど、特定のタイプのテキスト入力を想定しています。アプリの各テキストフィールドの入力タイプを指定することが重要です。プレーンテキストの場合はオンスクリーンキーボード、電話番号を入力する場合はテンキーなど、適切なソフト入力方法がシステムに表示されるようにします。</p>
 <p>1.1 名前を入力するための編集テキストの追加</p>
@@ -123,9 +124,11 @@
 <li><code>strings.xml内のname_label_textという名前のエントリを作成するためのandroid:text属性値の文字列リソースを抽出します。</code></li>
 <li><code>EditText</code>要素を追加します。ビジュアルレイアウトエディタを使用するには、パレットペインからPlain Text要素を<code>name_label TextView</code>の隣の位置にドラッグします。そして、IDフィールドにname_textを入力し、下図のように要素の左側とベースラインを<code>name_label</code>要素の右側とベースラインに拘束します。</li>
 </ol>
+<p class="image-container"><img alt="The layout for the EditText, with the inputType attribute highlighted" style="width: 372.26px" src="img/65c4022720895530.png"></p>
 <ol type="1" start="1">
 <li>上の図は、Android Studio が自動的に <code>textPersonName</code> タイプを割り当てていることを示すために、［属性］ペインの inputType フィールドをハイライト表示しています。inputTypeフィールドをクリックすると、入力タイプのメニューが表示されます。</li>
 </ol>
+<p class="image-container"><img alt="The inputType choices" style="width: 191.00px" src="img/cb8635aecf5ed86e.png"></p>
 <p>上の図では、入力タイプとしてtextPersonNameが選択されています。</p>
 <ol type="1" start="1">
 <li>属性ペインのヒント欄に「名前を入力してください」などのテキスト入力のヒントを追加し、テキスト欄の「名前」の入力を削除します。ユーザーへのヒントとして、「名前を入力してください」というテキストを<code>EditText</code>の中で薄暗くしておきます。</li>
@@ -170,6 +173,7 @@
 <ol type="1" start="1">
 <li>アプリを起動します。最初の画面でドーナツの画像をタップし、フローティングアクションボタンをタップすると次の<code>Activity</code>が表示されます。テキスト入力欄の内側をタップすると、下図のようにキーボードが表示され、テキストを入力することができます。</li>
 </ol>
+<p class="image-container"><img alt="Tap inside the text entry field to show the keyboard" style="width: 353.75px" src="img/223f38170dd77439.png"></p>
 <p>入力した単語には自動的にサジェストが表示されることに注意してください。それを使用するには、提案をタップします。これは、<a href="https://developer.android.com/reference/android/widget/TextView.html#attr_android:inputType" target="_blank"><code>android:inputType</code></a>属性の<code>textPersonName</code>値のプロパティの1つです。<code>inputType</code>属性は、キーボードのレイアウト、大文字小文字の区別、テキストの複数行を含む様々な機能を制御します。</p>
 <ol type="1" start="1">
 <li>キーボードを閉じるには、キーボードの右下隅に表示される 緑色の円の中のチェックマークのアイコンをタップします。これはDoneキーとして知られています。</li>
@@ -216,6 +220,7 @@
 <li><code>android:text属性値の文字列リソースを抽出して、strings.xml内のaddress_label_textという名前のエントリを作成します。</code></li>
 <li><code>EditText</code>要素を追加します。ビジュアルレイアウトエディタを使用するには、パレットペインからMultiline Text要素を<code>address_label TextView</code>の隣の位置にドラッグします。そして、IDフィールドにaddress_textを入力し、下図のように要素の左側とベースラインを<code>address_label</code>要素の右側とベースラインに拘束します。</li>
 </ol>
+<p class="image-container"><img alt="The layout for the multiple-line EditText" style="width: 367.47px" src="img/1d3502fa691a272.png"></p>
 <ol type="1" start="1">
 <li>属性］ペインの［ヒント］フィールドに、［アドレスを入力］などのテキスト入力のヒントを追加します。ユーザーへのヒントとして、「アドレスを入力してください」というテキストを<code>EditText</code>の中で薄暗くしておきます。</li>
 <li>テキスト］タブをクリックしてレイアウトのXMLコードを確認します。<code>android:hint</code>属性値の文字列リソースを<code>Enter_address_hint</code>に抽出します。新しい<code>EditText</code>には以下の属性を設定する必要があります（Androidの古いバージョンとの互換性のためにlay<code>out_marginLeft</code>属性を追加します）。</li>
@@ -259,6 +264,7 @@
 <li>アプリを実行します。最初の画面で画像をタップし、フローティングアクションボタンをタップすると次のアクティビティが表示されます。</li>
 <li>アドレス」テキスト入力フィールドの内側をタップするとキーボードが表示され、下図のように、キーボードの右下隅にある リターンキー（EnterキーまたはNew Lineキーとしても知られています）を使用してテキストを入力し、新しい行のテキストを開始します。リターンキーは、<a href="https://developer.android.com/reference/android/widget/TextView.html#attr_android:inputType" target="_blank"><code>android:inputType</code></a>属性に<code>textMultiLine</code>値を設定した場合に表示されます。</li>
 </ol>
+<p class="image-container"><img alt="Tap inside the entry field to enter a multiple-line address using the Return key" style="width: 192.25px" src="img/85e017ad624b14b9.png"></p>
 <ol type="1" start="1">
 <li>キーボードを閉じるには、ボタンの下段にある「戻る」ボタンの代わりに表示される下矢印ボタンをタップします。</li>
 </ol>
@@ -305,6 +311,7 @@
 <li><code>android:text</code>属性値のための文字列リソースを抽出して、<code>string.xml</code>内に<code>phone_label_text</code>という名前のエントリを作成します。</li>
 <li><code>EditText</code>要素を追加します。ビジュアルレイアウトエディタを使用するには、パレットペインからPhone要素を<code>phone_label TextView</code>の隣の位置にドラッグします。次に、IDフィールドにphone_textを入力し、下図のように要素の左側とベースラインを<code>phone_label</code>要素の右側とベースラインに拘束します。</li>
 </ol>
+<p class="image-container"><img alt="The layout for the phone number EditText" style="width: 423.53px" src="img/43434244e7862fc0.png"></p>
 <ol type="1" start="1">
 <li>属性］ペインの［ヒント］フィールドに、「電話を入力する」などのテキスト入力のヒントを追加します。ユーザーへのヒントとして、「電話を入力してください」というテキストは、<code>EditText</code>の内側で薄暗くする必要があります。</li>
 <li>テキスト］タブをクリックして、レイアウトのXMLコードを確認します。<code>android:hint</code>属性値の文字列リソースを<code>Enter_phone_hint</code>に抽出します。新しい<code>EditText</code>には以下の属性を設定する必要があります（Androidの古いバージョンとの互換性のためにlay<code>out_marginLeft</code>属性を追加します）。</li>
@@ -348,6 +355,7 @@
 <li>アプリを実行します。最初の画面で画像をタップし、フローティングアクションボタンをタップすると次のアクティビティが表示されます。</li>
 <li>電話」フィールドの内側をタップすると、テンキーが表示されます。すると、下図のように電話番号を入力することができます。</li>
 </ol>
+<p class="image-container"><img alt="Tap inside the field to show the numeric keypad " style="width: 150.08px" src="img/70710a39aa921d25.png"></p>
 <ol type="1" start="1">
 <li>キーボードを閉じるには、Done キーをタップします 。</li>
 </ol>
@@ -441,21 +449,24 @@
 <li>アプリを実行します。最初の画面で画像をタップし、フローティングアクションボタンをタップすると次のアクティビティが表示されます。</li>
 <li>ノート」フィールドの中をタップして、下図のように完全な文章を入力します。リターンキーを使って改行することもできますし、入力するだけで複数行に渡って文章を折り返すこともできます。</li>
 </ol>
+<p class="image-container"><img alt="Tap inside the field to enter sentences over multiple lines that start with capital letters. " style="width: 282.57px" src="img/bfac9a5a4af8d71d.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：ラジオボタンを使う" duration="0">
+      <google-codelab-step label="タスク2：ラジオボタンを使う" duration="0">
         <p>入力コントロールは、データ入力を受け入れるアプリの UI のインタラクティブな要素です。ラジオ ボタンは、一連のオプションから 1 つのオプションのみを選択するのに便利な入力コントロールです。</p>
 <p>ヒント: 利用可能なすべてのオプションを横に並べて表示したい場合は、ラジオボタンを使用する必要があります。すべてのオプションを並べて表示する必要がない場合、代わりに<a href="https://developer.android.com/reference/android/widget/Spinner.html" target="_blank">スピナー</a>を使用することもできます。</p>
 <p>このタスクでは、デザート注文の配送オプションを設定するためのラジオボタンのグループを DroidCafeInput アプリに追加します。ラジオボタンの概要とサンプルコードについては、「ラジオ<a href="https://developer.android.com/guide/topics/ui/controls/radiobutton.html" target="_blank">ボタン</a>」を参照してください。</p>
 <p>2.1 RadioGroupとラジオボタンの追加</p>
 <p>DroidCafeInputアプリの<code>OrderActivity</code>にラジオボタンを追加するには、レイアウトファイルact<code>ivity_order.xml</code>に<a href="https://developer.android.com/reference/android/widget/RadioButton.html" target="_blank"><code>RadioButton</code></a>要素を作成します。レイアウトファイルを編集すると、<code>OrderActivity</code>のラジオボタンのレイアウトは下図のようになります。</p>
+<p class="image-container"><img alt="Radio buttons in a RadioGroup" style="width: 324.00px" src="img/3991c4dbdea074da.png"></p>
 <p>ラジオボタンの選択は相互に排他的であるため、<a href="https://developer.android.com/reference/android/widget/RadioGroup.html" target="_blank"><code>RadioGroup</code></a>内でグループ化します。それらを一緒にグループ化することで、Androidシステムは、一度に1つのラジオボタンだけを選択できるようにします。</p>
 <p>注意：<strong><code>RadioButton</code></strong> 要素をリストアップする順番によって、画面に表示される順番が決まります。</p>
 <ol type="1" start="1">
 <li>activity_order.xmlを開き、下図のように、既にレイアウト内にある<code>note_text</code>要素の下部と左マージンに拘束された<code>TextView</code>要素を追加します。</li>
 </ol>
+<p class="image-container"><img alt="Layout for the text label for delivery options" style="width: 422.47px" src="img/f817c5036ca0b9bd.png"></p>
 <ol type="1" start="1">
 <li>XMLの編集に切り替えて、新しい<code>TextView</code>に以下の属性が設定されていることを確認します。</li>
 </ol>
@@ -498,34 +509,37 @@
 <li><code>choose_delivery_methodになるように、「配送方法を選択してください：」の文字列リソースを抽出します。</code></li>
 <li>ラジオボタンを追加するには、<code>RadioGroup</code>内で囲みます。追加した<code>TextView</code>の下のレイアウトに<code>RadioGroup</code>を追加し、以下のXMLコードに示すように3つの<a href="https://developer.android.com/reference/android/widget/RadioButton.html" target="_blank"><code>RadioButton</code></a>要素を囲みます。</li>
 </ol>
-<p><code><</code>ラジオグループ</p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="24dp"</code></p>
-<p><code>="24dp"</code></p>
-<p><code>="vertical"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@id/delivery_label"></code></p>
-<p><code><</code>ラジオボタン</p>
-<p><code>android:id="@+id/sameday"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>android:onClick="onRadioButtonClicked"</code></p>
-<p><code>android:text="当日メッセンジャーサービス" /></code></p>
-<p><code><</code>ラジオボタン</p>
-<p><code>android:id="@+id/nextday"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>android:onClick="onRadioButtonClicked"</code></p>
-<p><code>android:text="翌日の地上配送" /></code></p>
-<p><code><</code>ラジオボタン</p>
-<p><code>="@+id/pickup"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>android:onClick="onRadioButtonClicked"</code></p>
-<p><code>="Pick up" /></code></p>
-<p><code></RadioGroup> </RadioGroup</code></p>
-<p><code>各RadioButtonのandroid:onClick属性の"onRadioButtonClicked"エントリは、このタスクの次のステップでそのメソッドを追加するまで、赤で下線が引かれます。</code></p>
+<pre><code>&lt;RadioGroup
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginLeft=&#34;24dp&#34;
+        android:layout_marginStart=&#34;24dp&#34;
+        android:orientation=&#34;vertical&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@id/delivery_label&#34;&gt;
+
+        &lt;RadioButton
+            android:id=&#34;@+id/sameday&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:onClick=&#34;onRadioButtonClicked&#34;
+            android:text=&#34;Same day messenger service&#34; /&gt;
+
+        &lt;RadioButton
+            android:id=&#34;@+id/nextday&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:onClick=&#34;onRadioButtonClicked&#34;
+            android:text=&#34;Next day ground delivery&#34; /&gt;
+
+        &lt;RadioButton
+            android:id=&#34;@+id/pickup&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:onClick=&#34;onRadioButtonClicked&#34;
+            android:text=&#34;Pick up&#34; /&gt;
+&lt;/RadioGroup&gt;</code></pre>
+<p>各RadioButtonのandroid:onClick属性の&#34;onRadioButtonClicked&#34;エントリは、このタスクの次のステップでそのメソッドを追加するまで、赤で下線が引かれます。</p>
 <ol type="1" start="1">
 <li><code>android:text属性の</code>3<code>つの文字列リソースを以下の名前に抽出して、文字列を簡単に翻訳できるようにします</code>: <code>same_day_messenger_service、next_day_ground_delivery、pick_up。</code></li>
 </ol>
@@ -536,54 +550,55 @@
 <li><code>onRadioButtonClicked</code>の値をクリックしてから、左マージンの赤い電球の警告アイコンをクリックします。</li>
 <li>赤い球根のメニューのOrderActivityでCreate onRadioButtonClicked(View)を選択します。Android Studioでは、<code>OrderActivity</code>で<code>onRadioButtonClicked(View view)</code>メソッドを作成します。</li>
 </ol>
-<p><code>public void onRadioButtonClicked(View) {</code></p>
-<p><code>}</code></p>
-<p><code>また、activity_order.xml内の他のandroid:onClick属性のonRadioButtonClicked値は解決され、下線はなくなりました。</code></p>
+<pre><code>public void onRadioButtonClicked(View view) {
+}</code></pre>
+<p>また、activity_order.xml内の他のandroid:onClick属性のonRadioButtonClicked値は解決され、下線はなくなりました。</p>
 <ol type="1" start="1">
 <li>どのラジオボタンがクリックされたか（つまり、ユーザーが選択した配信の種類）を表示するには、<code>Toast</code> メッセージを使用します。OrderActivityを開き、以下の<code>displayToast</code>メソッドを追加します。</li>
 </ol>
-<p><code>public void displayToast(String message) { {.</code></p>
-<p><code>Toast.makeText(getApplicationContext(), message.</code></p>
-<p><code>Toast.LENGTH_SHORT).show()。</code></p>
-<p><code>}</code></p>
+<pre><code>public void displayToast(String message) {
+   Toast.makeText(getApplicationContext(), message, 
+                         Toast.LENGTH_SHORT).show();
+}</code></pre>
 <ol type="1" start="1">
 <li>新しい <code>onRadioButtonClicked()</code> メソッドで、どのラジオボタンが選択されているかをチェックし、適切なメッセージを表示して <code>displayToast()</code> を呼び出すためのスイッチ・ケース・ブロックを追加します。このコードでは、<a href="https://developer.android.com/reference/android/widget/Checkable.html" target="_blank"><code>Checkable</code></a> インターフェイスの<a href="https://developer.android.com/reference/android/widget/Checkable.html#isChecked()" target="_blank"><code>isChecked()</code></a> メソッドを使用しており、ボタンが選択されている場合は <code>true</code> を返します。また、<code>View</code> <a href="https://developer.android.com/reference/android/view/View.html#getId()" target="_blank"><code>getId() メソッドを</code></a>使用して、選択されたラジオ・ボタン・ビューの識別子を取得しています。</li>
 </ol>
-<p><code>public void onRadioButtonClicked(View) {</code></p>
-<p><code>//</code> これでボタンにチェックが入りましたか？</p>
-<p><code>boolean checked = ((RadioButton) view).isChecked()。</code></p>
-<p><code>//</code> どのラジオボタンがクリックされたかを確認します。</p>
-<p><code>switch (view.getId() {)</code></p>
-<p><code>case R.id.sameday.</code></p>
-<p>は</p>
-<p><code>//</code> 当日対応可能です</p>
-<p><code>                    displayToast(getString(R. string. same_day_messenger_service))を表示します。</code></p>
-<p>。</p>
-<p><code>case R.id.nextday.</code></p>
-<p>は</p>
-<p><code>//</code> 翌日配達</p>
-<p><code>                    displayToast(getString(R.string.next_day_ground_delivery))を表示します。</code></p>
-<p>。</p>
-<p><code>case R.id.pickup.</code></p>
-<p>は</p>
-<p><code>//</code> ピックアップ</p>
-<p><code>                    displayToast(getString(R. string.pick_up))。</code></p>
-<p>。</p>
-<p>は</p>
-<p><code>//</code> 何もしないで</p>
-<p>。</p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<pre><code>public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked.
+        switch (view.getId()) {
+            case R.id.sameday:
+                if (checked)
+                    // Same day service
+                    displayToast(getString(R.string.same_day_messenger_service));
+                break;
+            case R.id.nextday:
+                if (checked)
+                    // Next day delivery
+                    displayToast(getString(R.string.next_day_ground_delivery));
+                break;
+            case R.id.pickup:
+                if (checked)
+                    // Pick up
+                    displayToast(getString(R.string.pick_up));
+                break;
+            default:
+                // Do nothing.
+                break;
+        }
+}</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。画像をタップすると<code>OrderActivity</code>アクティビティが表示され、配信の選択肢が表示されます。配信の選択肢をタップすると、下の図のように、選択した選択肢が表示された画面の下部に<code>Toast</code>メッセージが表示されます。</li>
 </ol>
+<p class="image-container"><img alt="The OrderActivity with radio buttons for delivery choices" style="width: 221.80px" src="img/5ba27b7bdc56d748.png"></p>
 <p>タスク2のソリューションコード</p>
 <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeInput" target="_blank">DroidCafeInput</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。コーディングの課題" duration="0">
+      <google-codelab-step label="コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: DroidCafeInput アプリの配送選択用のラジオボタンが最初に非選択状態で表示され、デフォルトの配送選択がないことを意味します。ラジオボタンが最初に表示されたときに、そのうちの 1 つ (例えば <code>nextday</code>) がデフォルトとして選択されるように、ラジオボタンを変更します。</p>
 <p>ヒント: このタスクはレイアウトファイルの中で完全に行うことができます。別の方法として、アクティビティが最初に表示されたときにラジオボタンの1つを選択するコードを<code>OrderActivity</code>に書くことができます。</p>
@@ -593,7 +608,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6.タスク3：ユーザーの選択にスピナーを使用する" duration="0">
+      <google-codelab-step label="タスク3：ユーザーの選択にスピナーを使用する" duration="0">
         <p><a href="https://developer.android.com/reference/android/widget/Spinner.html" target="_blank">スピナーは</a>、セットの中から 1 つの値を素早く選択する方法を提供します。スピナーをタッチすると、利用可能なすべての値のドロップダウンリストが表示され、そこから1つを選択することができます。2 つまたは 3 つの選択肢しかない場合は、レイアウトに余裕があれば、ラジオボタンを使用して選択肢を選択することもできますが、3 つ以上の選択肢がある場合は、スピナーは非常によく機能し、必要に応じてスクロールしてアイテムを表示し、レイアウトの場所を取らないようにします。</p>
 <p>ヒント。スピナーについての詳細は、「<a href="http://developer.android.com/guide/topics/ui/controls/spinner.html" target="_blank">スピナー</a>」を参照してください。</p>
 <p>電話番号のラベルを選択する方法を提供するには、電話番号フィールドのすぐ隣に表示されるように、DroidCafe アプリの <code>OrderActivity</code> レイアウトにスピナーを追加することができます。</p>
@@ -609,166 +624,170 @@
 <li>属性] ペインで、[スピナー ID] を label_spinner に設定し、上部と右側のマージンを 24 に、左側のマージンを 8 に設定します。layout_width ドロップダウンメニューで match_constraint を選択し、layout_height ドロップダウンメニューで wrap_content を選択します。</li>
 </ol>
 <p>レイアウトは下の図のようになるはずです。属性ペインの <code>phone_text</code> 要素の layout_width ドロップダウンメニューは <code>134dp</code> に設定されています。オプションで他の幅の設定を試すことができます。</p>
+<p class="image-container"><img alt="Layout for the Spinner element." style="width: 480.47px" src="img/c36acb953b275ec2.png"></p>
 <p><code>activity_order.xml</code>のXMLコードを見るには、テキストタブをクリックします。</p>
 <p>スピナーは以下の属性を持つ必要があります。</p>
-<p><code><</code>スピナー</p>
-<p><code>android:id="@+id/label_spinner"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="24dp"</code></p>
-<p><code>="24dp"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>="24dp"</code></p>
-<p><code>="親"</code></p>
-<p><code>="@+id/phone_text"</code></p>
-<p><code>="@+id/address_text" /></code></p>
+<pre><code>&lt;Spinner
+        android:id=&#34;@+id/label_spinner&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginEnd=&#34;24dp&#34;
+        android:layout_marginRight=&#34;24dp&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginTop=&#34;24dp&#34;
+        app:layout_constraintEnd_toEndOf=&#34;parent&#34;
+        app:layout_constraintStart_toEndOf=&#34;@+id/phone_text&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/address_text&#34; /&gt;</code></pre>
 <p>古いバージョンのAndroidとの互換性を維持するために、上のコードスニペットに示されているand<code>roid:layout_marginRight</code>と<code>android:layout_marginLeft</code>属性を必ず追加してください。</p>
 <p><code>phone_text</code>要素は、以下の属性を持つようになりました（パックツールを使用した後）。</p>
-<p><code><</code>編集テキスト</p>
-<p><code>android:id="@+id/phone_text"</code></p>
-<p><code>="134dp"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>="10"</code></p>
-<p><code>android:hint="@string/enter_phone_hint"</code></p>
-<p><code>="電話"</code></p>
-<p><code>="@+id/phone_label"</code></p>
-<p><code>="@+id/phone_label" /></code></p>
+<pre><code>&lt;EditText
+        android:id=&#34;@+id/phone_text&#34;
+        android:layout_width=&#34;134dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:ems=&#34;10&#34;
+        android:hint=&#34;@string/enter_phone_hint&#34;
+        android:inputType=&#34;phone&#34;
+        app:layout_constraintBaseline_toBaselineOf=&#34;@+id/phone_label&#34;
+        app:layout_constraintStart_toEndOf=&#34;@+id/phone_label&#34; /&gt;</code></pre>
 <p>3.2 スピナーとそのリスナーをアクティブにするコードを追加する</p>
 <p><a href="https://developer.android.com/reference/android/widget/Spinner.html" target="_blank">スピナーの</a>選択肢は、&#34;Home&#34;や&#34;Work&#34;のようなよく定義された静的文字列なので、<code>strings.xml</code>で定義されたテキスト配列を使用して値を保持することができます。</p>
 <p><code>スピナーとそのリスナーを有効にするには、</code><a href="https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html" target="_blank"><code>AdapterView.</code></a><code>OnItemSelectedListener インターフェイスを実装します。</code></p>
 <ol type="1" start="1">
 <li>strings.xmlを開き、スピナーの選択可能な値（Home、Work、Mobile、Other）を文字列配列 <code>labels_array</code>として定義します。</li>
 </ol>
-<p><code><string-array name="labels_array">。</code></p>
-<p><code>>ホーム</item</code></p>
-<p><code>>仕事内容</item</code></p>
-<p><code><item> モバイル</item</code></p>
-<p><code>> その他</item</code></p>
-<p><code></string-array>。</code></p>
+<pre><code>&lt;string-array name=&#34;labels_array&#34;&gt;
+        &lt;item&gt;Home&lt;/item&gt;
+        &lt;item&gt;Work&lt;/item&gt;
+        &lt;item&gt;Mobile&lt;/item&gt;
+        &lt;item&gt;Other&lt;/item&gt;
+&lt;/string-array&gt;</code></pre>
 <ol type="1" start="1">
 <li><code>スピナーの選択コールバックを定義するには、OrderActivity クラスを変更して AdapterView.OnItemSelectedListener インターフェイスを実装します。</code></li>
 </ol>
-<p><code>public class OrderActivity extends AppCompatActivity implements</code></p>
-<p><code>AdapterView を使用しています。OnItemSelectedListener {</code></p>
+<pre><code>public class OrderActivity extends AppCompatActivity implements
+            AdapterView.OnItemSelectedListener {
+</code></pre>
 <p>上の文で AdapterView. と入力すると、Android Studio は自動的に <code>AdapterView</code> ウィジェットをインポートします。なぜ <code>AdapterView</code> が必要なのかというと、スピナーに配列を割り当てるためにアダプタ (特に<a href="https://developer.android.com/reference/android/widget/ArrayAdapter.html" target="_blank"><code>ArrayAdapter)</code></a> が必要だからです。アダプタは、データ (この場合はスピナー項目の配列) をスピナーに接続します。アダプタを使用してデータを接続するこのパターンについては、別の実用例で詳しく説明します。この行は、インポート文のブロック内に記述する必要があります。</p>
-<p><code>import android.widget.アダプタビューをインポートしています。</code></p>
+<pre><code>import android.widget.AdapterView;</code></pre>
 <p>上の文でOnItemSelectedListenerを入力した後、左マージンに赤い電球が表示されるまで数秒待ちます。</p>
 <ol type="1" start="1">
 <li>電球をクリックして、「Implement methods」を選択します。<code>OnItemSelectedListener</code>に必要な<code>onItemSelected()</code>メソッドと<code>onNothingSelected()</code>メソッドがハイライトされているはずなので、「Insert @Override」オプションが選択されているはずです。OKをクリックします。</li>
 </ol>
 <p>このステップでは、空の <code>onItemSelected()</code> および <code>onNothingSelected()</code> コールバックメソッドを <code>OrderActivity</code> クラスの下部に自動的に追加します。どちらのメソッドも、パラメータ <code>AdapterView<?></code> を使用します。<code><?></code> は Java 型のワイルドカードで、引数として任意のタイプの <code>AdapterView</code> を受け入れることができるようにメソッドを柔軟にすることができます。4.4. レイアウト内の <code>label_spinner</code> 要素を使用して <code>onCreate()</code> メソッドでスピナーをインスタンス化し、次のコード・スニペットに示すように、<code>onCreate()</code> メソッドでリスナー (<code>spinner.setOnItemSelectedListener</code>) を設定します。</p>
-<p>オーバーライド</p>
-<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
-<p><code>// ...onCreateコードの残りの部分 ...</code></p>
-<p><code>//</code> スピナーを作成します。</p>
-<p><code>スピナーspinner = findViewById(R.id.label_spinner)。</code></p>
-<p><code>if (spinner != null) {</code></p>
-<p><code>            spinner.setOnItemSelectedListener(this)を使用しています。</code></p>
-<p><code>   }</code></p>
-<p><code>//</code> 文字列配列とデフォルトのスピナーレイアウトを使用して<code>ArrayAdapter</code>を作成します。</p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+   // ... Rest of onCreate code ...
+   // Create the spinner.
+   Spinner spinner = findViewById(R.id.label_spinner);
+   if (spinner != null) {
+            spinner.setOnItemSelectedListener(this);
+   }
+   // Create ArrayAdapter using the string array and default spinner layout.</code></pre>
 <ol type="1" start="1">
 <li><code>onCreate() メソッドの編集を続けて、</code>Android <code>が提供する Spinner レイアウトをアイテムごとに使用して、文字列配列</code> (<code>labels_array</code>) <code>を持つ ArrayAdapter を作成するステートメントを追加します</code> (<code>layout.simple_spinner_item</code>)<code>。</code></li>
 </ol>
-<p><code>//</code> 文字列配列とデフォルトのスピナーレイアウトを使用して<code>ArrayAdapter</code>を作成します。</p>
-<p><code>ArrayAdapter< CharSequence> adapter = ArrayAdapter.createFromResource(this.</code></p>
-<p><code>                R.array.labels_array, android.R.layout.simple_spinner_item)を使用しています。</code></p>
-<p><code>//</code> 選択肢リストが表示されたときに使用するレイアウトを指定します。</p>
+<pre><code>// Create ArrayAdapter using the string array and default spinner layout.
+ArrayAdapter&lt;CharSequence&gt; adapter = ArrayAdapter.createFromResource(this, 
+                R.array.labels_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears.</code></pre>
 <p>このステップで使用する <code>simple_spinner_item</code> レイアウトと次のステップで使用する <code>simple_spinner_dropdown_item</code> レイアウトは、Android が<a href="https://developer.android.com/reference/android/R.layout.html#simple_spinner_item" target="_blank"><code>R.layout</code></a> クラスで提供するデフォルトの定義済みレイアウトです。スピナー内のアイテムとその外観のために独自のレイアウトを定義したい場合を除き、これらのレイアウトを使用する必要があります。</p>
 <ol type="1" start="1">
 <li><code>Spinnerの選択肢のレイアウトをsimple_spinner_dropdown_itemに指定し、Spinnerにアダプタを適用します。</code></li>
 </ol>
-<p><code>//</code> 選択肢リストが表示されたときに使用するレイアウトを指定します。</p>
-<p><code>アダプタ.setDropDownViewResource</code></p>
-<p><code>                       (android.R.layout.simple_spinner_dropdown_item)を使用しています。</code></p>
-<p><code>//</code> スピナーにアダプタを適用します。</p>
-<p><code>if (spinner != null) {</code></p>
-<p><code>     spinner.setAdapter(adapter)。</code></p>
-<p><code>}</code></p>
-<p><code>// ...onCreateコードの終了 ...</code></p>
+<pre><code>// Specify the layout to use when the list of choices appears.
+adapter.setDropDownViewResource
+                       (android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner.
+if (spinner != null) {
+     spinner.setAdapter(adapter);
+}
+// ... End of onCreate code ...</code></pre>
 <p>3.3 スピナーの選択に反応するコードを追加する</p>
 <p>ユーザがスピナーでアイテムを選択すると、スピナーは on-item-selected イベントを受け取ります。このイベントを処理するために、先ほどの手順で <code>AdapterView.OnItemSelectedListener</code> インターフェイスを実装し、空の <code>onItemSelected()</code> と <code>onNothingSelected()</code> コールバックメソッドを追加しました。</p>
 <p>このステップでは、<code>getItemAtPosition()</code>を使用してスピナーで選択されたアイテムを取得し、アイテムを<code>spinnerLabel</code>変数に代入するための<code>onItemSelected()</code>メソッドのコードを記入します。</p>
 <ol type="1" start="1">
 <li>以下のように、空の <code>onItemSelected()</code> コールバックメソッドにコードを追加して、<a href="https://developer.android.com/reference/android/widget/AdapterView.html#getItemAtPosition(int)" target="_blank"><code>getItemAtPosition()</code> を</a>使用してユーザーの選択したアイテムを取得し、<code>spinnerLabel</code> に割り当てるようにします。また、すでに<code>OrderActivity</code>に追加した<code>displayToast()</code>メソッドへの呼び出しを追加することもできます。</li>
 </ol>
-<p><code>public void onItemSelected(AdapterView<?> adapterView, View view, int)</code></p>
-<p><code>               i, long l) {</code></p>
-<p><code>   spinnerLabel = adapterView.getItemAtPosition(i).toString().</code></p>
-<p><code>   displayToast(spinnerLabel)を表示します。</code></p>
-<p><code>}</code></p>
+<pre><code>public void onItemSelected(AdapterView&lt;?&gt; adapterView, View view, int
+               i, long l) {
+   spinnerLabel = adapterView.getItemAtPosition(i).toString();
+   displayToast(spinnerLabel);
+}</code></pre>
 <p>この例では、空の <code>onNothingSelected()</code> コールバックメソッドにコードを追加する必要はありません。</p>
 <ol type="1" start="1">
 <li>アプリを実行します。</li>
 </ol>
 <p>電話入力欄の横にスピナーが表示され、最初の選択肢（ホーム）が表示されます。スピナーをタップすると、下の図の左側に示すように、すべての選択肢が表示されます。スピナーで選択肢をタップすると、図の右側に表示されているように、その選択肢のトーストメッセージが表示されます。</p>
+<p class="image-container"><img alt="Choosing from a Spinner (left) and showing the choice in a Toast (right)" style="width: 420.25px" src="img/c32287d47b980231.png"></p>
 <p>タスク3のソリューションコード</p>
 <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeInput" target="_blank">DroidCafeInput</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。コーディングチャレンジ2" duration="0">
+      <google-codelab-step label="コーディングチャレンジ2" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
-<p>課題:電話番号をダイヤルするためのように、送信キーをタップしてキーボードから直接アクションを実行するコードを書きます。</p>
+<p>課題:電話番号をダイヤルするためのように、送信キーをタップしてキーボードから直接アクションを実行するコードを書きます。 </p>
+<p class="image-container"><img alt="Enter the phone number and press the send key to dial the number." style="width: 476.47px" src="img/83c31bb8cbf716a.png"></p>
 <p>上の図では</p>
 <ol type="1" start="1">
 <li>編集テキスト欄に電話番号を入力します。</li>
 <li>送信キーをタップすると、電話のダイヤラーが起動します。図の右側にダイヤラーが表示されます。</li>
 </ol>
 <p><code>この課題では、新しいアプリプロジェクトを作成し、android:inputType属性を使用するEditTextを追加します。actionSend値を持つEditText要素に</code><a href="https://developer.android.com/reference/android/widget/TextView.html#attr_android:imeOptions" target="_blank"><code>android:imeOptions</code></a><code>属性を使用します。</code></p>
-<p><code>android:imeOptions="actionSend"</code></p>
+<pre><code>android:imeOptions=&#34;actionSend&#34;</code></pre>
 <p>これで、ユーザーは上図のように送信キーを押して電話番号をダイヤルすることができるようになりました。</p>
-<p><code>このActivityのonCreate()メソッドでは、setOnEditorActionListener()を使って、キーが押されたかどうかを検出するEditTextのリスナーを設定します。</code></p>
-<p><code>EditText editText = findViewById(R.id.editText_main).</code></p>
-<p><code>if (editText != null)</code></p>
-<p><code>   editText.setOnEditorActionListener</code></p>
-<p><code>                         (new TextView.(新しいTextView.OnEditorActionListener() {</code></p>
-<p><code>//</code> ビューが見つかった場合は、<code>editText</code>のリスナーを設定します。</p>
-<p><code>   });</code></p>
+<p>このActivityのonCreate()メソッドでは、setOnEditorActionListener()を使って、キーが押されたかどうかを検出するEditTextのリスナーを設定します。</p>
+<pre><code>EditText editText = findViewById(R.id.editText_main);
+if (editText != null)
+   editText.setOnEditorActionListener
+                         (new TextView.OnEditorActionListener() {
+      // If view is found, set the listener for editText.
+   });</code></pre>
 <p>リスナーの設定については、「<a href="https://developer.android.com/training/keyboard-input/style.html" target="_blank">入力メソッドの種類を指定する</a>」を参照してください。</p>
 <p>次に、<code>onEditorAction()</code>をオーバーライドして、<a href="https://developer.android.com/reference/android/view/inputmethod/EditorInfo.html" target="_blank"><code>EditorInfo</code></a>クラスの<code>IME_ACTION_SEND</code>定数を使って、押されたキーに反応するようにします。下の例では、電話番号をダイヤルするための <code>dialNumber()</code> メソッドを呼び出すためにキーを使用しています。</p>
-<p>オーバーライド</p>
-<p><code>public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {</code></p>
-<p><code>boolean handled = falseです。</code></p>
-<p><code>if (actionId == EditorInfo.IME_ACTION_SEND) { { { { { { { { { actionId</code></p>
-<p>      ダイヤルナンバー<code>()</code>を使用しています。</p>
-<p><code>      handled = true となります。</code></p>
-<p><code>   }</code></p>
-<p>ます。</p>
-<p><code>}</code></p>
+<pre><code>@Override
+public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+   boolean handled = false;
+   if (actionId == EditorInfo.IME_ACTION_SEND) {
+      dialNumber();
+      handled = true;
+   }
+   return handled;
+}</code></pre>
 <p>これは、電話番号をダイヤルできる別のアプリに電話番号を渡すために、<code>ACTION_DIAL</code>を使用した暗黙のインテントを使用しています。以下のようになります。</p>
-<p><code>private void dialNumber() {</code></p>
-<p><code>// editText_mainビューを探します。</code></p>
-<p><code>EditText editText = findViewById(R.id.editText_main).</code></p>
-<p><code>String phoneNum = null.</code></p>
-<p><code>// editTextフィールドがNULLでない場合。</code></p>
-<p><code>// "tel."</code>と電話番号の文字列を連結します。</p>
-<p><code>if (editText != null) phoneNum = "tel:"+</code></p>
-<p><code>                                      editText.getText().toString()。</code></p>
-<p><code>//</code> オプションです。ダイヤル用に連結された電話番号を記録します。</p>
-<p><code>Log.d(TAG, "dialNumber: " + phoneNum).</code></p>
-<p><code>//</code> インテントを指定します。</p>
-<p><code>Intent intent = new Intent(Intent.ACTION_DIAL).</code></p>
-<p><code>//</code> 電話番号として、インテントのデータを設定します。</p>
-<p><code>   intent.setData(Uri.parse(phoneNum))。</code></p>
-<p><code>//</code> インテントがパッケージ<code>(app)</code>に解決する場合。</p>
-<p><code>//</code> インテントでアクティビティを開始します。</p>
-<p><code>if (intent.resolveActivity(getPackageManager() ) != null) {</code></p>
-<p><code>      startActivity(intent)。</code></p>
-<p>他にもあり   ます</p>
-<p><code>Log.d("ImplicitIntents", "Can't handle this!)</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>private void dialNumber() {
+   // Find the editText_main view.
+   EditText editText = findViewById(R.id.editText_main);
+   String phoneNum = null;
+   // If the editText field is not null, 
+   // concatenate &#34;tel: &#34; with the phone number string.
+   if (editText != null) phoneNum = &#34;tel:&#34; + 
+                                      editText.getText().toString();
+   // Optional: Log the concatenated phone number for dialing.
+   Log.d(TAG, &#34;dialNumber: &#34; + phoneNum);
+   // Specify the intent.
+   Intent intent = new Intent(Intent.ACTION_DIAL);
+   // Set the data for the intent as the phone number.
+   intent.setData(Uri.parse(phoneNum));
+   // If the intent resolves to a package (app),
+   // start the activity with the intent.
+   if (intent.resolveActivity(getPackageManager()) != null) {
+      startActivity(intent);
+   } else {
+       Log.d(&#34;ImplicitIntents&#34;, &#34;Can&#39;t handle this!&#34;);
+   }
+}</code></pre>
 <p>チャレンジ2のソリューションコード</p>
 <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/KeyboardDialPhone" target="_blank">KeyboardDialPhone</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。概要" duration="0">
+      <google-codelab-step label="概要" duration="0">
         <p>以下の<code>android:inputType</code>属性値は、オンスクリーンキーボードの外観に影響を与えます。</p>
 <ul>
 <li><code>textAutoCorrect</code>: <code>スペルの修正を提案します。</code></li>
@@ -798,13 +817,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。関連コンセプト" duration="0">
+      <google-codelab-step label="関連コンセプト" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-2-c-input-controls/4-2-c-input-controls.html" target="_blank">4.2: 入力コントロールにあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。詳細はこちら" duration="0">
+      <google-codelab-step label="詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -831,7 +850,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。宿題" duration="0">
+      <google-codelab-step label="宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -846,6 +865,7 @@
 <li>ユーザーが単一のチェックボックスを選択して「乾杯を表示」をタップした場合、選択されたチェックボックスを示す乾杯メッセージを表示します。</li>
 <li>ユーザーが複数のチェックボックスを選択して「乾杯を表示」をタップした場合、下図のように、選択したすべてのチェックボックスのメッセージを含む乾杯を表示します。</li>
 </ol>
+<p class="image-container"><img alt="Checkboxes and the toast message" style="width: 206.03px" src="img/c73e9f3f2946af5.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>チェックボックスとラジオボタンの<code>RadioGroup</code>の最も重要な違いは何ですか？1つを選択してください。</p>
@@ -881,7 +901,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
 <p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 

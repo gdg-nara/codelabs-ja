@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 01.3: Text and scrolling views</title>
+  <title>Android Developer Fundamentals 01.3: Text and scrolling views</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,299 +23,635 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="1-3"
-                  title="Android 開発者基礎講座 01.3: Text and scrolling views"
+                  title="Android Developer Fundamentals 01.3: Text and scrolling views"
                   environment="web"
                   feedback-link="">
     
       <google-codelab-step label="はじめに" duration="0">
-        <p>この実践的なコードラボはユニット 1: Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
+        <p>この実用的なコードラボは、 Android Developer Fundamentals (Version 2) コース にある <a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">Unit 1: Get started</a> の一部です。このコースでは、コードラボを順番にこなしていくことで最大限の効果を得ることができます。</p>
 <ul>
-<li>コースのコードラボの完全なリストについては、Codelabs for Android Developer Fundamentals (V2)を参照してください。</li>
-<li>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer Fundamentals (Version 2)を参照してください。</li>
+<li>コースに含まれるコードラボの全リストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Android Developer Fundamentals (V2) </a>のコードラボをご覧ください。</li>
+<li>本コースの詳細（すべてのコンセプトチャプター、アプリ、スライドへのリンクなど）については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a> をご覧ください。</li>
 </ul>
-<p>注：このコースでは、「codelab」と「実践」という用語を入れ替えて使用しています。</p>
-<p>すでに知っておくべきこと</p>
+<aside class="special"><p><strong>注</strong>：このコースでは、 コードラボ と 実習 という言葉を同じ意味で使用しています</p>
+</aside>
+<h2 is-upgraded>導入</h2>
+<p><a href="https://developer.android.com/reference/android/widget/TextView.html" target="_blank"><code>TextView</code></a> クラスは、画面上にテキストを表示する <a href="https://developer.android.com/reference/android/view/View.html" target="_blank"><code>View</code></a> クラスのサブクラスです。テキストの表示方法は、XML レイアウトファイルの <code>TextView</code> 属性で制御することができます。この実習では、複数の <code>TextView</code> 要素を扱う方法を紹介します。その中には、ユーザーが内容を縦にスクロールできるものもあります。</p>
+<p>デバイスのディスプレイに収まりきらないほどの情報がある場合、スクロールビューを作成して、ユーザーが上下にスワイプすることで垂直方向に、左右にスワイプすることで水平方向にスクロールできるようにすることができます。</p>
+<p>スクロールビューは、ニュースや記事など、ディスプレイに収まりきらない長さのテキストによく使われます。また、ユーザーが複数行のテキストを入力できるようにしたり、スクロールビューの中で UI 要素（テキストフィールドとボタンなど）を組み合わせたりする場合にも、スクロールビューを使用します。</p>
+<p><a href="https://developer.android.com/reference/android/widget/ScrollView.html" target="_blank"><code>ScrollView</code></a> クラスは、スクロール・ビューのレイアウトを提供します。<code>ScrollView</code> は、<a href="https://developer.android.com/reference/android/widget/FrameLayout.html" target="_blank"><code>FrameLayout</code></a> のサブクラスです。その中に子として1つのビューだけを配置します。子View は、スクロールするコンテンツ全体を含んでいます。この子 View は、それ自体が UI 要素を含む<a href="https://developer.android.com/reference/android/view/ViewGroup.html" target="_blank"><code>ViewGroup</code></a>（<a href="https://developer.android.com/reference/android/widget/LinearLayout.html" target="_blank"><code>LinearLayout</code></a> など）である可能性があります。</p>
+<p>複雑なレイアウトでは、画像などの子View でパフォーマンスの問題が発生する可能性があります。<code>ScrollView</code> 内の <code>View</code> としては、ユーザーがスクロールできるアイテム(TextView 要素など)を表示する、垂直方向に配置された <code>LinearLayout</code> が適しています。</p>
+<p><code>ScrollView</code> では、画面に表示されていなくても、すべてのUI要素がメモリ上にあり、ビュー階層にあります。<code>ScrollView</code> は、テキストがすでにメモリ内にあるため、自由形式のテキストのページをスムーズにスクロールさせるのに適しています。しかし、<code>ScrollView</code> は多くのメモリを使用するため、アプリの他の部分のパフォーマンスに影響を与える可能性があります。ユーザーが追加、削除、編集できるアイテムの長いリストを表示するには、 <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code></a> の使用を検討してください。</p>
+<h2 is-upgraded>知っておくべきこと</h2>
+<p>以下のことができるようになっている必要があります。</p>
 <ul>
-<li>Android Studioの基本的なワークフロー。</li>
-<li>Android StudioでEmpty Activityテンプレートを使ってアプリを作成する方法。</li>
-<li>Android Studioでのレイアウトエディタの使い方。</li>
+<li>Android Studio で Hello World アプリを作成できること。</li>
+<li>エミュレータやデバイス上でアプリを実行すること。</li>
+<li>アプリのレイアウトに <code>TextView</code> を実装すること。</li>
+<li>文字列リソースを作成、使用するできること。</li>
 </ul>
-<p>学ぶこと</p>
+<h2 is-upgraded>学ぶこと</h2>
 <ul>
-<li>Androidの開発者情報やリソースを探す場所。</li>
-<li>アプリにランチャーアイコンを追加する方法。</li>
-<li>Androidアプリを開発しているときにヘルプを探す方法。</li>
+<li>XML コードを使って複数の <code>TextView</code> 要素を追加する方法。</li>
+<li>XML コードを使ってスクロールする <code>View</code> を定義する方法</li>
+<li>自由形式のテキストをいくつかの HTML フォーマットタグで表示する方法。</li>
+<li><code>TextView</code> の背景色と文字色のスタイルを設定する方法。</li>
+<li>テキストの中に Web リンクを含める方法。</li>
 </ul>
-<p>あなたがすること</p>
+<h2 is-upgraded>行うこと</h2>
 <ul>
-<li>あらゆるレベルのAndroid開発者が利用できる多くのリソースの一部をご紹介します。</li>
-<li>アプリのランチャーアイコンを追加します。</li>
+<li>ScrollingText アプリを作成します。</li>
+<li><code>ConstraintLayout</code> の <code>ViewGroup</code> を <code>RelativeLayout</code> に変更します。</li>
+<li>記事の見出しと小見出し用に 2 つの <code>TextView</code> 要素を追加します。</li>
+<li>記事の見出しと小見出しに <code>TextAppearance</code> スタイルとカラーを使用します。</li>
+<li>テキスト文字列に HTML タグを使用して書式を制御します。</li>
+<li><code>lineSpacingExtra</code> 属性を使用して、読みやすさのために行間を追加します。</li>
+<li>レイアウトに <code>ScrollView</code> を追加し、<code>TextView</code> 要素のスクロールを可能にします。</li>
+<li><code>autoLink</code> 属性を追加し、テキスト内の URL をアクティブにしてクリックできるようにします。</li>
 </ul>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="アプリの概要" duration="0">
-        <p>このコードラボでは、以前のコードラボで作成したHelloToastアプリのランチャーアイコンを変更します。デフォルトのアイコンを、Android Studio内で利用可能な画像アセットに置き換えます。</p>
-<p class="image-container"><img alt="The app uses the new launcher icon." style="width: 267.00px" src="img/b4c3755de9c148cf.png"></p>
+        <p>Scrolling Text アプリでは、<a href="https://developer.android.com/reference/android/widget/ScrollView.html" target="_blank"><code>ScrollView</code></a> UI コンポーネントを実装しています。<code>ScrollView</code> は、この例では <code>TextView</code> を含む <code>ViewGroup</code> です。この例では、音楽アルバムのレビューという長いテキストのページが表示され、ユーザーは上下にスワイプすることで縦方向にスクロールして読むことができます。右端にはスクロールバーが表示されています。このアプリでは、太字や斜体にするための最小限の HTML タグや、段落を区切るための改行文字を使って、テキストを整形する方法を紹介しています。また、本文中にアクティブな Web リンクを含めることもできます。</p>
+<p class="image-container"><img alt="Scrolling formatted text" style="width: 494.15px" src="img/7a5265ded9f5a41a.png"></p>
+<p>上の図では、次のように表示されています。</p>
+<ol type="1" start="1">
+<li>自由形式のテキストに埋め込まれたアクティブな Web リンク</li>
+<li>テキストをスクロールするときに表示されるスクロールバー</li>
+</ol>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="タスク1 :  ランチャーのアイコンを変更する" duration="0">
-        <p>Android Studioで作成した各アプリは、アプリを表すデフォルトのランチャーアイコンから始まります。ランチャー アイコンは、アプリ アイコンや製品アイコンと呼ばれることもあります。</p>
-<p>Google Playでアプリを公開すると、アプリのランチャーアイコンは、Google Playストアのアプリのリストと検索結果に表示されます。</p>
-<p>Androidを搭載したデバイスにアプリをインストールすると、アプリのランチャーアイコンがデバイスのホーム画面やその他の場所に表示されます。例えば、以下のスクリーンショットに示すように、ランチャーアイコンはデバイスの「アプリ検索」ウィンドウに表示されます。下に示すHelloToastアイコンは、Android Studioで作成するすべてのアプリプロジェクトで使用されるデフォルトのランチャーアイコンです。</p>
-<p class="image-container"><img alt="The standard launcher icon for a new app project appears in the Search Apps screen." style="width: 256.15px" src="img/d23ec66d9f31ee3e.png"></p>
-<p>ランチャーアイコンを変更するプロセスを経て、Android Studio のイメージアセット機能を紹介します。このタスクでは、Androidのドキュメント内のヘルプを見つける方法についても学びます。</p>
-<p>1.1 Androidの公式ドキュメントを探る</p>
-<p>最も便利なAndroidのドキュメントサイトをいくつか見てみて、何が利用できるのかを熟知しましょう: </p>
+      <google-codelab-step label="タスク1:  TextView 要素の追加と編集" duration="0">
+        <p>この実習では、ScrollingText アプリの Android プロジェクトを作成し、記事のタイトルとサブタイトル用の <code>TextView</code> 要素をレイアウトに追加し、既存の &#34;Hello World&#34; <code>TextView</code> 要素を長文の記事を表示するように変更します。下図は、レイアウトの図です。</p>
+<p class="image-container"><img alt="Layout of TextViews" style="width: 473.53px" src="img/d3e367a774f976d4.png"></p>
+<p>これらの変更はすべて、XML コードと <code>strings.xml</code> ファイルで行います。レイアウト用の XML コードは、 デザイン ペインの <strong>Design</strong> タブではなく、 <strong>Text</strong> タブをクリックして表示される テキスト ペインで編集します。UI 要素や属性の変更は、XML ソースコードを使ってテキストペインで直接行う方が簡単な場合もあります。</p>
+<h2 is-upgraded>1.1 プロジェクトと TextView 要素の作成</h2>
+<p>このタスクでは、プロジェクトと <code>TextView</code> 要素を作成し、<code>TextView</code> 属性を使ってテキストと背景のスタイルを設定します。</p>
+<p>ヒント：これらの属性についての詳細は、<a href="https://developer.android.com/reference/android/widget/TextView.html" target="_blank"><code>TextView</code></a> リファレンスを参照してください。</p>
 <ol type="1" start="1">
-<li>developer.android.com にアクセスしてください。この公式のAndroid開発者向けドキュメントは、Googleによって最新の状態に保たれています。</li>
-<li>developer.android.com/design/にアクセスしてください。このサイトでは、高品質なAndroidアプリの外観や機能をデザインするためのガイドラインを提供しています。</li>
-<li>Material.ioというMaterial Designに関するサイトに行きましょう。Material Designは、Androidアプリに限らず、すべてのアプリがモバイルデバイス上でどのように見え、どのように機能するべきかを概説する概念的なデザイン哲学です。マテリアルデザインについて詳しく知りたい方は、リンク先をご覧ください。たとえば、色の使用について学ぶには、「デザイン」タブをクリックし、「色」を選択します。</li>
-<li>developer.android.com/docs/にアクセスして、API情報、リファレンスドキュメント、チュートリアル、ツールガイド、コードサンプルを見つけます。</li>
-<li>developer.android.com/distribute/ にアクセスして、Google Play でアプリを公開するための情報を確認します。Google Play は、Android SDK で開発されたアプリのための Google のデジタル配信システムです。Google Play コンソールを使用して、ユーザーベースを増やし、収入を得ることができます。</li>
+<li>Android Studio で、以下のパラメータを持つ新規プロジェクトを作成します。</li>
 </ol>
-<p>1.2 ランチャーアイコンにイメージアセットを追加する</p>
-<p>このステップでは、HelloToastアプリのランチャーアイコンにクリップアート画像を追加します。</p>
-<ol type="1" start="1">
-<li>レイアウトエディタを使用して前回のコードラボで作成したHelloToastアプリプロジェクトを開くか、新しいアプリプロジェクトを作成します。</li>
-<li>プロジェクト &gt; Androidペインで、resフォルダを右クリック（またはControlキーを押しながらクリック）します。新規作成] &gt; [イメージアセット]を選択します。イメージアセットの設定ダイアログが表示されます。</li>
-</ol>
-<p class="image-container"><img alt="Click the Foreground Layer tab for the launcher icon." style="width: 345.61px" src="img/d28d5cf254c302f1.png"></p>
-<p>  3. Icon Type フィールドで、まだ選択されていない場合は、[Launcher Icons (Adaptive &amp; Legacy)] を選択します。</p>
-<p>  4. 前景レイヤータブをクリックします。アセットタイプでは、下のスクリーンショットの1のように表示されているクリップアートを選択します。</p>
-<p class="image-container"><img alt="bf278706ed49eb5c.png" style="width: 385.78px" src="img/4d2749f2680f556e.png"></p>
-<p>  5. 上のスクリーンショットで2のように表示されているクリップアートフィールドのロボットアイコンをクリックします。アイコンの選択ダイアログが表示され、マテリアルデザインアイコンセットが表示されます。</p>
-<p>  6. アイコンの選択ダイアログをブラウズするか、名前でアイコンを検索します。良いムードを暗示するムードアイコンなどのアイコンを選択します。OKをクリックします。</p>
-<p class="image-container"><img alt="Select an icon." style="width: 429.65px" src="img/a615c59c71be256c.png"></p>
-<p>  7. 画像アセットの設定] ダイアログで [背景レイヤー] タブをクリックします。アセットの種類では、[色] を選択します。カラーチップをクリックし、アイコンの背景レイヤーとして使用する色を選択します。</p>
-<p>  8. レガシー タブをクリックし、デフォルト設定を確認します。レガシー、ラウンド、Google Play ストア アイコンを生成することを確認します。次へ]をクリックします。</p>
-<p>  9. AVDエミュレータまたはAndroid搭載デバイスでアプリを実行します。</p>
-<p>Android Studioは、異なる画面密度用のmipmapディレクトリにランチャーイメージを自動的に追加します。これで、アプリは新しいアイコンを起動アイコンとして使用するようになりました。</p>
-<p class="image-container"><img alt="The app uses the new launcher icon." style="width: 193.15px" src="img/b4c3755de9c148cf.png"></p>
-<p>ヒント：効果的なランチャーアイコンのデザインについては、「マテリアルデザイン製品アイコン」ガイドを参照してください。</p>
-<h2 is-upgraded>タスク2：プロジェクトのテンプレートを使用する</h2>
-<p>Android Studioには、一般的で推奨されるアプリやアクティビティのデザイン用のテンプレートが用意されています。組み込みのテンプレートを使用することで、時間を節約し、デザインのベストプラクティスに従うことができます。</p>
-<p>各テンプレートには、スケルトン アクティビティとユーザー インターフェイスが組み込まれています。Empty Activity（空のアクティビティ）テンプレートはすでに使用しています。基本アクティビティテンプレートには、より多くの機能があり、Android搭載デバイスのアプリバーに表示されるオプションメニューなどの推奨アプリ機能が組み込まれています。</p>
-<p>Basic Activity テンプレートは、Android Studio が提供する汎用性の高いテンプレートで、アプリ開発のスタートアップに役立ちます。</p>
-<ol type="1" start="1">
-<li>Android Studio で、Basic Activity テンプレートを使用するプロジェクトを作成します。言語として Java を選択します。</li>
-<li>アプリをビルドして実行します。</li>
-<li>下の図と表で、ラベルの付いたパーツを識別します。デバイスまたはエミュレータの画面で、同等のものを探します。表に記載されている対応するJavaコードとXMLファイルを確認します。</li>
-</ol>
-<p>Java ソース コードと XML ファイルに精通していると、このテンプレートを自分のニーズに合わせて拡張したり、カスタマイズしたりするのに役立ちます。</p>
-<p>基本アクティビティテンプレートのアーキテクチャ</p>
-<p class="image-container"><img alt="3205526bc473631c.png" style="width: 321.00px" src="img/4e8afc8965445e6.png"></p>
 <table>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
-<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
+<tr><td colspan="1" rowspan="1"><p>属性</p>
+</td><td colspan="1" rowspan="1"><p>値</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Application Name</p>
+</td><td colspan="1" rowspan="1"><p>Scrolling Text</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Company Name</p>
+</td><td colspan="1" rowspan="1"><p>android.example.com (or your own domain)</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Phone and Tablet Minimum SDK</p>
+</td><td colspan="1" rowspan="1"><p>API15: Android 4.0.3 IceCreamSandwich</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Template</p>
+</td><td colspan="1" rowspan="1"><p>Empty Activity</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Generate Layout File checkbox</p>
+</td><td colspan="1" rowspan="1"><p>Selected</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Backwards Compatibility (AppCompat) checkbox</p>
+</td><td colspan="1" rowspan="1"><p>Selected</p>
+</td></tr>
 </table>
-<p>UIの説明</p>
-<p>コードリファレンス</p>
-<p>Androidシステムが提供し、制御するステータスバー。</p>
-<p>テンプレートコードでは見えませんが、アクティビティからステータスバーにアクセスすることができます。例えば、MainActivity.javaにコードを追加して、必要に応じてステータスバーを非表示にすることができます。</p>
-<p>アプリバーは、アクションバーとも呼ばれ、ビジュアル構造、標準化されたビジュアル要素、ナビゲーションを提供します。</p>
-<p>activity_main.xmlで、AppBarLayout要素の中にあるToolbarinsideを探します。下位互換性のために、テンプレート内のAppBarLayoutには、アクション・バーと同じ機能を持つツールバーが埋め込まれています。アプリ・バーのチュートリアルについては、アプリ・バーの追加を参照してください。</p>
-<p>アプリ名は、最初はパッケージ名から派生していますが、好きな名前に変更できます。</p>
-<p>AndroidManifest.xmlで、android:label=&#34;@string/app_name &#34;を探します。strings.xmlでapp_nameの文字列を指定します。</p>
-<p>オプションメニューのオーバーフローボタンは、アクティビティのメニュー項目を保持します。オーバーフローボタンは、アプリの検索や設定などのグローバルメニューオプションも保持します。アプリのメニュー項目は、このメニューに入ります。</p>
-<p>MainActivity.java では、onOptionsItemSelected() メソッドは、ユーザーがメニュー項目を選択したときに何が起こるかを実装しています。オプション メニュー項目を表示するには、res/menu/menu_main.xml ファイルを開きます。このテンプレートでは、設定メニュー項目のみが指定されています。</p>
-<p>CoordinatorLayout ViewGroup は、UI 要素が相互作用するメカニズムを提供するレイアウトです。アプリの UI は content_main.xml ファイルの中にあり、この ViewGroup に含まれています。</p>
-<p>activity_main.xmlで、include layout命令を探してください。このレイアウトではビューは指定されていません。代わりに、レイアウトにはcontent_mainレイアウトが含まれており、ここではアプリのビューが指定されています。システム ビューは、アプリに固有のビューとは別に保持されます。</p>
-<p>テンプレートでは、&#34;Hello World &#34;を表示するためにTextViewを使用しています。このTextViewをアプリのUI要素に置き換えます。</p>
-<p>Hello World」テキストビューはcontent_main.xmlファイルにあります。アプリのすべてのUI要素は、このファイルで定義する必要があります。</p>
-<p>フローティングアクションボタン（FAB</p>
-<p>activity_main.xmlで、FloatingActionButton要素を探します。FABは、クリップアートアイコンを使用したUI要素として定義されています。MainActivity.javaには、FABのためのonClick()リスナーを設定するonCreate()のスタブが含まれています。</p>
-<p>2.2 テンプレートが生成するアプリをカスタマイズする</p>
-<p>基本アクティビティテンプレートで生成されたアプリの外観を変更します。例えば、アプリバーの色をステータスバーに合わせて変更することができます(一部のデバイスでは、ステータスバーはアプリバーが使用しているのと同じ原色の濃い色合いになっています)。また、フローティングアクションボタン（FAB）を使用しない場合は削除することもできます。</p>
-<p>  1. アプリバーが表示するアプリの名前を変更します。これを行うには、string.xmlファイル内のapp_name文字列リソースを以下のように変更します。</p>
-<p>  2. activity_main.xml内のアプリバー（ツールバー）の色を変更するには、android:background属性を&#34;?attr/colorPrimaryDark &#34;に変更します。この値は、アプリバーの色をステータスバーと一致する暗い原色に設定します。</p>
-<p>  3. FAB を削除するには、まず、ボタンの onClick() リスナーを設定する onCreate() のスタブ コードを削除します。MainActivity.java を開き、次のコードのブロックを削除します。</p>
-<p> 4. レイアウトからFABを削除するには、activity_main.xmlから次のXMLコードのブロックを削除します。</p>
-<p>  5. アプリを実行します。FABが表示されなくなり、名前が変更され、アプリバーの背景色が濃くなり、ステータスバーの色と一致するようになりました。</p>
-<p class="image-container"><img alt="6cae8913f551e441.png" style="width: 220.00px" src="img/8dd6cbb331a722e3.png"></p>
-<p>ヒント。リソースにアクセスするためのXML構文の詳細については、「アプリのリソースにアクセスする」を参照してください。</p>
-<p>2.3 テンプレートを使ってアクティビティを追加する方法を探る</p>
-<p>これまでのこのコースのコードラボでは、新しいプロジェクトを開始する際に Empty Activity と Basic Activity のテンプレートを使用してきました。アクティビティのクラスについては別のレッスンで学びます）プロジェクトの作成後にアクティビティを作成する際にも、アクティビティテンプレートを使用することができます。</p>
-<ol type="1" start="1">
-<li>アプリ プロジェクトを作成するか、既存のプロジェクトを選択します。</li>
-<li>プロジェクト &gt; Android ペインで、java フォルダを右クリックします。</li>
-<li>新規作成 &gt; アクティビティ &gt; ギャラリーを選択します。</li>
-<li>アクティビティ テンプレートの 1 つを選択して、アプリにアクティビティを追加します。たとえば、ナビゲーション ドローワー アクティビティを選択して、ナビゲーション ドローワーを持つアクティビティを追加します。</li>
-<li>レイアウト エディタでアクティビティを表示するには、アクティビティのレイアウト ファイル（例： activity_main2.xml）をダブルクリックします。デザイン] タブと [テキスト] タブを使用して、アクティビティのレイアウト プレビューとレイアウト コードを切り替えます。</li>
+<ol type="1" start="2">
+<li><strong>app</strong> &gt; <strong>res</strong> &gt; <strong>layout</strong> フォルダの <strong>Project</strong> &gt; <strong>Android</strong> ペインで、 <strong>activity_main.xml</strong> ファイルを開き、 <strong>Text</strong> タブをクリックすると、XML コードが表示されます。</li>
 </ol>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="タスク3：サンプルコードから学ぶ" duration="0">
-        <p>GitHub の Google Samples リポジトリには、Android のコードサンプルが用意されています。</p>
-<h2 is-upgraded>3.1 Android コードサンプル</h2>
-<p>Android Studio内から直接コードサンプルを探索することができます。</p>
-<ol type="1" start="1">
-<li>Android Studio で、[ファイル] &gt; [新規作成] &gt; [サンプルのインポート] を選択します。</li>
-<li>サンプルをブラウズします。</li>
-<li>サンプルを選択し、[次へ] をクリックします。</li>
-<li>デフォルト値を受け入れて、[Finish（完了）] をクリックします。</li>
+<p><code>View</code> 階層の一番上、つまりルートにあるのが <a href="https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html" target="_blank"><code>ConstraintLayout</code></a> <code>ViewGroup</code> です。</p>
+<pre><code>android.support.constraint.ConstraintLayout</code></pre>
+<ol type="1" start="3">
+<li>この <code>ViewGroup</code> を <a href="https://developer.android.com/reference/android/widget/RelativeLayout.html" target="_blank"><code>RelativeLayout</code></a> に変更します。2 行目のコードは次のようになります。</li>
 </ol>
-<p>注: ここに記載されているサンプルは、さらなる開発のための出発点として意図されています。あなた自身のアイデアをデザインして、それらに組み込んでいくことをお勧めします。</p>
-<h2 is-upgraded>3.2 SDKマネージャを使用してオフラインドキュメントをインストールする</h2>
-<p>Android Studio をインストールすると、Android SDK (Software Development Kit) の要点もインストールされます。ただし、追加のライブラリやドキュメントも用意されており、SDKマネージャーを使用してインストールすることができます。</p>
-<ol type="1" start="1">
-<li>[ツール] &gt; [Android] &gt; [SDK マネージャ] を選択します。</li>
-<li>左側の列で、Android SDKをクリックします。</li>
-<li>画面上部にある Android SDK Location のパスを選択してコピーします。</li>
+<pre><code>&lt;RelativeLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;</code></pre>
+<p><code>RelativeLayout</code> は、UI 要素を相対的に配置したり、親となる <code>RelativeLayout</code> 自体を相対的に配置したりすることができます。</p>
+<p>Empty Layout テンプレートで作成されたデフォルトの &#34;Hello World&#34; <code>TextView</code> 要素には、制約属性（<code>app:layout_constraintBottom_toBottomOf="parent"</code> など）が残っています。次のステップで削除しますので、ご安心ください。</p>
+<ol type="1" start="4">
+<li><code>ConstraintLayout</code> に関連する XML コードの次の行を削除します。</li>
 </ol>
-<p class="image-container"><img alt="The Android SDK Location" style="width: 641.76px" src="img/30baf8b7dbd88062.png"></p>
-<p>  4. SDK Platformsタブをクリックします。ここからAndroidの追加バージョンをインストールすることができます。</p>
-<p>  5. SDK Update Sitesタブをクリックします。Android Studio は、リストされたサイトと選択されたサイトを定期的にチェックして更新を行います。</p>
-<p>  6. SDK Tools タブをクリックします。デフォルトではインストールされていないSDKツールの追加インストールや、Android開発者向けドキュメントのオフライン版をインストールすることができます。</p>
-<p>  7. まだインストールされていない場合は、「Android SDK用ドキュメント」のチェックボックスを選択し、[適用]をクリックします。</p>
-<p>  8. インストールが完了したら、「完了」をクリックします。</p>
-<p>  9. 上記でコピーしたsdkディレクトリに移動し、docsディレクトリを開きます。</p>
-<p>  10. index.htmlを見つけて開きます。</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="タスク4：他のリソース" duration="0">
-        <ul>
-<li>Android DeveloperのYouTubeチャンネルでは、チュートリアルやヒントを紹介しています。</li>
-<li>Android チームは Android 公式ブログでニュースやヒントを投稿しています。</li>
-<li>Stack Overflow は、プログラマー同士が助け合うコミュニティです。問題に遭遇した場合、誰かがすでに答えを投稿している可能性が高いです。例えば、&#34;How do I set up and use ADB over WiFi? &#34;や &#34;What are the most common memory leaks in Android development? &#34;などの質問を投稿してみてください。</li>
-<li>そして最後になりますが、Google検索に質問を入力すると、Google検索エンジンはこれらすべてのリソースから関連する結果を収集してくれます。例えば、&#34;インドで最も人気のあるAndroid OSのバージョンは？&#34; などです。</li>
-</ul>
-<h2 is-upgraded>4.1 Stack Overflowでタグを使って検索する</h2>
-<p>Stack Overflowの検索ボックスに[android]と入力してください。タグが付けられている投稿を検索したい場合は、[]カッコの中にAndroidに関するタグが付けられていることを示しています。</p>
-<p>タグと検索語を組み合わせて、より具体的に検索することができます。以下の検索を試してみてください。</p>
+<pre><code>xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;</code></pre>
+<p>一番上の XML コードのブロックは次のようになります。</p>
+<pre><code>&lt;RelativeLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.scrollingtext.MainActivity&#34;&gt;</code></pre>
+<ol type="1" start="5">
+<li>&lt;TextView&gt; と入力して、 &#34;Hello World&#34; <code>TextView</code> の上に <code>TextView</code> 要素を追加します。<code>TextView</code> のブロックは <code>/></code> で終わり、<code>TextView</code> に必要な <code>layout_width</code>、<code>layout_height</code> 属性が表示されます。</li>
+<li><code>TextView</code> に必要な以下の属性を入力します。各属性と値を入力すると、属性名や値を補完するための候補が表示されます。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p><code>TextView #1 属性</code></p>
+</td><td colspan="1" rowspan="1"><p><code>値</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_width</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"match_parent"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"wrap_content"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/article_heading"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:background</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@color/colorPrimary"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:textColor</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@android:color/white"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:padding</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"10dp"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:textAppearance</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@android:style/TextAppearance.DeviceDefault.Large"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:textStyle</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"bold"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"Article Title"</code></p>
+</td></tr>
+</table>
+<ol type="1" start="7">
+<li><code>TextView</code> の <code>android:text</code> 属性のハードコードされた文字列 <code>"Article Title"</code> の文字列リソースを抽出して、<strong>strings.xml</strong> にエントリを作成します。</li>
+</ol>
+<p>ハードコードされた文字列にカーソルを置き、Alt-Enter（MacではOption-Enter）を押し、<strong>Extract string resource</strong> を選択します。<strong>Create the resource in directories</strong> オプションが選択されていることを確認し、文字列値のリソース名を <strong>article_title </strong>に編集します。</p>
+<p>文字列リソースについては、 <a href="https://developer.android.com/guide/topics/resources/string-resource.html" target="_blank">文字列リソース</a> で詳しく説明しています。</p>
+<ol type="1" start="8">
+<li>TextView の<code>android:padding</code> 属性のハードコードされた文字列 <code>"10dp"</code> のディメンションリソースを抽出して <code>dimens.xml</code> を作成し、エントリを追加します。</li>
+</ol>
+<p>ハードコードされた文字列にカーソルを置き、Alt-Enter（MacではOption-Enter）を押して、<strong>Extract string resource</strong> を選択します。<strong>Create the resource in directories</strong> オプションが選択されていることを確認し、 Resource name を <strong>padding_regular</strong> に編集します。</p>
+<ol type="1" start="9">
+<li>&#34;Hello World&#34;  <code>TextView</code> の上と、前のステップで作成した <code>TextView</code> の下に、もう1つ <code>TextView</code> 要素を追加します。<code>TextView</code> に以下の属性を追加します。</li>
+</ol>
+<table>
+<tr><td colspan="1" rowspan="1"><p><code>TextView #2 属性</code></p>
+</td><td colspan="1" rowspan="1"><p><code>値</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>layout_width</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"match_parent"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"wrap_content"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/article_subheading"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_below</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@id/article_heading"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:padding</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@dimen/padding_regular"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:textAppearance</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@android:style/TextAppearance.DeviceDefault"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"Article Subtitle"</code></p>
+</td></tr>
+</table>
+<p>先に作成した <code>TextView</code> で <code>"10dp"</code> という文字列の寸法リソースを <code>padding_regular</code> に抽出したので、この <code>TextView</code> の <code>android:padding</code>属性には <code>"@dimen/padding_regular"</code> を使うことができます。</p>
+<p>10. <code>TextView</code> の <code>android:text</code> 属性のハードコードされた文字列 <code>"Article Subtitle"</code> の文字列リソースを <strong>article_subtitle </strong>に展開します。</p>
+<p>11. &#34;Hello World&#34; の <code>TextView</code> 要素では、<code>layout_constraint</code> 属性を削除します。</p>
+<pre><code>app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+app:layout_constraintLeft_toLeftOf=&#34;parent&#34;
+app:layout_constraintRight_toRightOf=&#34;parent&#34;
+app:layout_constraintTop_toTopOf=&#34;parent&#34; </code></pre>
+<p>12. &#34;Hello World&#34; の <code>TextView</code> 要素に、以下の <code>TextView</code> 属性を追加し、<code>android:text</code> 属性を変更します。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><code>TextView 属性</code></p>
+</td><td colspan="1" rowspan="1"><p><code>値</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@+id/article"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:layout_below</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@id/article_subheading"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:lineSpacingExtra</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"5sp"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:padding</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"@dimen/padding_regular"</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>android:text</code></p>
+</td><td colspan="1" rowspan="1"><p><code>"Article text"</code></p>
+</td></tr>
+</table>
+<p>13. <code>"Article text"</code> の文字列リソースを <code>article_text</code> に、<code>"5sp"</code> の寸法リソースを <strong>line_spacing</strong> に抽出します。</p>
+<p>14.  <strong>Code</strong> &gt; <strong>Reformat Code</strong> を選択して、コードの再フォーマットとアライメント(配置)を行います。自分や他の人が理解しやすいように、コードを再フォーマットして整列させるのは良い習慣です。</p>
+<h2 is-upgraded>1.2 記事のテキストを追加する</h2>
+<p>雑誌や新聞の記事にアクセスする実際のアプリでは、表示される記事はおそらくコンテンツプロバイダを通じてオンラインソースから送られてくるか、あるいはデバイス上のデータベースにあらかじめ保存されているかもしれません。</p>
+<p>今回の実用では、記事を <code>string.xml</code> リソースで1つの長い文字列として作成します。</p>
+<ol type="1" start="1">
+<li><strong>app</strong> &gt; <strong>res</strong> &gt; <strong>values</strong> フォルダで、<strong>strings.xml </strong>を開きます。</li>
+<li>文字数の多いテキストファイルを開くか、<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/blob/master/ScrollingText/app/src/main/res/values/strings.xml" target="_blank">完成したScrollingTextアプリのstrings.xmlファイル</a> を開きます。</li>
+<li><code>article_title</code> と <code>article_subtitle</code> の文字列の値は、タイトルとサブタイトルを作って入力するか、ScrollingText アプリの完成品の strings.xml ファイルの値を使用してください。文字列の値は、HTML タグや複数行を含まない1行のテキストにしてください。</li>
+<li><code>article_text</code> には、文字列を入力するか、コピー＆ペーストしてください。</li>
+</ol>
+<p>テキストファイルのテキストを使用するか、完成した ScrollingText アプリの strings.xml ファイルの <code>article_text</code> 文字列に提供されているテキストを使用します。このタスクの唯一の要件は、テキストが画面に収まらないほどの長さであることです。</p>
+<p>以下の点に注意してください（例として下図を参照してください）。</p>
 <ul>
-<li>[アンドロイド]と[レイアウト]</li>
-<li>[アンドロイド] &#34;Hello World&#34;</li>
+<li><code>strings.xml</code> ファイルにテキストを入力したり貼り付けたりすると、テキストの行が次の行に折り返されず、右マージンからはみ出してしまいます。これは正しい動作で、左マージンから始まるテキストの各行が段落全体を表しています。<code>strings.xml</code> のテキストを折り返して表示したい場合は、Return キーを押して改行コードを入力するか、改行コードを保存するテキストエディタで最初にテキストをフォーマットします。</li>
+<li>改行を表すには行末に \n を、空行を表すには \n のみを入力します。段落同士がぶつからないようにするためには、行末の文字を追加する必要があります。</li>
+<li>文章中にアポストロフィ（<code>'</code>）がある場合は、アポストロフィの前にバックスラッシュ（<code>\</code>）を付けてエスケープする必要があります。文章中にダブルクオートがある場合も、それをエスケープしなければなりません（<code>"</code>）。その他の非ASCII文字もエスケープする必要があります。詳細は、文字列リソースの <a href="https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling" target="_blank">フォーマットとスタイル</a> のセクションを参照してください。</li>
+<li>太字にしたい場合は、HTML の &lt;b&gt; および &lt;/b&gt; タグを入力してください。</li>
+<li>イタリック体にしたい場合は、HTML の &lt;i&gt; および &lt;/i&gt; タグを入力してください。イタリック体のフレーズの中でカールしたアポストロフィーを使用している場合は、ストレートなアポストロフィー（<code>'</code>）に置き換えてください。<em>（補足：英語文化圏では、引用符にカールしたアポストロフィーを使います）</em></li>
+<li>&lt;b&gt;&lt;i&gt;...単語...&lt;/i&gt;&lt;/b&gt; のように、タグを組み合わせることで、ボールドとイタリックを組み合わせることができます。その他の HTML タグは無視されます。</li>
+<li><code>strings.xml</code> ファイル内の <code>&lt;string name="article_text"&gt; &lt;/string&gt;</code> でテキスト全体を囲みます。</li>
+<li>www.google.com のように、テスト用の Web リンクを含める。(以下の例では、<code>www.rockument.com</code> を使用しています。) HTML タグは使用しないでください。太字と斜体のタグ以外の HTML タグは無視され、テキストとして表示されます。</li>
 </ul>
-<p>Stack Overflow での検索方法の詳細については、Stack Overflow ヘルプセンターを参照してください。</p>
+<p class="image-container"><img alt="The Article Text with HTML Tags" style="width: 641.76px" src="img/f19547ac6f6d25b.png"></p>
+<h2 is-upgraded>1.3 アプリの実行</h2>
+<p>アプリを実行します。記事が表示されますが、まだ <code>ScrollView</code> を入れていないので、ユーザーは記事をスクロールできません（次のタスクで行います）。また、Web リンクをタップしても何もできないことに注意してください。これも次のタスクで修正します。</p>
+<p class="image-container"><img alt="The text of the article appears but doesn&#39;t scroll." style="width: 203.06px" src="img/4bfc98aacba2673f.png"></p>
+<h2 is-upgraded>タスク1のソリューションコード</h2>
+<p><code>activity_main.xml</code> レイアウトファイルは以下のようになっています。</p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+&lt;RelativeLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+   xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+   android:layout_width=&#34;match_parent&#34;
+   android:layout_height=&#34;match_parent&#34;
+   tools:context=&#34;com.example.android.scrollingtext.MainActivity&#34;&gt;
+
+   &lt;TextView
+      android:layout_width=&#34;match_parent&#34;
+      android:layout_height=&#34;wrap_content&#34;
+      android:id=&#34;@+id/article_heading&#34;
+      android:background=&#34;@color/colorPrimary&#34;
+      android:padding=&#34;@dimen/padding_regular&#34;
+      android:text=&#34;@string/article_title&#34;
+      android:textAppearance=
+                  &#34;@android:style/TextAppearance.DeviceDefault.Large&#34;
+      android:textColor=&#34;@android:color/white&#34;
+      android:textStyle=&#34;bold&#34; /&gt;
+
+   &lt;TextView
+      android:layout_width=&#34;match_parent&#34;
+      android:layout_height=&#34;wrap_content&#34;
+      android:id=&#34;@+id/article_subheading&#34;
+      android:layout_below=&#34;@id/article_heading&#34;
+      android:padding=&#34;@dimen/padding_regular&#34;
+      android:text=&#34;@string/article_subtitle&#34;
+      android:textAppearance=
+                  &#34;@android:style/TextAppearance.DeviceDefault&#34; /&gt;
+
+   &lt;TextView
+      android:layout_width=&#34;wrap_content&#34;
+      android:layout_height=&#34;wrap_content&#34;
+      android:id=&#34;@+id/article&#34;
+      android:layout_below=&#34;@id/article_subheading&#34;
+      android:lineSpacingExtra=&#34;@dimen/line_spacing&#34;
+      android:padding=&#34;@dimen/padding_regular&#34;
+      android:text=&#34;@string/article_text&#34; /&gt;
+
+&lt;/RelativeLayout&gt;</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク2:  ScrollView とアクティブな Web リンクの追加" duration="0">
+        <p>前のタスクでは、記事のタイトル、サブタイトル、および長い記事テキスト用の <code>TextView</code> 要素を持つ ScrollingText アプリを作成しました。また、Web リンクを追加しましたが、リンクはまだアクティブではありません。それをアクティブにするためのコードを追加します。</p>
+<p>また、<code>TextView</code> だけでは、ユーザーが記事のテキストをスクロールしてすべてを見ることができません。XML レイアウトに <code>ScrollView</code> という新しい <code>ViewGroup</code> を追加して、<code>TextView</code> をスクロールできるようにします。</p>
+<h2 is-upgraded>2.1 アクティブなWebリンクのためのautoLink属性の追加</h2>
+<p>記事を表す <code>article</code> の <code>TextView</code> に <code>android:autoLink="web"</code> 属性を追加します。この<code>TextView</code> の XML コードは次のようになります。</p>
+<pre><code>&lt;TextView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:id=&#34;@+id/article&#34;
+        android:autoLink=&#34;web&#34;
+        android:layout_below=&#34;@id/article_subheading&#34;
+        android:lineSpacingExtra=&#34;@dimen/line_spacing&#34;
+        android:padding=&#34;@dimen/padding_regular&#34;
+        android:text=&#34;@string/article_text&#34; /&gt;</code></pre>
+<h2 is-upgraded>2.2 ScrollViewのレイアウトへの追加</h2>
+<p><code>View</code>（<code>TextView</code>など）をスクロール可能にするには、<code>ScrollView</code> の中に <code>View</code> を埋め込みます。</p>
+<ol type="1" start="1">
+<li><code>article_subheading</code> <code>TextView</code> と <code>article</code> <code>TextView</code> の間に <code>ScrollView</code> を追加します。&lt;ScrollView&gt;と入力すると、Android Studio は自動的に最後に<code>&lt;/ScrollView&gt;</code>を追加し、<code>android:layout_width</code>と<code>android:layout_height</code> 属性の候補を表示します。</li>
+<li>両方の属性の候補から <code>wrap_content</code> を選びます。</li>
+</ol>
+<p>これで、2 つの <code>TextView</code> 要素と <code>ScrollView</code> のコードは次のようになりました。</p>
+<pre><code>&lt;TextView
+   android:layout_width=&#34;match_parent&#34;
+   android:layout_height=&#34;wrap_content&#34;
+   android:id=&#34;@+id/article_subheading&#34;
+   android:layout_below=&#34;@id/article_heading&#34;
+   android:padding=&#34;@dimen/padding_regular&#34;
+   android:text=&#34;@string/article_subtitle&#34;
+        android:textAppearance=
+                     &#34;@android:style/TextAppearance.DeviceDefault&#34;/&gt;
+
+&lt;ScrollView
+   android:layout_width=&#34;wrap_content&#34;
+   android:layout_height=&#34;wrap_content&#34;&gt;&lt;/ScrollView&gt;
+
+&lt;TextView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:id=&#34;@+id/article&#34;
+        android:autoLink=&#34;web&#34;
+        android:layout_below=&#34;@id/article_subheading&#34;
+        android:lineSpacingExtra=&#34;@dimen/line_spacing&#34;
+        android:padding=&#34;@dimen/padding_regular&#34;
+        android:text=&#34;@string/article_text&#34; /&gt;</code></pre>
+<ol type="1" start="3">
+<li>末尾の <code>&lt;/ScrollView&gt;</code> コードを <code>article</code> <code>TextView</code> の後に移動し、<code>article</code> <code>TextView</code> の属性が全て <code>ScrollView</code> の中に入るようにします。</li>
+<li>次の属性を <code>article</code> <code>TextView</code> から削除し、<code>ScrollView</code> に追加します。</li>
+</ol>
+<pre><code>android:layout_below=&#34;@id/article_subheading&#34;</code></pre>
+<p>上記の属性を設定すると、<code>ScrollView</code> 要素は記事の小見出しの下に表示されます。記事は<code>ScrollView</code> 要素の中にあります。</p>
+<ol type="1" start="5">
+<li><strong>Code &gt; Reformat Code</strong> を選択してXMLコードを再フォーマットし、<code>article</code> <code>TextView</code> が <code>&lt;ScrollView&gt;</code> コードの中でインデントされて表示されるようにします。</li>
+<li>レイアウトエディタの右側にある <strong>Preview</strong> タブをクリックすると、レイアウトのプレビューが表示されます。</li>
+</ol>
+<p>次の図の右側のようなレイアウトになりました。</p>
+<p class="image-container"><img alt="The Layout with a ScrollView" style="width: 325.53px" src="img/b0f7614be7c4c904.png"></p>
+<h2 is-upgraded>2.3 アプリの実行</h2>
+<p>テキストがどのようにスクロールするかを調べるには:</p>
+<ol type="1" start="1">
+<li>端末やエミュレータでアプリを実行します。</li>
+</ol>
+<p>上下にスワイプして記事をスクロールします。スクロールすると、右余白にスクロールバーが表示されます。</p>
+<p>Web リンクをタップすると、その Web ページに移動します。<code>android:autoLink</code> 属性は、<code>TextView</code> 内の認識可能な URL（<code>www.rockument.com</code> など）を Web リンクに変換します。</p>
+<ol type="1" start="2">
+<li>アプリの実行中に端末やエミュレータを回転(縦横に傾ける)させてみてください。スクロールビューがディスプレイいっぱいに広がっても、きちんとスクロールしていることがわかります。</li>
+<li>タブレットまたはタブレットエミュレータでアプリを実行します。スクロールビューがディスプレイ全体に広がり、適切にスクロールすることがわかります。</li>
+</ol>
+<p class="image-container"><img alt="Scrolling formatted text" style="width: 427.53px" src="img/7a5265ded9f5a41a.png"></p>
+<p>上の図では、次のように表示されています。</p>
+<ol type="1" start="1">
+<li>自由形式のテキストに埋め込まれたアクティブなWebリンク</li>
+<li>テキストをスクロールするときに表示されるスクロールバー</li>
+</ol>
+<h2 is-upgraded>タスク2: 解答のコード</h2>
+<p>スクロールビューを使ったレイアウトの XML コードは以下の通りです。</p>
+<pre><code>&lt;RelativeLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.scrollingtext.MainActivity&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/article_heading&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:background=&#34;@color/colorPrimary&#34;
+        android:padding=&#34;@dimen/padding_regular&#34;
+        android:text=&#34;@string/article_title&#34;
+        android:textAppearance=
+                  &#34;@android:style/TextAppearance.DeviceDefault.Large&#34;
+        android:textColor=&#34;@android:color/white&#34;
+        android:textStyle=&#34;bold&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/article_subheading&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_below=&#34;@id/article_heading&#34;
+        android:padding=&#34;@dimen/padding_regular&#34;
+        android:text=&#34;@string/article_subtitle&#34;
+        android:textAppearance=
+                  &#34;@android:style/TextAppearance.DeviceDefault&#34; /&gt;
+
+    &lt;ScrollView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_below=&#34;@id/article_subheading&#34;&gt;
+
+        &lt;TextView
+            android:id=&#34;@+id/article&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:autoLink=&#34;web&#34;
+            android:lineSpacingExtra=&#34;@dimen/line_spacing&#34;
+            android:padding=&#34;@dimen/padding_regular&#34;
+            android:text=&#34;@string/article_text&#34; /&gt;
+
+    &lt;/ScrollView&gt;
+
+&lt;/RelativeLayout&gt;</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="タスク3: 複数要素のスクロール" duration="0">
+        <p>前述の通り、<code>ScrollView</code> は1つの子 <code>View</code>(作成した記事の <code>article</code> <code>TextView</code> など)しか含むことができません。しかし、その <code>View</code> は、<a href="https://developer.android.com/reference/android/widget/LinearLayout.html" target="_blank"><code>LinearLayout</code></a> のような <code>View</code> 要素を含む別の <code>ViewGroup</code> にすることができます。<code>ScrollView</code> の中に <code>LinearLayout</code> などの <code>ViewGroup</code> を入れ子にすることで、<code>LinearLayout</code> の中にある全てのものをスクロールすることができます。</p>
+<p>例えば、記事の小見出しを記事と一緒にスクロールさせたい場合は、<code>ScrollView</code> 内に <code>LinearLayout</code> を追加し、小見出しと記事を <code>LinearLayout</code> 内に移動させます。下図のように、<code>LinearLayout</code> は <code>ScrollView</code> の単一の子 <code>View</code> となり、ユーザーは <code>LinearLayout</code> 全体（小見出しと記事）をスクロールすることができます。</p>
+<p class="image-container"><img alt="A LinearLayout inside the ScrollView" style="width: 431.53px" src="img/9c92fccacc59c713.png"></p>
+<h2 is-upgraded>3.1 ScrollView に LinearLayout を追加する</h2>
+<ol type="1" start="1">
+<li>ScrollingText アプリプロジェクトの <strong>activity_main.xml</strong> ファイルを開き、<strong>Text</strong> タブを選択して(まだ選択されていない場合) 、XML コードを編集します。</li>
+<li><code>ScrollView</code> の中の記事の <code>article</code> <code>TextView</code> の上に <code>LinearLayout</code> を追加します。&lt;LinearLayout&gt; と入力すると、Android Studio は自動的に末尾に <code>&lt;/LinearLayout&gt;</code> を追加し、<code>android:layout_width</code> と <code>android:layout_height</code> 属性の候補を提示します。その幅と高さの候補から、それぞれ match_parent と wrap_content を選びます。<code>ScrollView</code> の最初のコードは次のようになります。</li>
+</ol>
+<pre><code>&lt;ScrollView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_below=&#34;@id/article_subheading&#34;&gt;
+        
+        &lt;LinearLayout
+            android:layout_width=&#34;match_parent&#34;
+            android:layout_height=&#34;wrap_content&#34;&gt;&lt;/LinearLayout&gt;
+
+        &lt;TextView
+            android:id=&#34;@+id/article&#34;</code></pre>
+<p><code>match_parent</code> を使用して、親 <code>ViewGroup</code> の幅に合わせます。<code>wrap_content</code> を使用して <code>LinearLayout</code>のサイズを変更し、コンテンツを囲むのに十分な大きさにします。</p>
+<ol type="1" start="3">
+<li>最後の <code>&lt;/LinearLayout&gt;</code> コードを、記事の <code>article</code> <code>TextView</code> の後、<code>&lt;/ScrollView&gt;</code> の前に移動します。</li>
+</ol>
+<p>これで <code>LinearLayout</code> は記事の <code>article</code> <code>TextView</code> を含み、完全に <code>ScrollView</code> の中に入りました。</p>
+<ol type="1" start="4">
+<li><code>LinearLayout</code> に <code>android:orientation="vertica"</code> 属性を追加して、向きを垂直にします。</li>
+<li><strong>Code &gt; Reformat Code</strong> を選択して、コードを正しくインデントづけします。</li>
+</ol>
+<p>これで <code>LinearLayout</code> は次のようになります : </p>
+<pre><code>&lt;ScrollView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_below=&#34;@id/article_subheading&#34;&gt;
+
+        &lt;LinearLayout
+            android:layout_width=&#34;match_parent&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:orientation=&#34;vertical&#34;&gt;
+
+            &lt;TextView
+                android:id=&#34;@+id/article&#34;
+                android:layout_width=&#34;wrap_content&#34;
+                android:layout_height=&#34;wrap_content&#34;
+                android:autoLink=&#34;web&#34;
+                android:lineSpacingExtra=&#34;@dimen/line_spacing&#34;
+                android:padding=&#34;@dimen/padding_regular&#34;
+                android:text=&#34;@string/article_text&#34; /&gt;
+        &lt;/LinearLayout&gt;
+
+&lt;/ScrollView&gt;</code></pre>
+<h2 is-upgraded>3.2 LinearLayout 内での UI 要素の移動</h2>
+<p><code>LinearLayout</code> は今、1 つのUI要素として記事の <code>article</code> <code>TextView</code> だけを持っています。<code>article_subheading</code> <code>TextView</code> を <code>LinearLayout</code> の中に入れて、両方がスクロールするようにしたいと思います。</p>
+<ol type="1" start="1">
+<li><code>article_subheading</code> <code>TextView</code> を移動するには、コードを選択し、<strong>Edit &gt; Cut</strong> を選択し、<code>LinearLayout</code> 内の <code>article</code> <code>TextView</code> の上をクリックして、<strong>Edit &gt; Paste</strong> を選択します。</li>
+<li><code>article_subheading</code> <code>TextView</code> から <code>android:layout_below="@id/article_heading"</code> 属性を削除します。この <code>TextView</code> は <code>LinearLayout</code> の中に入っているので、この属性は <code>LinearLayout</code> の属性と衝突してしまいます。</li>
+<li><code>ScrollView</code> の layout 属性を <code>android:layout_below="@id/article_subheading"</code> から<code>android:layout_below="@id/article_heading"</code> に変更します。小見出しが <code>LinearLayout</code> の一部になったことで、<code>ScrollView</code> は小見出しではなく、見出しの下に配置しなければなりません。</li>
+</ol>
+<p><code>ScrollView</code> の XML コードは以下のようになります : </p>
+<pre><code>&lt;ScrollView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_below=&#34;@id/article_heading&#34;&gt;
+
+        &lt;LinearLayout
+            android:layout_width=&#34;match_parent&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:orientation=&#34;vertical&#34;&gt;
+
+            &lt;TextView
+                android:id=&#34;@+id/article_subheading&#34;
+                android:layout_width=&#34;match_parent&#34;
+                android:layout_height=&#34;wrap_content&#34;
+                android:padding=&#34;@dimen/padding_regular&#34;
+                android:text=&#34;@string/article_subtitle&#34;
+                android:textAppearance=
+                     &#34;@android:style/TextAppearance.DeviceDefault&#34; /&gt;
+
+            &lt;TextView
+                android:id=&#34;@+id/article&#34;
+                android:layout_width=&#34;wrap_content&#34;
+                android:layout_height=&#34;wrap_content&#34;
+                android:autoLink=&#34;web&#34;
+                android:lineSpacingExtra=&#34;@dimen/line_spacing&#34;
+                android:padding=&#34;@dimen/padding_regular&#34;
+                android:text=&#34;@string/article_text&#34; /&gt;
+        &lt;/LinearLayout&gt;
+
+&lt;/ScrollView&gt;</code></pre>
+<ol type="1" start="4">
+<li>アプリを起動します。</li>
+</ol>
+<p>上下にスワイプして記事をスクロールさせると、小見出しが記事と一緒にスクロールし、見出しは固定されていることに気づきます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="解答のコード" duration="0">
+        <p>Android Studio プロジェクト: <a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/ScrollingText" target="_blank">ScrollingText</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="コーディングの挑戦" duration="0">
+        <aside class="special"><p><strong>注</strong>：すべてのコーディングチャレンジは任意であり、後のレッスンの前提条件ではありません。</p>
+</aside>
+<p>課題: <code>ScrollView</code> 内の <code>LinearLayout</code> に別の UI 要素（<a href="https://developer.android.com/reference/android/widget/Button.html" target="_blank"><code>Button</code></a>）を追加し、テキストと一緒にスクロールさせるようにしてください。</p>
+<ul>
+<li><code>Button</code>は記事の下に表示してください。ユーザーは、<code>Button</code> を見るために記事の最後までスクロールします。</li>
+<li><code>Button</code>には <strong>Add Comment</strong> というテキストを使用します。この課題では、<code>Button</code>を処理するメソッド(button-handling method) を作成する必要はありません。すべきことは、Button 要素をレイアウトの適切な場所に配置することだけです。</li>
+</ul>
+<p class="image-container"><img alt="The Add Comment button is reached by scrolling the article to the end." style="width: 200.15px" src="img/eb16ee525e778517.png"></p>
+<h2 is-upgraded>挑戦の解答コード</h2>
+<p>Android Studioプロジェクト: <a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/ScrollingTextChallenge" target="_blank">ScrollingTextChallenge</a></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="まとめ" duration="0">
         <ul>
-<li>公式Android開発者ドキュメント：<a href="http://developer.android.com/index.html" target="_blank">developer.android.com</a></li>
-<li>マテリアルデザインとは、モバイルデバイス上でアプリがどのように見え、どのように動作するかを概説する概念的なデザイン哲学です。</li>
-<li>Google Playストアは、Android SDKで開発されたアプリのためのGoogleのデジタル配信システムです。</li>
-<li>Android Studioには、一般的で推奨されるアプリやアクティビティのデザイン用のテンプレートが用意されています。これらのテンプレートは、一般的なユースケースのための作業コードを提供しています。</li>
-<li>プロジェクトを作成する際に、最初のアクティビティのテンプレートを選択することができます。</li>
-<li>アプリをさらに開発している間に、アクティビティやその他のアプリコンポーネントは、組み込みのテンプレートから作成することができます。</li>
-<li>Android Studio には多くのコードサンプルが含まれているので、研究したり、コピーしたり、プロジェクトに組み込むことができます。</li>
+<li>1つの子 <code>View</code>（<code>TextView</code> など）をスクロールするには、<a href="https://developer.android.com/reference/android/widget/ScrollView.html" target="_blank"><code>ScrollView</code></a> を使用します。<code>ScrollView</code> は、1つの子 <code>View</code> または <code>ViewGroup</code> のみを保持することができます。</li>
+<li>1つ以上の <code>View</code> 要素をスクロールするには、<code>ScrollView</code> 内の子 <code>View</code> として <a href="https://developer.android.com/reference/android/widget/LinearLayout.html" target="_blank"><code>LinearLayout</code></a> などの <code>ViewGroup</code> を使用します。要素を <code>LinearLayout</code> で囲みます。</li>
+<li>太字やイタリックなどの HTML フォーマットタグを使用して、<code>TextView</code> に自由形式のテキストを表示します。</li>
+<li>自由形式のテキストに行末文字として <code>\n</code> を使用して改行させ、ある段落が次の段落に入らないようにします。</li>
+<li><code>android:autoLink="web"</code> 属性を使って、テキスト中の Web リンクをクリック可能にします。</li>
 </ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="関連するコンセプト" duration="0">
-        <p>関連する概念のドキュメントは1.4にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-1-build-your-first-app/1-4-c-resources_to_help_you_learn/1-4-c-resources_to_help_you_learn.html" target="_blank">1.4: Resources to help you learn</a> にあります。</p>
+      <google-codelab-step label="関連する概念" duration="0">
+        <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-1-build-your-first-app/1-3-c-text-and-scrolling-views/1-3-c-text-and-scrolling-views.html" target="_blank">1.3 Text and scrolling views</a> にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="参考文献" duration="0">
-        <p>Android Studio ドキュメント:</p>
+      <google-codelab-step label="追加の学習" duration="0">
+        <p>Android Studio ドキュメント : </p>
 <ul>
+<li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio download page</a></li>
 <li><a href="http://developer.android.com/tools/studio/index.html" target="_blank">Meet Android Studio</a></li>
-<li><a href="https://developer.android.com/studio/workflow.html" target="_blank">Developer workflow basics</a></li>
 </ul>
-<p>Android developer ドキュメント:</p>
+<p>Android developer ドキュメント : </p>
 <ul>
-<li><a href="http://developer.android.com/index.html" target="_blank">Android developer site</a></li>
-<li><a href="http://developers.google.com/training" target="_blank">Google Developers Training</a></li>
-<li><a href="https://developer.android.com/guide/topics/ui/overview.html" target="_blank">Layouts</a></li>
-<li><a href="http://developer.android.com/guide/topics/resources/index.html" target="_blank">App resources overview</a></li>
-<li><a href="https://developer.android.com/guide/topics/ui/declaring-layout.html" target="_blank">Layouts</a></li>
-<li><a href="https://developer.android.com/guide/topics/ui/menus.html" target="_blank">Menus</a></li>
+<li><a href="https://developer.android.com/reference/android/widget/ScrollView.html" target="_blank"><code>ScrollView</code></a></li>
+<li><a href="http://developer.android.com/reference/android/widget/LinearLayout.html" target="_blank"><code>LinearLayout</code></a></li>
+<li><a href="https://developer.android.com/reference/android/widget/RelativeLayout.html" target="_blank"><code>RelativeLayout</code></a></li>
+<li><a href="http://developer.android.com/reference/android/view/View.html" target="_blank"><code>View</code></a></li>
+<li><a href="http://developer.android.com/reference/android/widget/Button.html" target="_blank"><code>Button</code></a></li>
 <li><a href="http://developer.android.com/reference/android/widget/TextView.html" target="_blank"><code>TextView</code></a></li>
 <li><a href="https://developer.android.com/guide/topics/resources/string-resource.html" target="_blank">String resources</a></li>
-<li><a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">App Manifest</a></li>
+<li><a href="https://developer.android.com/guide/topics/ui/layout/relative.html" target="_blank">Relative Layout</a></li>
 </ul>
-<p>Code サンプル:</p>
+<p>その他 :  </p>
 <ul>
-<li><a href="http://github.com/google-developer-training" target="_blank">Source code for exercises on GitHub</a></li>
-<li><a href="http://developer.android.com/samples/index.html" target="_blank">Android code samples for developers</a></li>
-</ul>
-<p>動画:</p>
-<ul>
-<li><a href="https://www.youtube.com/user/androiddevelopers" target="_blank">Android Developer YouTube channel</a></li>
-<li><a href="http://www.udacity.com/courses/android" target="_blank">Udacity online courses</a></li>
-</ul>
-<p>その他:</p>
-<ul>
-<li><a href="http://officialandroid.blogspot.com/" target="_blank">Official Android blog</a></li>
-<li><a href="http://android-developers.blogspot.com/" target="_blank">Android Developers blog</a></li>
-<li><a href="http://codelabs.developers.google.com/" target="_blank">Google Developers Codelabs</a></li>
-<li><a href="http://stackoverflow.com/" target="_blank">Stack Overflow</a></li>
-<li><a href="http://developers.google.com/android/for-all/vocab-words" target="_blank">Android vocabulary</a></li>
+<li>Android Developers Blog: <a href="http://android-developers.blogspot.com/2008/03/linkify-your-text.html" target="_blank">Linkify your Text!</a></li>
+<li>Codepath: <a href="https://guides.codepath.com/android/Working-with-the-TextView" target="_blank">Working with a TextView</a></li>
 </ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="課題" duration="0">
-        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
+      <google-codelab-step label="宿題" duration="0">
+        <p>このセクションでは、講師が指導するコースの一環として、このコードラボを学習している生徒が考えられる宿題を出しています。講師は以下のことを行うことができます。</p>
 <ul>
-<li>必要に応じて宿題を割り当てる。</li>
-<li>宿題の提出方法を学生に伝える。</li>
-<li>宿題の割り当てを評価します。</li>
+<li>必要に応じて宿題を出す。</li>
+<li>宿題を提出する方法を生徒に伝える。</li>
+<li>宿題を採点する。</li>
 </ul>
-<p>インストラクターは、これらの提案を少しでも多くのように使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じる必要があります。</p>
-<p>あなた自身でこのコードラボを介して作業している場合は、あなたの知識をテストするためにこれらの宿題の割り当てを使用して自由に感じています。</p>
-<p>以下の手順で、サンプルアプリをロードしてリソースを探索してください</p>
+<p>講師はこれらの提案を必要に応じて利用することができます。また、適切と思われる他の宿題を自由に割り当てることもできます。</p>
+<p>自分でこのコードラボに取り組んでいる場合は、自分の知識を試すために、これらの宿題を自由に使ってください。</p>
+<h2 is-upgraded>アプリの変更</h2>
+<p>Working with TextView Elements のレッスンで作成した <a href="https://github.com/google-developer-training/android-fundamentals/tree/master/ScrollingText2" target="_blank">ScrollingText2 のアプリ</a>を開きます。</p>
 <ol type="1" start="1">
-<li>Android Studioにサンプルアプリの1つをロードします。</li>
-<li>アプリ内のJavaアクティビティファイルの1つを開きます。見慣れないクラス、タイプ、またはプロシージャを探し、Android Developer ドキュメントで調べます。</li>
-<li>Stack Overflow にアクセスして、同じトピックに関する質問を検索します。</li>
-<li>ランチャーのアイコンを変更します。Android Studio の画像アセットセクションにあるアイコンを使用します。</li>
+<li>下図のように、小見出しが幅 100dp の左の列に折り返されるように変更してください。</li>
+<li>下図のように、記事のテキストを小見出しの右側に配置してください。</li>
 </ol>
-<p>以下の質問に答えてください。</p>
-<p>質問1</p>
-<p>Android Studio プロジェクト内で、サンプル・アプリのリストを開くには、どのメニュー・コマンドを使用できますか？1つ選んでください。</p>
+<p class="image-container"><img alt="Scrolling text in two columns" style="width: 278.63px" src="img/dbbf04adc1269e1b.png"></p>
+<h2 is-upgraded>以下の質問に答えてください。</h2>
+<h3 is-upgraded>質問1</h3>
+<p><code>ScrollView</code> の中で使用できるビューはいくつありますか？ 1 つ選んでください。</p>
 <ul>
-<li>ファイル &gt; 開く</li>
-<li>ファイル &gt; 新規作成 &gt; サンプルのインポート</li>
-<li>ファイル &gt; 新規作成 &gt; モジュールのインポート</li>
-<li>ファイル &gt; 新規作成 &gt; プロジェクトのインポート</li>
+<li>1 つのビューのみ</li>
+<li>1 つのビューまたは 1 つのビューグループ</li>
+<li>必要な数だけ</li>
 </ul>
-<p>質問2</p>
-<p>基本アクティビティのテンプレートがUIの一部として提供しているボタンはどれですか？2つ選んでください。</p>
+<h3 is-upgraded>質問2</h3>
+<p><code>LinearLayout</code> でビューを左右に並べて表示する場合、使用する XML 属性はどれですか？ 1 つ選んでください。</p>
 <ul>
-<li>ナビゲーションボタン</li>
-<li>オプションメニューのオーバーフローボタン</li>
-<li>フローティングアクションボタン</li>
-<li>テキスト &#34;Button &#34;を持つButtonクラスのボタン</li>
+<li><code>android:orientation="horizontal"</code></li>
+<li><code>android:orientation="vertical"</code></li>
+<li><code>android:layout_width="wrap_content"</code></li>
 </ul>
-<p>質問3</p>
-<p>Android開発者向けの公式ドキュメントのソースはどれですか？1つ選んでください。</p>
+<h3 is-upgraded>質問3</h3>
+<p>スクロールビュー内の <code>LinearLayout</code> の幅を定義するには、どの XML 属性を使用しますか？ 1 つ選んでください。</p>
 <ul>
-<li>stackoverflow.com</li>
-<li>officialandroid.blogspot.com</li>
-<li>開発者.android.com</li>
-<li>github.com</li>
+<li><code>android:layout_width="wrap_content"</code></li>
+<li><code>android:layout_width="match_parent"</code></li>
+<li><code>android:layout_width="200dp"</code></li>
 </ul>
-<p>アプリを提出して採点を受ける</p>
-<p>学年別ガイダンス</p>
-<p>その結果、Android端末の検索アプリ画面に新しいランチャーアイコンが表示され、新しいアプリ、つまりHello Toastのバージョンが追加されました。</p>
+<h2 is-upgraded>採点のためにアプリを提出する</h2>
+<h3 is-upgraded>採点者向けガイダンス</h3>
+<p>アプリに以下の特徴があるかを確認します : </p>
+<ul>
+<li>上図のように、左の列に小見出し、右の列に記事本文を表示するレイアウトであること</li>
+<li><code>ScrollView</code> に 2 つの <code>TextView</code> 要素を持つ <code>LinearLayout</code> が含まれていること</li>
+<li><code>LinearLayout</code> の向きは horizontal に設定されていること</li>
+</ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="次の Codelab" duration="0">
-        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
-<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer Fundamentals (Version 2)を参照してください。</p>
+      <google-codelab-step label="次の codelab" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、 <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Android Developer Fundamentals (V2)</a> のコードラボ を参照してください。</p>
+<p>概要のチャプター、アプリ、スライドへのリンクなど、コースの概要については <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2) </a>を参照してください。</p>
 
 
       </google-codelab-step>

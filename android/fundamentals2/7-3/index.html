@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 07.3: Broadcast receivers</title>
+  <title>Android Developer Fundamentals 07.3: Broadcast receivers</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="7-3"
-                  title="Android 開発者基礎講座 07.3: Broadcast receivers"
+                  title="Android Developer Fundamentals 07.3: Broadcast receivers"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -63,13 +63,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>PowerReceiverアプリは、デバイスが電源に接続されているとき、または電源から切断されたときにトーストメッセージを表示する<code>BroadcastReceiver</code>を登録します。また、アプリは、異なる乾杯メッセージを表示するカスタムブロードキャストを送受信します。</p>
+<p class="image-container"><img alt="Preview of the Power Receiver App" style="width: 189.26px" src="img/26c4a5117e27b023.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1.PowerReceiverプロジェクトのセットアップ" duration="0">
+      <google-codelab-step label="タスク1.PowerReceiverプロジェクトのセットアップ" duration="0">
         <p>1.1 プロジェクトの作成</p>
 <ol type="1" start="1">
 <li>Android Studio で、PowerReceiver という名前の新しい Java プロジェクトを作成します。デフォルトのオプションを受け入れ、Empty Activity テンプレートを使用します。</li>
@@ -94,34 +95,34 @@
 <li>(オプション) <code>AndroidManifest.xml</code>ファイルに移動します。Android Studioは<code><receiver></code>要素を生成していますが、電源接続システムの放送を聞くために静的な受信機を使用することはできないので、この要素は必要ありません。&lt;re<code>ceiver></code>要素全体を削除します。</li>
 <li><code>MainActivity.javaで、CustomReceiverオブジェクトをメンバ変数として作成し、初期化します。</code></li>
 </ol>
-<p><code>private CustomReceiver mReceiver = new CustomReceiver().</code></p>
+<pre><code>private CustomReceiver mReceiver = new CustomReceiver();</code></pre>
 <p>インテントアクションでインテントフィルタを作成する</p>
 <p>インテントフィルタは、コンポーネントが受け取ることができるインテントの種類を指定します。これは、アクションやカテゴリなどの Intent 値に基づいてインテントをフィルタリングする際に使用します。</p>
 <ol type="1" start="1">
 <li><code>MainActivity.javaのonCreate()メソッドの最後に、</code><a href="https://developer.android.com/reference/android/content/IntentFilter" target="_blank"><code>IntentFilter</code></a><code>オブジェクトを作成します。</code></li>
 </ol>
-<p><code>IntentFilter filter = new IntentFilter().</code></p>
+<pre><code>IntentFilter filter = new IntentFilter();</code></pre>
 <p>システムは<code>Intent</code>をブロードキャストとして受信すると、<code>IntentFilter</code>オブジェクトで指定されたアクション値に基づいてブロードキャスト受信機を検索します。</p>
 <ol type="1" start="1">
 <li><code>MainActivity.java で、onCreate() の最後に、アクション</code> <a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_POWER_CONNECTED" target="_blank"><code>ACTION_POWER_CONNECTED</code></a> <code>と</code> <a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_POWER_DISCONNECTED" target="_blank"><code>ACTION_POWER_DISCONNECTED を</code></a> <code>IntentFilter オブジェクトに追加します。</code></li>
 </ol>
-<p><code>filter.addAction(Intent.ACTION_POWER_DISCONNECTED)。</code></p>
-<p><code>filter.addAction(Intent.ACTION_POWER_CONNECTED)を使用しています。</code></p>
+<pre><code>filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+filter.addAction(Intent.ACTION_POWER_CONNECTED);</code></pre>
 <p>受信機の登録と解除</p>
 <ol type="1" start="1">
 <li><code>MainActivity.java</code> で、<code>onCreate()</code> の最後に、<code>MainActivity</code> コンテキストを使用してレシーバーを登録します。受信機はアクティブで、<code>MainActivity</code> が実行されている限り、ブロードキャストを受信することができます。</li>
 </ol>
-<p><code>//</code> アクティビティコンテキストを利用して受信機を登録します。</p>
-<p><code>this.registerReceiver(mReceiver, filter)。</code></p>
+<pre><code>// Register the receiver using the activity context.
+this.registerReceiver(mReceiver, filter);</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivity.java</code>で、<code>onDestroy()</code>メソッドをオーバーライドして、レシーバーの登録を解除します。システムリソースを節約し、リークを避けるために、ダイナミックレシーバは、使用されるコンテキストに応じて、不要になったとき、または対応するアクティビティやアプリが破棄される前に、登録を解除しなければなりません。</li>
 </ol>
-<p>オーバーライド</p>
-<p><code>protected void onDestroy() {</code></p>
-<p><code>//</code>受信機の登録を解除する</p>
-<p><code>this.unregisterReceiver(mReceiver)の登録を解除します。</code></p>
-<p><code>.onDestroy()を使用しています。</code></p>
-<p><code>   }</code></p>
+<pre><code>@Override
+   protected void onDestroy() {
+       //Unregister the receiver
+       this.unregisterReceiver(mReceiver);
+       super.onDestroy();
+   }</code></pre>
 <p>1.3 BroadcastReceiver で onReceive() を実装する</p>
 <p>ブロードキャスト受信機が登録したブロードキャストをインターセプトすると、受信機の<a href="https://developer.android.com/reference/android/content/BroadcastReceiver#onReceive(android.content.Context,%2520android.content.Intent)" target="_blank"><code>onReceive()</code></a> メソッドに <code>Intent</code> が配信されます。</p>
 <p><code>CustomReceiver.java の onReceive() メソッド内で、以下の手順を実装します。</code></p>
@@ -129,29 +130,30 @@
 <li><code>UnsupportedOperationException コードを含む onReceive() メソッドの実装全体を削除します。</code></li>
 <li><code>intent</code>パラメータからIntentアクションを取得し、<code>intentAction</code>という<code>String</code>変数に格納します。</li>
 </ol>
-<p>オーバーライド</p>
-<p><code>public void onReceive(Context context, Intent Intent) { { {.</code></p>
-<p><code>String intentAction = intent.getAction()。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+public void onReceive(Context context, Intent intent) {
+   String intentAction = intent.getAction();
+}</code></pre>
 <ol type="1" start="1">
 <li><code>intentAction</code>文字列で<code>switch</code>文を作成します。(<code>intentAction</code>を使用する前に<code>null</code>チェックを行います。) 受信者が登録したアクションごとに異なるトーストメッセージを表示します。</li>
 </ol>
-<p><code>if (intentAction != null) {</code></p>
-<p><code>String toastMessage = "unknown intent action"です。</code></p>
-<p><code>switch (intentAction){</code></p>
-<p><code>case Intent.ACTION_POWER_CONNECTED.</code></p>
-<p><code>           toastMessage = "Power connected!</code></p>
-<p>。</p>
-<p><code>case Intent.ACTION_POWER_DISCONNECTED.</code></p>
-<p><code>           toastMessage = "Power disconnected!</code></p>
-<p>。</p>
-<p><code>   }</code></p>
-<p><code>//</code>トーストを表示します。</p>
-<p><code>}</code></p>
+<pre><code>if (intentAction != null) {
+   String toastMessage = &#34;unknown intent action&#34;;
+   switch (intentAction){
+       case Intent.ACTION_POWER_CONNECTED:
+           toastMessage = &#34;Power connected!&#34;;
+           break;
+       case Intent.ACTION_POWER_DISCONNECTED:
+           toastMessage = &#34;Power disconnected!&#34;;
+           break;
+   }
+
+  //Display the toast.
+}</code></pre>
 <ol type="1" start="1">
 <li><code>switch</code>文の後に、トーストメッセージを短時間表示するコードを追加します。</li>
 </ol>
-<p><code>Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()。</code></p>
+<p>  Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();</p>
 <ol type="1" start="1">
 <li>アプリを実行します。アプリが起動したら、デバイスの電源を接続または切断します。アクティビティが実行中であれば、電源を接続または切断するたびにトーストが表示されます。</li>
 </ol>
@@ -160,7 +162,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2.カスタムブロードキャストの送受信" duration="0">
+      <google-codelab-step label="タスク2.カスタムブロードキャストの送受信" duration="0">
         <p>システム ブロードキャストへの応答に加えて、アプリはカスタム ブロードキャストを送受信できます。カスタム ブロードキャストは、データがデバイスにダウンロードされたことを他のアプリに知らせる場合など、アクティビティを起動せずにアプリにアクションを実行させたい場合に使用します。</p>
 <p>Androidでは、アプリがカスタム放送を送信するための3つの方法が用意されています。</p>
 <ul>
@@ -178,8 +180,8 @@
 <ol type="1" start="1">
 <li><code>MainActivity</code> と <code>CustomReceiver</code> クラスの両方に定数のメンバ変数を作成します。この変数をブロードキャスト <code>Intent</code> アクションとして使用します。</li>
 </ol>
-<p><code>private static final String ACTION_CUSTOM_BROADCAST =</code></p>
-<p><code>BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST"。</code></p>
+<pre><code>private static final String ACTION_CUSTOM_BROADCAST = 
+BuildConfig.APPLICATION_ID + &#34;.ACTION_CUSTOM_BROADCAST&#34;;</code></pre>
 <p>重要: <strong><code>startActivity(Intent)</code></strong></p>
 <p><strong>を</strong>使用してブロードキャストを送信することとアクティビティを開始することの両方にintentが使用されますが、これらのアクションは全く関係がありません。ブロードキャストの受信者は、アクティビティを開始するために使用される <strong><code>Intent</code></strong></p>
 <p><strong> を</strong>見ることも、キャプチャすることもできません。同様に、<strong><code>Intent</code></strong>をブロードキャストするときに、そのIntent<strong>を</strong>使ってアクティビティを見つけたり開始したりすることはできません。</p>
@@ -187,16 +189,16 @@
 <ol type="1" start="1">
 <li><code>activity_main.xmlレイアウトファイルで、</code>Hello World <code>Textviewを以下の属性を持つButtonに置き換えます。</code></li>
 </ol>
-<p><code><</code>ボタン</p>
-<p><code>android:id = "@+id/sendBroadcast"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>android:text="カスタムブロードキャストを送信"</code></p>
-<p><code>android:onClick="sendCustomBroadcast"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="親"</code></p>
-<p><code>="親" /></code></p>
+<pre><code>&lt;Button
+   android:id = &#34;@+id/sendBroadcast&#34;
+   android:layout_width=&#34;wrap_content&#34;
+   android:layout_height=&#34;wrap_content&#34;
+   android:text=&#34;Send Custom Broadcast&#34;
+   android:onClick=&#34;sendCustomBroadcast&#34;
+   app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+   app:layout_constraintLeft_toLeftOf=&#34;parent&#34;
+   app:layout_constraintRight_toRightOf=&#34;parent&#34;
+   app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;</code></pre>
 <ol type="1" start="1">
 <li>文字列リソースを抽出します。</li>
 </ol>
@@ -212,32 +214,32 @@
 <ol type="1" start="1">
 <li>カスタムのアクション文字列を引数として、新しい<code>Intent</code>を作成します。</li>
 </ol>
-<p><code>Intent customBroadcastIntent = new Intent(ACTION_CUSTOM_BROADCAST).</code></p>
+<pre><code>Intent customBroadcastIntent = new Intent(ACTION_CUSTOM_BROADCAST);</code></pre>
 <ol type="1" start="1">
 <li>カスタム <code>Intent</code> 宣言の後、<code>LocalBroadcastManager</code> クラスを使用してブロードキャストを送信します。</li>
 </ol>
-<p><code>LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent)。</code></p>
+<pre><code>LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent);</code></pre>
 <p>2.4 カスタム放送の登録と解除</p>
 <p>ローカル放送の登録は、ダイナミック・レシーバを使用して行うシステム放送の登録と似ています。<code>LocalBroadcastManager</code> を使用して送信されるブロードキャストの場合、マニフェストへの静的登録は許可されていません。</p>
 <p>ブロードキャスト受信機を動的に登録した場合、受信機が不要になったら登録を解除する必要があります。アプリでは、レシーバーはアプリの実行中にカスタム ブロードキャストに応答する必要があるだけなので、<code>onCreate()</code>でアクションを登録し、<code>onDestroy()</code>で登録を解除することができます。</p>
 <ol type="1" start="1">
 <li><code>MainActivity.javaのonCreate()メソッド内で、LocalBroadcastManagerのインスタンスを取得し、カスタムIntentアクションで受信機を登録します。</code></li>
 </ol>
-<p><code>LocalBroadcastManager.getInstance(this)</code></p>
-<p><code>             .registerReceiver(mReceiver.</code></p>
-<p><code>new IntentFilter(ACTION_CUSTOM_BROADCAST))を使用しています。</code></p>
+<pre><code>LocalBroadcastManager.getInstance(this)
+             .registerReceiver(mReceiver,
+                          new IntentFilter(ACTION_CUSTOM_BROADCAST));</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivity.java の onDestroy() メソッドの中で、LocalBroadcastManager からレシーバーの登録を解除します。</code></li>
 </ol>
-<p><code>LocalBroadcastManager.getInstance(this)</code></p>
-<p><code>          .unregisterReceiver(mReceiver)の登録を解除します。</code></p>
+<pre><code>LocalBroadcastManager.getInstance(this)
+          .unregisterReceiver(mReceiver);</code></pre>
 <p>2.5 カスタム放送への対応</p>
 <ol type="1" start="1">
 <li><code>CustomReceiver.java の onReceive() メソッドの中で、カスタム Intent アクション用のスイッチブロックに別の case 文を追加します。トースト・メッセージのテキストとして"Custom Broadcast Received"を使用します。</code></li>
 </ol>
-<p><code>case ACTION_CUSTOM_BROADCAST.</code></p>
-<p><code>   toastMessage = "</code>カスタムブロードキャストを受信しました。</p>
-<p>。</p>
+<pre><code>case ACTION_CUSTOM_BROADCAST:
+   toastMessage = &#34;Custom Broadcast Received&#34;;
+   break;</code></pre>
 <ol type="1" start="1">
 <li>文字列リソースを抽出します。</li>
 <li>お使いのアプリを実行し、カスタムブロードキャストを送信するには、[カスタムブロードキャストを送信]ボタンをタップします。受信機（カスタム受信機）に乾杯メッセージが表示されます。</li>
@@ -247,25 +249,25 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/PowerReceiver" target="_blank">パワーレシーバー</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題:音楽プレーヤーアプリを開発している場合、アプリでは、ユーザが有線ヘッドセットを接続または切断したときに音楽を再生または一時停止する必要があるかもしれません。この機能を実装するには、有線ヘッドセットのイベントに応答するブロードキャストレシーバーが必要です。有線ヘッドセットが接続または切断されたときにトーストメッセージを表示するブロードキャストレシーバーを実装します。</p>
 <p>ヒント:<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_HEADSET_PLUG" target="_blank"><code>ACTION_HEADSET_PLUG</code></a>アクションに登録する必要があります。これはシステムブロードキャストアクションなので、静的に登録することはできません。代わりに、<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver,%2520android.content.IntentFilter)" target="_blank"><code>Context.registerReceiver()</code></a> でコンテキストを使用してレシーバーを動的に登録します。</p>
-<p><code>IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG).</code></p>
-<p><code>this.registerReceiver(mReceiver, filter)。</code></p>
+<pre><code>IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+this.registerReceiver(mReceiver, filter);</code></pre>
 <p>また、受信機が不要になったら登録を解除する必要があります。</p>
-<p><code>unregisterReceiver(mReceiver)の登録を解除します。</code></p>
+<pre><code>unregisterReceiver(mReceiver);</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li>放送受信機は、Androidアプリの基本的なコンポーネントです。</li>
 <li>放送受信機は、システムから送信された放送やアプリから送信された放送を受信することができます。</li>
@@ -280,13 +282,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-3-c-broadcasts/7-3-c-broadcasts.html" target="_blank">7.3: ブロードキャスト</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/guide/components/intents-filters.html" target="_blank">インテントとインテントフィルター</a></li>
@@ -298,7 +300,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -313,6 +315,7 @@
 <li>余分なデータをローカルのカスタム放送受信機に送信します。これを行うには、1 から 20 の間のランダムな整数を生成します。ローカル カスタム ブロードキャストを送信する前に、<code>Intent</code> の余分なフィールドにその数値を追加します。</li>
 <li>受信機では、<code>Intent</code>から整数データを抽出します。乾杯のメッセージでは、乱数の二乗を表示します。</li>
 </ol>
+<p class="image-container"><img alt="BroadcastReceiver displaying the square of a random number" style="width: 163.83px" src="img/19eaf9e71b8b1136.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>システム放送とは？</p>
@@ -357,7 +360,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

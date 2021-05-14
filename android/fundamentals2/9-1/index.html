@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 09.1: Shared preferences</title>
+  <title>Android Developer Fundamentals 09.1: Shared preferences</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="9-1"
-                  title="Android 開発者基礎講座 09.1: Shared preferences"
+                  title="Android Developer Fundamentals 09.1: Shared preferences"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユニット 4:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_4_saving_user_data" target="_blank">ユーザーデータの保存</a>に含まれています。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -65,14 +65,15 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>HelloSharedPrefsアプリは、レッスン1で作成したHelloToastアプリの別のバリエーションです。このアプリには、数字を増やすボタン、背景色を変更するボタン、数字と色をデフォルトにリセットするボタンがあります。このアプリでは、テーマとスタイルを使ってボタンを定義しています。</p>
+<p class="image-container"><img alt="5dfd63922ee74727.png" style="width: 275.25px" src="img/5dfd63922ee74727.png"></p>
 <p>スターターアプリからスタートし、メインアクティビティコードに共有環境設定を追加します。また、カウントと背景色の両方をデフォルトに設定するリセットボタンを追加し、環境設定ファイルをクリアします。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3。HelloSharedPrefsの探索" duration="0">
+      <google-codelab-step label="HelloSharedPrefsの探索" duration="0">
         <p>この実習のための完全なスターターアプリプロジェクトは、<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/HelloSharedPrefs" target="_blank">HelloSharedPrefs-Starter</a>で入手できます。このタスクでは、プロジェクトをAndroid Studioにロードし、アプリの主要な機能のいくつかを探索します。</p>
 <p>1.1 HelloSharedPrefs プロジェクトを開いて実行します。</p>
 <ul>
@@ -100,7 +101,7 @@
 <p>1.2 アクティビティコードを探る</p>
 <ol type="1" start="1">
 <li><code>MainActivityを開きます。</code></li>
-<li>コードを調べろ</li>
+<li>コードを調べる</li>
 </ol>
 <p>これらのことに注意してください。</p>
 <ul>
@@ -113,113 +114,122 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：共有環境設定ファイルへのデータの保存と復元" duration="0">
+      <google-codelab-step label="タスク2：共有環境設定ファイルへのデータの保存と復元" duration="0">
         <p>このタスクでは、アプリの状態を共有環境設定ファイルに保存し、アプリの再起動時にそのデータを読み込みます。共有環境設定に保存する状態データ（現在のカウントと色）は、インスタンス状態で保存するのと同じデータなので、2回行う必要はありません。インスタンス状態をすべて共有環境設定状態に置き換えることができます。</p>
 <p>2.1 環境設定の初期化</p>
 <ol type="1" start="1">
 <li>共有環境設定ファイルの名前と、<code>SharedPreferences</code>オブジェクトへの参照を保持するために、<code>MainActivity</code>クラスにメンバー変数を追加します。</li>
 </ol>
-<p><code>private SharedPreferences mPreferences.</code></p>
-<p><code>private String sharedPrefFile = = (プライベート・ストリング・シェアード・ファイル)</code></p>
-<p><code>"。</code></p>
+<pre><code>private SharedPreferences mPreferences;
+private String sharedPrefFile = 
+   &#34;com.example.android.hellosharedprefs&#34;;</code></pre>
 <p>共有環境設定ファイルには好きな名前を付けることができますが、通常はアプリのパッケージ名と同じ名前になります。</p>
 <ol type="1" start="1">
 <li><code>onCreate()</code> メソッドで、共有環境設定を初期化します。このコードを <code>if</code> 文の前に挿入します。</li>
 </ol>
-<p><code>mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)。</code></p>
+<pre><code>mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);</code></pre>
 <p><a href="https://developer.android.com/reference/android/content/Context#getSharedPreferences(java.lang.String,%2520int)" target="_blank"><code>getSharedPreferences()</code></a><code>メソッド</code>(<code>アクティビティの</code><a href="https://developer.android.com/reference/android/content/Context" target="_blank"><code>コンテキスト</code></a><code>から</code>)<code>は、指定されたファイル名</code>(<code>sharedPrefFile</code>)<code>のファイルをMODE_PRIVATEモードで開きます。</code></p>
 <p>注意: Android の旧バージョンには、ワールドで読める共有環境設定ファイルやワールドで書ける共有環境設定ファイルを作成するための他のモードがありました。これらのモードはAPI 17で非推奨となり、現在ではセキュリティ上の理由から強く推奨されていません。他のアプリとデータを共有する必要がある場合は、<a href="https://developer.android.com/reference/android/support/v4/content/FileProvider" target="_blank"><strong><code>FileProvider</code></strong></a>によって提供されるコンテンツURIの使用を検討してください。</p>
 <p><code>MainActivity</code>のソリューションコード、パーシャル。</p>
-<p><code>public class MainActivity extends AppCompatActivity { public class MainActivity extends AppCompatActivity</code></p>
-<p><code>private int mCount = 0.</code></p>
-<p><code>private TextView mShowCount.</code></p>
-<p><code>int mColor.</code></p>
-<p><code>private SharedPreferences mPreferences.</code></p>
-<p><code>private String sharedPrefFile = = (プライベート・ストリング・シェアード・ファイル)</code></p>
-<p><code>"。</code></p>
-<p>オーバーライド</p>
-<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
-<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
-<p><code>       setContentView(R.layout.activity_main)を使用しています。</code></p>
-<p><code>       mShowCount = (TextView) findViewById(R.id.textview).</code></p>
-<p><code>       mColor = ContextCompat.getColor(this.</code></p>
-<p><code>          R.color.default_background)を使用しています。</code></p>
-<p><code>       mPreferences = getSharedPreferences(</code></p>
-<p><code>          sharedPrefFile, MODE_PRIVATE)。</code></p>
-<p><code>// ...</code></p>
-<p><code>    }</code></p>
-<p><code>}</code></p>
+<pre><code>public class MainActivity extends AppCompatActivity {
+   private int mCount = 0;
+   private TextView mShowCount;
+   private int mColor;
+
+   private SharedPreferences mPreferences;
+   private String sharedPrefFile = 
+      &#34;com.example.android.hellosharedprefs&#34;;
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+
+       mShowCount = (TextView) findViewById(R.id.textview);
+       mColor = ContextCompat.getColor(this, 
+          R.color.default_background);
+       mPreferences = getSharedPreferences(
+          sharedPrefFile, MODE_PRIVATE);
+
+       // ...
+    }
+}</code></pre>
 <p>2.2 onPause()で環境設定を保存する</p>
 <p>環境設定の保存はインスタンスの状態を保存するのと似ています - どちらの操作もデータをキーと値のペアとしてBundleオブジェクトに保存します。しかし、共有環境設定の場合、そのデータは <code>onPause()</code> ライフサイクルコールバックで保存され、共有環境設定オブジェクトに書き込むには共有エディタオブジェクト (<a href="https://developer.android.com/reference/android/content/SharedPreferences.Editor.html" target="_blank"><code>SharedPreferences.Editor</code></a> ) が必要です。</p>
 <ol type="1" start="1">
 <li><code>onPause() ライフサイクルメソッドを MainActivity に追加します。</code></li>
 </ol>
-<p>オーバーライド</p>
-<p><code>protected void onPause(){</code></p>
-<p><code>super.onPause()を使用しています。</code></p>
-<p><code>// ...</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onPause(){
+   super.onPause();
+
+   // ...
+}</code></pre>
 <ol type="1" start="1">
 <li><code>onPause() で、SharedPreferences オブジェクトのエディタを取得します。</code></li>
 </ol>
-<p><code>SharedPreferences.Editor = mPreferences.Edit()エディタ preferencesEditor = mPreferences.edit()。</code></p>
+<pre><code>SharedPreferences.Editor preferencesEditor = mPreferences.edit();</code></pre>
 <p>共有環境設定オブジェクトへの書き込みには、共有環境設定エディタが必要です。<code>super.onPause()</code>を呼び出した後に、この行を<code>onPause()</code>に追加します。</p>
 <ol type="1" start="1">
 <li><a href="https://developer.android.com/reference/android/content/SharedPreferences.Editor#putInt(java.lang.String,%2520int)" target="_blank"><code>putInt()</code></a> メソッドを使用して、<code>mCount</code> と <code>mColor</code> の両方の整数を適切なキーで共有環境設定に入れます。</li>
 </ol>
+<pre><code>preferencesEditor.putInt(COUNT_KEY, mCount);
+preferencesEditor.putInt(COLOR_KEY, mColor);</code></pre>
 <p><code>preferencesEditor.putInt(COUNT_KEY, mCount)を使用しています。</code></p>
 <p>環境設定編集者は、このような環境設定を行うことができます。</p>
 <p><code>SharedPreferences.Editorクラスには、</code><a href="https://developer.android.com/reference/android/content/SharedPreferences.Editor#putInt(java.lang.String,%2520int)" target="_blank"><code>putInt()</code></a><code>や</code><a href="https://developer.android.com/reference/android/content/SharedPreferences.Editor#putString(java.lang.String,%2520java.lang.String)" target="_blank"><code>putString()</code></a><code>など、異なるデータ型のための複数の</code>&#34;put&#34;<code>メソッドが含まれています。</code></p>
 <ol type="1" start="1">
 <li><code>apply()</code> を呼び出して環境設定を保存します。</li>
 </ol>
+<pre><code>preferencesEditor.apply();</code></pre>
 <p>環境設定編集者<code>.apply()</code>を使用しています。</p>
 <p><a href="https://developer.android.com/reference/android/content/SharedPreferences.Editor#apply()" target="_blank"><code>apply()</code></a> メソッドは、UI スレッドから非同期的に環境設定を保存します。共有環境設定エディタには、設定を同期的に保存するための<a href="https://developer.android.com/reference/android/content/SharedPreferences.Editor#commit()" target="_blank"><code>commit()</code> メソッドも</a>あります。<code>commit()</code> メソッドは、他の操作をブロックする可能性があるのでお勧めしません。</p>
 <ol type="1" start="1">
 <li><code>onSaveInstanceState()</code> メソッド全体を削除します。アクティビティのインスタンス状態には共有環境設定と同じデータが含まれているため、インスタンス状態を完全に置き換えることができます。</li>
 </ol>
 <p><code>MainActivity onPause()メソッドの解決コードです。</code></p>
-<p>オーバーライド</p>
-<p><code>protected void onPause(){</code></p>
-<p><code>super.onPause()を使用しています。</code></p>
-<p><code>SharedPreferences.Editor = mPreferences.Edit()エディタ preferencesEditor = mPreferences.edit()。</code></p>
-<p><code>   preferencesEditor.putInt(COUNT_KEY, mCount)を使用しています。</code></p>
-<p>   環境設定編集者は、このような環境設定を行うことができます。</p>
-<p>   環境設定編集者<code>.apply()</code>を使用しています。</p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onPause(){
+   super.onPause();
+
+   SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+   preferencesEditor.putInt(COUNT_KEY, mCount);
+   preferencesEditor.putInt(COLOR_KEY, mColor);
+   preferencesEditor.apply();
+}</code></pre>
 <p>2.3 onCreate() での環境設定の復元</p>
 <p>インスタンス ステートと同様に、アプリは <code>onCreate()</code> メソッドで保存された共有環境設定を読み込みます。繰り返しになりますが、共有環境設定にはインスタンス ステートと同じデータが含まれているため、ここでも状態を環境設定に置き換えることができます。<code>onCreate()</code> が呼び出されるたびに、アプリの起動時や設定変更時に、共有環境設定はビューの状態を復元するために使用されます。</p>
 <ol type="1" start="1">
 <li><code>onCreate()</code> メソッドの <code>savedInstanceState</code> 引数が NULL であるかどうかをテストし、インスタンスの状態を復元する部分を探します。</li>
 </ol>
-<p><code>if (savedInstanceState != null) { (savedInstanceState != null)</code></p>
-<p><code>   mCount = savedInstanceState.getInt(COUNT_KEY)。</code></p>
-<p><code>if (mCount != 0) {</code></p>
-<p><code>       mShowCountTextView.setText(String.format("%s", mCount).</code></p>
-<p><code>   }</code></p>
-<p><code>   mColor = savedInstanceState.getInt(COLOR_KEY)。</code></p>
-<p><code>   mShowCountTextView.setBackgroundColor(mColor)。</code></p>
-<p><code>}</code></p>
+<pre><code>if (savedInstanceState != null) {
+   mCount = savedInstanceState.getInt(COUNT_KEY);
+   if (mCount != 0) {
+       mShowCountTextView.setText(String.format(&#34;%s&#34;, mCount));
+   }
+   mColor = savedInstanceState.getInt(COLOR_KEY);
+   mShowCountTextView.setBackgroundColor(mColor);
+}</code></pre>
 <ol type="1" start="1">
 <li>そのブロック全体を削除します。</li>
 <li><code>onCreate()</code>メソッドで、インスタンスの状態コードがあった場所と同じ場所で、<code>COUNT_KEY</code>キーで環境設定からカウントを取得し、それを<code>mCount</code>変数に代入します。</li>
 </ol>
-<p><code>mCount = mPreferences.getInt(COUNT_KEY, 0)。</code></p>
+<pre><code>mCount = mPreferences.getInt(COUNT_KEY, 0);</code></pre>
 <p>環境設定からデータを読み込むときは、共有環境設定エディタを取得する必要はありません。共有環境設定オブジェクトの &#34;get&#34; メソッド (<a href="https://developer.android.com/reference/android/content/SharedPreferences#getInt(java.lang.String,%2520int)" target="_blank"><code>getInt()</code></a> や<a href="https://developer.android.com/reference/android/content/SharedPreferences#getString(java.lang.String,%2520java.lang.String)" target="_blank"><code>getString()</code> など<code>)</code> を使用</a>して環境設定データを取得します。</p>
 <p><code>getInt()</code> メソッドは 2 つの引数を取ることに注意してください。1 つはキー、もう 1 つはキーが見つからない場合の既定値です。この場合の既定値は 0 で、これは <code>mCount</code> の初期値と同じです。</p>
 <ol type="1" start="1">
 <li>メインの<code>TextView</code>の値を新しいカウントで更新します。</li>
 </ol>
-<p><code>mShowCountTextView.setText(String.format("%s", mCount).</code></p>
+<pre><code>mShowCountTextView.setText(String.format(&#34;%s&#34;, mCount));</code></pre>
 <ol type="1" start="1">
 <li><code>COLOR_KEY</code>キーで環境設定から色を取得し、それを変数<code>mColor</code>に代入します。</li>
 </ol>
-<p><code>mColor = mPreferences.getInt(COLOR_KEY, mColor).</code></p>
+<pre><code>mColor = mPreferences.getInt(COLOR_KEY, mColor);</code></pre>
 <p>先ほどと同様に、<code>getInt()</code>の第2引数は、共有環境設定にキーが存在しない場合に使用するデフォルト値です。この場合は、メソッドのさらに上の方でデフォルトの背景に初期化された <code>mColor</code> の値を再利用することができます。</p>
 <ol type="1" start="1">
 <li>メインテキストビューの背景色を更新します。</li>
 </ol>
-<p><code>mShowCountTextView.setBackgroundColor(mColor)。</code></p>
+<pre><code>mShowCountTextView.setBackgroundColor(mColor);</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。Countボタンをクリックし、背景色を変更してインスタンスの状態と環境設定を更新します。</li>
 <li>デバイスまたはエミュレータを回転させて、カウントとカラーが構成変更の間に保存されていることを確認します。</li>
@@ -233,66 +243,72 @@
 <li>アプリを再実行します。アプリを再起動して環境設定をロードし、状態を維持します。</li>
 </ol>
 <p><code>MainActivity onCreate()メソッドのソリューションコードです。</code></p>
-<p>オーバーライド</p>
-<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
-<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
-<p><code>   setContentView(R.layout.activity_main)を使用しています。</code></p>
-<p><code>//</code> ビュー、色、環境設定を初期化する</p>
-<p><code>   mShowCountTextView = (TextView) findViewById(R.id.count_textview)。</code></p>
-<p><code>   mColor = ContextCompat.getColor(this, R.color.default_background)。</code></p>
-<p><code>   mPreferences = getSharedPreferences(</code></p>
-<p><code>                         mSharedPrefFile, MODE_PRIVATE)。</code></p>
-<p><code>//</code> 環境設定を元に戻す</p>
-<p><code>   mCount = mPreferences.getInt(COUNT_KEY, 0)。</code></p>
-<p><code>   mShowCountTextView.setText(String.format("%s", mCount).</code></p>
-<p><code>   mColor = mPreferences.getInt(COLOR_KEY, mColor).</code></p>
-<p><code>   mShowCountTextView.setBackgroundColor(mColor)。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   setContentView(R.layout.activity_main);
+
+   // Initialize views, color, preferences
+   mShowCountTextView = (TextView) findViewById(R.id.count_textview);
+   mColor = ContextCompat.getColor(this, R.color.default_background);
+   mPreferences = getSharedPreferences(
+                         mSharedPrefFile, MODE_PRIVATE);
+
+   // Restore preferences
+   mCount = mPreferences.getInt(COUNT_KEY, 0);
+   mShowCountTextView.setText(String.format(&#34;%s&#34;, mCount));
+   mColor = mPreferences.getInt(COLOR_KEY, mColor);
+   mShowCountTextView.setBackgroundColor(mColor);
+}</code></pre>
 <p>2.4 reset() クリックハンドラで環境設定をリセットする</p>
 <p>スターターアプリのリセットボタンは、アクティビティのカウントと色の両方をデフォルト値にリセットします。環境設定はアクティビティの状態を保持するので、環境設定も同時にクリアすることが重要です。</p>
 <ol type="1" start="1">
 <li><code>reset()</code> onClick メソッドで、色とカウントがリセットされた後、<code>SharedPreferences</code> オブジェクトのエディタを取得します。</li>
 </ol>
-<p><code>SharedPreferences.Editor = mPreferences.Edit()エディタ preferencesEditor = mPreferences.edit()。</code></p>
+<pre><code>SharedPreferences.Editor preferencesEditor = mPreferences.edit();</code></pre>
 <ol type="1" start="1">
 <li>共有環境設定をすべて削除します。</li>
 </ol>
-<p>環境設定編集者<code>.clear()</code>を使用しています。</p>
+<pre><code>preferencesEditor.clear();</code></pre>
 <ol type="1" start="1">
 <li>変更を適用します。</li>
 </ol>
+<pre><code>preferencesEditor.apply();</code></pre>
 <p>環境設定編集者<code>.apply()</code>を使用しています。</p>
 <p><code>reset()</code> メソッドの解決コード。</p>
-<p><code>public void reset(View view) { {.</code></p>
-<p><code>//</code> カウントをリセット</p>
-<p><code>   mCount = 0.</code></p>
-<p><code>   mShowCountTextView.setText(String.format("%s", mCount).</code></p>
-<p><code>//</code> 色をリセットする</p>
-<p><code>   mColor = ContextCompat.getColor(this, R.color.default_background)。</code></p>
-<p><code>   mShowCountTextView.setBackgroundColor(mColor)。</code></p>
-<p><code>//</code> 設定を明確にする</p>
-<p><code>SharedPreferences.Editor = mPreferences.Edit()エディタ preferencesEditor = mPreferences.edit()。</code></p>
-<p>   環境設定編集者<code>.clear()</code>を使用しています。</p>
-<p>   環境設定編集者<code>.apply()</code>を使用しています。</p>
-<p><code>}</code></p>
+<pre><code>public void reset(View view) {
+   // Reset count
+   mCount = 0;
+   mShowCountTextView.setText(String.format(&#34;%s&#34;, mCount));
+
+   // Reset color
+   mColor = ContextCompat.getColor(this, R.color.default_background);
+   mShowCountTextView.setBackgroundColor(mColor);
+
+   // Clear preferences
+   SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+   preferencesEditor.clear();
+   preferencesEditor.apply();
+
+}</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/HelloSharedPrefs" target="_blank">HelloSharedPrefs</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。HelloSharedPrefsアプリを修正して、設定ファイルに状態を自動的に保存する代わりに、設定を変更、リセット、および保存するための2つ目のアクティビティを追加します。アプリに設定という名前のボタンを追加して、そのアクティビティを起動します。環境設定を変更するためのトグルボタンとスピナー、環境設定の保存とクリアのための保存とリセットボタンを含めます。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li><a href="https://developer.android.com/reference/android/content/SharedPreferences.html" target="_blank"><code>SharedPreferences</code></a>クラスは、アプリが少量のプリミティブデータをキーと値のペアとして保存することを可能にします。</li>
 <li>共有環境設定は、同じアプリの異なるユーザーセッション間で持続します。</li>
@@ -306,13 +322,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-9-preferences-and-settings/9-0-c-data-storage/9-0-c-data-storage.html" target="_blank">9.0: データストレージ</a>と<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-9-preferences-and-settings/9-1-c-shared-preferences/9-1-c-shared-preferences.html" target="_blank">9.1: 共有環境設定</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/guide/topics/data/data-storage" target="_blank">データとファイルストレージの概要</a></li>
@@ -329,7 +345,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -373,7 +389,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

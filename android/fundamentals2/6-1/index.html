@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 06.1: Espresso for UI testingEspressoでUIテストをする</title>
+  <title>Android Developer Fundamentals 06.1: UI testingEspresso 向け Espresso で UI テストをする</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="6-1"
-                  title="Android 開発者基礎講座 06.1: Espresso for UI testingEspressoでUIテストをする"
+                  title="Android Developer Fundamentals 06.1: UI testingEspresso 向け Espresso で UI テストをする"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -67,15 +67,16 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>ヒント。Android アプリのテストについては、「<a href="http://d.android.com/tools/testing/testing_android.html" target="_blank">アプリのテスト」を</a>参照してください。</p>
 <p>この実習では、前回のレッスンで使用した<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TwoActivities" target="_blank">TwoActivities</a> プロジェクトを修正します。テスト用のプロジェクトに Espresso を設定し、アプリの機能をテストします。</p>
 <p>TwoActivitiesアプリでは、下の図の左側に示すように、ユーザーはテキストフィールドにテキストを入力し、送信ボタンをタップすることができます。2つ目のアクティビティでは、下の図の右側に示すように、ユーザーは入力したテキストを表示します。</p>
+<p class="image-container"><img alt="Entering Text and Clicking Send (left) - Receiving the Message in the Second Activity (right)" style="width: 641.76px" src="img/fc8174a21176a319.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク 1: プロジェクトで Espresso をセットアップする" duration="0">
+      <google-codelab-step label="タスク 1: プロジェクトで Espresso をセットアップする" duration="0">
         <p>Espresso を使用するには、Android Studio と一緒に Android Support Repository がインストールされている必要があります。また、プロジェクトで Espresso を設定する必要があるかもしれません。</p>
 <p>このタスクでは、リポジトリがインストールされているかどうかをチェックします。インストールされていない場合は、インストールします。</p>
 <p>1.1 Androidサポートリポジトリを確認する</p>
@@ -102,16 +103,16 @@
 <li>build.gradle(Module: app)ファイルを開きます。</li>
 <li>以下のものが（他の依存関係と一緒に）依存関係セクションに含まれているかどうかを確認します。</li>
 </ol>
-<p><code>testImplementation 'junit:junit:4.12'</code></p>
-<p><code>androidTestImplementation 'com.android.support.test:runner:1.0.1'</code></p>
-<p>アンドロイドテストインプリメンテーション</p>
-<p><code>'com.android.support.test.espresso:espresso-core:3.0.1'</code></p>
+<pre><code>testImplementation &#39;junit:junit:4.12&#39;
+androidTestImplementation &#39;com.android.support.test:runner:1.0.1&#39;
+androidTestImplementation 
+           &#39;com.android.support.test.espresso:espresso-core:3.0.1&#39;</code></pre>
 <p>ファイルに上記の依存関係文が含まれていない場合は、依存関係セクションに入力してください。</p>
 <ol type="1" start="1">
 <li>また、Android Studio では、新規プロジェクトの <code>defaultConfig</code> セクションの最後に以下のようなインストルメンテーション文を追加します。</li>
 </ol>
-<p>テストインストルメンテーションランナー</p>
-<p><code>"android.support.test.runner.AndroidJUnitRunner"</code></p>
+<pre><code>testInstrumentationRunner 
+                &#34;android.support.test.runner.AndroidJUnitRunner&#34;</code></pre>
 <p>ファイルに上記のインストルメンテーション文が含まれていない場合は、<code>defaultConfig</code>セクションの最後に入力してください。</p>
 <p><a href="https://en.wikipedia.org/wiki/Instrumentation" target="_blank">計測器は、</a>Androidシステム内の制御メソッド、つまりフックのセットです。これらのフックは、コンポーネントの通常のライフサイクルとは独立して Android コンポーネントを制御します。また、Android がアプリをロードする方法も制御します。インストルメンテーションを使用すると、アプリの通常のライフサイクルとは無関係に、アプリ内のメソッドを呼び出したり、アプリ内のフィールドを変更したり、検査したりすることがテストで可能になります。</p>
 <ol type="1" start="1">
@@ -134,7 +135,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：アクティビティの切り替えと文字入力のテスト" duration="0">
+      <google-codelab-step label="タスク2：アクティビティの切り替えと文字入力のテスト" duration="0">
         <p>アプリとのインタラクション中にユーザーが行う可能性のあることに基づいて Espresso テストを書きます。Espresso テストは、アプリのコードとは別のクラスです。テストしたい UI の <code>View</code> 要素と対話するために、必要な数だけテストを作成することができます。</p>
 <p>Espresso テストは、何をすべきかを指示されなければならないロボットのようなものです。ロボットは、画面上で見つけてほしいビューを見つけ、ビューをクリックしたり、ビューの内容を確認したりするなどして、それと対話しなければなりません。これらのことを適切に実行できなかったり、結果が期待したものでなかったりすると、テストは失敗します。</p>
 <p>Espresso を使用すると、基本的には各ビューに対して実行するアクションのスクリプトを作成し、期待される結果と照らし合わせてチェックします。キーとなる概念は、UI 要素の位置を特定して、それを操作することです。これが基本的なステップです。</p>
@@ -158,9 +159,9 @@
 <li>アクションの結果がアサーションに一致するかどうかをチェックするには <code>ViewAssertion</code> を使用します。</li>
 </ol>
 <p>上記の式を文の中でどのように併用するかは以下の通りです。</p>
-<p><code>onView(withId(R.id.my_view)</code></p>
-<p><code>        .perform(click()</code></p>
-<p><code>        .check(matches(isDisplayed()) )を使用しています。</code></p>
+<pre><code>onView(withId(R.id.my_view))
+        .perform(click())
+        .check(matches(isDisplayed())); </code></pre>
 <p>2**.1 サンプルテストを実行する***。</p>
 <p>Android Studio では、プロジェクト作成時に空白の Espresso テストクラスが作成されます。</p>
 <ol type="1" start="1">
@@ -179,10 +180,10 @@
 <li>クラス名を ActivityInputOutputTest に変更し、すべてのオプションをチェックしたままにします。リファクタをクリックします。</li>
 <li><code>ActivityInputOutputTestクラスの先頭、最初の@Testアノテーションの前に以下を追加します。</code></li>
 </ol>
-<p>ルール</p>
-<p><code>public ActivityTestRule mActivityRule = new ActivityTestRule<>(</code></p>
-<p><code>.class)</code>を使用しています。</p>
-<p><code>}</code></p>
+<pre><code>@Rule
+public ActivityTestRule mActivityRule = new ActivityTestRule&lt;&gt;(
+                     MainActivity.class);
+}</code></pre>
 <p>クラス定義には、いくつかのアノテーションが含まれるようになりました。</p>
 <ul>
 <li><code>RunWith</code>: インストルメント付きの JUnit 4 テストクラスを作成するには、テストクラスの定義の最初に <code>@RunWith(AndroidJUnit4.class)</code> アノテーションを追加します。</li>
@@ -190,7 +191,7 @@
 <li><code>Test</code>.<code>Test</code> アノテーションは、それがアタッチされている <code>public void</code> メソッドをテストケースとして実行できることを JUnit に伝えます。テストメソッドは <code>@Test</code> アノテーションで始まり、テストしたいコンポーネントの関数を実行したり検証したりするコードが含まれています。</li>
 </ul>
 <p>上記の文では、<code>ActivityTestRule</code>が最初は赤くなっているかもしれませんが、Android Studioでは以下のようなインポート文が自動的に追加されています。</p>
-<p><code>import android.support.test.rule.ActivityTestRuleを使用しています。</code></p>
+<pre><code>import android.support.test.rule.ActivityTestRule;</code></pre>
 <p>2.3 あるアクティビティから別のアクティビティへの切り替えテスト</p>
 <p>TwoActivitiesアプリには、以下のようなものがあります。</p>
 <ul>
@@ -207,34 +208,34 @@
 <ol type="1" start="1">
 <li><code>ActivityInputOutputTest</code> に <code>activityLaunch()</code> メソッドの先頭を追加します。このメソッドは、ボタンをクリックしたときに <code>SecondActivity View</code> 要素が表示されるかどうかをテストし、メソッドのすぐ上の行に <code>@Test</code> 記法を含めます。</li>
 </ol>
-<p>テスト</p>
-<p><code>public void activityLaunch() {</code></p>
+<pre><code>@Test
+public void activityLaunch() {</code></pre>
 <ol type="1" start="1">
 <li><code>activityLaunch()メソッドにViewMatcherとViewActionを組み合わせた式を追加し、</code>button<code>_main Buttonを含むビューを探し、クリックを実行するためのViewAction式を含めます。</code></li>
 </ol>
-<p><code>onView(withId(R.id.button_main)).perform(click())を実行します。</code></p>
+<pre><code>onView(withId(R.id.button_main)).perform(click());</code></pre>
 <p><code>onView()</code> メソッドを使用すると、 <code>ViewMatcher</code> の引数を使用してビュー要素を見つけることができます。これは、ビュー階層を検索して、指定された条件を満たす対応するビューのインスタンスを見つけます。<code>.perform(click())</code> 式は、ビューのクリックを実行する <code>ViewAction</code> 式です。</p>
 <p>上の<code>onView</code>文では、<code>onView</code>、<code>withID</code>、<code>click</code>は最初は赤くなっているかもしれませんが、Android Studioではそれらのインポート文を追加しています。</p>
 <ol type="1" start="1">
 <li><code>ActivityLaunch()メソッドに別のViewMatcher式を追加して、text_header View</code>(<code>SecondActivityにある</code>)<code>を見つけ、</code>View<code>が表示されているかどうかのチェックを実行するためのViewAction式を追加します。</code></li>
 </ol>
-<p><code>onView(withId(R.id.text_header)).check(matches(isDisplayed()))。</code></p>
+<pre><code>onView(withId(R.id.text_header)).check(matches(isDisplayed()));</code></pre>
 <p>このステートメントでは、<code>onView()</code>メソッドを使って<code>SecondActivity</code>の<code>text_header View</code>を探し、button<code>_main Button</code>をクリックした後に表示されているかどうかをチェックしています。<code>check()</code>メソッドは最初は赤くなっているかもしれませんが、Android Studioではそのためのインポート文を追加しています。</p>
 <ol type="1" start="1">
 <li><code>SecondActivity</code>のbutton<code>_second</code>ボタンをクリックすると<code>MainActivity</code>に切り替わるかどうかをテストするために、同様のステートメントを追加します。</li>
 </ol>
-<p><code>onView(withId(R.id.button_second)).perform(click())。</code></p>
-<p><code>onView(withId(R.id.text_header_reply)).check(matches(isDisplayed()))します。</code></p>
+<pre><code>onView(withId(R.id.button_second)).perform(click());
+onView(withId(R.id.text_header_reply)).check(matches(isDisplayed()));</code></pre>
 <ol type="1" start="1">
 <li><code>ActivityInputOutputTestクラスで作成したactivityLaunch()メソッドを確認してください。このようになっているはずです。</code></li>
 </ol>
-<p>テスト</p>
-<p><code>public void activityLaunch() {</code></p>
-<p><code>   onView(withId(R.id.button_main)).perform(click())を実行します。</code></p>
-<p><code>   onView(withId(R.id.text_header)).check(matches(isDisplayed()))。</code></p>
-<p><code>   onView(withId(R.id.button_second)).perform(click())。</code></p>
-<p><code>   onView(withId(R.id.text_header_reply)).check(matches(isDisplayed()))します。</code></p>
-<p><code>}</code></p>
+<pre><code>@Test
+public void activityLaunch() {
+   onView(withId(R.id.button_main)).perform(click());
+   onView(withId(R.id.text_header)).check(matches(isDisplayed()));
+   onView(withId(R.id.button_second)).perform(click());
+   onView(withId(R.id.text_header_reply)).check(matches(isDisplayed()));
+}</code></pre>
 <ol type="1" start="1">
 <li>テストを実行するには、ActivityInputOutputTestを右クリック（またはControlキーを押しながらクリック）し、ポップアップメニューからActivityInputOutputTestの実行を選択します。その後、エミュレータ上でテストを実行するか、デバイス上でテストを実行するかを選択できます。</li>
 </ol>
@@ -246,17 +247,17 @@
 <ol type="1" start="1">
 <li>別の <code>@Test</code> アノテーションと、テキストの入出力をテストするための新しい <code>textInputOutput()</code> メソッドを追加します。</li>
 </ol>
-<p>テスト</p>
-<p><code>public void textInputOutput() {</code></p>
-<p><code>   onView(withId(R.id.editText_main)).perform(typeText("This is this is test."))を実行します。</code></p>
-<p><code>   onView(withId(R.id.button_main)).perform(click())を実行します。</code></p>
-<p><code>}</code></p>
+<pre><code>@Test
+public void textInputOutput() {
+   onView(withId(R.id.editText_main)).perform(typeText(&#34;This is a test.&#34;));
+   onView(withId(R.id.button_main)).perform(click());
+}</code></pre>
 <p><code>上記のメソッドはViewMatcherを使ってeditText_main EditTextを含むViewを探し、ViewActionで"This is a test."というテキストを入力します。次に、別のViewMatcherを使って</code>button<code>_main Buttonを含むViewを探し、別のViewActionを使ってButtonをクリックします。</code></p>
 <ol type="1" start="1">
 <li>メソッドに <code>ViewMatcher</code> を追加して <code>SecondActivity</code> 内の <code>text_message TextView</code> を探し、<code>ViewAssertion</code> を追加して出力が入力と一致するかどうかを確認して、メッセージが正しく送信されたかどうかをテストします-これは <code>"This is a test"</code> と一致するはずです。(最後にピリオドを含めるようにしてください)。</li>
 </ol>
-<p><code>onView(withId(R.id.text_message))</code></p>
-<p><code>                       .check(matches(withText("This is a test.")))。</code></p>
+<pre><code>onView(withId(R.id.text_message))
+                       .check(matches(withText(&#34;This is a test.&#34;)));</code></pre>
 <ol type="1" start="1">
 <li>テストを実行します。</li>
 </ol>
@@ -267,13 +268,13 @@
 <ol type="1" start="1">
 <li><code>text_message</code>ビューのマッチチェックを「これはテストです」から「これは失敗したテストです」に変更します。</li>
 </ol>
-<p><code>onView(withId(R.id.text_message)).check(matches(withText("This is failing test."))).</code></p>
+<pre><code>onView(withId(R.id.text_message)).check(matches(withText(&#34;This is a failing test.&#34;)));</code></pre>
 <ol type="1" start="1">
 <li>もう一度テストを実行します。今回は、下部ペインの上に「1 test failed」という赤で表示されたメッセージと、左カラムの<code>textInputOutput</code>の横に赤い感嘆符が表示されているのがわかります。一番下のペインをスクロールして&#34;Test running started&#34;というメッセージまで行くと、そのポイント以降の結果がすべて赤で表示されているのがわかります。&#34;Test running started&#34;の直後の文は次のようになります。</li>
 </ol>
-<p><code>android.support.test.espresso.base.DefaultFailureHandler$AssertionFailedWithCauseError: 'with text: is "This is a failing test." doesn't match the selected view.</code></p>
-<p><code>期待されるのは、テキスト:が"This is a failing test."となっていることです。</code></p>
-<p><code>取得しました。"AppCompatTextView{id=2131165307, res-name=text_message ...</code></p>
+<pre><code>android.support.test.espresso.base.DefaultFailureHandler$AssertionFailedWithCauseError: &#39;with text: is &#34;This is a failing test.&#34;&#39; doesn&#39;t match the selected view.
+Expected: with text: is &#34;This is a failing test.&#34;
+Got: &#34;AppCompatTextView{id=2131165307, res-name=text_message ...</code></pre>
 <p>障害が他の障害につながるカスケード効果により、上記の後に他の致命的なエラーメッセージが表示されます。これらは安全に無視して、テスト自体を修正することができます。</p>
 <p>タスク2のソリューションコード</p>
 <p>Android Studio プロジェクトの <code>ActivityInputOutputTest.java</code> を参照してください。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TwoActivitiesEspresso" target="_blank">TwoActivitiesEspresso</a></p>
@@ -281,52 +282,56 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3：スピナー選択の表示テスト" duration="0">
+      <google-codelab-step label="タスク3：スピナー選択の表示テスト" duration="0">
         <p>Espresso <code>onView()</code> メソッドは、テスト可能なビューを見つけます。このメソッドは、現在のビュー階層内のビューを見つけます。<a href="https://developer.android.com/reference/android/widget/Spinner.html" target="_blank">スピナ</a>などの<a href="https://developer.android.com/reference/android/widget/AdapterView.html" target="_blank">アダプタビュー</a>では、通常は実行時に子ビュー要素が動的に配置されます。つまり、テストしたいビューがその時点でビュー階層にない可能性があるということです。</p>
 <p>Espresso API は、個別の <code>onData()</code> エントリポイントを提供することでこの問題を処理します。このエントリポイントでは、アダプタ項目を最初にロードして、その子のいずれかを検索してアクションを実行する前にその項目にフォーカスを合わせることができます。</p>
 <p>PhoneNumberSpinnerはスピナーのテストに使えるスターターアプリです。電話番号のラベルを選択するためのスピナーを表示します。その後、電話番号と<code>Spinner</code>の選択を<code>TextView</code>に表示します。</p>
 <p>このテストの目的は、スピナーを開き、各アイテムをクリックし、<code>TextView text_phonelabel</code>がアイテムを含むことを確認することです。このテストは、スピナーの選択を取得するコードが正しく動作し、スピナー項目のテキストを表示するコードも正しく動作していることを示しています。文字列リソースを使用してテストを書き、<code>Spinner</code> の項目を反復処理することで、<code>Spinner</code> の中にいくつの項目があっても、またその項目がどのように語られていても、テストが動作するようにします。</p>
+<p class="image-container"><img alt="Spinner" style="width: 274.00px" src="img/a5b639b6a61391cf.png"></p>
 <p>3.1 テストメソッドの作成</p>
 <ol type="1" start="1">
 <li><a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/PhoneNumberSpinnerEspresso" target="_blank">PhoneNumberSpinnerEspresso</a>プロジェクトをダウンロードし、Android Studioでプロジェクトを開きます。</li>
 <li>アプリを実行します。電話番号を入力し、下の図の左側のようにスピナーからラベルを選択します。結果は図の右側のように、テキストビューとトーストメッセージに表示されます。</li>
 </ol>
+<p class="image-container"><img alt="Entering a phone number and choosing from the Spinner (left), and the result (right)." style="width: 476.33px" src="img/7f145433be640057.png"></p>
 <ol type="1" start="1">
 <li>com.example.android.phonenumberspinner(androidTest)を展開し、ExampleInstrumentedTestを開きます。</li>
 <li><code>クラス定義でExampleInstrumentedTestをSpinnerSelectionTestに改名し、以下を追加します。</code></li>
 </ol>
-<p><code>@RunWith(AndroidJUnit4.class)</code></p>
-<p><code>public class SpinnerSelectionTest { {.</code></p>
-<p>ルール</p>
-<p><code>public ActivityTestRule mActivityRule = new ActivityTestRule<>(</code></p>
-<p><code>.class)</code>を使用しています。</p>
+<pre><code>@RunWith(AndroidJUnit4.class)
+public class SpinnerSelectionTest {
+   @Rule
+   public ActivityTestRule mActivityRule = new ActivityTestRule&lt;&gt;(
+                     MainActivity.class);</code></pre>
 <p>3.2 スピナーアイテムに使用する配列にアクセスする</p>
 <p>配列の要素数に基づいてスピナーの各項目をクリックするようにテストしたいとします。しかし、どうやって配列にアクセスするのでしょうか？</p>
 <ol type="1" start="1">
 <li><code>iterateSpinnerItems() メソッドを public</code> return <code>void として作成し、Spinner アイテムに使用する配列を新しい配列に代入して iterateSpinnerItems() メソッド内で使用します。</code></li>
 </ol>
-<p>テスト</p>
-<p><code>public void iterateSpinnerItems() { { {.</code></p>
-<p><code>文字列[] myArray =</code></p>
-<p><code>         mActivityRule.getActivity().getResources()</code></p>
-<p><code>         .getStringArray(R.array.labels_array)を使用します。</code></p>
-<p><code>}</code></p>
+<pre><code>@Test
+public void iterateSpinnerItems() {
+   String[] myArray = 
+         mActivityRule.getActivity().getResources()
+         .getStringArray(R.array.labels_array);
+}</code></pre>
 <p>上の文では、<a href="https://developer.android.com/reference/android/support/test/rule/ActivityTestRule.html" target="_blank"><code>ActivityTestRule</code></a>クラスの<code>getActivity()</code>メソッドでコンテキストを確立し、<code>getResources()</code>でリソースのインスタンスを取得することで配列(id <code>labels_array</code>)にアクセスしています。</p>
 <ol type="1" start="1">
 <li>配列の長さを<code>size</code>に代入し、<code>size</code>をカウンタの最大数として<code>for</code>ループを開始します。</li>
 </ol>
-<p><code>int size = myArray.length.</code></p>
-<p><code>for (int i=0; i<size; i++) {</code></p>
+<pre><code>int size = myArray.length;
+    for (int i=0; i&lt;size; i++) {</code></pre>
 <p>3.3 スピナーのアイテムを探してクリックする</p>
 <ol type="1" start="1">
 <li><code>for</code> ループ内に <code>onView()</code> ステートメントを追加して、スピナーを見つけてクリックします。</li>
 </ol>
-<p><code>//</code> スピナーを見つけてクリックしてください。</p>
-<p><code>onView(withId(R.id.label_spinner)).perform(click())。</code></p>
+<pre><code>// Find the spinner and click on it.
+onView(withId(R.id.label_spinner)).perform(click());</code></pre>
 <p>ユーザーはスピナー内の任意の項目をクリックするためにスピナー自体をクリックしなければならないので、あなたのテストは項目をクリックする前にスピナーを最初にクリックしなければなりません。</p>
 <ol type="1" start="1">
 <li><code>onData()</code> ステートメントを書いて、スピナー項目を見つけてクリックします。</li>
 </ol>
+<pre><code>// Find the spinner item and click on it.
+onData(is(myArray[i])).perform(click());</code></pre>
 <p><code>//</code> スピナーの項目を見つけてクリックします。</p>
 <p><code>onData(is(myArray[i])).perform(click()).</code></p>
 <p>上記の文は、<code>myArray[i]</code>配列要素で指定されたスピナー内の特定の項目がオブジェクトである場合にマッチします。</p>
@@ -335,10 +340,10 @@
 <ol type="1" start="1">
 <li>別の <code>onView()</code> ステートメントを <code>for</code> ループに追加して、結果の <code>text_phonelabel</code> が <code>myArray[i]</code> で指定されたスピナー項目と一致するかどうかをチェックします。</li>
 </ol>
-<p><code>//</code> テキストビューを見つけて、スピナーの項目を確認します。</p>
-<p><code>//</code> は文字列の一部です。</p>
-<p><code>onView(withId(R.id.text_phonelabel))</code></p>
-<p><code>                   .check(matches(withText(containsString(myArray[i])))).</code></p>
+<pre><code>// Find the text view and check that the spinner item 
+// is part of the string.
+onView(withId(R.id.text_phonelabel))
+                   .check(matches(withText(containsString(myArray[i]))));</code></pre>
 <p><code>containsString</code> が赤く表示されている場合は、その単語をクリックしてから、左マージンに表示される赤い電球のアイコンをクリックします。ポップアップメニューで以下を選択します。スタティック・インポート・メソッド...&gt; Matchers.containsString (org.hamcrest)</p>
 <ol type="1" start="1">
 <li>テストを実行します。</li>
@@ -351,7 +356,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6.タスク4：エスプレッソテストの記録" duration="0">
+      <google-codelab-step label="タスク4：エスプレッソテストの記録" duration="0">
         <p>Android Studio では、Espresso テストを記録することができます。テストを記録している間は、通常のユーザーとしてアプリを使用し、アプリの UI をクリックすると、編集可能なテスト コードが生成されます。また、アサーションを追加して、ビューが特定の値を保持しているかどうかをチェックすることもできます。</p>
 <p>テストを手でコーディングするのではなく、Espresso テストを記録することで、時間がかかりすぎたり、手でコーディングするのが困難な領域の UI テストを確実にカバーすることができます。</p>
 <p>テストの記録を実演するために、ドローアブル、スタイル、テーマを使って、実習で作成した<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/Scorekeeper" target="_blank">Scorekeeper</a>アプリのテストを記録します。</p>
@@ -362,160 +367,182 @@
 <li>アプリを実行して正常に動作するようにしましょう。</li>
 </ol>
 <p>スコアキーパーアプリは、2つのボタン要素と2つのテキストビュー要素で構成されています。</p>
+<p class="image-container"><img alt="The Scorekeeper app" style="width: 224.41px" src="img/6ff1e098bf0726f4.png"></p>
 <p>4.2 試験の記録</p>
 <ol type="1" start="1">
 <li>実行] &gt; [エスプレッソ テストの記録] を選択し、配置ターゲット (エミュレータまたはデバイス) を選択して、[OK] をクリックします。</li>
 </ol>
 <p>テストの記録] ダイアログが表示され、Android Studio ウィンドウの下部に [デバッガ] ペインが表示されます。エミュレータを使用している場合は、エミュレータも表示されます。</p>
+<p class="image-container"><img alt="Record Your Test dialog" style="width: 272.65px" src="img/4147be23c2064c11.png"></p>
 <ol type="1" start="1">
 <li>エミュレータまたはデバイス上で、アプリ内のチーム1のプラス(+)の<code>ImageButton</code>をタップします。テストの記録」ウィンドウには、記録されたアクションが表示されます（「 コンテンツのプラスボタンで AppCompatImageButton をタップ」）。</li>
 </ol>
+<p class="image-container"><img alt="Recording an ImageButton Click for an Espresso Test" style="width: 418.24px" src="img/fa7e0e3b92be114f.png"></p>
 <ol type="1" start="1">
 <li>テストの記録] ウィンドウで [アサーションの追加] をクリックします。ウィンドウの右側のペインにアプリの UI のスクリーンショットが表示され、ドロップダウンメニューに [スクリーンショットから要素を選択] オプションが表示されます。下図のように、スクリーンショット内のスコア(1)を確認したいUI要素として選択します。</li>
 </ol>
+<p class="image-container"><img alt="Adding an assertion about a specific UI element to the recording" style="width: 446.23px" src="img/e4522a8ce9aa7797.png"></p>
 <ol type="1" start="1">
 <li>テキストを選択すると、下図のように2つ目のドロップダウンメニューから表示されます。ドロップダウンメニューの下のフィールドには、(1)に期待するテキストがすでに入力されています。</li>
 </ol>
+<p class="image-container"><img alt="Adding an assertion about the value of the UI element to the recording" style="width: 396.66px" src="img/20501efd8eaee52b.png"></p>
 <ol type="1" start="1">
 <li>アサーションを保存] をクリックします。</li>
 <li>別のクリックを記録するには、エミュレータまたはデバイス上で、アプリ内のTeam 1のマイナス(-)の<code>ImageButton</code>をタップします。テストの記録] ウィンドウには、記録されたアクションが表示されます（「 コンテンツのマイナスボタンで AppCompatImageButton をタップ」）。</li>
 </ol>
+<p class="image-container"><img alt="Recording another ImageButton Click for an Espresso Test" style="width: 372.47px" src="img/bd872949b92fbd66.png"></p>
 <ol type="1" start="1">
 <li>テストの記録] ウィンドウで [アサーションの追加] をクリックします。先ほどと同様に右側のペインにアプリのUIが表示されます。スクリーンショットのスコア（0）を確認したいUI要素として選択します。</li>
 </ol>
+<p class="image-container"><img alt="Recording another ImageButton Click for an Espresso Test" style="width: 400.32px" src="img/9ecf72d4b6962f79.png"></p>
 <ol type="1" start="1">
 <li>下の図のように、2つ目のドロップダウンメニューからテキストを選択します。ドロップダウンメニューの下のフィールドには、期待するテキスト(0)がすでに入力されています。</li>
 </ol>
+<p class="image-container"><img alt="Adding an assertion about the value of the UI element to the recording" style="width: 469.87px" src="img/18950da39da83cca.png"></p>
 <ol type="1" start="1">
 <li>アサーションの保存] をクリックし、[OK] をクリックします。</li>
 <li>表示されたダイアログで、テストの目的が他の人にも理解しやすいように、テストの名前をScorePlusMinusTestに編集します。</li>
 <li>Android Studioでは、Gradleビルドファイルへの依存関係の追加要求が表示されることがあります。はいをクリックして依存関係を追加します。Android Studio は <code>build.gradle (Module: app)</code> ファイルの依存関係セクションに以下を追加します。</li>
 </ol>
-<p>アンドロイドテストコンパイル</p>
-<p><code>', {.</code></p>
-<p><code>   exclude グループ: 'com.android.support', module.'support-annotations'</code></p>
-<p><code>   exclude グループ: 'com.android.support', module.'support-v4'</code></p>
-<p><code>   exclude グループ: 'com.android.support', module.デザイン</code></p>
-<p><code>   exclude グループ: 'com.android.support', module.'リサイクルビュー-v7'</code></p>
-<p><code>}</code></p>
+<pre><code>androidTestCompile
+         &#39;com.android.support.test.espresso:espresso-contrib:2.2.2&#39;, {
+   exclude group: &#39;com.android.support&#39;, module: &#39;support-annotations&#39;
+   exclude group: &#39;com.android.support&#39;, module: &#39;support-v4&#39;
+   exclude group: &#39;com.android.support&#39;, module: &#39;design&#39;
+   exclude group: &#39;com.android.support&#39;, module: &#39;recyclerview-v7&#39;
+}</code></pre>
 <ol type="1" start="1">
 <li>com.example.android.scorekeeper (androidTest) を展開してテストを見て、テストを実行します。合格するはずです。再度実行すると、合格するはずです。</li>
 </ol>
 <p><code>ScorePlusMinusTest.java</code>ファイルに記録されているテストは以下の通りです。</p>
-<p><code>// ...</code>パッケージとインポート文</p>
-<p>ラージテスト</p>
-<p><code>@RunWith(AndroidJUnit4.class)</code></p>
-<p><code>public class ScorePlusMinusTest {</code></p>
-<p>ルール</p>
-<p><code>public ActivityTestRule< MainActivity> mActivityTestRule</code></p>
-<p><code>                        = new ActivityTestRule<>(MainActivity.class)を使用しています。</code></p>
-<p>テスト</p>
-<p><code>public void scorePlusMinusTest() { { {.</code></p>
-<p><code>ViewInteraction appCompatImageButton = onView(</code></p>
-<p><code>                allOf(withId(R.id.updateTeam1).</code></p>
-<p><code>                withContentDescription("プラスボタン")を使用しています。</code></p>
-<p><code>                        childAtPosition()</code></p>
-<p><code>                                childAtPosition()</code></p>
-<p><code>                withClassName(is("android.widget.LinearLayout")を使用しています。)</code></p>
-<p><code>0),</code></p>
-<p><code>3),</code></p>
-<p><code>                        isDisplayed())を使用しています。)</code></p>
-<p><code>        appCompatImageButton.perform(click())を使用しています。</code></p>
-<p><code>ViewInteraction textView = onView(</code></p>
-<p><code>                allOf(withId(R.id.score_1), withText("1").</code></p>
-<p><code>                        childAtPosition()</code></p>
-<p><code>                                childAtPosition(IsInstanceOf</code></p>
-<p><code>               .<View>instanceOf(android.widget.LinearLayout.class).</code></p>
-<p><code>0),</code></p>
-<p><code>2),</code></p>
-<p><code>                        isDisplayed())を使用しています。)</code></p>
-<p><code>        textView.check(matches(withText("1")))を使用しています。</code></p>
-<p><code>ViewInteraction appCompatImageButton2 = onView(</code></p>
-<p><code>                allOf(withId(R.id.decreaseTeam1).</code></p>
-<p><code>                        withContentDescription("マイナスボタン")を使用しています。</code></p>
-<p><code>                        childAtPosition()</code></p>
-<p><code>                                childAtPosition()</code></p>
-<p><code>                withClassName(is("android.widget.LinearLayout")を使用しています。)</code></p>
-<p><code>0),</code></p>
-<p><code>1),</code></p>
-<p><code>                        isDisplayed())を使用しています。)</code></p>
-<p><code>        appCompatImageButton2.perform(click())を使用しています。</code></p>
-<p><code>ViewInteraction textView2 = onView(</code></p>
-<p><code>                allOf(withId(R.id.score_1), withText("0").</code></p>
-<p><code>                        childAtPosition()</code></p>
-<p><code>                                childAtPosition(IsInstanceOf</code></p>
-<p><code>                .<View>instanceOf(android.widget.LinearLayout.class).</code></p>
-<p><code>0),</code></p>
-<p><code>2),</code></p>
-<p><code>                        isDisplayed())を使用しています。)</code></p>
-<p><code>        textView2.check(matches(withText("0")))。</code></p>
-<p><code>    }</code></p>
-<p><code>private static Matcher< View> childAtPosition(</code></p>
-<p><code>final Matcher< View> parentMatcher, final int position) {</code></p>
-<p><code>return new TypeSafeMatcher< View>() {</code></p>
-<p>オーバーライド</p>
-<p><code>                description.appendText("Child at position "</code></p>
-<p><code>親の場合は、                +位置+"親の場合は")。</code></p>
-<p><code>                parentMatcher.describeTo(description)を使用しています。</code></p>
-<p><code>            }</code></p>
-<p>オーバーライド</p>
-<p><code>public boolean matchesSafely(View view) { { {.</code></p>
-<p><code>ViewParent parent = view.getParent().</code></p>
-<p><code>ViewGroup</code> の親インスタンスを返します。</p>
-<p><code>                        && parentMatcher.matches(parent)</code></p>
-<p><code>                        && view.equals(((ViewGroup)親)</code></p>
-<p><code>                        .getChildAt(position))を使用しています。</code></p>
-<p><code>            }</code></p>
-<p><code>        };</code></p>
-<p><code>    }</code></p>
-<p><code>}</code></p>
+<pre><code>// ... Package and import statements
+@LargeTest
+@RunWith(AndroidJUnit4.class)
+public class ScorePlusMinusTest {
+
+    @Rule
+    public ActivityTestRule&lt;MainActivity&gt; mActivityTestRule 
+                        = new ActivityTestRule&lt;&gt;(MainActivity.class);
+
+    @Test
+    public void scorePlusMinusTest() {
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.increaseTeam1), 
+                withContentDescription(&#34;Plus Button&#34;),
+                        childAtPosition(
+                                childAtPosition(
+                withClassName(is(&#34;android.widget.LinearLayout&#34;)),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.score_1), withText(&#34;1&#34;),
+                        childAtPosition(
+                                childAtPosition(IsInstanceOf
+               .&lt;View&gt;instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                2),
+                        isDisplayed()));
+        textView.check(matches(withText(&#34;1&#34;)));
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withId(R.id.decreaseTeam1), 
+                        withContentDescription(&#34;Minus Button&#34;),
+                        childAtPosition(
+                                childAtPosition(
+                withClassName(is(&#34;android.widget.LinearLayout&#34;)),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.score_1), withText(&#34;0&#34;),
+                        childAtPosition(
+                                childAtPosition(IsInstanceOf
+                .&lt;View&gt;instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                2),
+                        isDisplayed()));
+        textView2.check(matches(withText(&#34;0&#34;)));
+
+    }
+
+    private static Matcher&lt;View&gt; childAtPosition(
+            final Matcher&lt;View&gt; parentMatcher, final int position) {
+
+        return new TypeSafeMatcher&lt;View&gt;() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(&#34;Child at position &#34; 
+                + position + &#34; in parent &#34;);
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup 
+                        &amp;&amp; parentMatcher.matches(parent)
+                        &amp;&amp; view.equals(((ViewGroup) parent)
+                        .getChildAt(position));
+            }
+        };
+    }
+}</code></pre>
 <p>テストでは<a href="https://developer.android.com/reference/android/support/test/espresso/ViewInteraction.html" target="_blank"><code>ViewInteraction</code></a> クラスを使用しています。これは、<code>View</code> 要素に対してアクションやアサーションを実行するための主要なインターフェイスであり、<code>check()</code> メソッドと <code>perform()</code> メソッドの両方を提供します。テスト・コードを調べて、どのように動作するかを確認してください。</p>
 <ul>
 <li>実行します。以下のコードでは、カスタム マッチャーとして定義されている <code>childAtPosition()</code> というメソッドと <code>perform()</code> メソッドを使用して <code>ImageButton</code> をクリックしています。</li>
 </ul>
-<p><code>ViewInteraction appCompatImageButton = onView(</code></p>
-<p><code>      allOf(withId(R.id.updateTeam1).</code></p>
-<p><code>              withContentDescription("プラスボタン")を使用しています。</code></p>
-<p><code>                        childAtPosition()</code></p>
-<p><code>                                childAtPosition()</code></p>
-<p><code>              withClassName(is("android.widget.LinearLayout")を使用しています。)</code></p>
-<p><code>0),</code></p>
-<p><code>3),</code></p>
-<p><code>                        isDisplayed())を使用しています。)</code></p>
-<p><code>appCompatImageButton.perform(click())を使用しています。</code></p>
+<p>ViewInteraction appCompatImageButton = onView(</p>
+<p>      allOf(withId(R.id.increaseTeam1), </p>
+<p>              withContentDescription(&#34;Plus Button&#34;),</p>
+<p>                        childAtPosition(</p>
+<p>                                childAtPosition(</p>
+<p>              withClassName(is(&#34;android.widget.LinearLayout&#34;)),</p>
+<p>                                        0),</p>
+<p>                                3),</p>
+<p>                        isDisplayed()));</p>
+<p>appCompatImageButton.perform(click());</p>
 <ul>
 <li>アサーションに一致するかどうかをチェックします。以下のコードでは、カスタム <code>Matcher</code>である <code>childAtPosition()</code> を使用して、クリックした項目が <code>"1"</code> であるべきというアサーションに一致するかどうかをチェックしています。</li>
 </ul>
-<p><code>ViewInteraction textView = onView(</code></p>
-<p><code>                allOf(withId(R.id.score_1), withText("1").</code></p>
-<p><code>                        childAtPosition()</code></p>
-<p><code>                                childAtPosition()</code></p>
-<p><code>          .<View>instanceOf(android.widget.LinearLayout.class).</code></p>
-<p><code>0),</code></p>
-<p><code>2),</code></p>
-<p><code>                        isDisplayed())を使用しています。)</code></p>
-<p><code>textView.check(matches(withText("1")))を使用しています。</code></p>
+<pre><code>ViewInteraction textView = onView(
+                allOf(withId(R.id.score_1), withText(&#34;1&#34;),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf                   
+          .&lt;View&gt;instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                2),
+                        isDisplayed()));
+textView.check(matches(withText(&#34;1&#34;)));</code></pre>
 <ul>
 <li>カスタム <code>Matcher</code>。上記のコードでは、カスタム マッチャとして定義されている <code>childAtPosition()</code> を使用しています。</li>
 </ul>
-<p><code>private static Matcher< View> childAtPosition(</code></p>
-<p><code>final Matcher< View> parentMatcher, final int position) {</code></p>
-<p><code>return new TypeSafeMatcher< View>() {</code></p>
-<p>オーバーライド</p>
-<p><code>                description.appendText("Child at position "</code></p>
-<p><code>親の場合は、                        +位置+"親の場合は")。</code></p>
-<p><code>                parentMatcher.describeTo(description)を使用しています。</code></p>
-<p><code>            }</code></p>
-<p>オーバーライド</p>
-<p><code>public boolean matchesSafely(View view) { { {.</code></p>
-<p><code>ViewParent parent = view.getParent().</code></p>
-<p><code>ViewGroup</code> の親インスタンスを返します。</p>
-<p><code>                        && parentMatcher.matches(parent)</code></p>
-<p><code>                        && view.equals(((ViewGroup)親)</code></p>
-<p><code>                        .getChildAt(position))を使用しています。</code></p>
-<p><code>            }</code></p>
-<p><code>        };</code></p>
-<p><code>}</code></p>
+<pre><code>private static Matcher&lt;View&gt; childAtPosition(
+       final Matcher&lt;View&gt; parentMatcher, final int position) {
+
+        return new TypeSafeMatcher&lt;View&gt;() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(&#34;Child at position &#34;
+                        + position + &#34; in parent &#34;);
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup
+                        &amp;&amp; parentMatcher.matches(parent)
+                        &amp;&amp; view.equals(((ViewGroup) parent)
+                        .getChildAt(position));
+            }
+        };
+}</code></pre>
 <p>上のコードのカスタム <code>Matcher</code>は、抽象的な<a href="http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/TypeSafeMatcher.html" target="_blank"><code>TypeSafeMatcher</code></a>クラスを拡張しています。</p>
 <p>1回の記録セッションでUIとの複数のインタラクションを記録することができます。また、複数のテストを記録し、記録したコードをコピー、ペースト、編集するスニペットとして使用して、より多くのアクションを実行するためにテストを編集することもできます。</p>
 <p>タスク4のソリューションコード</p>
@@ -524,7 +551,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank"><code>RecyclerView</code></a>の作成方法は別の実践で学びましたね。このアプリでは、「単語1」から「単語19」までの単語のリストをスクロールさせることができます。<code>FloatingActionButton</code>をタップすると、リストの中に新しい単語が表示されます（「＋単語20」）。</p>
 <p>アダプタビュー（スピナーなど）と同様に、 <code>RecyclerView</code> は実行時に子ビュー要素を動的に生成します。しかし、 <code>RecyclerView</code> はアダプタビューではないので、先ほどのスピナーでのタスクのように <code>onData()</code> を使ってリスト項目を操作することはできません。Espresso の観点から <code>RecyclerView</code> を複雑にしているのは、画面の外にある子ビューを <code>onView()</code> で見つけることができないことです。</p>
@@ -536,21 +563,21 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <p>Android StudioプロジェクトをテストするためにEspressoを設定する。</p>
 <ul>
 <li>Android Studioで、Androidサポートリポジトリを確認してインストールします。</li>
 <li>build.gradle (Module: app) ファイルに依存関係を追加します。</li>
 </ul>
-<p><code>testImplementation 'junit:junit:4.12'</code></p>
-<p><code>androidTestImplementation 'com.android.support.test:runner:1.0.1'</code></p>
-<p>アンドロイドテストインプリメンテーション</p>
-<p><code>'com.android.support.test.espresso:espresso-core:3.0.1'</code></p>
+<pre><code>testImplementation &#39;junit:junit:4.12&#39;
+androidTestImplementation &#39;com.android.support.test:runner:1.0.1&#39;
+androidTestImplementation 
+           &#39;com.android.support.test.espresso:espresso-core:3.0.1&#39;</code></pre>
 <ul>
 <li><code>defaultConfig</code>セクションの最後に以下のインストルメントステートメントを追加します。</li>
 </ul>
-<p>テストインストルメンテーションランナー</p>
-<p><code>"android.support.test.runner.AndroidJUnitRunner"</code></p>
+<pre><code>testInstrumentationRunner 
+                &#34;android.support.test.runner.AndroidJUnitRunner&#34;</code></pre>
 <p><a href="https://en.wikipedia.org/wiki/Instrumentation" target="_blank">インストルメンテーション</a>とは、Androidシステムにおける制御方法のセット、つまりフックのことです。</p>
 <ul>
 <li>テストデバイスでは、アニメーションをオフにします。これを行うには、USBデバッグをオンにします。次に、[設定]アプリで、[開発者オプション] &gt; [描画]を選択します。ウィンドウアニメーションのスケール、トランジションアニメーションのスケール、アニメーターの持続時間のスケールをオフにします。</li>
@@ -578,13 +605,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-6-testing-your-ui/6-1-c-ui-testing/6-1-c-ui-testing.html" target="_blank">6.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-6-testing-your-ui/6-1-c-ui-testing/6-1-c-ui-testing.html" target="_blank">UIテストにあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="http://d.android.com/tools/testing/testing_android.html" target="_blank">アプリのテスト</a></li>
@@ -620,7 +647,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -668,7 +695,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
 <p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 

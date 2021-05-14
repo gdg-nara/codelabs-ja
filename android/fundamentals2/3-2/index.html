@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 03.2: Unit tests</title>
+  <title>Android Developer Fundamentals 03.2: Unit tests</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="3-2"
-                  title="Android 開発者基礎講座 03.2: Unit tests"
+                  title="Android Developer Fundamentals 03.2: Unit tests"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。ようこそ" duration="0">
+      <google-codelab-step label="ようこそ" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a> Android Developer Fundamentals (Version 2) コースの一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -63,13 +63,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。アプリ概要" duration="0">
+      <google-codelab-step label="アプリ概要" duration="0">
         <p>この実習では、前回の実習コードラボ(<a href="https://developer.android.com/codelabs/android-training-using-debugger" target="_blank">Androidの基礎3.1: デバッガ</a>)にあった<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>アプリを使用しています。そのアプリをそのまま修正してもいいですし、プロジェクトフォルダのコピーを取ってから進めてもいいでしょう。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク 1.CalculatorTestの探索と実行" duration="0">
+      <google-codelab-step label="タスク 1.CalculatorTestの探索と実行" duration="0">
         <p>Android Studio 内で、アプリのコードと一緒にテスト (ユニットテストとインストルメンテッドテストの両方) を書いて実行します。すべての新しい Android プロジェクトには、テスト用の基本的なサンプルクラスが含まれています。</p>
 <p>このタスクでは、基本的なユニットテストクラスを含む SimpleCalc アプリに戻ります。</p>
 <p>1.1 ソースセットと CalculatorTest の探索</p>
@@ -87,6 +87,7 @@
 <li>プロジェクト] &gt; [Android] ペインを開き、アプリと Java フォルダを展開します。</li>
 </ol>
 <p>Android ビューの <code>java</code> フォルダには、アプリ内のすべてのソースセットがパッケージ名で一覧表示されます。この場合（以下に示すように）、アプリのコードは <code>com.android.example.SimpleCalc</code> ソース セットにあります。テスト コードはソース セットにあり、パッケージ名の後に <code>test</code> が括弧で囲まれています。</p>
+<p class="image-container"><img alt="Source sets" style="width: 369.00px" src="img/7e016c94850f0b42.png"></p>
 <ol type="1" start="1">
 <li>com.android.example.SimpleCalc（テスト）フォルダを展開します。</li>
 </ol>
@@ -110,11 +111,13 @@
 <li>Project &gt; Android ペインで、CalculatorTest を右クリック（または Control-click）し、「Run &#39;CalculatorTest&#39;」を選択します。</li>
 </ol>
 <p>必要に応じてプロジェクトがビルドされ、画面下部に CalculatorTest ペインが表示されます。ペインの上部には、利用可能な実行構成のドロップダウン リストも CalculatorTest に変わります。</p>
+<p class="image-container"><img alt="d88beee50fbeb0e5.png" style="width: 564.00px" src="img/d88beee50fbeb0e5.png"></p>
 <p>CalculatorTest クラスのすべてのテストが実行され、それらのテストが成功すると、ビューの上部にあるプログレスバーが緑色に変わります（この場合、現在は 1 つのテストしかありません）。(この場合、現在は 1 つのテストしかありません。) フッターのステータス メッセージも &#34;Tests Passed&#34; を報告します。</p>
+<p class="image-container"><img alt="All tests successful" style="width: 641.76px" src="img/92bf1dd2a5189d52.png"></p>
 <ol type="1" start="1">
 <li>まだ開いていない場合は CalculatorTest を開き、<code>addTwoNumbers()</code> のアサーションを変更します。</li>
 </ol>
-<p><code>assertThat(resultAdd, is(equalTo(3d))）。)</code></p>
+<pre><code>assertThat(resultAdd, is(equalTo(3d)));</code></pre>
 <ol type="1" start="1">
 <li>画面上部の実行設定のドロップダウンメニューで、CalculatorTest を選択し（まだ選択されていない場合）、Run をクリックします 。</li>
 </ol>
@@ -127,7 +130,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2: CalculatorTestにユニットテストを追加する" duration="0">
+      <google-codelab-step label="タスク2: CalculatorTestにユニットテストを追加する" duration="0">
         <p>ユニット テストでは、メソッドやクラスなどのアプリ内のコードの小さな部分を取り、アプリの残りの部分から分離して、コードの小さな部分が期待通りに動作することをテストで確認します。通常、ユニットテストでは、さまざまな異なる入力を持つメソッドを呼び出し、そのメソッドが期待通りの動作をし、期待通りの戻り値を返すかどうかを検証します。</p>
 <p>このタスクでは、ユニットテストの構築方法について学びます。SimpleCalc アプリの <code>Calculator</code> ユーティリティメソッド用に追加のユニットテストを作成し、それらのテストを実行して、期待通りの出力が得られることを確認します。</p>
 <p>注意: ユニットテスト、テスト駆動開発、JUnit 4 API はいずれも大規模で複雑なトピックであり、このコースの対象外です。</p>
@@ -145,9 +148,9 @@
 <ol type="1" start="1">
 <li><code>addTwoNumbersNegative() という名前の新しいメソッドを CalculatorTest に追加します。このスケルトンを使用します。</code></li>
 </ol>
-<p>テスト</p>
-<p><code>public void addTwoNumbersNegative() { { {.</code></p>
-<p><code>}</code></p>
+<pre><code>@Test
+public void addTwoNumbersNegative() {
+}</code></pre>
 <p>このテストメソッドは <code>addTwoNumbers()</code> と似たような構造をしています。このメソッドには <code>@Test</code> というアノテーションが付けられており、これは単一のユニットテストであることを示しています。</p>
 <p>なぜ <code>addTwoNumbers()</code> にアサーションを追加しないのでしょうか?1 つのメソッドに複数のアサーションをグループ化すると、1 つのアサーションだけが失敗するとテストのデバッグが難しくなり、成功したテストが不明瞭になります。ユニットテストの一般的なルールは、個々のアサーションごとにテストメソッドを提供することです。</p>
 <ol type="1" start="1">
@@ -157,37 +160,37 @@
 <ol type="1" start="1">
 <li><code>負のオペランドを持つ Calculator クラスの add() メソッドを呼び出すために addTwoNumbersNegative() に行を追加します。</code></li>
 </ol>
-<p><code>double resultAdd = mCalculator.add(-1d, 2d).</code></p>
+<pre><code>double resultAdd = mCalculator.add(-1d, 2d);</code></pre>
 <p>各オペランドの後の <code>d</code> 記法は、これらが <code>double</code> 型の数値であることを示しています。<code>add()</code> メソッドは double パラメータで定義されているため、<code>float</code> や <code>int</code> でも動作します。型を明示的に示すことで、必要に応じて他の型を個別にテストすることができます。</p>
 <ol type="1" start="1">
 <li><code>assertThat()</code>でアサーションを追加します。</li>
 </ol>
-<p><code>assertThat(resultAdd, is(equalTo(1d)))。</code></p>
+<pre><code>assertThat(resultAdd, is(equalTo(1d)));</code></pre>
 <p><code>assertThat()</code> メソッドは、第一引数の式と第二引数の式が等しいことを主張する JUnit4 のアサーションです。古いバージョンの JUnit では、より特殊なアサーションメソッド (<code>assertEquals</code>()、<code>assertNull</code>()、<code>assertTrue()</code> など) を使用していましたが、 <code>assertThat()</code> の方が柔軟性が高く、デバッグがしやすく、読みやすい形式となっています。</p>
 <p><code>assertThat()</code>メソッドは、マッチャーと一緒に使用されます。マッチャーは、このアサーションの 2 番目のオペランドである <code>is(equalto()</code> で連結されたメソッド呼び出しです。Hamcrest フレームワークは、アサーションを構築する際に使用できるマッチャを定義しています。( &#34;Hamcrest&#34; は &#34;matcher&#34; のアナグラムです。) Hamcrest は、ほとんどの基本的なアサーションに対応する多くの基本的なマatcherを提供しています。また、より複雑なアサーション用に独自のカスタムマatcherを定義することもできます。</p>
 <p>この場合のアサーションは、<code>add()</code>操作の結果(-1 + 2)が1に等しいというものです。</p>
 <ol type="1" start="1">
 <li>浮動小数点数の<code>CalculatorTest</code>に新しいユニットテストを追加します。</li>
 </ol>
-<p>テスト</p>
-<p><code>public void addTwoNumbersFloats() { { {.</code></p>
-<p><code>double resultAdd = mCalculator.add(1.111f, 1.111d)。</code></p>
-<p><code>   assertThat(resultAdd, is(equalTo(2.222d)))。</code></p>
-<p><code>}</code></p>
+<pre><code>@Test
+public void addTwoNumbersFloats() {
+   double resultAdd = mCalculator.add(1.111f, 1.111d);
+   assertThat(resultAdd, is(equalTo(2.222d)));
+}</code></pre>
 <p>ここでも、先ほどのテストメソッドと非常によく似たテストですが、<code>add()</code> の引数のひとつが <code>double</code> ではなく <code>float</code> 型であることが明示されています。add<code>()</code> メソッドは <code>double</code> 型のパラメータで定義されているので、<code>float</code> 型で呼び出すことができ、その数値は <code>double</code> に昇格します。</p>
 <ol type="1" start="1">
 <li>実行] をクリックして、すべてのテストを再度実行し ます。</li>
 </ol>
 <p>今回はテストが失敗して、プログレスバーが赤くなっています。ここがエラーメッセージの重要な部分です。</p>
-<p><code>java.lang.</code>アサーションエラーが発生しました。</p>
-<p><code>期待値：<2.222>です。</code></p>
-<p><code>     でしたが: < 2.2219999418258665>でした。</code></p>
+<pre><code>java.lang.AssertionError: 
+Expected: is &lt;2.222&gt;
+     but: was &lt;2.2219999418258665&gt;</code></pre>
 <p>浮動小数点数を使った算術は不正確で、昇格したことで精度が上がるという副作用がありました。テスト中の主張は技術的には誤りである：期待値と実際の値が一致しない。</p>
 <p>この問題が提起するのは、次のようなことです。<code>float</code> 引数を促進することで精度の問題がある場合、それはコードの問題なのでしょうか、それともテストの問題なのでしょうか？この特定のケースでは、SimpleCalcアプリからの<code>add()</code>メソッドへの両方の入力引数は常に<code>double</code>型になるので、これは任意の非現実的なテストです。しかし、アプリが<code>add()</code>メソッドへの入力が<code>double</code>または<code>float</code>のどちらかになるように書かれていて、精度だけを気にしている場合は、「十分に近い」が成功とカウントされるように、テストに小刻みな余地を与える必要があります。</p>
 <ol type="1" start="1">
 <li><code>assertThatat() メソッドを closeTo() マッチャを使用するように変更します。</code></li>
 </ol>
-<p><code>assertThat(resultAdd, is(closeTo(2.222, 0.01)))。</code></p>
+<pre><code>assertThat(resultAdd, is(closeTo(2.222, 0.01)));</code></pre>
 <p>マッチャーの選択をする必要があります。closeToを2回クリックして（式全体に下線が引かれるまで）、<code>Alt+Enter</code>（Macの場合は<code>Option+Return</code>）を押します。isCloseTo.closeTo (org.hamcrest.number)を選択します。</p>
 <ol type="1" start="1">
 <li>実行] をクリックして、すべてのテストを再度実行し ます。</li>
@@ -208,51 +211,52 @@
 <p>タスク2のソリューションコード</p>
 <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/SimpleCalcTest" target="_blank">SimpleCalcTest</a></p>
 <p>次のコードスニペットは、このタスクのテストを示しています。</p>
-<p>テスト</p>
-<p><code>public void addTwoNumbers() { {.</code></p>
-<p><code>double resultAdd = mCalculator.add(1d, 1d)。</code></p>
-<p><code>   assertThat(resultAdd, is(equalTo(2d)))。</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void addTwoNumbersNegative() { { {.</code></p>
-<p><code>double resultAdd = mCalculator.add(-1d, 2d).</code></p>
-<p><code>   assertThat(resultAdd, is(equalTo(1d)))。</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void addTwoNumbersFloats() { { {.</code></p>
-<p><code>double resultAdd = mCalculator.add(1.111f, 1.111d)。</code></p>
-<p><code>assertThat(resultAdd, is(closeTo(2.222, 0.01)))。</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void subTwoNumbers() {</code></p>
-<p><code>double resultSub = mCalculator.sub(1d, 1d).</code></p>
-<p><code>   assertThat(resultSub, is(equalTo(0d))）。)</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void subWorksWithNegativeResult() { { {.</code></p>
-<p><code>double resultSub = mCalculator.sub(1d, 17d).</code></p>
-<p><code>   assertThat(resultSub, is(equalTo(-16d)))。</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void mulTwoNumbers() {</code></p>
-<p><code>double resultMul = mCalculator.mul(32d, 2d).</code></p>
-<p><code>   assertThat(resultMul, is(equalTo(64d))）。)</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void divTwoNumbers() {</code></p>
-<p><code>double resultDiv = mCalculator.div(32d,2d).</code></p>
-<p><code>   assertThat(resultDiv, is(equalTo(16d)))。</code></p>
-<p><code>}</code></p>
-<p>テスト</p>
-<p><code>public void divTwoNumbersZero() {</code></p>
-<p><code>double resultDiv = mCalculator.div(32d,0).</code></p>
-<p><code>   assertThat(resultDiv, is(equalTo(Double.POSITIVE_INFINITY)))。</code></p>
-<p><code>}</code></p>
+<pre><code>@Test
+public void addTwoNumbers() {
+   double resultAdd = mCalculator.add(1d, 1d);
+   assertThat(resultAdd, is(equalTo(2d)));
+}
+
+@Test
+public void addTwoNumbersNegative() {
+   double resultAdd = mCalculator.add(-1d, 2d);
+   assertThat(resultAdd, is(equalTo(1d)));
+}
+@Test
+public void addTwoNumbersFloats() {
+   double resultAdd = mCalculator.add(1.111f, 1.111d);
+assertThat(resultAdd, is(closeTo(2.222, 0.01)));
+}
+@Test
+public void subTwoNumbers() {
+   double resultSub = mCalculator.sub(1d, 1d);
+   assertThat(resultSub, is(equalTo(0d)));
+}
+@Test
+public void subWorksWithNegativeResult() {
+   double resultSub = mCalculator.sub(1d, 17d);
+   assertThat(resultSub, is(equalTo(-16d)));
+}
+@Test
+public void mulTwoNumbers() {
+   double resultMul = mCalculator.mul(32d, 2d);
+   assertThat(resultMul, is(equalTo(64d)));
+}
+@Test
+public void divTwoNumbers() {
+   double resultDiv = mCalculator.div(32d,2d);
+   assertThat(resultDiv, is(equalTo(16d)));
+}
+@Test
+public void divTwoNumbersZero() {
+   double resultDiv = mCalculator.div(32d,0);
+   assertThat(resultDiv, is(equalTo(Double.POSITIVE_INFINITY)));
+}</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。コーディングの課題" duration="0">
+      <google-codelab-step label="コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>チャレンジ1.ゼロで割ることは、算数の特殊なケースであるため、常にテストする価値があります。ゼロによる除算をより優雅に処理できるようにアプリを変更するにはどうしたらよいでしょうか?この課題を達成するには、正しい動作を示すテストから始めます。</p>
 <p><code>CalculatorTest</code> から <code>divTwoNumbersZero()</code> メソッドを削除し、<code>divByZeroThrows()</code> という新しいユニット テストを追加します。このテストはパスし、その結果、ゼロによる除算がこの例外になることを示します。</p>
@@ -262,7 +266,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。要約" duration="0">
+      <google-codelab-step label="要約" duration="0">
         <p>Android Studioには、ローカルのユニットテストを実行するための機能が組み込まれています。</p>
 <ul>
 <li>ローカルのユニットテストは、ローカルマシンの JVM を使用します。Android フレームワークは使用しません。</li>
@@ -279,13 +283,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。関連コンセプト" duration="0">
+      <google-codelab-step label="関連コンセプト" duration="0">
         <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-2-c-app-testing/3-2-c-app-testing.html" target="_blank">3.2: アプリのテスト</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。詳細はこちら" duration="0">
+      <google-codelab-step label="詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -313,7 +317,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。宿題" duration="0">
+      <google-codelab-step label="宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -376,7 +380,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

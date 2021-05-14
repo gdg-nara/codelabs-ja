@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 02.1: Activities and intents</title>
+  <title>Android Developer Fundamentals 02.1: Activities と intents</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="2-1"
-                  title="Android 開発者基礎講座 02.1: Activities and intents"
+                  title="Android Developer Fundamentals 02.1: Activities と intents"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コースのコードラボの完全なリストについては、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</li>
@@ -70,7 +70,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。アプリの概要" duration="0">
+      <google-codelab-step label="アプリの概要" duration="0">
         <p>この章では、当然のことながら、2つのActivityの実装を含むTwo Activitiesというアプリを作成し、ビルドします。アプリは3つのステージで作成します。</p>
 <p>最初のステージでは、メインアクティビティに送信ボタンが1つ含まれているアプリを作成します。ユーザーがこのボタンをクリックすると、メインアクティビティはインテントを使用して2つ目のアクティビティを開始します。</p>
 <p class="image-container"><img alt="Main Activity launches second Activity" style="width: 641.76px" src="img/170f0988e83e65fb.png"></p>
@@ -101,7 +101,7 @@
 <li>Autoconnect をオンにした状態（デフォルト設定）で、パレットペインから<code>ボタンを</code>レイアウトの右下隅にドラッグします。オートコネクトは、<code>ボタンの</code>制約を作成します。</li>
 <li>属性ペインで、ID を button_main に、layout_widthと layout_heightをwrap_content に設定し、Text フィールドにSendを入力します。これでレイアウトは次のようになります。</li>
 </ol>
-<p class="image-container"><img alt="Main Activity layout (first stage)" style="width: 641.76px" src="img/1ff9e83ac0bb3437.png"></p>
+<p class="image-container"><img alt="Main Activity layout (first stage)" style="width: 408.27px" src="img/1ff9e83ac0bb3437.png"></p>
 <ol type="1" start="5">
 <li>TextタブをクリックしてXMLコードを編集します。<code>ボタン</code>に次の属性を追加します。</li>
 </ol>
@@ -111,16 +111,16 @@
 <li>前回の実践で説明したように、&#34;Send&#34;用の文字列リソースを抽出し、リソースに<code>button_main</code>という名前を使用します。</li>
 </ol>
 <p><code>Button</code>のXMLコードは以下のようになります。</p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/button_main"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginRight="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_main"</code></p>
-<p><code>アンドロイド:オンクリック="launchSecondActivity"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:レイアウト制約Right_toRightOf="おや</code> <code>/></code></p>
+<pre><code>&lt;Button
+        android:id=&#34;@+id/button_main&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginRight=&#34;16dp&#34;
+        android:text=&#34;@string/button_main&#34;
+        android:onClick=&#34;launchSecondActivity&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintRight_toRightOf=&#34;parent&#34; /&gt;</code></pre>
 <p>1.3 ボタンアクションの定義</p>
 <p>このタスクでは、<code>android:onClick</code>属性のレイアウトで参照した<code>launchSecondActivity()</code>メソッドを実装します。</p>
 <ol type="1" start="1">
@@ -131,33 +131,40 @@
 <ol type="1" start="3">
 <li>launchSecond<code>Activity()</code>の中に、&#34;Button Clicked!</li>
 </ol>
-<p><code>ログ.d(ログタグ, "ボタンがクリックされました！");</code></p>
+<p><code>Log.d(LOG_TAG, "Button clicked!");</code></p>
 <p><code>LOG_TAGは</code>赤で表示されます。後のステップでその変数の定義を追加します。</p>
 <ol type="1" start="4">
 <li><code>MainActivity</code>クラスの先頭に、L<code>OG_TAG</code>変数の定数を追加します。</li>
 </ol>
-<p><code>プライベート</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじログタグ =</code></p>
-<p><code>主な活動.クラス.getSimpleName();</code></p>
+<pre><code>private static final String LOG_TAG = 
+                            MainActivity.class.getSimpleName();</code></pre>
 <p>この定数は、クラス自体の名前をタグとして使用します。</p>
 <ol type="1" start="5">
 <li>アプリを実行してください。送信ボタンをクリックすると、Logcatペインに「ボタンがクリックされました！」というメッセージが表示されます。モニターに出力が多すぎる場合は、検索ボックスにMainActivityと入力すると、Logcatペインにはそのタグに一致する行のみが表示されます。</li>
 </ol>
 <p>MainActivity<code>の</code>コードは以下のようになります。</p>
-<p><code>パッケージコム.例.アンドロイド.ふたぎょう;</code></p>
-<p><code>インポートアンドロイド.支持.v7.アプリ.AppCompatActivity;</code></p>
-<p><code>インポートアンドロイド.オーエス.バンドル;</code></p>
-<p><code>インポートアンドロイド.活用.ログ;</code></p>
-<p><code>インポートアンドロイド.視る.表示;</code></p>
-<p><code>パブリック</code> <code>級</code> <code>主な活動</code> <code>伸びる</code> <code>AppCompatActivity {</code></p>
-<p><code>内々</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじログタグ =</code></p>
-<p><code>主な活動.クラス.getSimpleName();</code></p>
-<p><code>省略した場合は</code></p>
-<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
-<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
-<p><code>セットコンテンツビュー(R.割り付け.アクティビティメイン);</code></p>
-<p><code>公然</code> <code>ボイド打ち上げ第二行動(ビューみる) {</code></p>
-<p><code>ログ.d(ログタグ, "ボタンがクリックされました！");</code></p>
-<p><code>}</code></p>
+<pre><code>package com.example.android.twoactivities;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+   private static final String LOG_TAG = 
+                               MainActivity.class.getSimpleName();
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+   }
+
+   public void launchSecondActivity(View view) {
+       Log.d(LOG_TAG, &#34;Button clicked!&#34;);
+   }
+}
+</code></pre>
 
 
       </google-codelab-step>
@@ -182,18 +189,18 @@
 <li>マニフェスト &gt; AndroidManifest.xmlを開きます。</li>
 <li>Android Studioが2つ目の<code>Activity</code>用に作成した<code><activity></code>要素を探します。</li>
 </ol>
-<p><code><アクティビティ</code> <code>アンドロイド名=".SecondActivity">>></activity>の</code></p>
+<p><code><activity</code> <code>android:name=".SecondActivity"></activity></code></p>
 <ol type="1" start="3">
 <li><code><activity></code>要素全体を以下のように置き換えてください。</li>
 </ol>
-<p><code><活動性</code> <code>アンドロイド名=".SecondActivity"</code></p>
-<p><code>アンドロイド:ラベル = "第二の活動"</code></p>
-<p><code>android:parentActivityName=".MainActivity"></code></p>
-<p><code><meta-data</code></p>
-<p><code>アンドロイド名="android.support.PARENT_ACTIVITY"</code></p>
-<p><code>アンドロイド:値=</code></p>
-<p><code>"com.example.android.twoactivities.MainActivity"</code> <code>/></code></p>
-<p><code></活動></code></p>
+<pre><code>&lt;activity android:name=&#34;.SecondActivity&#34;
+    android:label = &#34;Second Activity&#34;
+    android:parentActivityName=&#34;.MainActivity&#34;&gt;
+    &lt;meta-data
+        android:name=&#34;android.support.PARENT_ACTIVITY&#34;
+        android:value=
+                  &#34;com.example.android.twoactivities.MainActivity&#34; /&gt;
+&lt;/activity&gt;</code></pre>
 <p><code>label</code>属性は、<code>アクティビティ</code>のタイトルをアプリバーに追加します。</p>
 <p><code>parentActivityName</code>属性で、メインのアクティビティが2番目のアクティビティの親であることを示します。この関係は、アプリ内の上向きナビゲーションに使用されます：2番目のアクティビティのアプリバーには左向きの矢印が表示され、ユーザーはメインアクティビティに「上向き」に移動できます。</p>
 <p><code><meta-data></code>要素では、キーと値のペアの形でアクティビティに関する追加の任意の情報を提供します。この場合、メタデータ属性は、<code>android:parentActivityName</code>属性と同じことをします-上向きナビゲーションのための2つのアクティビティ間の関係を定義します。なぜなら、android<code>:</code>parentActivityName属性はAPIレベル16以上でのみ利用可能だからです。</p>
@@ -206,62 +213,63 @@
 <li>パレットペインからTextViewをレイアウトの左上にドラッグし、レイアウトの上部と左側に制約を追加します。属性ペインでその属性を以下のように設定します。</li>
 </ol>
 <table>
-<tr><td colspan="1" rowspan="1"><p>属性</p>
-</td><td colspan="1" rowspan="1"><p>値</p>
+<tr><td colspan="1" rowspan="1"><p>Attribute</p>
+</td><td colspan="1" rowspan="1"><p>Value</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>偶像</code></p>
-</td><td colspan="1" rowspan="1"><p><code>テキスト見出し</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>text_header</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>上マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Top margin</p>
 </td><td colspan="1" rowspan="1"><p><code>16</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>左マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Left margin</p>
 </td><td colspan="1" rowspan="1"><p><code>8</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>レイアウト幅</code></p>
-</td><td colspan="1" rowspan="1"><p><code>ラップ内容</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>layout_width</code></p>
+</td><td colspan="1" rowspan="1"><p><code>wrap_content</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>レイアウトハイト</code></p>
-</td><td colspan="1" rowspan="1"><p><code>ラップ内容</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>wrap_content</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>文章</code></p>
-</td><td colspan="1" rowspan="1"><p><code>受信したメッセージ</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>text</code></p>
+</td><td colspan="1" rowspan="1"><p><code>Message Received</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>テキストアピアランス</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>textAppearance</code></p>
 </td><td colspan="1" rowspan="1"><p><code>AppCompat.Medium</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>テキストスタイル</code></p>
-</td><td colspan="1" rowspan="1"><p><code>Ｂ</code>（太字</p>
+<tr><td colspan="1" rowspan="1"><p><code>textStyle</code></p>
+</td><td colspan="1" rowspan="1"><p><code>B</code> (bold)</p>
 </td></tr>
 </table>
 <p>textAppearanceの値は、基本的なフォントスタイルを定義する特別なAndroidテーマ属性です。テーマについての詳細は後のレッスンで学びます。</p>
 <p>これでレイアウトは次のようになるはずです。</p>
-<p class="image-container"><img alt="Second Activity layout (first stage) " style="width: 641.76px" src="img/d505e47d07ddd850.png"></p>
+<p class="image-container"><img alt="Second Activity layout (first stage) " style="width: 308.57px" src="img/d505e47d07ddd850.png"></p>
 <ol type="1" start="3">
 <li>TextタブをクリックしてXMLコードを編集し、&#34;Message Received&#34;文字列を<code>text_header</code>という名前のリソースに抽出します。</li>
 <li>android<code>:layout_marginLeft="8dp"</code>属性を<code>TextView</code>に追加し、古いバージョンのAndroidの<code>layout_marginStart</code>属性を補完します。</li>
 </ol>
 <p><code>activity_second.xml</code>のXMLコードは以下のようにします。</p>
-<p><code><android.support.constraint.ConstraintLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.twoactivities.SecondActivity"></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_header"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginLeft="8dp"</code></p>
-<p><code>android:layout_marginTop="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/text_header"</code></p>
-<p><code>android:textAppearance=</code></p>
-<p><code>"@style/TextAppearance.AppCompat.Medium"</code></p>
-<p><code>アンドロイド:textStyle="大胆</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toTopOf="おや</code> <code>/></code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;android.support.constraint.ConstraintLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.twoactivities.SecondActivity&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_header&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginTop=&#34;16dp&#34;
+        android:text=&#34;@string/text_header&#34;
+        android:textAppearance=
+                          &#34;@style/TextAppearance.AppCompat.Medium&#34;
+        android:textStyle=&#34;bold&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;
+&lt;/android.support.constraint.ConstraintLayout&gt;</code></pre>
 <p>2.4 メインアクティビティにインテントを追加する</p>
 <p>このタスクでは、<code>メインアクティビティ</code>に明示的なインテント<code>を</code>追加します。この<code>Intent</code>は、送信ボタンがクリックされたときに 2 番目の<code>アクティビティを</code>アクティブにするために使用されます。</p>
 <ol type="1" start="1">
@@ -269,11 +277,11 @@
 <li><code>launchSecondActivity()</code>メソッドで新しい<code>Intent</code>を作成します。</li>
 </ol>
 <p>Intent コンストラクタは、明示的な<code>Intent</code> の 2 つの引数を取ります。 <a href="https://developer.android.com/reference/android/content/Context.html" target="_blank"><code>コンテキスト</code></a>と、その<code>Intent を</code>受け取る特定のコンポーネントを指定します。ここでは、<code>これを</code> <code>コンテキスト</code>として使用し、<code>SecondActivity.class を</code>特定のクラスとして使用します。</p>
-<p><code>意図意図 = 新しい</code> <code>意図(此れ, セカンドアクティビティ.クラス);</code></p>
+<p><code>Intent intent = new</code> <code>Intent(this, SecondActivity.class);</code></p>
 <ol type="1" start="3">
 <li>新しい<code>Intent を</code>引数として<code>startActivity()</code>メソッドを呼び出します。</li>
 </ol>
-<p><code>メソッドを呼び出します。(意図);</code></p>
+<p><code>startActivity(intent);</code></p>
 <ol type="1" start="4">
 <li>アプリを実行します。</li>
 </ol>
@@ -293,110 +301,115 @@
 <li>パレットペインからPlain Text<code>（EditText</code>）要素をレイアウトの下部にドラッグし、レイアウトの左側、レイアウトの下部、送信 <code>ボタン</code>の左側に制約を追加します。属性ペインでその属性を以下のように設定します。</li>
 </ol>
 <table>
-<tr><td colspan="1" rowspan="1"><p>属性</p>
-</td><td colspan="1" rowspan="1"><p>値</p>
+<tr><td colspan="1" rowspan="1"><p>Attribute</p>
+</td><td colspan="1" rowspan="1"><p>Value</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>偶像</code></p>
-</td><td colspan="1" rowspan="1"><p><code>エディットテキストメイン</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>editText_main</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>右マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Right margin</p>
 </td><td colspan="1" rowspan="1"><p><code>8</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>左マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Left margin</p>
 </td><td colspan="1" rowspan="1"><p><code>8</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>下マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Bottom margin</p>
 </td><td colspan="1" rowspan="1"><p><code>16</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>レイアウト幅</code></p>
-</td><td colspan="1" rowspan="1"><p><code>マッチ制約</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>layout_width</code></p>
+</td><td colspan="1" rowspan="1"><p><code>match_constraint</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>レイアウトハイト</code></p>
-</td><td colspan="1" rowspan="1"><p><code>ラップ内容</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>wrap_content</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>にゅうりょくしゅべつ</code></p>
-</td><td colspan="1" rowspan="1"><p><code>テキストロングメッセージ</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>inputType</code></p>
+</td><td colspan="1" rowspan="1"><p><code>textLongMessage</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>ヒント</code></p>
-</td><td colspan="1" rowspan="1"><p><code>ここにメッセージを入力してください</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>hint</code></p>
+</td><td colspan="1" rowspan="1"><p><code>Enter Your Message Here</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>文章</code></p>
-</td><td colspan="1" rowspan="1"><p>(このフィールドのテキストを削除してください)</p>
+<tr><td colspan="1" rowspan="1"><p><code>text</code></p>
+</td><td colspan="1" rowspan="1"><p>(Delete any text in this field)</p>
 </td></tr>
 </table>
 <p><code>activity_main.xml</code>の新しいレイアウトは次のようになります。</p>
-<p class="image-container"><img alt="Main Activity layout (second stage)" style="width: 641.76px" src="img/cd5302e2709828b7.png"></p>
+<p class="image-container"><img alt="Main Activity layout (second stage)" style="width: 294.16px" src="img/cd5302e2709828b7.png"></p>
 <ol type="1" start="3">
 <li>テキストタブをクリックしてXMLコードを編集し、&#34;ここにメッセージを入力してください&#34;という文字列を<code>editText_main</code>という名前のリソースに抽出します。</li>
 </ol>
 <p>レイアウトのXMLコードは以下のようになります。</p>
-<p><code><android.support.constraint.ConstraintLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.twoactivities.MainActivity"></code></p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/button_main"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginRight="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_main"</code></p>
-<p><code>アンドロイド:オンクリック="launchSecondActivity"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:レイアウト制約Right_toRightOf="おや</code> <code>/></code></p>
-<p><code><編集テキスト</code></p>
-<p><code>アンドロイド:id="@+id/editText_main"</code></p>
-<p><code>アンドロイド:レイアウトの幅="0dp"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginEnd="8dp"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>アンドロイド:エムエス="10"</code></p>
-<p><code>アンドロイド:ヒント="@string/editText_main"</code></p>
-<p><code>アンドロイド:inputType="textLongMessage"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:layout_constraintEnd_toStartOf="@+id/button_main"</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code> <code>/></code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;android.support.constraint.ConstraintLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.twoactivities.MainActivity&#34;&gt;
+
+    &lt;Button
+        android:id=&#34;@+id/button_main&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginRight=&#34;16dp&#34;
+        android:text=&#34;@string/button_main&#34;
+        android:onClick=&#34;launchSecondActivity&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintRight_toRightOf=&#34;parent&#34; /&gt;
+
+    &lt;EditText
+        android:id=&#34;@+id/editText_main&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginEnd=&#34;8dp&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:ems=&#34;10&#34;
+        android:hint=&#34;@string/editText_main&#34;
+        android:inputType=&#34;textLongMessage&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintEnd_toStartOf=&#34;@+id/button_main&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34; /&gt;
+&lt;/android.support.constraint.ConstraintLayout&gt;
+</code></pre>
 <p>3.2 Intentエクストラに文字列を追加する</p>
 <p><code>インテントエクストラ</code> <em>は</em>、キー/値のペアを <a href="https://developer.android.com/reference/android/os/Bundle.html" target="_blank"><code>バンドル</code></a>.<code>バンドル</code>とは、キーと値のペアとして格納されたデータの集合体です。ある<code>アクティビティ</code>から別のアクティビティに情報を渡すには、送信側の<code>アクティビティ</code>から<code>Intent</code>の余分な<code>バンドル</code>にキーと値を入れ、受信側の<code>アクティビティ</code>でそれらを再び取り出す必要があります。</p>
 <ol type="1" start="1">
 <li>MainActivityを開きます。</li>
 <li>クラスの先頭に<code>パブリック</code>定数を追加して、<code>Intent</code>エクストラのキーを定義します。</li>
 </ol>
-<p><code>公開されている</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじEXTRA_MESSAGE =</code></p>
-<p><code>"com.example.android.twoactivities.extra.MESSAGE";</code></p>
+<pre><code>public static final String EXTRA_MESSAGE = 
+                   &#34;com.example.android.twoactivities.extra.MESSAGE&#34;;</code></pre>
 <ol type="1" start="3">
 <li><code>EditTextを</code>保持するためにクラスの先頭にプライベート変数を追加します。</li>
 </ol>
-<p><code>プライベート</code> <code>編集テキストmMessageEditText;</code></p>
+<pre><code>private EditText mMessageEditText;</code></pre>
 <ol type="1" start="4">
 <li><code>onCreate()</code>メソッドでは <a href="https://developer.android.com/reference/android/view/View.html#findViewById(int)" target="_blank"><code>findViewById()</code></a>を使用して<code>EditText</code>への参照を取得し、そのプライベート変数に代入します。</li>
 </ol>
-<p><code>mMessageEditText =ファインドビューバイアイディー(R.偶像.エディットテキストメイン);</code></p>
+<pre><code>mMessageEditText = findViewById(R.id.editText_main);</code></pre>
 <ol type="1" start="5">
 <li><code>launchSecondActivity()</code>メソッドで、新しい<code>Intent</code>のすぐ下にある<code>EditText</code>のテキストを文字列として取得します。</li>
 </ol>
-<p><code>文字列伝言 =mMessageEditText.ゲットテキスト().文字列に変換します。();</code></p>
+<pre><code>String message = mMessageEditText.getText().toString();</code></pre>
 <ol type="1" start="6">
 <li>その文字列を、<code>EXTRA_MESSAGE</code>定数をキーに、文字列を値にして、余分なものとしてイン<code>テント</code>に追加します。</li>
 </ol>
-<p><code>インテント.putExtra(EXTRA_MESSAGE,伝言);</code></p>
+<pre><code>intent.putExtra(EXTRA_MESSAGE, message);</code></pre>
 <p><code>MainActivity</code>の<code>onCreate()</code>メソッドは以下のようになるはずです。</p>
-<p><code>メソッドは次のようになるはずです。</code></p>
-<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
-<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
-<p><code>セットコンテンツビュー(R.割り付け.アクティビティメイン);</code></p>
-<p><code>mMessageEditText =ファインドビューバイアイディー(R.偶像.エディットテキストメイン);</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mMessageEditText = findViewById(R.id.editText_main);
+}</code></pre>
 <p><code>MainActivity</code>の<code>launchSecondActivity()</code>メソッドは、以下のようになるはずです。</p>
-<p><code>公開されている</code> <code>ボイド打ち上げ第二行動(ビューみる) {</code></p>
-<p><code>ログ.d(ログタグ, "ボタンがクリックされました！");</code></p>
-<p><code>インテント意図 = 新しい</code> <code>意図(此れ, セカンドアクティビティ.クラス);</code></p>
-<p><code>文字列伝言 =mMessageEditText.ゲットテキスト().文字列に変換します。();</code></p>
-<p><code>意図.putExtra(EXTRA_MESSAGE,伝言);</code></p>
-<p><code>startActivity(意図);</code></p>
+<pre><code>public void launchSecondActivity(View view) {
+        Log.d(LOG_TAG, &#34;Button clicked!&#34;);
+        Intent intent = new Intent(this, SecondActivity.class);
+        String message = mMessageEditText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+}</code></pre>
 <p>3.3 SecondActivityにメッセージ用のTextViewを追加する</p>
 <ol type="1" start="1">
 <li>activity_second.xmlを開きます。</li>
@@ -404,90 +417,94 @@
 <li>属性ペインで新しい<code>TextView</code>属性を以下のように設定します。</li>
 </ol>
 <table>
-<tr><td colspan="1" rowspan="1"><p>属性</p>
-</td><td colspan="1" rowspan="1"><p>値</p>
+<tr><td colspan="1" rowspan="1"><p>Attribute</p>
+</td><td colspan="1" rowspan="1"><p>Value</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>偶像</code></p>
-</td><td colspan="1" rowspan="1"><p><code>テキストメッセージ</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>id</code></p>
+</td><td colspan="1" rowspan="1"><p><code>text_message</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>上マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Top margin</p>
 </td><td colspan="1" rowspan="1"><p><code>8</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>左マージン</p>
+<tr><td colspan="1" rowspan="1"><p>Left margin</p>
 </td><td colspan="1" rowspan="1"><p><code>8</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>レイアウト幅</code></p>
-</td><td colspan="1" rowspan="1"><p><code>ラップ内容</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>layout_width</code></p>
+</td><td colspan="1" rowspan="1"><p><code>wrap_content</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>レイアウトハイト</code></p>
-</td><td colspan="1" rowspan="1"><p><code>ラップ内容</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>layout_height</code></p>
+</td><td colspan="1" rowspan="1"><p><code>wrap_content</code></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>文章</code></p>
-</td><td colspan="1" rowspan="1"><p>(このフィールドのテキストを削除してください)</p>
+<tr><td colspan="1" rowspan="1"><p><code>text</code></p>
+</td><td colspan="1" rowspan="1"><p>(Delete any text in this field)</p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p><code>テキストアピアランス</code></p>
+<tr><td colspan="1" rowspan="1"><p><code>textAppearance</code></p>
 </td><td colspan="1" rowspan="1"><p><code>AppCompat.Medium</code></p>
 </td></tr>
 </table>
 <p>新しいレイアウトは前のタスクと同じように見えますが、新しい<code>TextView</code>にはテキストが含まれていないため、画面には表示されません。</p>
 <p><code>activity_second.xml</code>レイアウトのXMLコードは以下のようになります。</p>
-<p><code><android.support.constraint.ConstraintLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.twoactivities.SecondActivity"></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_header"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginTop="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/text_header"</code></p>
-<p><code>android:textAppearance=</code></p>
-<p><code>"@style/TextAppearance.AppCompat.Medium"</code></p>
-<p><code>アンドロイド:textStyle="大胆</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toTopOf="おや</code> <code>/></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_message"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginTop="8dp"</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toBottomOf="@+id/text_header"</code> <code>/></code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;android.support.constraint.ConstraintLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.twoactivities.SecondActivity&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_header&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginTop=&#34;16dp&#34;
+        android:text=&#34;@string/text_header&#34;
+        android:textAppearance=
+                          &#34;@style/TextAppearance.AppCompat.Medium&#34;
+        android:textStyle=&#34;bold&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_message&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginTop=&#34;8dp&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/text_header&#34; /&gt;
+&lt;/android.support.constraint.ConstraintLayout&gt;</code></pre>
 <p>3.4 SecondActivityを変更してエキストラを取得し、メッセージを表示する</p>
 <ol type="1" start="1">
 <li><code>onCreate()</code>メソッドにコードを追加するためにSecondActivity を開きます。</li>
 <li>この<code>アクティビティを</code>アクティブにした<code>Intent</code>を取得します。</li>
 </ol>
-<p><code>インテント意図 =ゲットインテント();</code></p>
+<p><code>Intent intent = getIntent();</code></p>
 <ol type="1" start="3">
 <li><code>MainActivity.EXTRA_MESSAGE</code>静的変数をキーにして、<code>インテントエクストラ</code>からメッセージを含む文字列を取得します。</li>
 </ol>
-<p><code>文字列伝言 =意図.getStringExtra(主な活動.EXTRA_MESSAGE);</code></p>
+<p><code>String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);</code></p>
 <ol type="1" start="4">
 <li><code>findViewByID()を</code>使用して、レイアウトからメッセージの<code>TextView</code>への参照を取得します。</li>
 </ol>
-<p><code>のテキストビューへの参照を取得します。テキストビュー =ファインドビューバイアイディー(R.偶像.テキストメッセージ);</code></p>
+<p><code>TextView textView = findViewById(R.id.text_message);</code></p>
 <ol type="1" start="5">
 <li><code>TextViewの</code>テキストを<code>Intent</code>エクストラからの文字列に設定します。</li>
 </ol>
-<p><code>テキストビュー.セットテキスト(伝言);</code></p>
+<p><code>textView.setText(message);</code></p>
 <ol type="1" start="6">
 <li>アプリを実行します。<code>MainActivity</code>にメッセージを入力して送信をクリックすると、<code>SecondActivityが</code>起動してメッセージが表示されます。</li>
 </ol>
 <p><code>SecondActivity</code>の<code>onCreate()</code>メソッドは以下のようになっているはずです。</p>
 <p><code>メソッドは次のようになります。</code></p>
-<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
-<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
-<p><code>セットコンテンツビュー(R.割り付け.アクティビティ秒);</code></p>
-<p><code>意図意図 =ゲットインテント();</code></p>
-<p><code>文字列伝言 =意図.getStringExtra(主な活動.EXTRA_MESSAGE);</code></p>
-<p><code>テキストビューテキストビュー =ファインドビューバイアイディー(R.偶像.テキストメッセージ);</code></p>
-<p><code>テキストビュー.セットテキスト(伝言);</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_second);
+    Intent intent = getIntent();
+    String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+    TextView textView = findViewById(R.id.text_message);
+    textView.setText(message);
+}</code></pre>
 
 
       </google-codelab-step>
@@ -498,8 +515,8 @@
 <ol type="1" start="1">
 <li>strings.xml を開き、<code>Button</code>テキスト用の文字列リソースと<code>SecondActivity</code> に追加する<code>EditText</code>用のヒントを追加します。</li>
 </ol>
-<p><code><文字列</code> <code>名="ボタン秒">返信</文字列</code></p>
-<p><code><文字列</code> <code>名="editText_second">ここに返信を入力してください</文字列</code></p>
+<pre><code>&lt;string name=&#34;button_second&#34;&gt;Reply&lt;/string&gt;
+&lt;string name=&#34;editText_second&#34;&gt;Enter Your Reply Here&lt;/string&gt;</code></pre>
 <ol type="1" start="2">
 <li>activity_main.xmlとactivity_second.xmlを開きます。</li>
 <li><code>activity_main.xml</code>レイアウトファイルから<code>EditText</code>と<code>Buttonを</code>コピーし、act<code>ivity_second.xml</code>レイアウトに貼り付けます。</li>
@@ -548,122 +565,128 @@
 <p><code>activity_second.xml</code>の新しいレイアウトは次のようになります。</p>
 <p class="image-container"><img alt="Second Activity layout (final stage)" style="width: 303.00px" src="img/4acbc21712a8e6f7.png"></p>
 <p><code>activity_second.xml</code>レイアウト・ファイルのXMLコードは次のようになります。</p>
-<p><code><android.support.constraint.ConstraintLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.twoactivities.SecondActivity"></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_header"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginLeft="8dp"</code></p>
-<p><code>android:layout_marginTop="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/text_header"</code></p>
-<p><code>android:textAppearance="@style/TextAppearance.AppCompat.Medium"</code></p>
-<p><code>アンドロイド:textStyle="大胆</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toTopOf="おや</code> <code>/></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_message"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginLeft="8dp"</code></p>
-<p><code>android:layout_marginTop="8dp"</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toBottomOf="@+id/text_header"</code> <code>/></code></p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/button_second"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginRight="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_second"</code></p>
-<p><code>アンドロイド:オンクリック="returnReply"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:レイアウト制約Right_toRightOf="おや</code> <code>/></code></p>
-<p><code><編集テキスト</code></p>
-<p><code>アンドロイド:id="@+id/editText_second"</code></p>
-<p><code>アンドロイド:レイアウトの幅="0dp"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginEnd="8dp"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>アンドロイド:エムエス="10"</code></p>
-<p><code>アンドロイド:ヒント="@string/editText_second"</code></p>
-<p><code>アンドロイド:inputType="textLongMessage"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:layout_constraintEnd_toStartOf="@+id/button_second"</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code> <code>/></code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;android.support.constraint.ConstraintLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.twoactivities.SecondActivity&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_header&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginTop=&#34;16dp&#34;
+        android:text=&#34;@string/text_header&#34;
+        android:textAppearance=&#34;@style/TextAppearance.AppCompat.Medium&#34;
+        android:textStyle=&#34;bold&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_message&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginTop=&#34;8dp&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/text_header&#34; /&gt;
+
+    &lt;Button
+        android:id=&#34;@+id/button_second&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginRight=&#34;16dp&#34;
+        android:text=&#34;@string/button_second&#34;
+        android:onClick=&#34;returnReply&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintRight_toRightOf=&#34;parent&#34; /&gt;
+
+    &lt;EditText
+        android:id=&#34;@+id/editText_second&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginEnd=&#34;8dp&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:ems=&#34;10&#34;
+        android:hint=&#34;@string/editText_second&#34;
+        android:inputType=&#34;textLongMessage&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintEnd_toStartOf=&#34;@+id/button_second&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34; /&gt;
+&lt;/android.support.constraint.ConstraintLayout&gt;</code></pre>
 <p>4.2 2つ目のアクティビティでレスポンスインテントを作成する</p>
 <p>2 番目の<code>アクティビティ</code>からメインの<code>アクティビティ</code>に戻ってくるレスポンスデータは、<code>Intent</code>エクストラで送信されます。この return<code>Intent</code>を構築し、送信する<code>Intent</code> と同じ方法でデータを入れます。</p>
 <ol type="1" start="1">
 <li>SecondActivityを開きます。</li>
 <li>クラスの先頭に、<code>Intent</code>エクストラのキーを定義するための public 定数を追加します。</li>
 </ol>
-<p><code>public</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじエクストラリプライ =</code></p>
-<p><code>"com.example.android.twoactivities.extra.REPLY";</code></p>
+<pre><code>public static final String EXTRA_REPLY = 
+                     &#34;com.example.android.twoactivities.extra.REPLY&#34;;</code></pre>
 <ol type="1" start="3">
 <li><code>EditTextを</code>保持するためにクラスの先頭にプライベート変数を追加します。</li>
 </ol>
-<p><code>プライベート</code> <code>編集テキストmReply;</code></p>
+<p><code>private</code> <code>EditText mReply;</code></p>
 <ol type="1" start="4">
 <li><code>onCreate()</code>メソッドでは、<code>Intent</code>コードの前に<code>findViewByID() を</code>使用して<code>EditText</code>への参照を取得し、そのプライベート変数に代入します。</li>
 </ol>
-<p><code>mReply =ファインドビューバイアイディー(R.偶像.editText_second);</code></p>
+<p><code>mReply = findViewById(R.id.editText_second);</code></p>
 <ol type="1" start="5">
 <li><code>returnReply()</code>メソッドでは、<code>EditTextの</code>テキストを文字列として取得します。</li>
 </ol>
-<p><code>文字列返事 =mReply.ゲットテキスト().文字列に変換します。();</code></p>
+<p><code>String reply = mReply.getText().toString();</code></p>
 <ol type="1" start="6">
 <li><code>returnReply()</code>メソッドでは、レスポンス用の新しいインテントを作成します<em>。</em></li>
 </ol>
-<p><code>Intent オブジェクトを再利用しないでください。返信先 = 新しい</code> <code>意図();</code></p>
+<p><code>Intent replyIntent = new</code> <code>Intent();</code></p>
 <ol type="1" start="7">
 <li><code>EditText</code>からの<code>返信</code>文字列を<code>Intent</code>の<em>エクストラ</em>として新しいインテントに追加します。エクストラ<em>は</em>キーと値のペアなので、ここではキーが<code>EXTRA_REPLY</code>、値が<code>返信</code>です。</li>
 </ol>
-<p><code>replyIntent.putExtra(エクストラリプライ,返事);</code></p>
+<p><code>replyIntent.putExtra(EXTRA_REPLY, reply);</code></p>
 <ol type="1" start="8">
 <li>レスポンスが成功したことを示すために結果を<code>RESULT_OK</code>に設定します。その結果をRESULT_OKに設定して、レスポンスが成功したことを示します。 <a href="https://developer.android.com/reference/android/app/Activity.html" target="_blank"><code>活動内容</code></a>クラスは<code>RESULT_OK</code>と<code>RESULT_CANCELLED</code> を含む結果コードを定義します。</li>
 </ol>
-<p><code>集合結果(結果OK,返信先);</code></p>
+<p><code>setResult(RESULT_OK,replyIntent);</code></p>
 <ol type="1" start="9">
 <li><code>アクティビティを</code>閉じて<code>MainActivity</code> に戻るために<code>finish() を</code>呼び出します。</li>
 </ol>
-<p><code>を終了します。();</code></p>
-<p><code>SecondActivityの</code>コードは以下のようになるはずです。</p>
-<p><code>公開されている</code> <code>級</code> <code>セカンドアクティビティ</code> <code>伸びる</code> <code>AppCompatActivity {</code></p>
-<p><code>公然</code> <code>スタティック</code> <code>締めくくり</code> <code>ひもじエクストラリプライ =</code></p>
-<p><code>"com.example.android.twoactivities.extra.REPLY";</code></p>
-<p><code>二等兵</code> <code>編集テキストmReply;</code></p>
-<p><code>省略時には</code></p>
-<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
-<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
-<p><code>セットコンテンツビュー(R.割り付け.アクティビティ秒);</code></p>
-<p><code>mReply =ファインドビューバイアイディー(R.偶像.editText_second);</code></p>
-<p><code>意図意図 =ゲットインテント();</code></p>
-<p><code>文字列伝言 =意図.getStringExtra(主な活動.EXTRA_MESSAGE);</code></p>
-<p><code>テキストビューテキストビュー =ファインドビューバイアイディー(R.偶像.テキストメッセージ);</code></p>
-<p><code>テキストビュー.セットテキスト(伝言);</code></p>
-<p><code>公然</code> <code>ボイド返答(ビューみる) {</code></p>
-<p><code>ひもじ返事 =mReply.ゲットテキスト().文字列に変換します。();</code></p>
-<p><code>意図返信先 = 新しい</code> <code>意図();</code></p>
-<p><code>返信先.putExtra(エクストラリプライ,返事);</code></p>
-<p><code>設定結果(結果OK,返信先);</code></p>
-<p><code>了();</code></p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<p><code>finish();</code></p>
+<pre><code>public class SecondActivity extends AppCompatActivity {
+    public static final String EXTRA_REPLY =
+                         &#34;com.example.android.twoactivities.extra.REPLY&#34;;
+    private EditText mReply;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        mReply = findViewById(R.id.editText_second);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        TextView textView = findViewById(R.id.text_message);
+        textView.setText(message);
+    }
+
+    public void returnReply(View view) {
+        String reply = mReply.getText().toString();
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK, replyIntent);
+        finish();
+    }
+}</code></pre>
 <p>4.3返信を表示するためのTextView要素の追加</p>
 <p><code>MainActivityには</code>、<code>SecondActivityが</code>送信した返信を表示する方法が必要です。このタスクでは、<code>MainActivity</code>の返信を表示するために、Activity<code>_main.xml</code>レイアウトに<code>TextView</code>要素を追加します。</p>
 <p>このタスクを簡単にするために、<code>SecondActivity</code>で使用した<code>TextView</code>要素をコピーします。</p>
 <ol type="1" start="1">
 <li>strings.xmlを開き、返信ヘッダー用の文字列リソースを追加します。</li>
 </ol>
-<p><code><文字列</code> <code>名="text_header_reply">受信した返信</文字列</code></p>
+<p><code><string</code> <code>name="text_header_reply">Reply Received</string></code></p>
 <ol type="1" start="2">
 <li>activity_main.xmlとactivity_second.xmlを開きます。</li>
 <li><code>activity_second.xml</code>レイアウトファイルから2つの<code>TextView</code>要素をコピーし、<code>Buttonの</code>上のact<code>ivity_main.xml</code>レイアウトに貼り付けます。</li>
@@ -699,63 +722,67 @@
 <ol type="1" start="6">
 <li>それぞれの<code>TextView</code>に<code>android:visibility</code>属性を追加して、最初は見えないようにします。(画面上に表示されていても、何も内容がないと、ユーザーが混乱することがあります)。</li>
 </ol>
-<p><code>アンドロイド:視認性="見えない</code></p>
+<p><code>android:visibility="invisible"</code></p>
 <p>これらの<code>TextView</code>要素は、レスポンスデータが2つ目の<code>アクティビティ</code>から渡された後に表示されます。</p>
 <p><code>activity_main.xmlの</code>レイアウトは前のタスクと同じように見えますが、レイアウトに2つの新しい<code>TextView</code>要素を追加しました。これらの要素を不可視に設定しているため、画面には表示されません。</p>
 <p>以下は、<code>activity_main.xml</code>ファイルのXMLコードです。</p>
-<p><code><android.support.constraint.ConstraintLayout</code> <code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:ツール="http://schemas.android.com/tools"</code></p>
-<p><code>アンドロイド:レイアウトの幅="match_parent"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="match_parent"</code></p>
-<p><code>ツール:コンテキスト="com.example.android.twoactivities.MainActivity"></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_header_reply"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginLeft="8dp"</code></p>
-<p><code>android:layout_marginTop="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/text_header_reply"</code></p>
-<p><code>android:textAppearance="@style/TextAppearance.AppCompat.Medium"</code></p>
-<p><code>アンドロイド:textStyle="大胆</code></p>
-<p><code>アンドロイド:可視性="見えない</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toTopOf="おや</code> <code>/></code></p>
-<p><code><テキストビュー</code></p>
-<p><code>アンドロイド:id="@+id/text_message_reply"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>android:layout_marginLeft="8dp"</code></p>
-<p><code>android:layout_marginTop="8dp"</code></p>
-<p><code>アンドロイド:可視性="見えない</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code></p>
-<p><code>app:layout_constraintTop_toBottomOf="@+id/text_header_reply"</code> <code>/></code></p>
-<p><code><ボタン</code></p>
-<p><code>アンドロイド:id="@+id/button2"</code></p>
-<p><code>アンドロイド:レイアウトの幅="ラップコンテンツ"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginRight="16dp"</code></p>
-<p><code>アンドロイド:テキスト="@string/button_main"</code></p>
-<p><code>アンドロイド:オンクリック="launchSecondActivity"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:レイアウト制約Right_toRightOf="おや</code> <code>/></code></p>
-<p><code><編集テキスト</code></p>
-<p><code>アンドロイド:id="@+id/editText_main"</code></p>
-<p><code>アンドロイド:レイアウトの幅="0dp"</code></p>
-<p><code>アンドロイド:レイアウトの高さ="ラップコンテンツ"</code></p>
-<p><code>android:layout_marginBottom="16dp"</code></p>
-<p><code>android:layout_marginEnd="8dp"</code></p>
-<p><code>android:layout_marginStart="8dp"</code></p>
-<p><code>アンドロイド:エムエス="10"</code></p>
-<p><code>アンドロイド:ヒント="@string/editText_main"</code></p>
-<p><code>アンドロイド:inputType="textLongMessage"</code></p>
-<p><code>app:layout_constraintBottom_toBottomOf="おや</code></p>
-<p><code>app:layout_constraintEnd_toStartOf="@+id/button2"</code></p>
-<p><code>app:layout_constraintStart_toStartOf="おや</code> <code>/></code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;android.support.constraint.ConstraintLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.twoactivities.MainActivity&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_header_reply&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginTop=&#34;16dp&#34;
+        android:text=&#34;@string/text_header_reply&#34;
+        android:textAppearance=&#34;@style/TextAppearance.AppCompat.Medium&#34;
+        android:textStyle=&#34;bold&#34;
+        android:visibility=&#34;invisible&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/text_message_reply&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:layout_marginLeft=&#34;8dp&#34;
+        android:layout_marginTop=&#34;8dp&#34;
+        android:visibility=&#34;invisible&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/text_header_reply&#34; /&gt;
+
+    &lt;Button
+        android:id=&#34;@+id/button2&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginRight=&#34;16dp&#34;
+        android:text=&#34;@string/button_main&#34;
+        android:onClick=&#34;launchSecondActivity&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintRight_toRightOf=&#34;parent&#34; /&gt;
+
+    &lt;EditText
+        android:id=&#34;@+id/editText_main&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginBottom=&#34;16dp&#34;
+        android:layout_marginEnd=&#34;8dp&#34;
+        android:layout_marginStart=&#34;8dp&#34;
+        android:ems=&#34;10&#34;
+        android:hint=&#34;@string/editText_main&#34;
+        android:inputType=&#34;textLongMessage&#34;
+        app:layout_constraintBottom_toBottomOf=&#34;parent&#34;
+        app:layout_constraintEnd_toStartOf=&#34;@+id/button2&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34; /&gt;
+&lt;/android.support.constraint.ConstraintLayout&gt;</code></pre>
 <p>4.4 Intent extraからの返信を取得して表示する</p>
 <p>明示的な<code>Intent</code>を使用して別の<code>アクティビティ</code> <code>を</code>開始する場合、データの取得は期待できないかもしれません。その場合は、先ほどの実践で行ったように<code>startActivity() を</code>使用して新しい<code>アクティビティ</code>を開始します。しかし、アクティベートされた<code>アクティビティ</code>からデータを取得したい場合は、<code>startActivityForResult()</code>を使用してアクティベートを開始する必要があります。</p>
 <p>このタスクでは、結果を期待して<code>SecondActivityを</code>起動し、その戻りデータを<code>Intent</code>から抽出し、前回のタスクで作成した<code>TextView</code>要素にそのデータを表示するようにアプリを修正します。</p>
@@ -763,101 +790,102 @@
 <li>MainActivityを開きます。</li>
 <li>クラスの先頭に公開定数を追加して、興味のある特定のタイプのレスポンスのキーを定義します。</li>
 </ol>
-<p><code>public</code> <code>スタティック</code> <code>締めくくり</code> <code>インスタントテキスト要求 = 1;</code></p>
+<p><code>public</code> <code>static</code> <code>final</code> <code>int TEXT_REQUEST = 1;</code></p>
 <ol type="1" start="3">
 <li>返信ヘッダと返信<code>TextView</code>要素を保持するために2つのプライベート変数を追加します。</li>
 </ol>
-<p><code>プライベート</code> <code>テキストビューmReplyHeadTextView;</code></p>
-<p><code>二等兵</code> <code>テキストビューmReplyTextView;</code></p>
+<p><code>private</code> <code>TextView mReplyHeadTextView;</code></p>
+<p><code>private</code> <code>TextView mReplyTextView;</code></p>
 <ol type="1" start="4">
 <li><code>onCreate()</code>メソッドで、<code>findViewByID() を</code>使用して、レイアウトから返信ヘッダーと返信<code>テキストビュー</code>要素への参照を取得します。これらのビューインスタンスをプライベート変数に代入します。</li>
 </ol>
-<p><code>mReplyHeadTextView =ファインドビューバイアイディー(R.偶像.テキストヘッダ返信);</code></p>
-<p><code>mReplyTextView =ファインドビューバイアイディー(R.偶像.テキストメッセージ返信);</code></p>
+<p><code>mReplyHeadTextView = findViewById(R.id.text_header_reply);</code></p>
+<p><code>mReplyTextView = findViewById(R.id.text_message_reply);</code></p>
 <p>完全な<code>onCreate()</code>メソッドは次のようになります。</p>
-<p><code>メソッドは次のようになります。</code></p>
-<p><code>保護された</code> <code>ボイドオンクリエイト(バンドルセーブインスタンス状態) {</code></p>
-<p><code>超.オンクリエイト(セーブインスタンス状態);</code></p>
-<p><code>セットコンテンツビュー(R.割り付け.アクティビティメイン);</code></p>
-<p><code>mMessageEditText =ファインドビューバイアイディー(R.偶像.エディットテキストメイン);</code></p>
-<p><code>mReplyHeadTextView =ファインドビューバイアイディー(R.偶像.テキストヘッダ返信);</code></p>
-<p><code>mReplyTextView =ファインドビューバイアイディー(R.偶像.テキストメッセージ返信);</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mMessageEditText = findViewById(R.id.editText_main);
+        mReplyHeadTextView = findViewById(R.id.text_header_reply);
+        mReplyTextView = findViewById(R.id.text_message_reply);
+}</code></pre>
 <ol type="1" start="5">
 <li><code>launchSecondActivity</code>()メソッドで、startAct<code>ivity()</code>の呼び出しを<code>startActivityForResult()</code>に変更し、引数に<code>TEXT_REQUEST</code>キーを含めます。</li>
 </ol>
-<p><code>startActivityForResult(意図,テキスト要求);</code></p>
+<p><code>startActivityForResult(intent, TEXT_REQUEST);</code></p>
 <ol type="1" start="6">
 <li>このシグネチャで<code>onActivityResult()</code>コールバックメソッドをオーバーライドします。</li>
 </ol>
-<p><code>コールバックメソッドをオーバーライドします。</code></p>
-<p><code>公然</code> <code>ボイドオンアクティビティ結果(インスタント要求コード,</code></p>
-<p><code>インスタント結果コード, 意図データ) {</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+public void onActivityResult(int requestCode, 
+                             int resultCode, Intent data) {
+}</code></pre>
 <p><code>onActivityResult(</code>)の3つの引数には、戻りデータを処理するために必要なすべての情報が含まれています:<code>startActivityForResult()</code>で<code>アクティビティ</code>を起動したときに設定した<code>requestCode</code>、起動した<code>アクティビティ</code>で設定した<code>resultCode</code>(通常は<code>RESULT_OK</code>または<code>RESULT_CANCELED</code>のいずれか)、および起動した<code>アクティビティ</code>から返されたデータを含む<code>Intentデータ</code>です。</p>
 <ol type="1" start="7">
 <li><code>onActivityResult</code>()の中で、<code>super.onActivityResult()</code>を呼び出します。</li>
 </ol>
-<p><code>を呼び出します。.オンアクティビティ結果(要求コード,結果コード,データ);</code></p>
+<p><code>super.onActivityResult(requestCode, resultCode, data);</code></p>
 <ol type="1" start="8">
 <li><code>TEXT_REQUEST</code>をテストするコードを追加して、正しい<code>Intent</code>の結果を処理していることを確認します。また、<code>RESULT_OK</code> をテストして、リクエストが成功したことを確認します。</li>
 </ol>
-<p><code>もし (要求コード ==テキスト要求) {</code></p>
-<p><code>とすれば (結果コード ==結果OK) {</code></p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<pre><code>if (requestCode == TEXT_REQUEST) {
+    if (resultCode == RESULT_OK) { 
+    }
+}</code></pre>
 <p>そのためには <a href="https://developer.android.com/reference/android/app/Activity.html" target="_blank"><code>活動内容</code></a>クラスは結果コードを定義します。コードは<code>RESULT_OK</code>(リクエストが成功した)、<code>RESULT_CANCELED</code>(ユーザーが操作をキャンセルした)、RESULT_<code>FIRST_USER</code>(独自の結果コードを定義するためのもの) のいずれかです。</p>
 <ol type="1" start="9">
 <li>内側の if ブロックの中で、レスポンス<code>Intent(data</code>) から<code>Intent</code>のエクストラを取得します。ここで、extra のキーは<code>SecondActivity</code> の<code>EXTRA_REPLY</code>定数です。</li>
 </ol>
-<p><code>文字列返事 =データ.getStringExtra(セカンドアクティビティ.EXTRA_REPLY);</code></p>
+<pre><code>String reply = data.getStringExtra(SecondActivity.EXTRA_REPLY);</code></pre>
 <ol type="1" start="10">
 <li>返信ヘッダーの可視性をtrueに設定します。</li>
 </ol>
-<p><code>mReplyHeadTextView.セット可視性(ビュー.目に見える);</code></p>
+<p><code>mReplyHeadTextView.setVisibility(View.VISIBLE);</code></p>
 <ol type="1" start="11">
 <li>返信<code>テキストビューの</code>テキストを<code>返信</code>に設定し、その可視性をtrueに設定します。</li>
 </ol>
-<p><code>mReplyTextView.セットテキスト(返事);</code></p>
-<p><code>mReplyTextView.セット可視性(ビュー.目に見える);</code></p>
+<pre><code>mReplyTextView.setText(reply);
+mReplyTextView.setVisibility(View.VISIBLE);</code></pre>
 <p>完全な<code>onActivityResult()</code>メソッドは次のようになります。</p>
-<p><code>メソッドは次のようになります。</code></p>
-<p><code>公然</code> <code>ボイドオンアクティビティ結果(インスタント要求コード,</code></p>
-<p><code>インスタント結果コード, 意図データ) {</code></p>
-<p><code>超.オンアクティビティ結果(要求コード,結果コード,データ);</code></p>
-<p><code>の場合 (要求コード ==テキスト要求) {</code></p>
-<p><code>とすれば (結果コード ==結果OK) {</code></p>
-<p><code>ひもじ返事 =</code></p>
-<p><code>データ.getStringExtra(セカンドアクティビティ.EXTRA_REPLY);</code></p>
-<p><code>mReplyHeadTextView.セット可視性(ビュー.目に見える);</code></p>
-<p><code>mReplyTextView.セットテキスト(返事);</code></p>
-<p><code>mReplyTextView.セット可視性(ビュー.目に見える);</code></p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+public void onActivityResult(int requestCode, 
+                             int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == TEXT_REQUEST) {
+        if (resultCode == RESULT_OK) {
+            String reply = 
+                    data.getStringExtra(SecondActivity.EXTRA_REPLY);
+            mReplyHeadTextView.setVisibility(View.VISIBLE);
+            mReplyTextView.setText(reply);
+            mReplyTextView.setVisibility(View.VISIBLE);
+        }
+    }
+}</code></pre>
 <ol type="1" start="12">
 <li>アプリを実行します。</li>
 </ol>
 <p>これで、2つ目の<code>アクティビティ</code>にメッセージを送信して返信が来ると、メインの<code>アクティビティ</code>が更新されて返信が表示されるようになりました。</p>
-<p class="image-container"><img alt="Main Activity, final result" style="width: 388.83px" src="img/e1c10fcdbf9a7e75.png"></p>
+<p class="image-container"><img alt="Main Activity, final result" style="width: 235.15px" src="img/e1c10fcdbf9a7e75.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。 <a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/TwoActivities" target="_blank">TwoActivities</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注意:コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。 テキスト 1、テキスト2、テキスト 3 とラベルの付いた 3 つの<code>Button</code>要素を持つアプリを作成します。これらの<code>Button</code>要素のいずれかがクリックされると、2 つ目の<code>アクティビティを</code>起動します。2 つ目の<code>アクティビティ</code>には、3 つのテキスト パッセージのうちの 1 つを表示する<code>ScrollView</code>を含める必要があります (任意のパッセージを含めることができます)。イン<code>テント</code>を使用して、3つのパッセージのうちどのパッセージを表示するかを指定して、2つ目の<code>アクティビティ</code>を起動します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Summary" duration="0">
-        <p>概要。</p>
-<ul>
+      <google-codelab-step label="Summary" duration="0">
+        <ul>
 <li><code>アクティビティ</code>は、単一のユーザー タスクに焦点を当てた単一の画面を提供するアプリ コンポーネントです。</li>
 <li>各<code>アクティビティ</code>には、独自のユーザー インターフェイス レイアウト ファイルがあります。</li>
 <li>アクティビティ<code>の</code>実装に親子関係を割り当てることで、アプリ内でのアップ ナビゲーションを有効にすることができます。</li>
@@ -880,13 +908,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連する概念のドキュメントは、2<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-1-c-activities-and-intents/2-1-c-activities-and-intents.html" target="_blank">.1</a>にある。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-2-activities-and-intents/2-1-c-activities-and-intents/2-1-c-activities-and-intents.html" target="_blank">活動と意図</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Studio のドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio の紹介</a></li>
@@ -909,81 +937,68 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Homework" duration="0">
-        <p>This section lists possible homework assignments for students who are working through this codelab as part of a course led by an instructor. It&#39;s up to the instructor to do the following:</p>
+      <google-codelab-step label="Homework" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
 <ul>
-<li>Assign homework if required.</li>
-<li>Communicate to students how to submit homework assignments.</li>
-<li>Grade the homework assignments.</li>
+<li>必要に応じて宿題を割り当てる。</li>
+<li>宿題の提出方法を学生に伝える。</li>
+<li>宿題の割り当てを評価します。</li>
 </ul>
-<p>Instructors can use these suggestions as little or as much as they want, and should feel free to assign any other homework they feel is appropriate.</p>
-<p>If you&#39;re working through this codelab on your own, feel free to use these homework assignments to test your knowledge.</p>
+<p>講師は、これらの提案を少しでも多くのように使用することができますし、彼らが適切であると感じる他の宿題を割り当てるために自由に感じる必要があります。</p>
+<p>あなた自身でこのコードラボを介して作業している場合は、あなたの知識をテストするためにこれらの宿題の割り当てを使用して自由に感じています。</p>
 <h2 is-upgraded>Build and run an app</h2>
-<p>Open the <a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/HelloToast" target="_blank">HelloToast</a> app that you created in a previous practical codelab.</p>
-<ol type="1" start="1">
-<li>Modify the Toast button so that it launches a new Activity to display the word &#34;Hello!&#34; and the current count, as shown below.</li>
-<li>Change the text on the Toast button to Say Hello.</li>
-</ol>
-<p class="image-container"><img alt="1fffd3c1b8d09d64.png" style="width: 641.76px" src="img/1fffd3c1b8d09d64.png"></p>
+<p>前回の実践コードラボで作成したHelloToastアプリを開きます。</p>
+<p>Toastボタンを変更して、以下のように「Hello！」という言葉と現在のカウントを表示する新しいアクティビティを起動するようにします。</p>
+<p>ToastボタンのテキストをSay Helloに変更します。</p>
+<p class="image-container"><img alt="1fffd3c1b8d09d64.png" style="width: 466.53px" src="img/1fffd3c1b8d09d64.png"></p>
 <h2 is-upgraded>Answer these questions</h2>
-<h3 is-upgraded>Question 1</h3>
-<p>What changes are made when you add a second Activity to your app by choosing File &gt; New &gt; Activity and an Activity template? Choose one:</p>
-<ul>
-<li>The second Activity is added as a Java class. You still need to add the XML layout file.</li>
-<li>The second Activity XML layout file is created and a Java class added. You still need to define the class signature.</li>
-<li>The second Activity is added as a Java class, the XML layout file is created, and the AndroidManifest.xml file is changed to declare a second Activity.</li>
-<li>The second Activity XML layout file is created, and the AndroidManifest.xml file is changed to declare a second Activity.</li>
-</ul>
-<h3 is-upgraded>Question 2</h3>
-<p>What happens if you remove the android:parentActivityName and the &lt;meta-data&gt; elements from the second Activity declaration in the AndroidManifest.xml file? Choose one:</p>
-<ul>
-<li>The second Activity no longer appears when you try to start it with an explicit Intent.</li>
-<li>The second Activity XML layout file is deleted.</li>
-<li>The Back button no longer works in the second Activity to send the user back to the main Activity.</li>
-<li>The Up button in the app bar no longer appears in the second Activity to send the user back to the parent Activity.</li>
-</ul>
-<h3 is-upgraded>Question 3</h3>
-<p>Which constructor method do you use to create a new explicit Intent? Choose one:</p>
-<ul>
-<li>new Intent()</li>
-<li>new Intent(Context context, Class&lt;?&gt; class)</li>
-<li>new Intent(String action, Uri uri)</li>
-<li>new Intent(String action)</li>
-</ul>
-<h3 is-upgraded>Question 4</h3>
-<p>In the HelloToast app homework, how do you add the current value of the count to the Intent? Choose one:</p>
-<ul>
-<li>As the Intent data</li>
-<li>As the Intent TEXT_REQUEST</li>
-<li>As an Intent action</li>
-<li>As an Intent extra</li>
-</ul>
-<h3 is-upgraded>Question 5</h3>
-<p>In the HelloToast app homework, how do you display the current count in the second &#34;Hello&#34; Activity? Choose one:</p>
-<ul>
-<li>Get the Intent that the Activity was launched with.</li>
-<li>Get the current count value out of the Intent.</li>
-<li>Update the TextView for the count.</li>
-<li>All of the above.</li>
-</ul>
-<h2 is-upgraded>Submit your app for grading</h2>
-<h3 is-upgraded>Guidance for graders</h3>
-<p>Check that the app has the following features:</p>
-<ul>
-<li>It displays the Say Hello button instead of the Toast button.</li>
-<li>The second Activity starts when the Say Hello button is pressed, and it displays the message &#34;Hello!&#34; and the current count from MainActivity.</li>
-<li>The second Activity Java and XML layout files have been added to the project.</li>
-<li>The XML layout file for the second Activity contains two TextView elements, one with the string &#34;Hello!&#34; and the second with the count.</li>
-<li>It includes an implementation of a click handler method for the Say Hello button (in MainActivity).</li>
-<li>It includes an implementation of the onCreate() method for the second Activity and updates the count TextView with the count from MainActivity.</li>
-</ul>
+<p>以下の質問に答えてください。</p>
+<p>質問1</p>
+<p>ファイル] &gt; [新規作成] &gt; [アクティビティ]とアクティビティ テンプレートを選択して、アプリに2つ目のアクティビティを追加すると、どのような変更が行われますか？1つを選択します。</p>
+<p>2 番目のアクティビティは Java クラスとして追加されます。XML レイアウト ファイルを追加する必要があります。</p>
+<p>2 番目のアクティビティ XML レイアウト ファイルが作成され、Java クラスが追加されます。クラス・シグネチャを定義する必要があります。</p>
+<p>2 番目のアクティビティが Java クラスとして追加され、XML レイアウト・ファイルが作成され、AndroidManifest.xml ファイルが変更され、2 番目のアクティビティが宣言されます。</p>
+<p>2つ目のアクティビティのXMLレイアウトファイルを作成し、AndroidManifest.xmlファイルを変更して2つ目のアクティビティを宣言します。</p>
+<p>質問2</p>
+<p>AndroidManifest.xmlファイルの2番目のActivity宣言からandroid:parentActivityNameと&lt;meta-data&gt;要素を削除するとどうなりますか？1つ選択してください。</p>
+<p>2 番目のアクティビティを明示的な Intent で起動しようとすると、2 番目のアクティビティが表示されなくなりました。</p>
+<p>2 番目の Activity XML レイアウト ファイルが削除されます。</p>
+<p>2 番目のアクティビティで、ユーザーをメイン アクティビティに戻すための [戻る] ボタンが機能しなくなりました。</p>
+<p>2 番目のアクティビティで、親アクティビティにユーザーを戻すためのアプリ バーの [上へ] ボタンが表示されなくなりました。</p>
+<p>質問3</p>
+<p>新しい明示的な Intent を作成するために使用するコンストラクタ・メソッドはどれですか? 1つ選んでください。</p>
+<p>新しい Intent()</p>
+<p>new Intent(Context context, Class&lt;?&gt; class)</p>
+<p>new Intent(String action, Uri uri)</p>
+<p>new Intent(String action)</p>
+<p>質問4</p>
+<p>HelloToastアプリの宿題では、カウントの現在値をIntentに追加する方法を教えてください。1つを選択してください。</p>
+<p>インテントのデータとして</p>
+<p>インテント TEXT_REQUEST として</p>
+<p>インテントアクションとして</p>
+<p>インテントエクストラとして</p>
+<p>質問5</p>
+<p>HelloToastアプリの宿題で、2回目の「Hello」アクティビティで現在のカウントを表示する方法を教えてください。1つ選びます。</p>
+<p>アクティビティが起動したIntentを取得します。</p>
+<p>Intentから現在のカウント値を取得します。</p>
+<p>カウントのTextViewを更新する。</p>
+<p>上記のすべてを行います。</p>
+<p>アプリを提出して採点を受ける</p>
+<p>学年別ガイダンス</p>
+<p>アプリが以下の機能を持っていることを確認してください。</p>
+<p>Toastボタンの代わりにSay Helloボタンが表示される。</p>
+<p>Say Helloボタンが押されると2つ目のアクティビティが起動し、「Hello！」というメッセージとMainActivityからの現在のカウントが表示されます。</p>
+<p>2つ目のアクティビティのJavaとXMLレイアウトファイルがプロジェクトに追加されました。</p>
+<p>2つ目のアクティビティのXMLレイアウトファイルには、2つのTextView要素が含まれており、1つは &#34;Hello!&#34;という文字列、もう1つはカウントを表示します。</p>
+<p>これには、（MainActivityの）Say Helloボタンのクリックハンドラメソッドの実装が含まれています。</p>
+<p>2 番目のアクティビティの onCreate() メソッドの実装を含み、MainActivity からのカウントでカウントの TextView を更新します。</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="13。Next codelab" duration="0">
-        <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
-<p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
+<p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer Fundamentals (Version 2)を参照してください。</p>
 
 
       </google-codelab-step>

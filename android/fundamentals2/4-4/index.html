@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.4: ユーザーナビゲーション</title>
+  <title>Android Developer Fundamentals 04.4: ユーザーナビゲーション</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-4"
-                  title="Android 開発者基礎講座 04.4: ユーザーナビゲーション"
+                  title="Android Developer Fundamentals 04.4: ユーザーナビゲーション"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの Unit 2: User experience の一部です。このコースでは、コードラボを順を追って学習することで、このコースを最大限に活用することができます。</p>
 <p>コースのコードラボの完全なリストについては、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
 <p>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer Fundamentals (Version 2)を参照してください。</p>
@@ -61,7 +61,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>前回のオプションメニューの使い方の実習では、基本アクティビティのテンプレートを使ってDroid Cafeというアプリを作成しました。このテンプレートは、画面の上部にアプリバーを提供します。2つ目のアクティビティ(OrderActivity)から親アクティビティ(MainActivity)へのアップナビゲーションのために、アプリバーにアップボタン(左向きの矢印)を追加する方法を学びます。これでDroid Cafeアプリが完成します。</p>
 <p>前回の実践で途中で中断したところからプロジェクトを開始するには、Android StudioプロジェクトのDroidCafeOptionsをダウンロードしてください。</p>
 <p class="image-container"><img alt="Up navigation in the app bar" style="width: 276.72px" src="img/2340bb55e27a9d91.png"></p>
@@ -71,7 +71,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1. 先祖代々のナビゲーションのためのアップボタンの追加" duration="0">
+      <google-codelab-step label="タスク1. 先祖代々のナビゲーションのためのアップボタンの追加" duration="0">
         <p>アプリは、ユーザーがアプリのメイン画面（通常は親アクティビティ）に戻る方法を簡単に見つけられるようにする必要があります。これを行う1つの方法は、親アクティビティの子である各アクティビティのアプリバーに「上へ」ボタンを提供することです。</p>
 <p>アップボタンは先祖代々の「アップ」ナビゲーションを提供し、ユーザーが子ページから親ページへと上に行くことを可能にします。上」ボタンは、下の図の左側に示すように、アプリバーの左側にある左向きの矢印です。</p>
 <p>ユーザーが「上へ」ボタンをタッチすると、アプリは親アクティビティに移動します。下図の右側の図は、画面間の階層的な関係に基づいてアプリ内を移動するために Up ボタンがどのように使用されるかを示しています。</p>
@@ -85,17 +85,23 @@
 <p>前回学んだように、アプリにアクティビティを追加する際に、AndroidManifest.xmlファイルでアクティビティの親をMainActivityと宣言することで、OrderActivityなどの子アクティビティにアップボタンナビゲーションを追加することができます。また、「OrderActivity」のようなアクティビティ画面のタイトルにandroid:label属性を設定することもできます。以下の手順で設定してください。</p>
 <p>前回の実践からまだドロイドカフェアプリを開いていない場合は、Android StudioプロジェクトのDroidCafeOptionsをダウンロードしてプロジェクトを開きます。</p>
 <p>AndroidManifest.xmlを開き、OrderActivityのActivity要素を以下のように変更します。</p>
+<pre><code>&lt;activity android:name=&#34;com.example.android.droidcafeinput.OrderActivity&#34;
+    android:label=&#34;Order Activity&#34;
+    android:parentActivityName=&#34;.MainActivity&#34;&gt;
+    &lt;meta-data android:name=&#34;android.support.PARENT_ACTIVITY&#34;
+        android:value=&#34;.MainActivity&#34;/&gt;
+&lt;/activity&gt;</code></pre>
 <p>android:labelの値「Order Activity」をtitle_activity_orderという名前の文字列リソースに抽出します。</p>
 <p>アプリを実行します。</p>
 <p>Order Activity画面には、親アクティビティに戻るためのUpボタン（下の図で強調表示）がアプリバーに表示されます。</p>
-<p class="image-container"><img alt="Up navigation in the app bar" style="width: 325.53px" src="img/2340bb55e27a9d91.png"></p>
+<p class="image-container"><img alt="Up navigation in the app bar" style="width: 250.44px" src="img/2340bb55e27a9d91.png"></p>
 <p>タスク1のソリューションコード</p>
 <p>Android Studioプロジェクト。DroidCafeOptionsUp</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：スワイプビューでタブナビゲーションを使う" duration="0">
+      <google-codelab-step label="タスク2：スワイプビューでタブナビゲーションを使う" duration="0">
         <p>ラテラル ナビゲーションを使用すると、ユーザーは1つの兄弟から別の兄弟へ（多階層階層の同じレベルで）移動することができます。たとえば、アプリが複数のカテゴリのストーリーを提供している場合（下図に示すように、トップストーリーズ、テックニュース、料理など）、親画面に戻ることなく、1つのカテゴリから次のカテゴリに移動できる機能をユーザーに提供したいと思うでしょう。ラテラルナビゲーションのもう一つの例としては、Gmailの会話の中で左右にスワイプして、同じ受信トレイにある新しいものや古いものを表示する機能があります。</p>
 <p class="image-container"><img alt="Lateral navigation with tabs" style="width: 641.76px" src="img/7cfe86b3328ea19b.png"></p>
 <p>上の図では</p>
@@ -111,15 +117,55 @@
 <p>2.1 プロジェクトとレイアウトの作成</p>
 <p>Empty Activity テンプレートを使用して、新しいプロジェクトを作成します。アプリの名前を Tab Experiment とします。</p>
 <p>build.gradle (Module: app)ファイルを編集し、TabLayoutを使用するために必要なAndroid Design Support Libraryの依存関係セクションに以下の行を追加します。</p>
-<p>実装 &#39;com.android.support:design:26.1.0&#39;</p>
+<p>implementation &#39;com.android.support:design:26.1.0&#39;</p>
 <p>Android Studioがより高い番号のバージョンを提案している場合は、上の行を編集してバージョンを更新してください。</p>
 <p>アプリバーとアプリタイトルではなくツールバーを使用するには、res &gt; values &gt; styles.xmlファイルに以下の属性を追加して、アプリバーとタイトルを非表示にします。</p>
+<pre><code>&lt;style name=&#34;AppTheme&#34; parent=&#34;Theme.AppCompat.Light.DarkActionBar&#34;&gt;
+   &lt;!-- Other style attributes --&gt;      
+   &lt;item name=&#34;windowActionBar&#34;&gt;false&lt;/item&gt;
+   &lt;item name=&#34;windowNoTitle&#34;&gt;true&lt;/item&gt;
+&lt;/style&gt;</code></pre>
 <p>activity_main.xmlレイアウトファイルを開き、テキストタブをクリックしてXMLコードを表示します。</p>
 <p>以前の演習で行ったように、ConstraintLayoutをRelativeLayoutに変更します。</p>
 <p>android:id 属性と android:padding の 16dp を RelativeLayout に追加します。</p>
 <p>テンプレートによって提供された TextView を削除し、以下のコードに示すように、ツールバー、TabLayout、および ViewPager を RelativeLayout 内に追加します。</p>
+<pre><code>&lt;RelativeLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:id=&#34;@+id/activity_main&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    android:padding=&#34;16dp&#34;
+    tools:context=&#34;com.example.android.tabexperiment.MainActivity&#34;&gt;
+
+    &lt;android.support.v7.widget.Toolbar
+        android:id=&#34;@+id/toolbar&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_alignParentTop=&#34;true&#34;
+        android:background=&#34;?attr/colorPrimary&#34;
+        android:minHeight=&#34;?attr/actionBarSize&#34;
+        android:theme=&#34;@style/ThemeOverlay.AppCompat.Dark.ActionBar&#34;
+        app:popupTheme=&#34;@style/ThemeOverlay.AppCompat.Light&#34;/&gt;
+
+    &lt;android.support.design.widget.TabLayout
+        android:id=&#34;@+id/tab_layout&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_below=&#34;@id/toolbar&#34;
+        android:background=&#34;?attr/colorPrimary&#34;
+        android:minHeight=&#34;?attr/actionBarSize&#34;
+        android:theme=&#34;@style/ThemeOverlay.AppCompat.Dark.ActionBar&#34;/&gt;
+
+    &lt;android.support.v4.view.ViewPager
+        android:id=&#34;@+id/pager&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;fill_parent&#34;
+        android:layout_below=&#34;@id/tab_layout&#34;/&gt;
+
+&lt;/RelativeLayout&gt;</code></pre>
 <p>Toolbarのapp:popupTheme属性を入力すると、RelativeLayoutに以下の文を追加していないとアプリが赤字になります。</p>
-<p>&lt;RelativeLayout xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;</p>
+<pre><code>&lt;RelativeLayout xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;</code></pre>
 <p>アプリをクリックしてOption+Enter（またはAlt+Enter）を押すと、Android Studioが自動的にステートメントを追加してくれます。</p>
 <p>2.2 各フラグメントのクラスとレイアウトを作成する</p>
 <p>各タブ付き画面を表すフラグメントを追加するには、以下の手順に従います。</p>
@@ -133,6 +179,20 @@
 <p>ステップ 3 では TabFragment2 と TabFragment3、ステップ 4 では tab_fragment2 と tab_fragment3 を使用して、上記の手順を繰り返します。</p>
 <p>各フラグメントは、クラス定義がFragmentを拡張するように設定された状態で作成されます。また、各フラグメントは画面に関連付けられたレイアウト（tab_fragment1、tab_fragment2、tab_fragment3）を膨らませ、前の章でオプションメニューで学んだお馴染みのリソースインフレートデザインパターンを使用します。</p>
 <p>例えば、TabFragment1 は次のようになります。</p>
+<pre><code>public class TabFragment1 extends Fragment {
+
+    public TabFragment1() {
+        // Required empty public constructor
+    }
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment.
+        return inflater.inflate(R.layout.tab_fragment1, container, false);
+    }
+
+}</code></pre>
 <p>2.3 フラグメントレイアウトの編集</p>
 <p>各FragmentレイアウトXMLファイル（tab_fragment1、tab_fragment2、tab_fragment3）を編集します。</p>
 <p>FrameLayout を RelativeLayout に変更します。</p>
@@ -142,6 +202,19 @@
 <p>tab_fragment2.xmlにあるTextViewのテキストを入力します。&#34;使用できる技術ニュース。&#34;</p>
 <p>tab_fragment3.xmlのTextViewのテキスト。&#34;料理のヒント。&#34;</p>
 <p>各フラグメントのレイアウト XML ファイルを調べます。たとえば、tab_fragment1 は次のようになります。</p>
+<pre><code>&lt;RelativeLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.tabexperiment.TabFragment1&#34;&gt;
+
+    &lt;TextView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:text=&#34;These are the top stories: &#34;
+        android:textAppearance=&#34;?android:attr/textAppearanceLarge&#34;/&gt;
+
+&lt;/RelativeLayout&gt;</code></pre>
 <p>フラグメント・レイアウト XML ファイル tab_fragment1 で、&#34;These are the top stories:&#34; の文字列を文字列リソース tab_1 に展開します。tab_fragment2 と tab_fragment3 の文字列についても同様にします。</p>
 <p>2.3 PagerAdapter の追加</p>
 <p>アダプタ・レイアウト・マネージャ・パターンを使用すると、アクティビティ内でコンテンツの異なる画面を提供することができます。</p>
@@ -155,18 +228,104 @@
 <p>プロジェクト &gt; Android ペインで PagerAdapter を開きます。クラス定義の横に赤い電球が表示されます。この電球をクリックして、「メソッドの実装」を選択し、「OK」をクリックして、すでに選択されている getItem() と getCount() メソッドを実装します。</p>
 <p>クラス定義の横にもう一つ赤い電球が表示されるはずです。この電球をクリックして、「Create constructor matching super」を選択します。</p>
 <p>整数のメンバ変数 mNumOfTabs を追加し、それを使用するようにコンストラクタを変更します。これでコードは以下のようになるはずです。</p>
+<pre><code>public class PagerAdapter extends FragmentStatePagerAdapter {
+    int mNumOfTabs;
+    
+    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
+        super(fm);
+        this.mNumOfTabs = NumOfTabs;
+    }
+
+    /**
+     * Return the Fragment associated with a specified position.
+     *
+     * @param position
+     */
+    @Override
+    public Fragment getItem(int position) {
+        return null;
+    }
+
+    /**
+     * Return the number of views available.
+     */
+    @Override
+    public int getCount() {
+        return 0;
+    }
+}</code></pre>
 <p>上記のコードを入力している間に、Android Studioでは以下のように自動でインポートされます。</p>
+<pre><code>import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;</code></pre>
 <p>コード内のFragmentManagerが赤で表示されている場合、それをクリックすると赤い電球アイコンが表示されるはずです。電球アイコンをクリックして、クラスのインポートを選択します。インポートの選択肢が表示されます。FragmentManager（android.support.v4）を選択します。</p>
 <p>新しく追加された getItem() メソッドを以下のように変更します。これは、どのタブがクリックされたかに応じて表示する Fragment を返すためにスイッチケースブロックを使用するものです。</p>
+<pre><code>@Override
+public Fragment getItem(int position) {
+        switch (position) {
+            case 0: return new TabFragment1();
+            case 1: return new TabFragment2();
+            case 2: return new TabFragment3();
+            default: return null;
+        }
+}</code></pre>
 <p>新しく追加されたgetCount()メソッドを以下のように変更して、タブの数を返すようにします。</p>
+<pre><code>@Override
+public int getCount() {
+        return mNumOfTabs;
+}</code></pre>
 <p>2.4 ツールバーとTabLayoutを膨らませる</p>
 <p>アプリバーの下に収まるタブを使用しているので、このタスクの最初のステップで、アプリバーとツールバーをactivity_main.xmlレイアウトに設定しました。次に、ツールバーを膨らませて（オプションメニューについての前の章で説明したのと同じ方法で）、タブを配置するためのTabLayoutのインスタンスを作成する必要があります。</p>
 <p>MainActivityを開き、setSupportActionBar()を使用してツールバーを膨らませるために、onCreate()メソッド内に以下のコードを追加します。</p>
+<pre><code>protected void onCreate(Bundle savedInstanceState) {
+    // ... Code inside onCreate() method
+    android.support.v7.widget.Toolbar toolbar = 
+                                  findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    // Create an instance of the tab layout from the view.
+}</code></pre>
 <p>strings.xmlを開き、以下の文字列リソースを作成します。</p>
+<pre><code>&lt;string name=&#34;tab_label1&#34;&gt;Top Stories&lt;/string&gt;
+&lt;string name=&#34;tab_label2&#34;&gt;Tech News&lt;/string&gt;
+&lt;string name=&#34;tab_label3&#34;&gt;Cooking&lt;/string&gt;</code></pre>
 <p>onCreate() メソッドの最後に、レイアウト内の tab_layout 要素からタブレイアウトのインスタンスを作成し、addTab() を使用して各タブにテキストを設定します。</p>
+<pre><code>// Create an instance of the tab layout from the view.
+TabLayout tabLayout = findViewById(R.id.tab_layout);
+// Set the text for each tab.
+tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_label1));
+tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_label2));
+tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_label3));
+// Set the tabs to fill the entire layout.
+tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+// Use PagerAdapter to manage page views in fragments.</code></pre>
 <p>2.5 PagerAdapter を使用してスクリーンビューを管理する</p>
 <p>前のタスクで onCreate() メソッドに追加したコードの下に、PagerAdapter を使用してフラグメント内の画面 (ページ) ビューを管理するための以下のコードを追加します。</p>
+<pre><code>// Use PagerAdapter to manage page views in fragments.
+// Each page is represented by its own fragment.
+final ViewPager viewPager = findViewById(R.id.pager);
+final PagerAdapter adapter = new PagerAdapter
+              (getSupportFragmentManager(), tabLayout.getTabCount());
+viewPager.setAdapter(adapter);
+// Setting a listener for clicks.</code></pre>
 <p>onCreate()メソッドの最後に、タブがクリックされたかどうかを検出するリスナー(TabLayoutOnPageChangeListener)を設定し、ViewPagerを適切なタブ付き画面に設定するためのonTabSelected()メソッドを作成します。コードは以下のようになるはずです。</p>
+<pre><code>// Setting a listener for clicks.
+viewPager.addOnPageChangeListener(new
+                TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+tabLayout.addOnTabSelectedListener(new 
+                TabLayout.OnTabSelectedListener() {
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+    }
+});</code></pre>
 <p>アプリを実行します。各タブをタップすると、それぞれの「ページ」（画面）が表示されます。また、左右にスワイプして、それぞれの「ページ」を見ることができるはずです。</p>
 <p>アプリを起動します。各タブをタップすると、各「ページ」（画面）が表示されます。また、左右にスワイプして別の「ページ」を訪問することもできるはずです。</p>
 <p>タスク2のソリューションコード</p>
@@ -175,7 +334,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注意: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。ナビゲーションドロワーを持つ新しいアプリを作成します。ユーザーがナビゲーションドロワーの選択肢をタップすると、ドロワーを閉じて、どの選択肢が選択されたかを示すToastメッセージを表示します。</p>
 <p>ナビゲーションドロワーは、下の図の右側に示すように、通常は画面の左端にナビゲーションオプションを表示するパネルです。下の図の左側に示すように、ユーザーが画面の左端から指をスワイプするか、アプリバーのナビゲーションアイコンをタッチすると、ほとんどの場合は非表示になります。</p>
@@ -209,7 +368,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。タスク3：ユーザーの選択にスピナーを使用する" duration="0">
+      <google-codelab-step label="タスク3：ユーザーの選択にスピナーを使用する" duration="0">
         <p>アプリバーのナビゲーションです。</p>
 <p>AndroidManifest.xmlファイルで親アクティビティを宣言することで、子アクティビティにアップボタンナビゲーションを追加します。</p>
 <p>子の親アクティビティを子の &lt;activity ... &lt;/activity&gt; セクション内で宣言します。</p>
@@ -222,13 +381,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Coding challenge 2" duration="0">
+      <google-codelab-step label="Coding challenge 2" duration="0">
         <p>関連するコンセプトのドキュメントは4.4にあります。ユーザーナビゲーションにあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。詳細" duration="0">
+      <google-codelab-step label="詳細" duration="0">
         <p>Android developer documentation:</p>
 <ul>
 <li><a href="https://developer.android.com/guide/topics/ui/" target="_blank">User Interface &amp; Navigation</a></li>
@@ -259,7 +418,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
 <p>必要に応じて宿題を割り当てる。</p>
 <p>宿題の提出方法を学生に伝える。</p>
@@ -301,7 +460,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer Fundamentals (Version 2)を参照してください。</p>
 <h2 is-upgraded>11。Homework</h2>

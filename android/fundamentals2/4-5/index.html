@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.5: RecyclerView</title>
+  <title>Android Developer Fundamentals 04.5: RecyclerView</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-5"
-                  title="Android 開発者基礎講座 04.5: RecyclerView"
+                  title="Android Developer Fundamentals 04.5: RecyclerView"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの Unit 2: User experience の一部です。このコースでは、コードラボを順を追って学習することで、このコースを最大限に活用することができます。</p>
 <p>コースのコードラボの完全なリストについては、Codelabs for Android Developer Fundamentals (V2)を参照してください。</p>
 <p>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer Fundamentals (Version 2)を参照してください。</p>
@@ -60,7 +60,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2.アプリの概要" duration="0">
+      <google-codelab-step label="アプリの概要" duration="0">
         <p>RecyclerViewアプリは、長いスクロール可能な単語のリストを表示するために RecyclerViewを使用する方法を示しています。データセット（単語）、 RecyclerView自体、そしてユーザーが取ることのできるアクションを作成します。</p>
 <p>単語をタップするとクリックされたことになります。</p>
 <p>フローティングアクションボタン(FAB)をタップすると、新しい単語が追加されます。</p>
@@ -69,7 +69,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1. 新しいプロジェクトとデータセットの作成" duration="0">
+      <google-codelab-step label="タスク1. 新しいプロジェクトとデータセットの作成" duration="0">
         <p>RecyclerViewを表示する前に、表示するデータが必要です。このタスクでは、アプリの新しいプロジェクトとデータセットを作成します。より洗練されたアプリでは、データは内部ストレージ（ファイル、SQLiteデータベース、保存された設定）、別のアプリ（連絡先、写真）、インターネット（クラウドストレージ、Google Sheets、またはAPI付きのデータソース）から取得することができます。データの保存と取得については、データストレージの章で説明します。この演習では、MainActivity の onCreate() メソッドでデータを作成してシミュレーションします。</p>
 <p>1.1. プロジェクトとレイアウトを作成する</p>
 <p>Android Studioを起動します。</p>
@@ -80,7 +80,15 @@
 <p>1.2. データを作成するコードを追加</p>
 <p>このステップでは、[&#34;Word 1&#34;, &#34;Word 2&#34;, &#34;Word 3&#34;, ....] のように、末尾が数字の増加で終わる 20 個の単語文字列の LinkedList を作成します。</p>
 <p>MainActivity を開き、mWordList リンクド リストのプライベート メンバ変数を追加します。</p>
+<pre><code>public class MainActivity extends AppCompatActivity {
+    private final LinkedList&lt;String&gt; mWordList = new LinkedList&lt;&gt;();
+    // ... Rest of MainActivity code ...
+}</code></pre>
 <p>onCreate() メソッド内に、mWordList に単語を入力するコードを追加します。</p>
+<pre><code>// Put initial data into the word list.
+for (int i = 0; i &lt; 20; i++) {
+            mWordList.addLast(&#34;Word &#34; + i);
+}</code></pre>
 <p>このコードは、文字列 &#34;Word &#34;をiの値を増やしながら連結しています。この演習に必要なデータセットはこれだけです。</p>
 <p>1.3. FABのアイコンを変更する</p>
 <p>今回の実践では、FABを使ってリストに挿入する新しい単語を生成します。基本アクティビティのテンプレートにはFABが用意されていますが、そのアイコンを変更したい場合があります。別のレッスンで学んだように、Android StudioのアイコンセットからFAB用のアイコンを選択することができます。以下の手順に従ってください。</p>
@@ -96,7 +104,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2: RecyclerViewの作成" duration="0">
+      <google-codelab-step label="タスク2: RecyclerViewの作成" duration="0">
         <p>この実習では、RecyclerViewにデータを表示します。必要なものは以下の通りです。</p>
 <p>表示するデータです。mWordList を使用します。</p>
 <p>リスト項目を含むスクロール・リスト用の RecyclerView。</p>
@@ -117,6 +125,11 @@
 <p>RecyclerViewアプリでcontent_main.xmlを開きます。ConstraintLayoutの中心に &#34;Hello World &#34;TextViewが表示されます。</p>
 <p>TextタブをクリックしてXMLコードを表示します。</p>
 <p>TextView要素全体を以下のように置き換えます。</p>
+<pre><code>&lt;android.support.v7.widget.RecyclerView
+        android:id=&#34;@+id/recyclerview&#34;
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;match_parent&#34;&gt;
+&lt;/android.support.v7.widget.RecyclerView&gt;</code></pre>
 <p>RecyclerViewはサポートライブラリの一部なので、フルパス(android.support.v7.widget. RecyclerView)を指定する必要があります。</p>
 <p>2**.2. 1つのリスト項目のレイアウトを作成する**.</p>
 <p>アダプタは、リスト内の 1 つの項目のレイアウトを必要とします。すべての項目で同じレイアウトを使用します。そのリスト項目のレイアウトは、リサイクル・ビューとは別にアダプタで使用されるため、別のレイアウト・リソース・ファイルで指定する必要があります。</p>
@@ -149,6 +162,18 @@
 <p>プロンプトが表示されたら、プロジェクト全体にスタイルを適用します。</p>
 <p>values &gt; styles.xml で word_title スタイルを検索して調べます。</p>
 <p>wordlist_item.xmlがまだ開いていない場合は、再度開きます。テキストビューは、以下に示すように、個々のスタイリングプロパティの代わりにスタイルを使用するようになりました。</p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;wrap_content&#34;
+    android:orientation=&#34;vertical&#34;
+    android:padding=&#34;6dp&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/word&#34;
+        style=&#34;@style/word_title&#34; /&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
 <p>2**.4. アダプタを作成する**。</p>
 <p>Androidでは、リスト内のView項目とデータを接続するためにアダプタ(アダプタクラスから)を使用します。アダプタには多くの種類があり、カスタムアダプタを書くこともできます。このタスクでは、単語のリストを単語リストのビュー項目に関連付けるアダプタを作成します。</p>
 <p>データをビュー項目に接続するには、アダプタはビュー項目について知っている必要があります。アダプタは、View 項目と RecyclerView 内での位置を記述する ViewHolder を使用します。</p>
@@ -156,6 +181,8 @@
 <p>java/com.android.example.recyclerview を右クリックし、新規作成 &gt; Java クラスを選択します。</p>
 <p>クラス名を WordListAdapter とします。</p>
 <p>WordListAdapter には、次のシグネチャを指定します。</p>
+<p>public class WordListAdapter extends</p>
+<p>    RecyclerView.Adapter&lt;WordListAdapter.WordViewHolder&gt;  {}</p>
 <p>WordListAdapter は、RecyclerView 用の汎用アダプタを拡張して、アプリに固有のビューホルダを使用し、WordListAdapter の内部で定義されています。WordViewHolder は、まだ定義していないため、エラーが表示されます。</p>
 <p>クラス宣言（WordListAdapter）をクリックし、ペインの左側にある赤い電球をクリックします。メソッドの実装を選択します。</p>
 <p>どのメソッドを実装するかを尋ねるダイアログが表示されます。3 つのメソッドをすべて選択して OK をクリックします。</p>
@@ -163,37 +190,80 @@
 <p>2.5 アダプタの ViewHolder を作成する</p>
 <p>ViewHolder を作成するには、以下の手順に従います。</p>
 <p>WordListAdapter クラスの内部に、このシグネチャを持つ新しい WordViewHolder インナークラスを追加します。</p>
+<p>class WordViewHolder extends RecyclerView.ViewHolder {}</p>
 <p>デフォルトのコンストラクタが存在しないというエラーが表示されます。エラーの詳細は、赤下線のコードの上にマウスカーソルを置くか、 エディタペインの右端にある赤い水平線の上にマウスカーソルを置くと見ることができます。</p>
 <p>テキストビューとアダプタ用のWordViewHolderインナークラスに変数を追加します。</p>
+<p>public final TextView wordItemView;</p>
+<p>final WordListAdapter mAdapter;</p>
 <p>インナークラスWordViewHolderに、ワードXMLリソースからViewHolder TextViewを初期化するコンストラクタを追加し、そのアダプタを設定します。</p>
+<pre><code>public WordViewHolder(View itemView, WordListAdapter adapter) {
+   super(itemView);
+   wordItemView = itemView.findViewById(R.id.word);
+   this.mAdapter = adapter;
+}</code></pre>
 <p>アプリを実行してエラーがないことを確認してください。まだ何も表示されていない状態です。</p>
 <p>LogcatタブをクリックしてLogcatペインを表示し、E/RecyclerViewに注意してください。アダプタが接続されていません。別のステップで RecyclerView にアダプタを取り付けることになります。</p>
 <p>2.6 アダプタへのデータの保存</p>
 <p>アダプタにデータを保持する必要があり、WordListAdapter には、データから単語リストを初期化するコンストラクタが必要です。以下の手順に従ってください。</p>
 <p>データをアダプタに保持するには、WordListAdapter で文字列のプライベートなリンクされたリストを作成し、それを mWordList と呼びます。</p>
+<pre><code>private final LinkedList&lt;String&gt; mWordList;</code></pre>
 <p>これで、getItemCount()メソッドを埋めて、mWordListのサイズを返すことができるようになりました。</p>
+<pre><code>@Override
+public int getItemCount() {
+   return mWordList.size();
+}</code></pre>
 <p>WordListAdapter は、データから単語リストを初期化するコンストラクタが必要です。リスト項目のビューを作成するには、WordListAdapter はリスト項目の XML をインフレーションする必要があります。その作業にはレイアウト・インフレーターを使用します。LayoutInflator は、レイアウト XML の記述を読み取り、それを対応するビュー項目に変換します。WordListAdapter でインフレーターのメンバ変数を作成することから始めます。</p>
+<pre><code>private LayoutInflater mInflater;</code></pre>
 <p>WordListAdapter のコンストラクタを実装します。コンストラクタには、コンテキスト パラメータと、アプリのデータを持つ単語のリンクされたリストが必要です。メソッドは、mInflater の LayoutInflator をインスタンス化し、mWordList を渡されたデータに設定する必要があります。</p>
+<pre><code>public WordListAdapter(Context context, 
+                               LinkedList&lt;String&gt; wordList) {
+   mInflater = LayoutInflater.from(context);
+   this.mWordList = wordList;
+}</code></pre>
 <p>このコードで onCreateViewHolder() メソッドを記入します。</p>
+<pre><code>@Override
+public WordViewHolder onCreateViewHolder(ViewGroup parent, 
+                                                     int viewType) {
+   View mItemView = mInflater.inflate(R.layout.wordlist_item, 
+                                                     parent, false);
+   return new WordViewHolder(mItemView, this);
+}</code></pre>
 <p>onCreateViewHolder() メソッドは、 onCreate() メソッドに似ています。これは、アイテムのレイアウトを膨らませ、 レイアウトとアダプタを含む ViewHolder を返します。</p>
 <p>onBindViewHolder()メソッドに以下のコードを記入します。</p>
+<pre><code>@Override
+public void onBindViewHolder(WordViewHolder holder, int position) {
+   String mCurrent = mWordList.get(position);
+   holder.wordItemView.setText(mCurrent);
+}</code></pre>
 <p>onBindViewHolder() メソッドは、データをビューホルダーに接続します。</p>
 <p>アプリを実行して、エラーがないことを確認してください。</p>
 <p>2**.7. アクティビティに RecyclerView を作成する**。</p>
 <p>これでViewHolderを持つアダプタができたので、最後に RecyclerViewを作成して、データを表示するためのすべてのピースを接続します。</p>
 <p>MainActivityを開きます。</p>
 <p>RecyclerView とアダプタのメンバ変数を追加します。</p>
+<p>private RecyclerView mRecyclerView;</p>
+<p>private WordListAdapter mAdapter;</p>
 <p>MainActivityのonCreate()メソッドに、RecyclerViewを作成し、アダプタとデータを接続する以下のコードを追加します。コメントで各行を説明しています。このコードは mWordList の初期化後に挿入する必要があります。</p>
+<pre><code>// Get a handle to the RecyclerView.
+mRecyclerView = findViewById(R.id.recyclerview);
+// Create an adapter and supply the data to be displayed.
+mAdapter = new WordListAdapter(this, mWordList);
+// Connect the adapter with the RecyclerView.
+mRecyclerView.setAdapter(mAdapter);
+// Give the RecyclerView a default layout manager.
+mRecyclerView.setLayoutManager(new LinearLayoutManager(this));</code></pre>
 <p>アプリを実行してください。</p>
 <p>単語のリストが表示され、リストをスクロールすることができます。</p>
-<p class="image-container"><img alt="The RecyclerView app showing a scrollable list" style="width: 320.53px" src="img/8f0a2bef15cdf09.png"></p>
+<p class="image-container"><img alt="The RecyclerView app showing a scrollable list" style="width: 211.08px" src="img/8f0a2bef15cdf09.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3: リストをインタラクティブにする" duration="0">
+      <google-codelab-step label="タスク3: リストをインタラクティブにする" duration="0">
         <p>アイテムのリストを見るのも面白いですが、ユーザーがそれらを操作できればもっと楽しくて便利です。RecyclerViewがユーザーの入力にどのように反応するかを見るために、各アイテムにクリックハンドラをアタッチします。アイテムがタップされるとクリックハンドラが実行され、そのアイテムのテキストが変更されます。</p>
 <p>RecyclerViewが表示するアイテムのリストは動的に変更することができます。ビヘイビアを追加する方法はいくつかあります。1つはフローティングアクションボタン(FAB)を使用する方法です。例えば、Gmailでは、FABは新しいメールを作成するために使用されます。この実用的な方法としては、リストに挿入する新しい単語を生成します。より便利なアプリの場合は、ユーザーからデータを取得することになります。</p>
+<pre><code>class WordViewHolder extends RecyclerView.ViewHolder 
+                             implements View.OnClickListener {</code></pre>
 <p>3**.1. アイテムをクリックに反応させる**。</p>
 <p>WordListAdapter を開きます。</p>
 <p>WordViewHolder クラスのシグネチャを View.onClickListener を実装するように変更します。</p>
@@ -201,7 +271,17 @@
 <p>                             View.OnClickListener { を実装します。</p>
 <p>クラスのヘッダーと赤い電球をクリックして、必要なメソッドのスタブを実装しますが、この場合は onClick() メソッドだけです。</p>
 <p>onClick() メソッドのボディに以下のコードを追加します。</p>
+<pre><code>// Get the position of the item that was clicked.
+int mPosition = getLayoutPosition();
+// Use that to access the affected item in mWordList.
+String element = mWordList.get(mPosition);
+// Change the word in the mWordList.
+mWordList.set(mPosition, &#34;Clicked! &#34; + element);
+// Notify the adapter, that the data has changed so it can 
+// update the RecyclerView to display the data.
+mAdapter.notifyDataSetChanged();</code></pre>
 <p>onClickListener を View に接続します。このコードを WordViewHolder のコンストラクタに追加します (this.mAdapter = アダプタ行の下)。</p>
+<p>itemView.setOnClickListener(this);</p>
 <p>アプリを実行します。アイテムをクリックするとテキストが変化します。</p>
 <p>3**.2. FAB**にビヘイビアを追加する</p>
 <p>このタスクでは、FABのアクションを実装します。</p>
@@ -210,22 +290,33 @@
 <p>挿入された項目までスクロールします。</p>
 <p>以下の手順に従ってください。</p>
 <p>MainActivity を開きます。onCreate() メソッドで、アクションを取るための onClick() メソッドを持つ FloatingActionButton に OnClickListener() を設定します。onClick() メソッドを以下のように変更します。</p>
+<pre><code>@Override
+public void onClick(View view) {
+    int wordListSize = mWordList.size();
+    // Add a new word to the wordList.
+    mWordList.addLast(&#34;+ Word &#34; + wordListSize);
+    // Notify the adapter, that the data has changed.
+    mRecyclerView.getAdapter().notifyItemInserted(wordListSize);
+    // Scroll to the bottom.
+    mRecyclerView.smoothScrollToPosition(wordListSize);
+}
+</code></pre>
 <p>アプリを実行します。</p>
 <p>単語の一覧をスクロールしてアイテムをクリックします。</p>
 <p>FABをクリックして項目を追加します。</p>
-<p class="image-container"><img alt="Clicking words and adding new words to RecyclerView" style="width: 351.56px" src="img/86fabc5476249934.png"></p>
+<p class="image-container"><img alt="Clicking words and adding new words to RecyclerView" style="width: 231.17px" src="img/86fabc5476249934.png"></p>
 <p>画面を回転させるとどうなりますか？画面を回転させたときにアプリの状態を保持する方法は後のレッスンで学びます。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。リサイクルビュー</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Coding challenges" duration="0">
+      <google-codelab-step label="Coding challenges" duration="0">
         <p>注意: コーディングの課題はすべてオプションであり、後のレッスンの前提条件ではありません。</p>
 <p>課題1: オプションメニューを変更して、1つのオプションのみを表示するようにします。リセット。このオプションは、単語のリストを元の状態に戻し、何もクリックされておらず、余分な単語もない状態にします。</p>
 <p>課題 2: リストの各項目のクリック リスナーを作成するのは簡単ですが、データが多いとアプリのパフォーマンスが低下することがあります。これをより効率的に実装する方法を研究してください。これは高度な課題です。概念的に考えることから始めて、実装例を探します。</p>
@@ -233,7 +324,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <p>RecyclerView は、アイテムのスクロール可能なリストを表示するためのリソース効率の高い方法です。</p>
 <p>各リスト項目のビューを作成するには、アダプタは、LayoutInflator を使用してリスト項目の XML レイアウト・リソースを膨らませます。</p>
 <p>LinearLayoutManager は RecyclerView のレイアウト・マネージャで、縦または横にスクロールするリストのアイテムを表示します。</p>
@@ -245,13 +336,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは、4.5: RecyclerViewです。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Studio のドキュメントです。</p>
 <p>Android Studio ユーザーガイド</p>
 <p>Image Asset Studioでアプリのアイコンを作成</p>
@@ -274,7 +365,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
 <p>必要に応じて宿題を割り当てる。</p>
 <p>宿題の提出方法を学生に伝える。</p>
@@ -288,7 +379,7 @@
 <p>オプションとして、完成した料理の画像を各レシピに追加します。</p>
 <p>上へ」ボタンをクリックすると、ユーザーはレシピのリストに戻ります。</p>
 <p>下のスクリーンショットは、簡単な実装例を示しています。あなたのアプリは、必要な機能を持っている限り、非常に異なった外観にすることができます。</p>
-<p class="image-container"><img alt="Sample implementation screens for recipe app" style="width: 641.76px" src="img/80f8b037ad2494a7.png"></p>
+<p class="image-container"><img alt="Sample implementation screens for recipe app" style="width: 449.53px" src="img/80f8b037ad2494a7.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>RecyclerViewに関する次の記述のうち、誤っているのはどれか。1つ選んでください。</p>
@@ -320,7 +411,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
 <p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 

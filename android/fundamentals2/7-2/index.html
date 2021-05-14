@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 07.2: AsyncTaskとAsyncTaskLoader</title>
+  <title>Android Developer Fundamentals 07.2: AsyncTaskとAsyncTaskLoader</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="7-2"
-                  title="Android 開発者基礎講座 07.2: AsyncTaskとAsyncTaskLoader"
+                  title="Android Developer Fundamentals 07.2: AsyncTaskとAsyncTaskLoader"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -64,19 +64,20 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
-        <p><code>EditTextとButtonを含むアプリを作ります。</code></p>
+      <google-codelab-step label="App overview" duration="0">
+        <p>EditTextとButtonを含むアプリを作ります。</p>
 <ul>
 <li>ユーザーは<code>EditText</code>に本の名前を入力してボタンをタップします。</li>
 <li>このボタンは、ユーザーが探している本の著者とタイトルを見つけるために Google Books API をクエリする <code>AsyncTask</code> を実行します。</li>
 <li>結果は取得され、ボタンの下のテキストビューに表示されます。</li>
 </ul>
 <p>アプリが動作したら、<code>AsyncTask</code>クラスの代わりに<code>AsyncTaskLoader</code>を使用するようにアプリを修正します。</p>
+<p class="image-container"><img alt="Preview for the Who Wrote It? app" style="width: 226.49px" src="img/e29db06b7c9abd7d.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1.Google Books APIを調べる" duration="0">
+      <google-codelab-step label="タスク1.Google Books APIを調べる" duration="0">
         <p>この実習では、Google Books APIを使用して、本の著者やタイトルなどの本に関する情報を検索します。Books API は、REST API を使用して Google Book Search サービスへのプログラム的なアクセスを提供します。これは、<a href="https://books.google.com/" target="_blank">Google Books</a> で手動で検索を実行する際に裏で使用されるのと同じサービスです。ブラウザでGoogle APIs ExplorerとGoogle Book Searchを使用して、Androidアプリが期待通りの結果を得ているかどうかを確認することができます。</p>
 <p>1.1 Books APIリクエストの送信</p>
 <ul>
@@ -107,7 +108,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2.誰が書いたのか」アプリを作成する" duration="0">
+      <google-codelab-step label="タスク2.誰が書いたのか」アプリを作成する" duration="0">
         <p>Books APIに慣れてきたところで、アプリのレイアウトを設定してみましょう。</p>
 <p>2.1 プロジェクトとユーザーインターフェース（UI）の作成</p>
 <ol type="1" start="1">
@@ -115,7 +116,7 @@
 <li><code>activity_main.xml</code>レイアウトファイルを開きます。テキスト］タブをクリックします。</li>
 <li><code>トップレベル ConstraintLayout に layout_margin 属性を追加します。</code></li>
 </ol>
-<p><code>android:layout_margin="16dp"</code></p>
+<pre><code>android:layout_margin=&#34;16dp&#34;</code></pre>
 <ol type="1" start="1">
 <li>既存の<code>TextView</code>を削除します。</li>
 <li>以下のUI要素と属性をレイアウトファイルに追加します。文字列リソースは赤で表示されることに注意してください。</li>
@@ -150,94 +151,101 @@
 <ol type="1" start="1">
 <li><code>strings.xml</code> ファイルに、以下の文字列リソースを追加します。</li>
 </ol>
-<p><code><string name="instruction"> 書名を入力して、誰が書いたかを調べます。 </string>。</code></p>
-<p><code><string name="button_text"> 書籍の検索</string</code></p>
-<p><code><string name="input_hint"> ブックタイトル</string</code></p>
+<pre><code>&lt;string name=&#34;instructions&#34;&gt;Enter a book name to find out who wrote the book. &lt;/string&gt;
+&lt;string name=&#34;button_text&#34;&gt;Search Books&lt;/string&gt;
+&lt;string name=&#34;input_hint&#34;&gt;Book Title&lt;/string&gt;</code></pre>
 <ol type="1" start="1">
 <li><code>searchBooks()</code> メソッドは <code>MainActivity</code> にまだ実装されていないため、ボタンの <code>onClick</code> 属性は黄色で強調表示されます。<code>MainActivity</code>でメソッドのスタブを作成するには、ハイライトされたテキストにカーソルを置き、<code>Alt+Enter</code>（Macの場合は<code>Option+Enter</code>）を押して、「MainActivity」で「Create &#39;searchBooks(View)&#39;」を選択します。</li>
 </ol>
 <p><code>activity_main.xmlのソリューションコードです。</code></p>
-<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
-<p><code><android.support.constraint.ConstraintLayout</code></p>
-<p><code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="16dp"</code></p>
-<p><code>=".MainActivity"></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/instructions"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>android:text="@string/instructions"</code></p>
-<p><code>android:textAppearance="@style/TextAppearance.AppCompat.Title"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="親"/></code></p>
-<p><code><</code>編集テキスト</p>
-<p><code>android:id="@+id/bookInput"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>android:hint="@string/input_hint"</code></p>
-<p><code>="text"</code></p>
-<p><code>="親"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/instructions"/></code></p>
-<p><code><</code>ボタン</p>
-<p><code>android:id="@+id/searchButton"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>="searchBooks"</code></p>
-<p><code>android:text="@string/button_text"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/bookInput"/></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/titleText"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="16dp"</code></p>
-<p><code>=</code></p>
-<p><code>"@style/TextAppearance.AppCompat.Headline"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/searchButton" /></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/authorText"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="8dp"</code></p>
-<p><code>=</code></p>
-<p><code>"@style/TextAppearance.AppCompat.Headline"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/titleText"/>.</code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+&lt;android.support.constraint.ConstraintLayout
+   xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+   xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+   xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+   android:layout_width=&#34;match_parent&#34;
+   android:layout_height=&#34;match_parent&#34;
+   android:layout_margin=&#34;16dp&#34;
+   tools:context=&#34;.MainActivity&#34;&gt;
+
+   &lt;TextView
+       android:id=&#34;@+id/instructions&#34;
+       android:layout_width=&#34;match_parent&#34;
+       android:layout_height=&#34;wrap_content&#34;
+       android:text=&#34;@string/instructions&#34;
+       android:textAppearance=&#34;@style/TextAppearance.AppCompat.Title&#34;
+       app:layout_constraintStart_toStartOf=&#34;parent&#34;
+       app:layout_constraintTop_toTopOf=&#34;parent&#34;/&gt;
+
+   &lt;EditText
+       android:id=&#34;@+id/bookInput&#34;
+       android:layout_width=&#34;match_parent&#34;
+       android:layout_height=&#34;wrap_content&#34;
+       android:layout_marginTop=&#34;8dp&#34;
+       android:hint=&#34;@string/input_hint&#34;
+       android:inputType=&#34;text&#34;
+       app:layout_constraintEnd_toEndOf=&#34;parent&#34;
+       app:layout_constraintStart_toStartOf=&#34;parent&#34;
+       app:layout_constraintTop_toBottomOf=&#34;@+id/instructions&#34;/&gt;
+
+   &lt;Button
+       android:id=&#34;@+id/searchButton&#34;
+       android:layout_width=&#34;wrap_content&#34;
+       android:layout_height=&#34;wrap_content&#34;
+       android:layout_marginTop=&#34;8dp&#34;
+       android:onClick=&#34;searchBooks&#34;
+       android:text=&#34;@string/button_text&#34;
+       app:layout_constraintStart_toStartOf=&#34;parent&#34;
+       app:layout_constraintTop_toBottomOf=&#34;@+id/bookInput&#34;/&gt;
+
+   &lt;TextView
+       android:id=&#34;@+id/titleText&#34;
+       android:layout_width=&#34;wrap_content&#34;
+       android:layout_height=&#34;wrap_content&#34;
+       android:layout_marginTop=&#34;16dp&#34;
+       android:textAppearance=
+          &#34;@style/TextAppearance.AppCompat.Headline&#34;
+       app:layout_constraintStart_toStartOf=&#34;parent&#34;
+       app:layout_constraintTop_toBottomOf=&#34;@+id/searchButton&#34; /&gt;
+
+   &lt;TextView
+       android:id=&#34;@+id/authorText&#34;
+       android:layout_width=&#34;wrap_content&#34;
+       android:layout_height=&#34;wrap_content&#34;
+       android:layout_marginTop=&#34;8dp&#34;
+       android:textAppearance=
+          &#34;@style/TextAppearance.AppCompat.Headline&#34;
+       app:layout_constraintStart_toStartOf=&#34;parent&#34;
+       app:layout_constraintTop_toBottomOf=&#34;@+id/titleText&#34;/&gt;
+
+&lt;/android.support.constraint.ConstraintLayout&gt;</code></pre>
 <p>2.2 ユーザーの入力を得る</p>
 <p>Books APIをクエリするには、<code>EditText</code>からユーザー入力を取得する必要があります。</p>
 <ol type="1" start="1">
 <li><code>MainActivity.javaで、EditText、</code>author <code>TextView、</code>title <code>TextViewのメンバ変数を作成します。</code></li>
 </ol>
-<p><code>private EditText mBookInput.</code></p>
-<p><code>private TextView mTitleText.</code></p>
-<p><code>private TextView mAuthorText.</code></p>
+<pre><code>private EditText mBookInput;
+private TextView mTitleText;
+private TextView mAuthorText;</code></pre>
 <ol type="1" start="1">
 <li>これらの変数を <code>onCreate()</code> でビューに初期化します。</li>
 </ol>
-<p>オーバーライド</p>
-<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
-<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
-<p><code>   setContentView(R.layout.activity_main)を使用しています。</code></p>
-<p><code>   mBookInput = (EditText)findViewById(R.id.bookInput)です。</code></p>
-<p><code>   mTitleText = (TextView)findViewById(R.id.titleText).</code></p>
-<p><code>   mAuthorText = (TextView)findViewById(R.id.authorText).</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   setContentView(R.layout.activity_main);
+
+   mBookInput = (EditText)findViewById(R.id.bookInput);
+   mTitleText = (TextView)findViewById(R.id.titleText);
+   mAuthorText = (TextView)findViewById(R.id.authorText);
+}</code></pre>
 <ol type="1" start="1">
 <li><code>searchBooks()</code> メソッドで、<code>EditText</code> ビューからテキストを取得します。テキストを文字列に変換し、変数に代入します。</li>
 </ol>
-<p><code>public void searchBooks(View view) {</code></p>
-<p><code>//</code> 入力フィールドから検索文字列を取得します。</p>
-<p><code>String queryString = mBookInput.getText().toString()。</code></p>
-<p><code>}</code></p>
+<pre><code>public void searchBooks(View view) {
+   // Get the search string from the input field.
+   String queryString = mBookInput.getText().toString();
+}</code></pre>
 <p>2.3 空の AsyncTask クラスの作成</p>
 <p>これで、インターネットに接続してBooks APIを使用する準備ができました。このタスクでは、ネットワークへの接続を処理するために <code>FetchBook</code> という新しい<a href="https://developer.android.com/reference/android/os/AsyncTask" target="_blank"><code>AsyncTask</code></a> サブクラスを作成します。</p>
 <p>ネットワーク接続が遅くなると、アプリが不安定になったり遅くなったりすることがあります。このため、UIスレッドでネットワーク接続を行わないようにしてください。UI スレッドでネットワーク接続を試みると、Android ランタイムが<a href="http://developer.android.com/reference/android/os/NetworkOnMainThreadException.html" target="_blank"><code>NetworkOnMainThreadException</code> を</a>発生させて、それが良くないことを警告することがあります。</p>
@@ -245,53 +253,58 @@
 <ol type="1" start="1">
 <li>アプリ内に <code>FetchBook</code> という名前の Java クラスを作成し、<code>AsyncTask</code> を継承します。クラスの汎用型パラメータは <code><String, Void, String></code> となります。(クエリが文字列なので<code>String</code>、進捗インジケータがないので<code>Void</code>、JSONレスポンスが文字列なので<code>String</code>)</li>
 </ol>
-<p><code>public class FetchBook extends AsyncTask< String, Void, String> { { {.</code></p>
-<p><code>}</code></p>
+<pre><code>public class FetchBook extends AsyncTask&lt;String, Void, String&gt; {
+
+}</code></pre>
 <ol type="1" start="1">
 <li>必要なメソッド<a href="https://developer.android.com/reference/android/os/AsyncTask#doInBackground(Params...)" target="_blank"><code>doInBackground``()</code> を</a>実装します。これを行うには、赤い下線のテキストにカーソルを置き、<code>Alt+Enter</code>（Macの場合は<code>Option+Enter</code>）を押して、メソッドの実装を選択します。doInBackground()を選択し、OKをクリックします。</li>
 </ol>
 <p>パラメータと戻り値の型が正しいことを確認してください。(このメソッドは、<code>String</code> オブジェクトの変数リストを受け取り、<code>String</code> を返します)。</p>
-<p>オーバーライド</p>
-<p><code>protected String doInBackground(String...strings) { { {.</code></p>
-<p><code>null</code>を返します。</p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected String doInBackground(String... strings) {
+   return null;
+}</code></pre>
 <ol type="1" start="1">
-<li>コード] &gt; [メソッドをオーバーライド] を選択するか、<code>Ctrl+O</code> キーを押します。onPostExecute() メソッドを選択して、メソッド定義をクラスに挿入します。<a href="https://developer.android.com/reference/android/os/AsyncTask#onPostExecute(Result)" target="_blank"><code>onPostExecute()</code> メソッドは</a>、パラメータとして <code>String</code> を受け取り、<code>void</code> を返します。</li>
+<li>[コード] &gt; [メソッドをオーバーライド] を選択するか、<code>Ctrl+O</code> キーを押します。onPostExecute() メソッドを選択して、メソッド定義をクラスに挿入します。<a href="https://developer.android.com/reference/android/os/AsyncTask#onPostExecute(Result)" target="_blank"><code>onPostExecute()</code> メソッドは</a>、パラメータとして <code>String</code> を受け取り、<code>void</code> を返します。</li>
 </ol>
-<p>オーバーライド</p>
-<p><code>protected void onPostExecute(String s) {.</code></p>
-<p><code>super.onPostExecute(s)。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onPostExecute(String s) {
+   super.onPostExecute(s);
+
+}</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivity</code> 内の <code>TextView</code> オブジェクトに結果を表示するには、<code>AsyncTask</code> 内でこれらのテキスト・ビューにアクセスする必要があります。結果を表示する 2 つのテキスト・ビューへの参照用に<a href="https://developer.android.com/reference/java/lang/ref/WeakReference" target="_blank"><code>WeakReference</code></a> メンバ変数を作成します。</li>
 </ol>
-<p><code>private WeakReference< TextView> mTitleText.</code></p>
-<p><code>private WeakReference< TextView> mAuthorText.</code></p>
+<pre><code>private WeakReference&lt;TextView&gt; mTitleText;
+private WeakReference&lt;TextView&gt; mAuthorText;</code></pre>
 <p>注意: 前回の実習で学んだように、<strong>アクティビティ</strong>からのコンテキストの漏洩を避けるために、(実際の<strong><code>TextView</code></strong>オブジェクトではなく)<strong><code>WeakReference</code></strong>オブジェクトをこれらのテキストビューに使用します。弱い参照は、必要に応じてその参照によって保持されているオブジェクトをゴミ箱に回収できるようにすることで、メモリリークを防ぎます。</p>
 <ol type="1" start="1">
 <li><code>MainActivity</code>から<code>TextView</code>ビューを含む<code>FetchBook</code>クラスのコンストラクタを作成し、そのコンストラクタ内のメンバ変数を初期化します。</li>
 </ol>
-<p><code>FetchBook(TextView titleText, TextView authorText) {</code></p>
-<p><code>this.mTitleText = new WeakReference<>(titleText).</code></p>
-<p><code>this.mAuthorText = new WeakReference<>(authorText).</code></p>
-<p><code>}</code></p>
+<pre><code>FetchBook(TextView titleText, TextView authorText) {
+   this.mTitleText = new WeakReference&lt;&gt;(titleText);
+   this.mAuthorText = new WeakReference&lt;&gt;(authorText);
+}</code></pre>
 <p><code>FetchBook</code>のソリューションコードです。</p>
-<p><code>public class FetchBook extends AsyncTask< String,Void,String> {</code></p>
-<p><code>private WeakReference< TextView> mTitleText.</code></p>
-<p><code>private WeakReference< TextView> mAuthorText.</code></p>
-<p><code>public FetchBook(TextView mTitleText, TextView mAuthorText) {</code></p>
-<p><code>this.mTitleText = new WeakReference<>(titleText).</code></p>
-<p><code>this.mAuthorText = new WeakReference<>(authorText).</code></p>
-<p><code>   }</code></p>
-<p>オーバーライド</p>
-<p><code>protected String doInBackground(String...strings) { { {.</code></p>
-<p><code>null</code>を返します。</p>
-<p><code>   }</code></p>
-<p>オーバーライド</p>
-<p><code>protected void onPostExecute(String s) {.</code></p>
-<p><code>super.onPostExecute(s)。</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>public class FetchBook extends AsyncTask&lt;String,Void,String&gt; {
+   private WeakReference&lt;TextView&gt; mTitleText;
+   private WeakReference&lt;TextView&gt; mAuthorText;
+        
+   public FetchBook(TextView mTitleText, TextView mAuthorText) {
+      this.mTitleText = new WeakReference&lt;&gt;(titleText);
+      this.mAuthorText = new WeakReference&lt;&gt;(authorText);
+   }
+
+   @Override
+   protected String doInBackground(String... strings) {
+       return null;
+   }
+
+   @Override
+   protected void onPostExecute(String s) {
+       super.onPostExecute(s);
+   }
+}</code></pre>
 <p>2.4 NetworkUtilsクラスを作成し、URIを構築する</p>
 <p>インターネット接続を開き、Books APIに問い合わせをする必要があります。この機能はおそらくまた使うことになるでしょうから、この機能を持ったユーティリティクラスを作成したり、自分の都合に合わせて便利なサブクラスを開発したりすると良いでしょう。</p>
 <p>このタスクでは、<code>NetworkUtils</code>というヘルパークラスでインターネットに接続するためのコードを書きます。</p>
@@ -299,115 +312,119 @@
 <li>アプリ内に <code>NetworkUtils</code> という名前の新しい Java クラスを作成します。<code>NetworkUtils</code> クラスは他のクラスからは拡張しません。</li>
 <li>ロギングのために、クラス名を含む<code>LOG_TAG</code>変数を作成します。</li>
 </ol>
-<p><code>private static static final String LOG_TAG = = (文字列の最後の文字列)</code></p>
-<p><code>NetworkUtils.class.getSimpleName()。</code></p>
+<pre><code>private static final String LOG_TAG = 
+   NetworkUtils.class.getSimpleName();</code></pre>
 <ol type="1" start="1">
 <li><code>getBookInfo()</code>という静的メソッドを作成します。<code>getBookInfo()</code>メソッドは、検索語を<code>String</code>パラメータとして受け取り、先ほど調べたAPIからJSON <code>String</code>レスポンスを返します。</li>
 </ol>
-<p><code>static String getBookInfo(String queryString){.</code></p>
-<p><code>}</code></p>
+<pre><code>static String getBookInfo(String queryString){
+
+}</code></pre>
 <ol type="1" start="1">
 <li><code>getBookInfo()</code> メソッドに以下のローカル変数を作成します。これらの変数は、インターネットへの接続、受信データの読み込み、レスポンス文字列の保持に必要です。</li>
 </ol>
-<p><code>HttpURLConnection urlConnection = null。</code></p>
-<p><code>BufferedReader reader = null.</code></p>
-<p><code>String bookJSONString = null.</code></p>
+<pre><code>HttpURLConnection urlConnection = null;
+BufferedReader reader = null;
+String bookJSONString = null;</code></pre>
 <ol type="1" start="1">
 <li><code>getBookInfo()メソッドの最後に、bookJSONStringの値を返します。</code></li>
 </ol>
-<p><code>return bookJSONString.</code></p>
+<pre><code>return bookJSONString;</code></pre>
 <ol type="1" start="1">
 <li><code>getBookInfo() で、ローカル変数の後と return 文の前に、スケルトンの try/catch</code>/<code>finally ブロックを追加。</code></li>
 </ol>
 <p><code>try</code>ブロックでは、URIを構築してクエリを発行します。<code>catch</code>ブロックでは、リクエストの問題を処理します。最後のブロックでは、JSONデータの受信が終わったらネットワーク接続を閉じます。</p>
-<p>試してみる</p>
-<p><code>//...</code></p>
-<p><code>} catch (IOException e) {</code></p>
-<p><code>      e.printStackTrace()。</code></p>
-<p><code>♪</code>最後に<code>{</code></p>
-<p><code>//...</code></p>
-<p><code>}</code></p>
+<pre><code>try {
+   //...
+} catch (IOException e) {
+      e.printStackTrace();
+} finally {
+   //...
+}</code></pre>
 <ol type="1" start="1">
 <li><code>NetworkUtils</code> クラスの先頭、<code>LOG_TAG</code> 定数の下に以下のメンバ定数を作成します。</li>
 </ol>
-<p><code>// Books APIのベースURLです。</code></p>
-<p><code>private static final String BOOK_BASE_URL = "https://www.googleapis.com/books/v1/volumes?</code></p>
-<p><code>//</code> 検索文字列のパラメータです。</p>
-<p><code>private static final String QUERY_PARAM = "q".</code></p>
-<p><code>//</code> 検索結果を制限するパラメータです。</p>
-<p><code>private static final String MAX_RESULTS = "maxResults".</code></p>
-<p><code>//</code> 印刷タイプでフィルタリングするパラメータです。</p>
-<p><code>private static final String PRINT_TYPE = "printType".</code></p>
+<pre><code>// Base URL for Books API.
+private static final String BOOK_BASE_URL =  &#34;https://www.googleapis.com/books/v1/volumes?&#34;;
+// Parameter for the search string.
+private static final String QUERY_PARAM = &#34;q&#34;;
+// Parameter that limits search results.
+private static final String MAX_RESULTS = &#34;maxResults&#34;;
+// Parameter to filter by print type.
+private static final String PRINT_TYPE = &#34;printType&#34;;</code></pre>
 <p>Books API ウェブページのリクエストで見たように、すべてのリクエストは同じ URI で始まります。リソースのタイプを指定するには、そのベースのURIにクエリパラメータを追加します。これらのクエリパラメータをすべて定数に分離して、<a href="https://developer.android.com/reference/android/net/Uri.Builder.html" target="_blank"><code>Uri.Builder</code></a> を使って結合し、異なる URI で再利用できるようにするのが一般的です。<a href="https://developer.android.com/reference/android/net/Uri" target="_blank"><code>Uri</code></a>クラスには<code>Uri</code><a href="https://developer.android.com/reference/android/net/Uri#buildUpon()" target="_blank"><code>.buildUpon()という</code></a>便利なメソッドがあります。</p>
 <p>このアプリでは、クエリの速度を上げるために、返される結果の数と種類を制限します。クエリを制限するには、印刷された本だけを探します。</p>
 <ol type="1" start="1">
 <li><code>getBookInfo()</code> メソッドでは、<code>try</code> ブロックにリクエスト URI を構築します。</li>
 </ol>
-<p><code>Uri builtURI = Uri.parse(BOOK_BASE_URL).buildUpon()</code></p>
-<p><code>       .appendQueryParameter(QUERY_PARAM, queryString)</code></p>
-<p><code>       .appendQueryParameter(MAX_RESULTS, "10")</code></p>
-<p><code>, "books")</code></p>
-<p><code>       .build() を使用しています。</code></p>
+<pre><code>Uri builtURI = Uri.parse(BOOK_BASE_URL).buildUpon()
+       .appendQueryParameter(QUERY_PARAM, queryString)
+       .appendQueryParameter(MAX_RESULTS, &#34;10&#34;)
+       .appendQueryParameter(PRINT_TYPE, &#34;books&#34;)
+       .build(); </code></pre>
 <ol type="1" start="1">
 <li>また、<code>try</code>ブロック内では、URIをURLオブジェクトに変換します。</li>
 </ol>
-<p><code>URL requestURL = new URL(builtURI.toString().</code></p>
+<pre><code>URL requestURL = new URL(builtURI.toString());</code></pre>
 <p>2.5 依頼をする</p>
 <p><code>この</code> API <code>リクエストでは、</code><a href="https://developer.android.com/reference/java/net/HttpURLConnection.html" target="_blank"><code>HttpURLConnection</code></a> <code>クラスを</code> <a href="https://developer.android.com/reference/java/io/InputStream.html" target="_blank"><code>InputStream</code></a><code>、</code><a href="https://developer.android.com/reference/java/io/BufferedReader" target="_blank"><code>BufferedReader</code></a><code>、および</code> <a href="https://developer.android.com/reference/java/lang/StringBuffer" target="_blank"><code>StringBuffer と</code></a><code>組み合わせて使用し、</code>Web <code>から</code> JSON <code>レスポンスを取得します。プロセスが失敗し、InputStream または StringBuffer が空の場合、リクエストは NULL を返し、クエリが失敗したことを示します。</code></p>
 <ol type="1" start="1">
 <li><code>getBookInfo()</code> メソッドの <code>try</code> ブロックで、URL 接続を開いてリクエストを行います。</li>
 </ol>
-<p><code>urlConnection = (HttpURLConnection) requestURL.openConnection().</code></p>
-<p><code>urlConnection.setRequestMethod("GET")を使用しています。</code></p>
-<p><code>urlConnection.connect()。</code></p>
+<pre><code>urlConnection = (HttpURLConnection) requestURL.openConnection();
+urlConnection.setRequestMethod(&#34;GET&#34;);
+urlConnection.connect();</code></pre>
 <ol type="1" start="1">
 <li>また、トライ・ブロック内では、<code>InputStream</code>、<code>BufferedReader</code>、および<code>StringBuilder</code>を使用して、接続からのレスポンスをセットアップします。</li>
 </ol>
-<p><code>// InputStreamを取得します。</code></p>
-<p><code>InputStream inputStream = urlConnection.getInputStream().</code></p>
-<p><code>//</code> その入力ストリームからバッファリングされたリーダを作成します．</p>
-<p><code>reader = new BufferedReader(new InputStreamReader(inputStream))。</code></p>
-<p><code>//</code> 受信したレスポンスを保持するために<code>StringBuilder</code>を使用します。</p>
-<p><code>StringBuilder builder = new StringBuilder().</code></p>
+<pre><code>// Get the InputStream.
+InputStream inputStream = urlConnection.getInputStream();
+
+// Create a buffered reader from that input stream.
+reader = new BufferedReader(new InputStreamReader(inputStream));
+
+// Use a StringBuilder to hold the incoming response.
+StringBuilder builder = new StringBuilder();</code></pre>
 <ol type="1" start="1">
 <li>入力が残っている間に、入力を行単位で文字列に読み込みます。</li>
 </ol>
-<p>文字列の行。</p>
-<p><code>while ((line = reader.readLine()) != null) {</code></p>
-<p><code>   builder.append(line)。</code></p>
-<p><code>// JSON</code>なので改行は必要ありません。</p>
-<p><code>//</code> しかし、デバッグが非常に簡単になります。</p>
-<p><code>//</code> デバッグ用に完成したバッファを出力する場合。</p>
-<p><code>   builder.append("ann")。</code></p>
-<p><code>}</code></p>
+<pre><code>String line;
+while ((line = reader.readLine()) != null) {
+   builder.append(line); 
+   // Since it&#39;s JSON, adding a newline isn&#39;t necessary (it won&#39;t
+   // affect parsing) but it does make debugging a *lot* easier
+   // if you print out the completed buffer for debugging.
+   builder.append(&#34;\n&#34;);
+}</code></pre>
 <p>注意: <strong><code>while</code></strong>ループは、入力された行を2つのステップでビルダ文字列に追加します: 1つは応答データの行のためのステップ、もう1つは新しい行文字<strong><code>("\n</code></strong>&#34;)を追加するためのステップです。</p>
 <p>この改行はレスポンスのJSONパースには影響しませんが、ログで見たときにレスポンスをデバッグするのがとても楽になります。</p>
 <ol type="1" start="1">
 <li>入力の最後に、文字列をチェックして既存のレスポンスの内容があるかどうかを確認します。レスポンスが空の場合は <code>null</code> を返します。</li>
 </ol>
-<p><code>if (builder.length() == 0) { (builder.length() == 0)</code></p>
-<p><code>//</code> ストリームは空でした。解析の意味がありません</p>
-<p><code>null</code>を返します。</p>
-<p><code>}</code></p>
+<pre><code>if (builder.length() == 0) {
+   // Stream was empty. No point in parsing.
+   return null;
+}</code></pre>
 <ol type="1" start="1">
 <li><code>StringBuilder オブジェクトを String に変換して bookJSONString 変数に格納します。</code></li>
 </ol>
-<p><code>bookJSONString = builder.toString()。</code></p>
+<pre><code>bookJSONString = builder.toString();
+</code></pre>
 <ol type="1" start="1">
 <li>最後のブロックでは、接続と <code>BufferedReader</code> の両方を閉じます。</li>
 </ol>
-<p>遂に</p>
-<p><code>if (urlConnection != null) {</code></p>
-<p><code>       urlConnection.disconnect()。</code></p>
-<p><code>   }</code></p>
-<p><code>if (reader != null) {</code></p>
-<p>試してみる</p>
-<p><code>           reader.close()を使用しています。</code></p>
-<p><code>       } catch (IOException e) {</code></p>
-<p><code>           e.printStackTrace()。</code></p>
-<p><code>       }</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>finally {
+   if (urlConnection != null) {
+       urlConnection.disconnect();
+   }
+   if (reader != null) {
+       try {
+           reader.close();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
+}</code></pre>
 <p>注意: 接続が何らかの理由で失敗するたびに、このコードは<strong><code>null</code></strong></p>
 <p><strong>を返します</strong>。これは、<strong><code>FetchBook</code></strong> クラスの <strong><code>onPostExecute()</code></strong></p>
 <p><strong> が</strong>入力パラメータに <strong><code>null</code></strong> 文字列がないかどうかをチェックして、失敗をユーザに知らせなければならないことを意味します。</p>
@@ -415,18 +432,19 @@
 <ol type="1" start="1">
 <li>最終的に戻る直前に、<code>bookJSONString</code>変数の値をログに出力します。</li>
 </ol>
-<p><code>Log.d(LOG_TAG, bookJSONString)。</code></p>
+<pre><code>Log.d(LOG_TAG, bookJSONString);</code></pre>
 <ol type="1" start="1">
 <li><code>FetchBook</code>では、<code>doInBackground()</code>メソッドを修正して、システムから渡された<code>params</code>引数から取得した検索語を渡して<code>NetworkUtils.getBookInfo()</code>メソッドを呼び出すようにします。(検索語は文字列配列の最初の値です。) このメソッドの結果を返します。(この行は、<code>NULL</code> リターンを置き換えます)。</li>
 </ol>
-<p><code>return NetworkUtils.getBookInfo(strings[0])。</code></p>
+<pre><code>return NetworkUtils.getBookInfo(strings[0]);</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivity</code>で、<code>searchBooks()</code>メソッドの最後にこの行を追加して、<code>execute()</code>メソッドとクエリ文字列でバックグラウンドタスクを起動します。</li>
 </ol>
-<p><code>new FetchBook(mTitleText, mAuthorText).execute(queryString).</code></p>
+<pre><code>new FetchBook(mTitleText, mAuthorText).execute(queryString);</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行して検索を実行してください。アプリがクラッシュします。Android Studioで、Logcatをクリックしてログを表示し、何がエラーの原因になっているかを確認します。次のような行が表示されているはずです。</li>
 </ol>
+<pre><code>Caused by: java.lang.SecurityException: Permission denied (missing INTERNET permission?)</code></pre>
 <p><code>原因: java.lang.SecurityException.Permission denied (INTERNET 権限がありませんか？)</code></p>
 <p>このエラーは、Androidのマニフェストにインターネットへのアクセス許可が含まれていないことを示しています。インターネットに接続するとセキュリティ上の問題が発生するため、アプリにはデフォルトで接続性がありません。次のタスクでは、マニフェストにインターネットアクセス許可を追加します。</p>
 <p>2.6 インターネットのパーミッションを追加する</p>
@@ -434,9 +452,9 @@
 <li><code>AndroidManifest.xmlファイルを開きます。</code></li>
 <li><code><application></code>要素の直前に以下のコードを追加します。</li>
 </ol>
-<p><code><uses-permission android:name="android.permission.INTERNET" /></code></p>
-<p><code><use-permission</code></p>
-<p><code>android:name="android.permission.ACCESS_NETWORK_STATE" /></code></p>
+<pre><code>&lt;uses-permission android:name=&#34;android.permission.INTERNET&#34; /&gt;
+&lt;uses-permission 
+       android:name=&#34;android.permission.ACCESS_NETWORK_STATE&#34; /&gt;</code></pre>
 <ol type="1" start="1">
 <li>アプリをビルドして再度実行します。Android Studioで、Logcatをクリックしてログを表示します。今回はクエリが正しく実行され、JSON文字列の結果がログに出力されることに注意してください。</li>
 </ol>
@@ -446,123 +464,134 @@
 <ol type="1" start="1">
 <li><code>FetchBook クラスの onPostExecute() メソッドで、super の呼び出しの下に try/catch ブロックを追加します。</code></li>
 </ol>
-<p>試してみる</p>
-<p><code>//...</code></p>
-<p><code>      e.printStackTrace()。</code></p>
-<p><code>}</code></p>
+<pre><code>try {
+   //...
+} catch (JSONException e) {
+      e.printStackTrace();
+}</code></pre>
 <ol type="1" start="1">
 <li><code>try</code>ブロックの中では、<a href="https://developer.android.com/reference/org/json/JSONObject" target="_blank"><code>JSONObject</code></a>と<a href="https://developer.android.com/reference/org/json/JSONArray" target="_blank"><code>JSONArray</code>という</a>クラスを使って、結果文字列から項目のJSON配列を取得します。</li>
 </ol>
-<p><code>JSONObject jsonObject = new JSONObject(s)。</code></p>
-<p><code>JSONArray itemsArray = jsonObject.getJSONArray("items")。</code></p>
+<pre><code>JSONObject jsonObject = new JSONObject(s); 
+JSONArray itemsArray = jsonObject.getJSONArray(&#34;items&#34;);</code></pre>
 <ol type="1" start="1">
 <li>解析ループで使用する変数を初期化します。</li>
 </ol>
-<p><code>int i = 0.</code></p>
-<p><code>文字列 title = null。</code></p>
-<p><code>文字列の著者 = null.</code></p>
+<pre><code>int i = 0;
+String title = null;
+String authors = null;</code></pre>
 <ol type="1" start="1">
 <li><code>itemsArray</code>配列を反復処理し、各書籍のタイトルと著者情報をチェックします。ループごとに、著者とタイトルの両方が見つかったかどうかをテストし、見つかった場合はループを終了します。こうすることで、タイトルと著者の両方を持つエントリのみが表示されます。</li>
 </ol>
-<p><code>while (i < itemsArray.length() &&)</code></p>
-<p><code>   (authors == null && title == null)) {</code></p>
-<p><code>//</code> 現在のアイテム情報を取得します。</p>
-<p><code>JSONObject book = itemsArray.getJSONObject(i)。</code></p>
-<p><code>JSONObject volumeInfo = book.getJSONObject("volumeInfo")。</code></p>
-<p><code>//</code> 現在のアイテムから著者とタイトルを取得しようとします。</p>
-<p><code>//</code> どちらかのフィールドが空の場合はキャッチして次のフィールドに移動します。</p>
-<p>試してみる</p>
-<p><code>        title = volumeInfo.getString("title")。</code></p>
-<p><code>        authors = volumeInfo.getString("authors")。</code></p>
-<p><code>    } catch (Exception e) {catch (Exception e) {catch (Exception e) {catch</code></p>
-<p><code>        e.printStackTrace()。</code></p>
-<p><code>    }</code></p>
-<p><code>//</code> 次の項目に移動します。</p>
-<p><code>    i++;</code></p>
-<p><code>}</code></p>
+<pre><code>while (i &lt; itemsArray.length() &amp;&amp; 
+   (authors == null &amp;&amp; title == null)) {
+    // Get the current item information.
+    JSONObject book = itemsArray.getJSONObject(i);
+    JSONObject volumeInfo = book.getJSONObject(&#34;volumeInfo&#34;);
+
+    // Try to get the author and title from the current item,
+    // catch if either field is empty and move on.
+    try {
+        title = volumeInfo.getString(&#34;title&#34;);
+        authors = volumeInfo.getString(&#34;authors&#34;);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // Move to the next item.
+    i++;
+}
+</code></pre>
 <p>注意: ループはレスポンスの最初のマッチで終了します。他にも回答があるかもしれませんが、このアプリは最初の回答のみを表示します。</p>
 <ol type="1" start="1">
 <li>一致するレスポンスが見つかった場合は、そのレスポンスでUIを更新します。<code>TextView</code>オブジェクトへの参照は<code>WeakReference</code>オブジェクトなので、<code>get()</code>メソッドを使って参照を解除する必要があります。</li>
 </ol>
-<p><code>if (title != null && authors != null) {</code></p>
-<p><code>    mTitleText.get().setText(title).</code></p>
-<p><code>    mAuthorText.get().setText(authors)。</code></p>
-<p><code>}</code></p>
+<pre><code>if (title != null &amp;&amp; authors != null) {
+    mTitleText.get().setText(title);
+    mAuthorText.get().setText(authors);
+}</code></pre>
 <ol type="1" start="1">
 <li>ループが停止し、結果に有効な著者と有効なタイトルの両方を持つ項目がない場合は、タイトルの<code>TextView</code>を&#34;結果なし&#34;の文字列リソースに設定し、著者の<code>TextView</code>をクリアします。</li>
 </ol>
-<p>他にもあります</p>
-<p><code>    mTitleText.get().setText(R. string.no_results)。</code></p>
-<p><code>get().setText("")。</code></p>
-<p><code>}</code></p>
+<pre><code>} else {
+    mTitleText.get().setText(R.string.no_results);
+    mAuthorText.get().setText(&#34;&#34;);
+}</code></pre>
 <ol type="1" start="1">
 <li>キャッチブロックでは、ログにエラーを表示します。タイトルの<code>TextView</code>を&#34;結果なし&#34;の文字列リソースに設定し、著者の<code>TextView</code>をクリアします。</li>
 </ol>
-<p><code>} catch (Exception e) {catch (Exception e) {catch (Exception e) {catch</code></p>
-<p><code>// onPostExecuteが適切なJSON文字列を受信しなかった場合。</code></p>
-<p><code>//</code> 失敗した結果を表示するために<code>UI</code>を更新します。</p>
-<p><code>   mTitleText.get().setText(R. string.no_results)。</code></p>
-<p><code>   mAuthorText.get().setText("")。</code></p>
-<p><code>   e.printStackTrace()。</code></p>
-<p><code>}</code></p>
+<pre><code>} catch (Exception e) {
+   // If onPostExecute does not receive a proper JSON string,
+   // update the UI to show failed results.
+   mTitleText.get().setText(R.string.no_results);
+   mAuthorText.get().setText(&#34;&#34;);
+   e.printStackTrace();
+}</code></pre>
 <ol type="1" start="1">
 <li><code>no_results リソースを strings.xml に追加します。</code></li>
 </ol>
-<p><code><string name="no_results"> "結果が見つかりませんでした"</string>。</code></p>
+<pre><code>&lt;string name=&#34;no_results&#34;&gt;&#34;No Results Found&#34;&lt;/string&gt;</code></pre>
 <p>解答コード。</p>
-<p>オーバーライド</p>
-<p><code>protected void onPostExecute(String s) {.</code></p>
-<p><code>super.onPostExecute(s)。</code></p>
-<p>試してみる</p>
-<p><code>//</code> レスポンスを<code>JSON</code>オブジェクトに変換します。</p>
-<p><code>JSONObject jsonObject = new JSONObject(s)。</code></p>
-<p><code>//</code> ブックアイテムの<code>JSONArray</code>を取得します。</p>
-<p><code>JSONArray itemsArray = jsonObject.getJSONArray("items")。</code></p>
-<p><code>//</code> イテレータと結果フィールドを初期化します。</p>
-<p><code>i = 0.</code></p>
-<p><code>title = null。</code></p>
-<p><code>著者 = null.</code></p>
-<p><code>//</code> 結果をアイテム配列で検索し、終了します</p>
-<p><code>//</code> タイトルと著者の両方の場合</p>
-<p><code>//</code> が見つかった場合、またはすべての項目がチェックされた場合。</p>
-<p><code>while (i < itemsArray.length() &&)</code></p>
-<p><code>          (authors == null && title == null)) {</code></p>
-<p><code>//</code> 現在のアイテム情報を取得します。</p>
-<p><code>JSONObject book = itemsArray.getJSONObject(i)。</code></p>
-<p><code>JSONObject volumeInfo = book.getJSONObject("volumeInfo")。</code></p>
-<p><code>//</code> 現在のアイテムから著者とタイトルを取得しようとします。</p>
-<p><code>//</code> どちらかのフィールドが空の場合はキャッチして次のフィールドに移動します。</p>
-<p>試してみる</p>
-<p><code>               title = volumeInfo.getString("title")。</code></p>
-<p><code>               authors = volumeInfo.getString("authors")。</code></p>
-<p><code>           } catch (Exception e) {catch (Exception e) {catch (Exception e) {catch</code></p>
-<p><code>               e.printStackTrace()。</code></p>
-<p><code>           }</code></p>
-<p><code>//</code> 次の項目に移動します。</p>
-<p><code>           i++;</code></p>
-<p><code>       }</code></p>
-<p><code>//</code> 両方とも見つかった場合は、結果を表示します。</p>
-<p><code>if (title != null && authors != null) {</code></p>
-<p><code>           mTitleText.get().setText(title).</code></p>
-<p><code>           mAuthorText.get().setText(authors)。</code></p>
-<p><code>他にもあり       ます</code></p>
-<p><code>//</code> 見つからなかった場合は、<code>UI</code>を</p>
-<p><code>//</code> 失敗した結果を表示します。</p>
-<p><code>           mTitleText.get().setText(R. string.no_results)。</code></p>
-<p><code>           mAuthorText.get().setText("")。</code></p>
-<p><code>       }</code></p>
-<p><code>   } catch (Exception e) {catch (Exception e) {catch (Exception e) {catch</code></p>
-<p><code>// onPostExecuteが適切なJSON文字列を受信しなかった場合。</code></p>
-<p><code>//</code> 失敗した結果を表示するために<code>UI</code>を更新します。</p>
-<p><code>       mTitleText.get().setText(R. string.no_results)。</code></p>
-<p><code>       mAuthorText.get().setText("")。</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onPostExecute(String s) {
+   super.onPostExecute(s);
+
+   try {
+       // Convert the response into a JSON object.
+       JSONObject jsonObject = new JSONObject(s);
+       // Get the JSONArray of book items.
+       JSONArray itemsArray = jsonObject.getJSONArray(&#34;items&#34;);
+
+       // Initialize iterator and results fields.
+       int i = 0;
+       String title = null;
+       String authors = null;
+
+       // Look for results in the items array, exiting 
+       // when both the title and author
+       // are found or when all items have been checked.
+       while (i &lt; itemsArray.length() &amp;&amp; 
+          (authors == null &amp;&amp; title == null)) {
+           // Get the current item information.
+           JSONObject book = itemsArray.getJSONObject(i);
+           JSONObject volumeInfo = book.getJSONObject(&#34;volumeInfo&#34;);
+
+           // Try to get the author and title from the current item,
+           // catch if either field is empty and move on.
+           try {
+               title = volumeInfo.getString(&#34;title&#34;);
+               authors = volumeInfo.getString(&#34;authors&#34;);
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+
+           // Move to the next item.
+           i++;
+       }
+
+       // If both are found, display the result.
+       if (title != null &amp;&amp; authors != null) {
+           mTitleText.get().setText(title);
+           mAuthorText.get().setText(authors);
+       } else {
+           // If none are found, update the UI to 
+           // show failed results.
+           mTitleText.get().setText(R.string.no_results);
+           mAuthorText.get().setText(&#34;&#34;);
+       }
+
+   } catch (Exception e) {
+       // If onPostExecute does not receive a proper JSON string,
+       // update the UI to show failed results.
+       mTitleText.get().setText(R.string.no_results);
+       mAuthorText.get().setText(&#34;&#34;);
+   }
+}</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3.UIのベストプラクティスを実装する" duration="0">
+      <google-codelab-step label="タスク3.UIのベストプラクティスを実装する" duration="0">
         <p>今、本のAPIを使って本の検索を実行する機能的なアプリがあります。しかし、いくつかのことが期待通りに動作しません。</p>
 <ul>
 <li>ユーザーが「本の検索」をクリックしても、キーボードが消えません。ユーザーには、クエリが実行されていることを示す表示がありません。</li>
@@ -576,96 +605,102 @@
 <ol type="1" start="1">
 <li><code>MainActivity</code> で、<code>queryString</code> の定義の後、<code>searchBooks()</code> メソッドに以下のコードを追加します。このコードは、ユーザーがボタンをタップしたときにキーボードを非表示にします。</li>
 </ol>
-<p><code>InputMethodManager inputManager = (InputMethodManager)</code></p>
-<p><code>   getSystemService(Context.INPUT_METHOD_SERVICE)を取得します。</code></p>
-<p><code>if (inputManager != null ) {</code></p>
-<p><code>   inputManager.hideSoftInputFromWindow(view.getWindowToken().</code></p>
-<p><code>InputMethodManager.HIDE_NOT_ALWAYS)を使用しています。</code></p>
-<p><code>}</code></p>
+<pre><code>InputMethodManager inputManager = (InputMethodManager)
+   getSystemService(Context.INPUT_METHOD_SERVICE);
+
+if (inputManager != null ) {
+   inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+           InputMethodManager.HIDE_NOT_ALWAYS);
+}</code></pre>
 <ol type="1" start="1">
 <li><code>FetchBook</code>タスクを実行する呼び出しのすぐ下に、タイトルの<code>TextView</code>をローディングメッセージに変更し、著者の<code>TextView</code>をクリアするコードを追加します。</li>
 </ol>
-<p><code>new FetchBook(mTitleText, mAuthorText).execute(queryString).</code></p>
-<p><code>mAuthorText.setText("" )。</code></p>
-<p><code>mTitleText.setText(R. string.loading).</code></p>
+<pre><code>new FetchBook(mTitleText, mAuthorText).execute(queryString);
+mAuthorText.setText(&#34;&#34;);
+mTitleText.setText(R.string.loading);</code></pre>
 <ol type="1" start="1">
 <li>読み込みリソースを<code>strings.xml</code>に追加します。</li>
 </ol>
-<p><code><string name="loading"> 読み込み中... </string>。</code></p>
+<pre><code>&lt;string name=&#34;loading&#34;&gt;Loading...&lt;/string&gt;
+</code></pre>
 <p>3.2 ネットワークの状態と空の検索フィールドを管理する場合</p>
 <p>アプリがネットワークを使用するときは常に、ネットワーク接続が利用できない可能性に対処する必要があります。ネットワークへの接続を試みる前に、アプリはネットワーク接続の状態を確認する必要があります。また、ユーザーがクエリ文字列を入力していない場合は、Books APIへのクエリを試みるべきではありません。</p>
 <ol type="1" start="1">
 <li><code>searchBooks()</code>メソッドでは、<a href="https://developer.android.com/reference/kotlin/android/net/ConnectivityManager" target="_blank"><code>ConnectivityManager</code></a>クラスと<a href="https://developer.android.com/reference/android/net/NetworkInfo" target="_blank"><code>NetworkInfo</code></a>クラスを使用してネットワーク接続を確認します。キーボードを非表示にする入力マネージャのコードの後に以下のコードを追加します。</li>
 </ol>
-<p><code>ConnectivityManager connMgr = (ConnectivityManager)</code></p>
-<p><code>           getSystemService(Context.CONNECTIVITY_SERVICE)を使用しています。</code></p>
-<p><code>NetworkInfo networkInfo = null。</code></p>
-<p><code>if (connMgr != null) { (connMgr != null)</code></p>
-<p><code>networkInfo = connMgr.getActiveNetworkInfo().</code></p>
-<p><code>}</code></p>
+<pre><code>ConnectivityManager connMgr = (ConnectivityManager)
+           getSystemService(Context.CONNECTIVITY_SERVICE);
+NetworkInfo networkInfo = null;
+if (connMgr != null) {
+   networkInfo = connMgr.getActiveNetworkInfo();
+}</code></pre>
 <ol type="1" start="1">
 <li>ネットワーク接続が存在すること、ネットワークが接続されていること、クエリ文字列が利用可能であることを確認するために、<code>FetchBook</code>タスクと<code>TextView</code>の更新の呼び出しの周りにテストを追加します。</li>
 </ol>
-<p><code>if (networkInfo != null && networkInfo.isConnected()</code></p>
-<p><code>&& queryString.length() != 0) {</code></p>
-<p><code>new FetchBook(mTitleText, mAuthorText).execute(queryString).</code></p>
-<p><code>   mAuthorText.setText("" )。</code></p>
-<p><code>   mTitleText.setText(R. string.loading).</code></p>
-<p><code>}</code></p>
+<pre><code>if (networkInfo != null &amp;&amp; networkInfo.isConnected()
+           &amp;&amp; queryString.length() != 0) {
+   new FetchBook(mTitleText, mAuthorText).execute(queryString);
+   mAuthorText.setText(&#34;&#34;);
+   mTitleText.setText(R.string.loading);
+}</code></pre>
 <ol type="1" start="1">
 <li>そのテストに else ブロックを追加します。<code>else</code> ブロックでは、検索する用語がない場合は <code>no_search_term</code> エラーメッセージを、そうでない場合は <code>no_network</code> エラーメッセージを表示して UI を更新します。</li>
 </ol>
-<p>他にもあります</p>
-<p><code>if (queryString.length() == 0) {</code></p>
-<p><code>       mAuthorText.setText("" )。</code></p>
-<p><code>       mTitleText.setText(R. string.no_search_term)。</code></p>
-<p>他にもあり   ます</p>
-<p><code>       mAuthorText.setText("" )。</code></p>
-<p><code>       mTitleText.setText(R. string.no_network)。</code></p>
-<p><code>}</code></p>
-<p><code>}</code></p>
+<pre><code>} else {
+   if (queryString.length() == 0) {
+       mAuthorText.setText(&#34;&#34;);
+       mTitleText.setText(R.string.no_search_term);
+   } else {
+       mAuthorText.setText(&#34;&#34;);
+       mTitleText.setText(R.string.no_network);
+   }
+}</code></pre>
 <ol type="1" start="1">
 <li><code>no_search_termとno_networkリソースをstrings.xmlに追加します。</code></li>
 </ol>
-<p><code><string name="no_search_term"> 検索語を入力してください</string</code></p>
-<p><code><string name="no_network"> ネットワーク接続を確認してから、もう一度試してみてください。 </string>。</code></p>
+<pre><code>&lt;string name=&#34;no_search_term&#34;&gt;Please enter a search term&lt;/string&gt;
+&lt;string name=&#34;no_network&#34;&gt;Please check your network connection and try again.&lt;/string&gt;</code></pre>
 <p>解答コード。</p>
-<p><code>public void searchBooks(View view) {</code></p>
-<p><code>String queryString = mBookInput.getText().toString()。</code></p>
-<p><code>inputManager = (InputMethodManager)</code></p>
-<p><code>           getSystemService(Context.INPUT_METHOD_SERVICE)を取得します。</code></p>
-<p><code>if (inputManager != null ) {</code></p>
-<p><code>       inputManager.hideSoftInputFromWindow(view.getWindowToken().</code></p>
-<p><code>InputMethodManager.HIDE_NOT_ALWAYS)を使用しています。</code></p>
-<p><code>   }</code></p>
-<p><code>connMgr = (ConnectivityManager)</code></p>
-<p><code>           getSystemService(Context.CONNECTIVITY_SERVICE)を使用しています。</code></p>
-<p><code>NetworkInfo networkInfo = null。</code></p>
-<p><code>if (connMgr != null) { (connMgr != null)</code></p>
-<p><code>       networkInfo = connMgr.getActiveNetworkInfo().</code></p>
-<p><code>   }</code></p>
-<p><code>if (networkInfo != null && networkInfo.isConnected()</code></p>
-<p><code>&& queryString.length() != 0) {</code></p>
-<p><code>new FetchBook(mTitleText, mAuthorText).execute(queryString).</code></p>
-<p><code>       mAuthorText.setText("" )。</code></p>
-<p><code>       mTitleText.setText(R. string.loading).</code></p>
-<p>他にもあり   ます</p>
-<p><code>if (queryString.length() == 0) {</code></p>
-<p><code>           mAuthorText.setText("" )。</code></p>
-<p><code>           mTitleText.setText(R. string.no_search_term)。</code></p>
-<p><code>他にもあり       ます</code></p>
-<p><code>           mAuthorText.setText("" )。</code></p>
-<p><code>           mTitleText.setText(R. string.no_network)。</code></p>
-<p><code>       }</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>public void searchBooks(View view) {
+   String queryString = mBookInput.getText().toString();
+
+   InputMethodManager inputManager = (InputMethodManager)
+           getSystemService(Context.INPUT_METHOD_SERVICE);
+   if (inputManager != null ) {
+       inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+               InputMethodManager.HIDE_NOT_ALWAYS);
+   }
+
+   ConnectivityManager connMgr = (ConnectivityManager)
+           getSystemService(Context.CONNECTIVITY_SERVICE);
+   NetworkInfo networkInfo = null;
+   if (connMgr != null) {
+       networkInfo = connMgr.getActiveNetworkInfo();
+   }
+
+   if (networkInfo != null &amp;&amp; networkInfo.isConnected()
+           &amp;&amp; queryString.length() != 0) {
+       new FetchBook(mTitleText, mAuthorText).execute(queryString);
+       mAuthorText.setText(&#34;&#34;);
+       mTitleText.setText(R.string.loading);
+   } else {
+       if (queryString.length() == 0) {
+           mAuthorText.setText(&#34;&#34;);
+           mTitleText.setText(R.string.no_search_term);
+       } else {
+           mAuthorText.setText(&#34;&#34;);
+           mTitleText.setText(R.string.no_network);
+       }
+   }
+}
+</code></pre>
 <p>ソリューションコード</p>
 <p>ここまでの実践のためのソリューションコードは、Android Studioのプロジェクト<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/WhoWroteIt" target="_blank">WhoWroteIt</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Task 4. Migrate to AsyncTaskLoader" duration="0">
+      <google-codelab-step label="Task 4. Migrate to AsyncTaskLoader" duration="0">
         <p>When you use an <code>AsyncTask</code> to perform operations in the background, that background thread can&#39;t update the UI if a configuration change occurs while the background task is running. To address this situation, use the <code>AsyncTaskLoader</code> class.</p>
 <p><code>AsyncTaskLoader</code> loads data in the background and reassociates background tasks with the <code>Activity</code>, even after a configuration change. With an <code>AsyncTaskLoader</code>, if you rotate the device while the task is running, the results are still displayed correctly in the <code>Activity</code>.</p>
 <p>Why use an <code>AsyncTask</code> if an <code>AsyncTaskLoader</code> is much more useful? The answer is that it depends on the situation. If the background task is likely to finish before any configuration changes occur, and it&#39;s not crucial for the task to update the UI, an <code>AsyncTask</code> may be sufficient. The <code>AsyncTaskLoader</code> class actually uses an <code>AsyncTask</code> behind the scenes to work its magic.</p>
@@ -677,74 +712,82 @@
 <li>To preserve the results of the previous practical, copy the <a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/WhoWroteIt" target="_blank">WhoWroteIt project</a>. Rename the copied project &#34;WhoWroteItLoader&#34;.</li>
 <li>Create a class called <code>BookLoader</code> that extends <code>AsyncTaskLoader</code> with parameterized type <code><String></code>.</li>
 </ol>
-<p><code>import android.support.v4.content.AsyncTaskLoader;</code></p>
-<p><code>public</code> <code>class</code> <code>BookLoader</code> <code>extends</code> <code>AsyncTaskLoader<String> {</code></p>
-<p><code>}</code></p>
+<pre><code>import android.support.v4.content.AsyncTaskLoader;
+
+public class BookLoader extends AsyncTaskLoader&lt;String&gt; {
+  
+}</code></pre>
 <p>Make sure to import the <code>AsyncTaskLoader</code> class from the v4 Support Library.</p>
 <ol type="1" start="3">
 <li>Implement the required <code>loadInBackground()</code> method. Notice the similarity between this method and the initial <code>doInBackground()</code> method from <code>AsyncTask</code>.</li>
 </ol>
-<p><code>@Nullable</code></p>
-<p><code>@Override</code></p>
-<p><code>public</code> <code>String loadInBackground() {</code></p>
-<p><code>return</code> <code>null;</code></p>
-<p><code>}</code></p>
+<pre><code>@Nullable
+@Override
+public String loadInBackground() {
+   return null;
+}</code></pre>
 <ol type="1" start="4">
 <li>Create the constructor for the <code>BookLoader</code> class. With your text cursor on the class declaration line, press <code>Alt+Enter</code> (<code>Option+Enter</code> on a Mac) and select Create constructor matching super. This creates a constructor with the <code>Context</code> as a parameter.</li>
 </ol>
-<p><code>public</code> <code>BookLoader(@NonNull</code> <code>Context context) {</code></p>
-<p><code>super(context);</code></p>
-<p><code>}</code></p>
+<pre><code>public BookLoader(@NonNull Context context) {
+   super(context);
+}</code></pre>
 <p>4.2 Implement required methods</p>
 <ol type="1" start="1">
 <li>Press <code>Ctrl+O</code> to open the Override methods menu, and select onStartLoading. The system calls this method when you start the loader.</li>
 </ol>
-<p><code>@Override</code></p>
-<p><code>protected</code> <code>void onStartLoading() {</code></p>
-<p><code>super.onStartLoading();</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onStartLoading() {
+   super.onStartLoading();
+}</code></pre>
 <ol type="1" start="2">
 <li>Inside the <code>onStartLoading()</code> method stub, call <code>forceLoad()</code> to start the <code>loadInBackground()</code> method. The loader will not start loading data until you call the <code>forceLoad()</code> method.</li>
 </ol>
-<p><code>@Override</code></p>
-<p><code>protected</code> <code>void onStartLoading() {</code></p>
-<p><code>super.onStartLoading();</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onStartLoading() {
+   super.onStartLoading();
+}</code></pre>
 <ol type="1" start="3">
 <li>Create a member variable called <code>mQueryString</code> to hold the string for the Books API query. Modify the constructor to take a <code>String</code> as an argument and assign it to the <code>mQueryString</code> variable.</li>
 </ol>
-<p><code>private</code> <code>String mQueryString;</code></p>
-<p><code>BookLoader(Context context, String queryString) {</code></p>
-<p><code>super(context);</code></p>
-<p><code>   mQueryString = queryString;</code></p>
-<p><code>}</code></p>
+<pre><code>private String mQueryString;
+
+BookLoader(Context context, String queryString) {
+   super(context);
+   mQueryString = queryString;
+}
+</code></pre>
 <ol type="1" start="4">
 <li>In the <code>loadInBackground()</code> method, replace the return statement with the following code, which calls the <code>NetworkUtils</code>.<code>getBookInfo()</code> method with the query string and returns the result:</li>
 </ol>
-<p><code>return</code> <code>NetworkUtils.getBookInfo(mQueryString);</code></p>
+<p>return NetworkUtils.getBookInfo(mQueryString);</p>
 <p>4.3 Modify MainActivity</p>
 <p>The connection between the <code>AsyncTaskLoader</code> and the <code>Activity</code> that calls it is implemented with the <code>LoaderManager</code>.<code>LoaderCallbacks</code> interface. These loader callbacks are a set of methods in the activity that are called by the <code>LoaderManager</code> when the loader is being created, when the data has finished loading, and when the loader is reset. The loader callbacks take the results of the task and pass them back to the activity&#39;s UI.</p>
 <p>In this task you implement the <code>LoaderManager</code>. <code>LoaderCallbacks</code> interface in your <code>MainActivity</code> to handle the results of the <code>loadInBackground()</code> <code>AsyncTaskLoader</code> method.</p>
 <ol type="1" start="1">
 <li>In <code>MainActivity</code>, add the <code>LoaderManager.LoaderCallbacks</code> implementation to the class declaration, parameterized with the <code>String</code> type:</li>
 </ol>
-<p><code>public</code> <code>class</code> <code>MainActivity</code> <code>extends</code> <code>AppCompatActivity</code>  </p>
-<p><code>implements</code> <code>LoaderManager.LoaderCallbacks<String> {</code></p>
+<pre><code>public class MainActivity extends AppCompatActivity  
+   implements LoaderManager.LoaderCallbacks&lt;String&gt; { </code></pre>
 <p>Make sure to import the <code>LoaderManager.LoaderCallbacks</code> class from the v4 Support Library.</p>
 <ol type="1" start="2">
 <li>Implement all the required callback methods from the interface. Thi includes <code>onCreateLoader()</code>, <code>onLoadFinished()</code>, and <code>onLoaderReset()</code>. Place your cursor on the class signature line and press <code>Alt+Enter</code> (<code>Option+Enter</code> on a Mac). Make sure that all the methods are selected and click OK.</li>
 </ol>
-<p><code>@NonNull</code></p>
-<p><code>@Override</code></p>
-<p><code>public</code> <code>Loader<String> onCreateLoader(int id, @Nullable</code> <code>Bundle args) {</code></p>
-<p><code>return</code> <code>null;</code></p>
-<p><code>}</code></p>
-<p><code>@Override</code></p>
-<p><code>public</code> <code>void onLoadFinished(@NonNull</code> <code>Loader<String> loader, String data) {</code></p>
-<p><code>}</code></p>
-<p><code>@Override</code></p>
-<p><code>public</code> <code>void onLoaderReset(@NonNull</code> <code>Loader<String> loader) {</code></p>
-<p><code>}</code></p>
+<pre><code>@NonNull
+@Override
+public Loader&lt;String&gt; onCreateLoader(int id, @Nullable Bundle args) {
+   return null;
+}
+
+@Override
+public void onLoadFinished(@NonNull Loader&lt;String&gt; loader, String data) {
+
+}
+
+@Override
+public void onLoaderReset(@NonNull Loader&lt;String&gt; loader) {
+
+}</code></pre>
 <p>About the required methods:</p>
 <ul>
 <li><code>onCreateLoader()</code> is called when you instantiate your loader.</li>
@@ -755,6 +798,9 @@
 <ol type="1" start="3">
 <li>The <code>searchBooks()</code> method is the onClick method for the button. In <code>searchBooks()</code>, replace the call to execute the <code>FetchBook</code> task with a call to <code>restartLoader()</code>. Pass in the query string that you got from the <code>EditText</code> in the loader&#39;s <code>Bundle</code> object:</li>
 </ol>
+<pre><code>Bundle queryBundle = new Bundle();
+queryBundle.putString(&#34;queryString&#34;, queryString);
+getSupportLoaderManager().restartLoader(0, queryBundle, this);</code></pre>
 <p><code>Bundle queryBundle = new</code> <code>Bundle();</code></p>
 <p><code>queryBundle.putString("queryString", queryString);</code></p>
 <p><code>getSupportLoaderManager().restartLoader(0, queryBundle, this);</code></p>
@@ -770,28 +816,30 @@
 <ol type="1" start="1">
 <li>In <code>onCreateLoader()</code>, replace the <code>return</code> statement with a statement that returns an instance of the <code>BookLoader</code> class. Pass in the context (<code>this</code>) and the <code>queryString</code> obtained from the passed-in <code>Bundle</code>:</li>
 </ol>
-<p><code>@NonNull</code></p>
-<p><code>@Override</code></p>
-<p><code>public</code> <code>Loader onCreateLoader(int id, @Nullable</code> <code>Bundle args) {</code></p>
-<p><code>String queryString = "";</code></p>
-<p><code>if (args != null) {</code></p>
-<p><code>       queryString = args.getString("queryString");</code></p>
-<p><code>   }</code></p>
-<p><code>return</code> <code>new</code> <code>BookLoader(this, queryString);</code></p>
-<p><code>}</code></p>
+<pre><code>@NonNull
+@Override
+public Loader onCreateLoader(int id, @Nullable Bundle args) {
+   String queryString = &#34;&#34;;
+
+   if (args != null) {
+       queryString = args.getString(&#34;queryString&#34;);
+   }
+
+   return new BookLoader(this, queryString);
+}</code></pre>
 <ol type="1" start="2">
 <li>Copy the code from <code>onPostExecute()</code> in your FetchBook class to <code>onLoadFinished()</code> in your <code>MainActivity</code>. Remove the call to <code>super.onPostExecute()</code>. This is the code that parses the JSON result for a match with the query string.</li>
 <li>Remove all the calls to <code>get()</code> for each of the <code>TextView</code> objects. Because updating the UI happens in the <code>Activity</code> itself, you no longer need weak references to the original views.</li>
 <li>Replace the argument to the <code>JSONObject</code> constructor (the variable <code>s</code>) with the parameter <code>data</code>.</li>
 </ol>
-<p><code>JSONObject jsonObject = new</code> <code>JSONObject(data);</code></p>
+<pre><code>JSONObject jsonObject = new JSONObject(data);</code></pre>
 <ol type="1" start="5">
 <li>Run your app. You should have the same functionality as before, but now in a loader! However, when you rotate the device, the view data is lost. That&#39;s because when the activity is created (or recreated), the activity doesn&#39;t know that a loader is running. To reconnect to the loader, you need an <code>initLoader()</code> method in the <code>onCreate()</code> of <code>MainActivity</code>.</li>
 <li>Add the following code in <code>onCreate()</code> to reconnect to the loader, if the loader already exists:</li>
 </ol>
-<p><code>if(getSupportLoaderManager().getLoader(0)!=null){</code></p>
-<p><code>   getSupportLoaderManager().initLoader(0,null,this);</code></p>
-<p><code>}</code></p>
+<pre><code>if(getSupportLoaderManager().getLoader(0)!=null){
+   getSupportLoaderManager().initLoader(0,null,this);
+}</code></pre>
 <p>If the loader exists, initialize it. You only want to reassociate the loader to the activity if a query has already been executed. In the initial state of the app, no data is loaded, so there is no data to preserve.</p>
 <ol type="1" start="7">
 <li>Run your app again and rotate the device. The loader manager now holds onto your data across device-configuration changes!</li>
@@ -803,14 +851,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注：すべてのコーディング課題は任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: Books API をさらに詳しく調べて、EPUB 形式でダウンロード可能な書籍に結果を制限する検索パラメータを見つけてください。リクエストにパラメータを追加して、結果を表示します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li>ネットワークに接続するタスクは、UIスレッド上で実行すべきではありません。UIスレッド上でネットワーク接続やファイルアクセスを試みると、Androidランタイムは通常例外を発生させます。</li>
 <li>Google Booksにプログラムでアクセスするには、Books Search APIを使用します。Google Books への API リクエストは URL の形式で、レスポンスは JSON 文字列です。</li>
@@ -819,7 +867,7 @@
 <li><code>Uri.buildUpon()</code>メソッドは、URI文字列を構築するために使用できる<code>URI.Builder</code>を返します。</li>
 <li>インターネットに接続するためには、Androidのマニフェストファイルでネットワークパーミッションを設定する必要があります。</li>
 </ul>
-<p><code><uses-permission android:name="android.permission.INTERNET" /></code></p>
+<pre><code>&lt;uses-permission android:name=&#34;android.permission.INTERNET&#34; /&gt;</code></pre>
 <p><a href="https://developer.android.com/reference/android/os/AsyncTask" target="_blank"><code>AsyncTask</code></a> クラスでは、UI スレッド上ではなくバックグラウンドでタスクを実行することができます。</p>
 <ul>
 <li><code>AsyncTask</code>を使用するには、それをサブクラス化する必要があります。サブクラスは <code>doInBackground(Params...)</code> メソッドをオーバーライドします。通常、サブクラスは <code>onPostExecute(Result)</code> メソッドもオーバーライドします。</li>
@@ -846,13 +894,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Related concepts" duration="0">
+      <google-codelab-step label="Related concepts" duration="0">
         <p>関連する概念のドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-7-background-tasks/7-2-c-internet-connection/7-2-c-internet-connection.html" target="_blank">7.2: インターネット接続</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/training/basics/network-ops/connecting.html" target="_blank">ネットワークに接続する</a></li>
@@ -865,7 +913,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -886,6 +934,7 @@
 <p>ユーザーがボタンをタップしたときにインターネットへの接続ができない場合、アプリはユーザーに適切な応答を表示する必要があります。例えば、&#34;インターネット接続を確認してもう一度試してみてください&#34;などのメッセージを表示することができます。</p>
 <p>表示はソースコードを表示する<code>ScrollView</code>内の<code>TextView</code>を含む必要がありますが、インターフェイスの正確な外観はあなた次第です。画面は以下のスクリーンショットとは違って見えるかもしれません。ポップアップメニュー、スピナー、チェックボックスを使用して、ユーザーが HTTP または HTTPS を選択できるようにすることができます。</p>
 <p>左の画像は起動画面で、プロトコルのポップアップメニューが表示されています。右の画像は、与えられたURLのページソースを検索した結果の例です。</p>
+<p class="image-container"><img alt="b70446f8ad83b959.png" style="width: 435.08px" src="img/b70446f8ad83b959.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>あなたのアプリがインターネットに接続するために必要なパーミッションは何ですか？</p>
@@ -947,7 +996,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
 <p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 

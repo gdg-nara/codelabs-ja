@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 05.1: Drawables, styles, and themes</title>
+  <title>Android Developer Fundamentals 05.1: Drawables, styles, and themes</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="5-1"
-                  title="Android 開発者基礎講座 05.1: Drawables, styles, and themes"
+                  title="Android Developer Fundamentals 05.1: Drawables, styles, and themes"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -67,7 +67,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>スコアキーパーアプリは、2つのボタン要素と2つのテキストビュー要素で構成されています。</p>
 <table>
 <tr><td colspan="1" rowspan="1"><p class="image-container"><img alt="The Scorekeeper app in Day Mode" style="width: 225.00px" src="img/6ff1e098bf0726f4.png"></p>
@@ -78,7 +78,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク 1.スコアキーパーアプリの作成" duration="0">
+      <google-codelab-step label="タスク 1.スコアキーパーアプリの作成" duration="0">
         <p>このセクションでは、Android Studio プロジェクトを作成し、レイアウトを変更し、<code>Button</code> 要素に <code>android:onClick</code> 属性を追加します。</p>
 <p>1.1 プロジェクトの作成</p>
 <ol type="1" start="1">
@@ -92,21 +92,21 @@
 <ol type="1" start="1">
 <li>activity_main.xmlを開き、TextタブをクリックしてXMLコードを表示します。<code>View</code>階層の一番上、またはルートにあるのが<a href="https://developer.android.com/reference/android/support/constraint/ConstraintLayout.html" target="_blank"><code>ConstraintLayout</code></a> <code>ViewGroup</code>です。</li>
 </ol>
-<p><code>android.support.constraint.ConstraintLayout</code></p>
+<pre><code>android.support.constraint.ConstraintLayout</code></pre>
 <ol type="1" start="1">
 <li>この <code>ViewGroup</code> を <a href="https://developer.android.com/reference/android/widget/LinearLayout.html" target="_blank"><code>LinearLayout</code></a> に変更します。2 行目のコードは次のようになります。</li>
 </ol>
-<p><code><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
+<pre><code>&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;</code></pre>
 <ol type="1" start="1">
 <li><code>ConstraintLayout</code>に関連するXMLコードの次の行を削除します。</li>
 </ol>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
+<pre><code>xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;</code></pre>
 <p>上部のXMLコードのブロックは次のようになっているはずです。</p>
-<p><code><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>tools:context="com.example.android.scorekeeper.MainActivity"></code></p>
+<pre><code>&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    tools:context=&#34;com.example.android.scorekeeper.MainActivity&#34;&gt;</code></pre>
 <ol type="1" start="1">
 <li>以下の属性を追加します（既存の属性は削除せずに）。</li>
 </ol>
@@ -123,6 +123,7 @@
 </table>
 <p>1.3 スコアコンテナを作成する</p>
 <p>このアプリのレイアウトには、2 つの <code>RelativeLayout</code> ビューグループ要素で定義されたスコア コンテナが含まれています。次の図は、最もシンプルな形でのレイアウトを示しています。</p>
+<p class="image-container"><img alt="Box diagram of Scorekeeper layout" style="width: 247.00px" src="img/46d135c222543bc3.png"></p>
 <ol type="1" start="1">
 <li><code>LinearLayout 内に、以下の属性を持つ</code> 2 <code>つの RelativeLayout 要素を追加します。</code></li>
 </ol>
@@ -234,104 +235,115 @@
 <ol type="1" start="1">
 <li>レイアウトの左側にある<code>ImageButton</code>要素に以下の属性を追加します。</li>
 </ol>
-<p><code>android:src="@drawable/ic_minus"</code></p>
-<p><code>android:contentDescription="マイナスボタン"</code></p>
+<pre><code>android:src=&#34;@drawable/ic_minus&#34;
+android:contentDescription=&#34;Minus Button&#34;</code></pre>
 <ol type="1" start="1">
 <li>レイアウトの右側にある<code>ImageButton</code>要素に以下の属性を追加します。</li>
 </ol>
-<p><code>android:src="@drawable/ic_plus"</code></p>
-<p><code>android:contentDescription="プラスボタン"</code></p>
+<pre><code>android:src=&#34;@drawable/ic_plus&#34;
+android:contentDescription=&#34;Plus Button&#34;</code></pre>
 <ol type="1" start="1">
 <li>すべての文字列リソースを抽出します。このプロセスでは、Java コードからすべての文字列が削除され、string<code>.xml</code> ファイルに格納されます。これにより、アプリをさまざまな言語に簡単にローカライズすることができます。</li>
 </ol>
 <p>レイアウトのためのソリューションコード</p>
 <p>以下に Scorekeeper アプリのレイアウトとその XML コードを示します。</p>
 <p>注意: 同じレイアウトを実現するには複数の方法があるため、あなたのコードは少し異なるかもしれません。</p>
+<p class="image-container"><img alt="Scorekeeper layout" style="width: 175.06px" src="img/f90f6326dbad487c.png"></p>
 <p>XMLコードです。</p>
-<p><code><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="vertical"</code></p>
-<p><code>="16dp"</code></p>
-<p><code>tools:context="com.example.android.scorekeeper.MainActivity"></code></p>
-<p><code><</code>相対レイアウト</p>
-<p><code>="match_parent"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="1"></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/team_1" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/decreaseTeam1"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:src="@drawable/ic_minus"</code></p>
-<p><code>=</code></p>
-<p><code>" /></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/score_1"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/initial_count" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/increaseTeam1"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:src="@drawable/ic_plus"</code></p>
-<p><code>=</code></p>
-<p><code>" /></code></p>
-<p><code></RelativeLayout> </RelativeLayout</code></p>
-<p><code><</code>相対レイアウト</p>
-<p><code>="match_parent"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="1"></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/team_2" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/decreaseTeam2"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:src="@drawable/ic_minus"</code></p>
-<p><code>=</code></p>
-<p><code>" /></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/score_2"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/initial_count" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/increaseTeam2"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:src="@drawable/ic_plus"</code></p>
-<p><code>=</code></p>
-<p><code>" /></code></p>
-<p><code></RelativeLayout> </RelativeLayout</code></p>
-<p><code></LinearLayout> </LinearLayout</code></p>
+<pre><code>&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    android:orientation=&#34;vertical&#34;
+    android:padding=&#34;16dp&#34;
+    tools:context=&#34;com.example.android.scorekeeper.MainActivity&#34;&gt;
+
+    &lt;RelativeLayout
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;0dp&#34;
+        android:layout_weight=&#34;1&#34;&gt;
+
+        &lt;TextView
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentTop=&#34;true&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:text=&#34;@string/team_1&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/decreaseTeam1&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentLeft=&#34;true&#34;
+            android:layout_alignParentStart=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:src=&#34;@drawable/ic_minus&#34;
+            android:contentDescription=
+                             &#34;@string/minus_button_description&#34; /&gt;
+
+        &lt;TextView
+            android:id=&#34;@+id/score_1&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:text=&#34;@string/initial_count&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/increaseTeam1&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentEnd=&#34;true&#34;
+            android:layout_alignParentRight=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:src=&#34;@drawable/ic_plus&#34;
+            android:contentDescription=
+                              &#34;@string/plus_button_description&#34; /&gt;
+    &lt;/RelativeLayout&gt;
+
+    &lt;RelativeLayout
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;0dp&#34;
+        android:layout_weight=&#34;1&#34;&gt;
+
+        &lt;TextView
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentTop=&#34;true&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:text=&#34;@string/team_2&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/decreaseTeam2&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentLeft=&#34;true&#34;
+            android:layout_alignParentStart=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:src=&#34;@drawable/ic_minus&#34;
+            android:contentDescription=
+                               &#34;@string/minus_button_description&#34; /&gt;
+
+        &lt;TextView
+            android:id=&#34;@+id/score_2&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:text=&#34;@string/initial_count&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/increaseTeam2&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentEnd=&#34;true&#34;
+            android:layout_alignParentRight=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:src=&#34;@drawable/ic_plus&#34;
+            android:contentDescription=
+                                &#34;@string/plus_button_description&#34; /&gt;
+    &lt;/RelativeLayout&gt;
+&lt;/LinearLayout&gt;</code></pre>
 <p>1.5 テキストビュー要素とスコアカウント変数を初期化する</p>
 <p>スコアを追跡するために、アプリには2つのものが必要です。</p>
 <ul>
@@ -342,90 +354,92 @@
 <ol type="1" start="1">
 <li>各チームのスコアを表す2つの整数メンバ変数を作成します。</li>
 </ol>
-<p><code>//</code> スコアを保持するためのメンバ変数</p>
-<p><code>private int mScore1.</code></p>
-<p><code>private int mScore2.</code></p>
+<pre><code>// Member variables for holding the score
+private int mScore1;
+private int mScore2;</code></pre>
 <ol type="1" start="1">
 <li>テキストビュー要素への参照を保持するために、2つのテキストビューメンバー変数を作成します。</li>
 </ol>
-<p><code>//</code> スコアを保持するためのメンバ変数</p>
-<p><code>private TextView mScoreText1.</code></p>
-<p><code>private TextView mScoreText2.</code></p>
+<pre><code>// Member variables for holding the score
+private TextView mScoreText1;
+private TextView mScoreText2;</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivityのonCreate()メソッドで、スコアのTextView要素を</code>id<code>で探して、メンバ変数に代入します。</code></li>
 </ol>
-<p>オーバーライド</p>
-<p><code>protected void onCreate(Bundle savedInstanceState) {.</code></p>
-<p><code>super.onCreate(savedInstanceState)を使用しています。</code></p>
-<p><code>        setContentView(R.layout.activity_main)を使用しています。</code></p>
-<p><code>//ID</code>でテキストビューを探す</p>
-<p><code>        mScoreText1 = (TextView)findViewById(R.id.score_1).</code></p>
-<p><code>        mScoreText2 = (TextView)findViewById(R.id.score_2).</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //Find the TextViews by ID
+        mScoreText1 = (TextView)findViewById(R.id.score_1);
+        mScoreText2 = (TextView)findViewById(R.id.score_2);
+}</code></pre>
 <p>1.6 ImageButton 要素のクリックハンドラの実装</p>
 <p>各<code>ImageButton</code>に<code>android:onClick</code>属性を追加し、<code>MainActivity</code>に2つのクリックハンドラメソッドを作成します。左の<code>ImageButton</code>要素は<code>TextView</code>のスコアを減少させ、右の要素はスコアを増加させます。</p>
 <ol type="1" start="1">
 <li>activity_main.xmlがまだ開いていない場合は開き、レイアウトの左側にある最初の<code>ImageButton</code>に以下の<code>android:onClick</code>属性を追加します。</li>
 </ol>
-<p><code>android:onClick="decreaseScore"</code></p>
+<pre><code>android:onClick=&#34;decreaseScore&#34;</code></pre>
 <ol type="1" start="1">
 <li><code>decreaseScore</code>のメソッド名には赤で下線が引かれています。左マージンの赤い球根アイコンをクリックするか、メソッド名をクリックしてOption-Returnを押し、「MainActivity」の中の「Create &#39;decreaseScore(view)&#39;」を選択します。Android Studioでは、<code>MainActivity</code>にdecreanceScore<code>()</code>メソッドのスタブが作成されます。</li>
 <li>レイアウト左側の2つ目の<code>ImageButton</code>に上記の<code>android:onClick</code>属性を追加します。今回は既にスタブが作成されているので、メソッド名は有効です。</li>
 <li><code>レイアウトの右側にある各ImageButtonに以下のandroid:onClick属性を追加します。</code></li>
 </ol>
-<p><code>android:onClick="updateScore"</code></p>
+<pre><code>android:onClick=&#34;increaseScore&#34;</code></pre>
 <ol type="1" start="1">
 <li><code>increaseScore</code> メソッド名には赤で下線が引かれています。左マージンの赤い球根アイコンをクリックするか、メソッド名をクリックしてOption-Returnを押し、「MainActivity」の中の「Create &#39;increaseScore(view)&#39;」を選択します。Android Studioでは、<code>MainActivity</code>の中に increaseScore<code>()</code> メソッドのスタブが作成されます。</li>
 <li>以下のように、スコアを減らしたり増やしたりするコードをスタブメソッドに追加します。どちらのメソッドも<a href="https://developer.android.com/reference/android/view/View.html#getId()" target="_blank"><code>view.getID()</code> を</a>使用して、クリックされたチームの <code>ImageButton</code> の ID を取得しているので、あなたのコードで適切なチームを更新することができます。</li>
 </ol>
 <p>increaseScore() と decreaseScore() のソリューションコード</p>
-<p><code>/**</code></p>
-<p><code>*</code> デクリメントボタンとデクリメントボタンの <code>onClick</code> を処理するメソッド</p>
-<p><code>*</code> クリックされたボタンビュー</p>
-<p><code>*/</code></p>
-<p><code>public void decreaseScore(View view) {</code></p>
-<p><code>//</code> クリックされたボタンの<code>ID</code>を取得します。</p>
-<p><code>int viewID = view.getId().</code></p>
-<p><code>switch (viewID){</code></p>
-<p><code>//</code>チーム<code>1</code>にいた場合</p>
-<p><code>case R.id.decreaseTeam1.</code></p>
-<p><code>//</code>スコアを減らして<code>TextView</code>を更新する</p>
-<p><code>           mScore1--。</code></p>
-<p><code>           mScoreText1.setText(String.valueOf(mScore1))。</code></p>
-<p>。</p>
-<p><code>//</code>チーム<code>2</code>だったとしたら</p>
-<p><code>case R.id.decreaseTeam2.</code></p>
-<p><code>//</code>スコアを減らして<code>TextView</code>を更新する</p>
-<p><code>           mScore2--。</code></p>
-<p><code>           mScoreText2.setText(String.valueOf(mScore2))。</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
-<p><code>/**</code></p>
-<p><code>*</code> インクリメントボタンとインクリメントボタンの <code>onClick</code> を処理するメソッド</p>
-<p><code>*</code> クリックされたボタンビュー</p>
-<p><code>*/</code></p>
-<p><code>public void increaseScore(View view) {</code></p>
-<p><code>//</code>クリックされたボタンの<code>ID</code>を取得します。</p>
-<p><code>int viewID = view.getId().</code></p>
-<p><code>switch (viewID){</code></p>
-<p><code>//</code>チーム<code>1</code>にいた場合</p>
-<p><code>case R.id.increaseTeam1.</code></p>
-<p><code>//</code>スコアをインクリメントして<code>TextView</code>を更新する</p>
-<p><code>           mScore1++です。</code></p>
-<p><code>           mScoreText1.setText(String.valueOf(mScore1))。</code></p>
-<p>。</p>
-<p><code>//</code>チーム<code>2</code>だったとしたら</p>
-<p><code>case R.id.increaseTeam2.</code></p>
-<p><code>//</code>スコアをインクリメントして<code>TextView</code>を更新する</p>
-<p><code>           mScore2++です。</code></p>
-<p><code>           mScoreText2.setText(String.valueOf(mScore2))。</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>/**
+* Method that handles the onClick of both the decrement buttons
+* @param view The button view that was clicked
+*/
+public void decreaseScore(View view) {
+   // Get the ID of the button that was clicked
+   int viewID = view.getId();
+   switch (viewID){
+       //If it was on Team 1
+       case R.id.decreaseTeam1:
+           //Decrement the score and update the TextView
+           mScore1--;
+           mScoreText1.setText(String.valueOf(mScore1));
+           break;
+       //If it was Team 2
+       case R.id.decreaseTeam2:
+           //Decrement the score and update the TextView
+           mScore2--;
+           mScoreText2.setText(String.valueOf(mScore2));
+   }
+}
+
+/**
+* Method that handles the onClick of both the increment buttons
+* @param view The button view that was clicked
+*/
+public void increaseScore(View view) {
+   //Get the ID of the button that was clicked
+   int viewID = view.getId();
+   switch (viewID){
+       //If it was on Team 1
+       case R.id.increaseTeam1:
+           //Increment the score and update the TextView
+           mScore1++;
+           mScoreText1.setText(String.valueOf(mScore1));
+           break;
+       //If it was Team 2
+       case R.id.increaseTeam2:
+           //Increment the score and update the TextView
+           mScore2++;
+           mScoreText2.setText(String.valueOf(mScore2));
+   }
+}</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：描画可能なリソースを作成する" duration="0">
+      <google-codelab-step label="タスク2：描画可能なリソースを作成する" duration="0">
         <p>これで機能するスコアキーパーアプリが完成しました!しかし、レイアウトがくすんでいて、<code>ImageButton</code>要素の機能が伝わっていません。そこで、ボタンの背景を標準のグレーに変更することで、より分かりやすくすることができます。</p>
 <p>Androidでは、グラフィックは<a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html" target="_blank"><code>Drawable</code>と</a>呼ばれるリソースによって処理されることが多いです。次のステップでは、<code>ShapeDrawable</code>と呼ばれるある種の<code>Drawable</code>を作成し、それを背景として<code>ImageButton</code>要素に適用する方法を学びます。</p>
 <p><code>Drawables</code>の詳細については、<a href="http://developer.android.com/guide/topics/resources/drawable-resource.html" target="_blank">Drawable resourcesを</a>参照してください。</p>
@@ -437,47 +451,48 @@
 <li>ファイル名をbutton_backgroundとし、OKをクリックします。(ソースセットやディレクトリ名は変更せず、修飾子も付けないでください)。Android Studioは、<code>drawable</code>フォルダ内に<code>button_background.xml</code>というファイルを作成します。</li>
 <li>button_background.xmlを開き、テキストタブをクリックしてXMLコードを編集し、それ以外のコードをすべて削除します。</li>
 </ol>
-<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</code></pre>
 <ol type="1" start="1">
 <li>輪郭のある楕円形を作成する以下のコードを追加します。</li>
 </ol>
-<p><code><</code>形状</p>
-<p><code>xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>="oval"> 楕円形</code></p>
-<p><code><</code>ストローク</p>
-<p><code>="2dp"</code></p>
-<p><code>android:color="@color/colorPrimary"/></code></p>
-<p><code></shape> </shape</code></p>
+<pre><code>&lt;shape 
+    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    android:shape=&#34;oval&#34;&gt;
+        &lt;stroke 
+            android:width=&#34;2dp&#34;
+            android:color=&#34;@color/colorPrimary&#34;/&gt;
+&lt;/shape&gt;</code></pre>
 <p>2.2 ShapeDrawableを背景として適用する</p>
 <ol type="1" start="1">
 <li>activity_main.xmlを開きます。</li>
 <li>4つの<code>ImageButton</code>要素すべての背景として<code>Drawable</code>を追加します。</li>
 </ol>
-<p><code>android:background="@drawable/button_background"</code></p>
+<pre><code>android:background=&#34;@drawable/button_background&#34;</code></pre>
 <ol type="1" start="1">
 <li>レイアウトエディタのプレビュータブをクリックすると、背景がイメージボタンのサイズに合わせて自動的に拡大縮小されることがわかります。</li>
 <li><code>すべてのデバイスでそれぞれの ImageButton を適切にレンダリングするために、各 ImageButton の android:layout_height と android:layout_width 属性を、ほとんどのデバイスでちょうど良いサイズの 70dp に変更します。最初のImageButtonの最初の属性を以下のように変更します。</code></li>
 </ol>
-<p><code>android:layout_width="70dp"</code></p>
+<pre><code>android:layout_width=&#34;70dp&#34;</code></pre>
 <ol type="1" start="1">
 <li><code>70dp</code>」を<code>1</code>回クリックし、Windowsの場合はAlt-Enter、macOSの場合はOption-Enterを押し、ポップアップメニューから次元リソースの抽出を選択します。</li>
 <li>リソース名のbutton_sizeを入力します。</li>
 <li>OK] をクリックします。これにより、<code>dimens.xml</code> ファイル (<code>values</code> フォルダ内) にディメンジョン・リソースが作成され、コード内のディメンジョンがリソースへの参照に置き換えられます。</li>
 </ol>
-<p>ボタンのサイズ</p>
+<p><code>@dimen/button_size</code></p>
 <ol type="1" start="1">
 <li><code>新しいディメンション・リソースを使用して、各ImageButton要素のandroid:layout_heightおよびandroid:layout_width属性を変更します。</code></li>
 </ol>
-<p><code>android:layout_width="@dimen/button_size"</code></p>
-<p><code>android:layout_height="@dimen/button_size"</code></p>
+<pre><code>android:layout_width=&#34;@dimen/button_size&#34;
+android:layout_height=&#34;@dimen/button_size&#34;</code></pre>
 <ol type="1" start="1">
 <li>レイアウトエディタのプレビュータブをクリックして、レイアウトを確認します。<code>ImageButton</code>要素に<code>ShapeDrawable</code>を使用するようになりました。</li>
 </ol>
+<p class="image-container"><img alt="Scorekeeper layout with the ShapeDrawable" style="width: 215.00px" src="img/5e39de83fef5ae1a.png"> </p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク 3: ビュー要素のスタイルを設定する" duration="0">
+      <google-codelab-step label="タスク 3: ビュー要素のスタイルを設定する" duration="0">
         <p>レイアウトにビュー要素や属性を追加し続けると、コードが大きくなり、反復的になります。スタイルは、パディング、フォント色、フォントサイズ、背景色などの一般的なプロパティを指定することができます。高さ、幅、相対位置などのレイアウト指向の属性は、レイアウト・リソース・ファイルに残しておくべきです。</p>
 <p>次のステップでは、スタイルを作成して複数のビュー要素やレイアウトに適用し、共通の属性を一箇所から同時に更新できるようにする方法を学びます。</p>
 <p>メモ: スタイルは、<strong>ビューの</strong>外観を変更する属性のためのものです。高さ、重さ、相対的な位置などのレイアウトパラメータは、レイアウトファイルに残っていなければなりません。</p>
@@ -495,53 +510,54 @@
 <li>プラスの <code>ImageButton</code> 要素のためのスタイル。このスタイルは <code>ImageButton</code> スタイルを継承し、プラスアイコンを含みます。</li>
 </ol>
 <p>これらのスタイルは下の図のように表されています。</p>
+<p class="image-container"><img alt="Diagram of three styles" style="width: 231.24px" src="img/c6cb20558d556640.png"></p>
 <p>以下のようにしてください。</p>
 <ol type="1" start="1">
 <li>プロジェクト &gt; Android ペインで res &gt; values を展開し、styles.xml ファイルを開きます。</li>
 </ol>
 <p>ここにすべてのスタイルコードが配置されます。<code>AppTheme</code>」スタイルは常に自動的に追加され、<code>Theme.AppCompat.Light.DarkActionBar</code>から拡張されていることがわかります。</p>
-<p><code><style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></code></p>
+<pre><code>&lt;style name=&#34;AppTheme&#34; parent=&#34;Theme.AppCompat.Light.DarkActionBar&#34;&gt;</code></pre>
 <p><code>parent</code> 属性は、XML を使って親スタイルを指定する方法であることに注意してください。</p>
 <p><code>name</code>属性（この場合<code>AppTheme</code>）は、スタイルの名前を定義します。parent属性（この場合は<code>Theme.AppCompat.Light.DarkActionBar</code>）は、<code>AppTheme</code>が継承する親スタイル属性を宣言します。この例では、Androidのデフォルトテーマで、背景が明るく、アクションバーが暗いものとなっています。</p>
 <p>テーマとは、単一のビューではなく、アクティビティやアプリ全体に適用されるスタイルのことです。テーマを使用すると、アクティビティやアプリ全体を通して一貫したスタイルが作成されます。例えば、アプリのすべての部分にあるアプリ バーの一貫したルック アンド フィールが作成されます。</p>
 <ol type="1" start="1">
 <li><code><resources></code>タグの間に、以下の属性を持つ新しいスタイルを追加して、すべてのボタンに共通のスタイルを作成します。</li>
 </ol>
-<p><code><style name="ScoreButtons" parent="Widget.AppCompat.Button"></code></p>
-<p><code>    <item name="android:background">@drawable/button_background</item>を使用します。</code></p>
-<p><code></style> </style</code></p>
+<pre><code>&lt;style name=&#34;ScoreButtons&#34; parent=&#34;Widget.AppCompat.Button&#34;&gt;
+    &lt;item name=&#34;android:background&#34;&gt;@drawable/button_background&lt;/item&gt;
+&lt;/style&gt;</code></pre>
 <p>上記のスニペットは、親スタイルを<code>Widget.AppCompat.Button</code>に設定し、<code>Button</code>のデフォルト属性を保持しています。また、<code>Drawable</code>の背景を前のタスクで作成したものに変更する属性を追加しています。</p>
 <ol type="1" start="1">
 <li><code>ScoreButtons</code> スタイルを拡張して、プラスボタンのスタイルを作成します。</li>
 </ol>
-<p><code><style name="PlusButtons" parent="ScoreButtons"></code></p>
-<p><code>    <item name="android:src">@drawable/ic_plus</item>を使用しています。</code></p>
-<p><code>    <項目名</code></p>
-<p><code>"android:contentDescription">@string/plus_button_description</item>を使用しています。</code></p>
-<p><code></style> </style</code></p>
+<pre><code>&lt;style name=&#34;PlusButtons&#34; parent=&#34;ScoreButtons&#34;&gt;
+    &lt;item name=&#34;android:src&#34;&gt;@drawable/ic_plus&lt;/item&gt;
+    &lt;item name=
+        &#34;android:contentDescription&#34;&gt;@string/plus_button_description&lt;/item&gt;
+&lt;/style&gt;</code></pre>
 <p><code>contentDescription</code>属性は、視覚障害のあるユーザーのためのものです。これは、ある種のアクセシビリティ機器が、UI要素の意味について何らかの文脈を提供するために、声に出して読み上げるために使用するラベルとして機能します。</p>
 <ol type="1" start="1">
 <li>マイナスボタンのスタイルを作成します。</li>
 </ol>
-<p><code><style name="MinusButtons" parent="ScoreButtons"></code></p>
-<p><code>    <item name="android:src">@drawable/ic_minus</item>を使用しています。</code></p>
-<p><code>    <項目名</code></p>
-<p><code>"android:contentDescription">@string/minus_button_description</item>です。</code></p>
-<p><code></style> </style</code></p>
+<pre><code>&lt;style name=&#34;MinusButtons&#34; parent=&#34;ScoreButtons&#34;&gt;
+    &lt;item name=&#34;android:src&#34;&gt;@drawable/ic_minus&lt;/item&gt;
+    &lt;item name=
+        &#34;android:contentDescription&#34;&gt;@string/minus_button_description&lt;/item&gt;
+&lt;/style&gt;</code></pre>
 <ol type="1" start="1">
 <li>これらのスタイルを使用して、<code>ImageButton</code>要素の特定のスタイル属性を置き換えることができるようになりました。<code>MainActivity</code>用のactivity_main.xmlレイアウトファイルを開き、マイナスの<code>ImageButton</code>要素の両方の以下の属性を置き換えます。</li>
 </ol>
 <table>
 <tr><td colspan="1" rowspan="1"><p>これらの属性を削除します。</p>
 </td><td colspan="1" rowspan="1"><p>この属性を追加</p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 <tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:src</code></p>
 </td><td colspan="1" rowspan="1"><p><code>style="@style/MinusButtons</code></p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 <tr><td colspan="2" rowspan="1"><p><code>android:contentDescription</code></p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 <tr><td colspan="2" rowspan="1"><p>アンドロイド<code>:</code>バックグラウンド</p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 </table>
 <p>注意: <strong><code>style</code></strong>属性は<strong><code>android:</code></strong>名前空間を使用しません。</p>
 <ol type="1" start="1">
@@ -550,21 +566,21 @@
 <table>
 <tr><td colspan="1" rowspan="1"><p>これらの属性を削除します。</p>
 </td><td colspan="1" rowspan="1"><p>この属性を追加</p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 <tr><td colspan="1" rowspan="1"><p>アンドロイド<code>:src</code></p>
 </td><td colspan="1" rowspan="1"><p><code>style="@style/PlusButtons</code></p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 <tr><td colspan="2" rowspan="1"><p><code>android:contentDescription</code></p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 <tr><td colspan="2" rowspan="1"><p>アンドロイド<code>:</code>バックグラウンド</p>
-</td><td colspan="1" rowspan="1"></td></tr>
+</td></tr>
 </table>
 <p>3.2 テキストビュースタイルの作成</p>
 <p>チーム名とスコア表示の<code>TextView</code>要素は、共通の色とフォントを持っているので、スタイリングすることもできます。以下のようにしてください。</p>
 <ol type="1" start="1">
 <li>すべての<code>TextView</code>要素に以下の属性を追加します。</li>
 </ol>
-<p><code>android:textAppearance="@style/TextAppearance.AppCompat.Headline"</code></p>
+<pre><code>android:textAppearance=&#34;@style/TextAppearance.AppCompat.Headline&#34;</code></pre>
 <ol type="1" start="1">
 <li>最初のスコア<code>TextView</code>属性の任意の場所を右クリック(またはControl-click)して、リファクタ &gt; 抽出 &gt; スタイル...を選択します。</li>
 <li>スタイルを ScoreText と名付け、textAppearance ボックス（先ほど追加した属性）と、スタイルが抽出された後の Launch &#39;Use Styles Where Possible&#39; refactoring チェックボックスにチェックを入れます。これにより、同じ属性を持つビューのレイアウトファイルがスキャンされ、スタイルが適用されます。レイアウトに関連する属性は抽出しないで、他のチェックボックスをクリックしてオフにしてください。</li>
@@ -573,121 +589,137 @@
 <li>他のビューで同じスタイルが見つかった場合、Android Studioの下部にあるペインが開きます。同じ属性のビューに新しいスタイルを適用するには、[リファクタを実行] を選択します。</li>
 <li>アプリを実行してください。スタイリング コードがすべてリソース ファイルになり、レイアウト ファイルが短くなった以外は変更はありません。</li>
 </ol>
+<p class="image-container"><img alt="Scorekeeper app with styled buttons and text" style="width: 185.73px" src="img/bc6201b7554f4c39.png"></p>
 <p>レイアウトとスタイルのソリューションコード</p>
 <p>以下は、レイアウトとスタイルのコードスニペットです。</p>
-<p>のようなスタイルを提供しています。</p>
-<p><code><</code>リソース</p>
-<p><code><!--></code></p>
-<p><code>name="AppTheme"</code></p>
-<p><code>parent="Theme.AppCompat.Light.DarkActionBar"> > ←これをクリックしてください。</code></p>
-<p><code><!--></code></p>
-<p><code>       <item name="colorPrimary">@color/colorPrimary</item>。</code></p>
-<p><code>       <item name="colorPrimaryDark">@color/colorPrimaryDark</item>。</code></p>
-<p><code>       <item name="colorAccent">@color/colorAccent</item>。</code></p>
-<p><code></style> </style</code></p>
-<p><code><style name="ScoreButtons" parent="AppTheme"></code></p>
-<p><code>       <項目</code></p>
-<p><code>         name="android:background">@drawable/button_background</item>のようなものです。</code></p>
-<p><code></style> </style</code></p>
-<p><code><style name="PlusButtons" parent="ScoreButtons"></code></p>
-<p><code>       <item name="android:src">@drawable/ic_plus</item>を使用しています。</code></p>
-<p><code>       <項目名</code></p>
-<p><code>"android:contentDescription">@string/plus_button_description</item>を使用しています。</code></p>
-<p><code></style> </style</code></p>
-<p><code><style name="MinusButtons" parent="ScoreButtons"></code></p>
-<p><code>       <item name="android:src">@drawable/ic_minus</item>を使用しています。</code></p>
-<p><code>       <項目名</code></p>
-<p><code>"android:contentDescription">@string/minus_button_description</item>です。</code></p>
-<p><code></style> </style</code></p>
-<p><code>name="ScoreText">。</code></p>
-<p><code>       <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>のようなものです。</code></p>
-<p><code></style> </style</code></p>
-<p><code></</code>リソース<code>> </</code>リソース</p>
-<p><code>activity_main.xmlを使用しています。</code></p>
-<p><code><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="vertical"</code></p>
-<p><code>="16dp"</code></p>
-<p><code>tools:context="com.example.android.scorekeeper.MainActivity"></code></p>
-<p><code><</code>相対レイアウト</p>
-<p><code>="match_parent"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="1"></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/team_1"</code></p>
-<p><code>style="@style/ScoreText" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/decreaseTeam1"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>style="@style/MinusButtons"</code></p>
-<p><code>="decreaseScore"/></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/score_1"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/initial_count"</code></p>
-<p><code>style="@style/ScoreText" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/increaseTeam1"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>style="@style/PlusButtons"</code></p>
-<p><code>="updateScore"/></code></p>
-<p><code></RelativeLayout> </RelativeLayout</code></p>
-<p><code><</code>相対レイアウト</p>
-<p><code>="match_parent"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="1"></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/team_2"</code></p>
-<p><code>style="@style/ScoreText" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/decreaseTeam2"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>style="@style/MinusButtons"</code></p>
-<p><code>="decreaseScore"/></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/score_2"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>android:text="@string/initial_count"</code></p>
-<p><code>style="@style/ScoreText" /></code></p>
-<p><code><</code>イメージボタン</p>
-<p><code>android:id="@+id/increaseTeam2"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="@dimen/button_size"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>="true"</code></p>
-<p><code>style="@style/PlusButtons"</code></p>
-<p><code>="updateScore"/></code></p>
-<p><code></RelativeLayout> </RelativeLayout</code></p>
-<p><code></LinearLayout> </LinearLayout</code></p>
+<p><code>styles.xml</code>:</p>
+<pre><code>&lt;resources&gt;
+   &lt;!-- Base application theme. --&gt;
+   &lt;style name=&#34;AppTheme&#34; 
+                      parent=&#34;Theme.AppCompat.Light.DarkActionBar&#34;&gt;
+       &lt;!-- Customize your theme here. --&gt;
+       &lt;item name=&#34;colorPrimary&#34;&gt;@color/colorPrimary&lt;/item&gt;
+       &lt;item name=&#34;colorPrimaryDark&#34;&gt;@color/colorPrimaryDark&lt;/item&gt;
+       &lt;item name=&#34;colorAccent&#34;&gt;@color/colorAccent&lt;/item&gt;
+   &lt;/style&gt;
+
+   &lt;style name=&#34;ScoreButtons&#34; parent=&#34;AppTheme&#34;&gt;
+       &lt;item 
+         name=&#34;android:background&#34;&gt;@drawable/button_background&lt;/item&gt;
+   &lt;/style&gt;
+
+   &lt;style name=&#34;PlusButtons&#34; parent=&#34;ScoreButtons&#34;&gt;
+       &lt;item name=&#34;android:src&#34;&gt;@drawable/ic_plus&lt;/item&gt;
+       &lt;item name=
+         &#34;android:contentDescription&#34;&gt;@string/plus_button_description&lt;/item&gt;
+   &lt;/style&gt;
+
+   &lt;style name=&#34;MinusButtons&#34; parent=&#34;ScoreButtons&#34;&gt;
+       &lt;item name=&#34;android:src&#34;&gt;@drawable/ic_minus&lt;/item&gt;
+       &lt;item name=
+        &#34;android:contentDescription&#34;&gt;@string/minus_button_description&lt;/item&gt;
+   &lt;/style&gt;
+
+   &lt;style name=&#34;ScoreText&#34;&gt;
+       &lt;item name= &#34;android:textAppearance&#34;&gt;@style/TextAppearance.AppCompat.Headline&lt;/item&gt;
+   &lt;/style&gt;
+&lt;/resources&gt;</code></pre>
+<p><code>activity_main.xml</code>:</p>
+<pre><code>&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    android:orientation=&#34;vertical&#34;
+    android:padding=&#34;16dp&#34;
+    tools:context=&#34;com.example.android.scorekeeper.MainActivity&#34;&gt;
+
+    &lt;RelativeLayout
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;0dp&#34;
+        android:layout_weight=&#34;1&#34;&gt;
+
+        &lt;TextView
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentTop=&#34;true&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:text=&#34;@string/team_1&#34;
+            style=&#34;@style/ScoreText&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/decreaseTeam1&#34;
+            android:layout_width=&#34;@dimen/button_size&#34;
+            android:layout_height=&#34;@dimen/button_size&#34;
+            android:layout_alignParentLeft=&#34;true&#34;
+            android:layout_alignParentStart=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            style=&#34;@style/MinusButtons&#34;
+            android:onClick=&#34;decreaseScore&#34;/&gt;
+
+        &lt;TextView
+            android:id=&#34;@+id/score_1&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:text=&#34;@string/initial_count&#34;
+            style=&#34;@style/ScoreText&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/increaseTeam1&#34;
+            android:layout_width=&#34;@dimen/button_size&#34;
+            android:layout_height=&#34;@dimen/button_size&#34;
+            android:layout_alignParentEnd=&#34;true&#34;
+            android:layout_alignParentRight=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            style=&#34;@style/PlusButtons&#34;
+            android:onClick=&#34;increaseScore&#34;/&gt;
+
+    &lt;/RelativeLayout&gt;
+
+    &lt;RelativeLayout
+        android:layout_width=&#34;match_parent&#34;
+        android:layout_height=&#34;0dp&#34;
+        android:layout_weight=&#34;1&#34;&gt;
+
+        &lt;TextView
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_alignParentTop=&#34;true&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:text=&#34;@string/team_2&#34;
+            style=&#34;@style/ScoreText&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/decreaseTeam2&#34;
+            android:layout_width=&#34;@dimen/button_size&#34;
+            android:layout_height=&#34;@dimen/button_size&#34;
+            android:layout_alignParentLeft=&#34;true&#34;
+            android:layout_alignParentStart=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            style=&#34;@style/MinusButtons&#34;
+            android:onClick=&#34;decreaseScore&#34;/&gt;
+
+        &lt;TextView
+            android:id=&#34;@+id/score_2&#34;
+            android:layout_width=&#34;wrap_content&#34;
+            android:layout_height=&#34;wrap_content&#34;
+            android:layout_centerHorizontal=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            android:text=&#34;@string/initial_count&#34;
+            style=&#34;@style/ScoreText&#34; /&gt;
+
+        &lt;ImageButton
+            android:id=&#34;@+id/increaseTeam2&#34;
+            android:layout_width=&#34;@dimen/button_size&#34;
+            android:layout_height=&#34;@dimen/button_size&#34;
+            android:layout_alignParentEnd=&#34;true&#34;
+            android:layout_alignParentRight=&#34;true&#34;
+            android:layout_centerVertical=&#34;true&#34;
+            style=&#34;@style/PlusButtons&#34;
+            android:onClick=&#34;increaseScore&#34;/&gt;
+    &lt;/RelativeLayout&gt;
+&lt;/LinearLayout&gt;</code></pre>
 <p>3.3 スタイルの更新</p>
 <p>同じスタイルの複数の要素に変更を加えたい場合、スタイルを使用することの威力が明らかになります。テキストを大きくしたり、大胆にしたり、明るくしたり、アイコンをボタンの背景色に変更したりすることができます。</p>
 <ol type="1" start="1">
@@ -708,31 +740,32 @@
 <ol type="1" start="1">
 <li>以下のように<code>textAppearance</code>属性を設定したTeamTextという新しいスタイルを作成します。</li>
 </ol>
-<p><code><style name="TeamText"></code></p>
-<p><code>   <項目名</code></p>
-<p><code>"android:textAppearance">@style/TextAppearance.AppCompat.Display1</code></p>
-<p><code></項目</code></p>
-<p><code></style> </style</code></p>
+<pre><code>&lt;style name=&#34;TeamText&#34;&gt;
+   &lt;item name=
+    &#34;android:textAppearance&#34;&gt;@style/TextAppearance.AppCompat.Display1
+   &lt;/item&gt;
+&lt;/style&gt;</code></pre>
 <ol type="1" start="1">
 <li>activity_main.xmlで、<code>TextView</code>チーム名要素の<code>style</code>属性を新しく作成した<code>TeamText</code>スタイルに変更します。</li>
 </ol>
-<p><code>style="@style/TeamText"</code></p>
+<pre><code>style=&#34;@style/TeamText&#34; </code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。<code>style.xml</code> ファイルへのこれらの調整だけで、すべてのビューが変更を反映するように更新されました。</li>
 </ol>
+<p class="image-container"><img alt="Scorekeeper app with team names in a display text style" style="width: 170.15px" src="img/ecaf915848eca81f.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6.タスク4：テーマと最後の仕上げ" duration="0">
+      <google-codelab-step label="タスク4：テーマと最後の仕上げ" duration="0">
         <p>似たような特性を持つ<code>View</code>要素を<code>styles.xml</code>ファイルで一緒にスタイリングできることを見てきました。しかし、アクティビティ全体、またはアプリ全体のスタイルを定義したい場合はどうでしょうか？テーマを使用することで、これを達成することができます。アクティビティごとにテーマを設定するには、<code>AndroidManifest.xml</code>ファイルを修正する必要があります。</p>
 <p>このタスクでは、アプリに「ナイトモード」のテーマを追加し、ユーザーが夜間に目にやさしい低コントラストバージョンのアプリを使用できるようにしたり、UIにいくつかの磨きをかけたりします。</p>
 <p>4.1 テーマを探る</p>
 <ol type="1" start="1">
 <li>AndroidManifest.xml<code>ファイルを開き、<application>タグを見つけ、android:theme属性を変更します。</code></li>
 </ol>
-<p><code>android:theme="@style/Theme.AppCompat.Light.NoActionBar"</code></p>
-<p>アクティビティからアクションバーを削除する事前定義済みのテーマです。</p>
+<pre><code>android:theme=&#34;@style/Theme.AppCompat.Light.NoActionBar&#34;</code></pre>
+<pre><code>     This is a predefined theme that removes the action bar from your activity.</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。ツールバーが消えてしまう</li>
 <li><code>アプリのテーマをAppThemeに変更します。これは、styles.xmlで見ることができるように、Theme.Appcompat.Light.DarkActionBarテーマの子です。</code></li>
@@ -745,51 +778,52 @@
 <ol type="1" start="1">
 <li>strings.xml を開き、このオプションメニュー項目のために 2 つの文字列リソースを作成します。</li>
 </ol>
-<p><code><string name="night_mode"> ナイトモード</string</code></p>
-<p><code><string name="day_mode"> デイモード</string</code></p>
+<pre><code>&lt;string name=&#34;night_mode&#34;&gt;Night Mode&lt;/string&gt;
+&lt;string name=&#34;day_mode&#34;&gt;Day Mode&lt;/string&gt;</code></pre>
 <ol type="1" start="1">
 <li>Project &gt; Androidペインのresディレクトリを右クリック（またはControlキーを押しながらクリック）し、New &gt; Androidリソースファイルを選択します。</li>
 <li>ファイル名をmain_menuとし、Resource TypeをMenuに変更し、OKをクリックします。main_<code>menu.xml</code>ファイルのレイアウトエディタが表示されます。</li>
 <li>レイアウトエディタのテキストタブをクリックすると、XMLコードが表示されます。</li>
 <li>以下の属性を持つメニュー項目を追加します。</li>
 </ol>
-<p><code><</code>項目</p>
-<p><code>android:id="@+id/night_mode"</code></p>
-<p><code>android:title="@string/night_mode"/></code></p>
+<pre><code>&lt;item 
+    android:id=&#34;@+id/night_mode&#34;
+    android:title=&#34;@string/night_mode&#34;/&gt;</code></pre>
 <ol type="1" start="1">
 <li>MainActivityを開き、Ctrl-Oを押してOverride Methodメニューを開き、android.app.ActivityカテゴリにあるonCreateOptionsMenu(menu:Menu):booleanメソッドを選択します。</li>
 <li>OK<code>をクリックします。</code>Android Studio<code>は、return super.onCreateOptionsMenu(menu)を唯一のステートメントとするonCreateOptionsMenu()メソッドのスタブを作成します。</code></li>
 <li><code>return.super ステートメントの直前の onCreateOptionsMenu() で、メニューを膨らませるコードを追加します。</code></li>
 </ol>
-<p><code>getMenuInflater().inflate(R.menu.main_menu, menu).</code></p>
+<pre><code>getMenuInflater().inflate(R.menu.main_menu, menu);</code></pre>
 <p>4.3 メニューからテーマを変更する</p>
 <p><code>DayNight</code>テーマは、<code>AppCompatDelegate</code>クラスを使用して、アクティビティのナイトモードオプションを設定します。このテーマの詳細については、この<a href="https://medium.com/@chrisbanes/appcompat-v23-2-daynight-d10f90c83e94#.ub2ptykn9" target="_blank">ブログ記事を</a>参照してください。</p>
 <ol type="1" start="1">
 <li>styles.xmlファイルで、<code>AppTheme</code>の親を「Theme.AppCompat.DayNight.DarkActionBar」に変更します。</li>
 <li><code>MainActivity</code>の<code>onOptionsItemSelected()</code>メソッドをオーバーライドし、どのメニュー項目がクリックされたかを確認するコードを追加します。</li>
 </ol>
-<p>オーバーライド</p>
-<p><code>public boolean onOptionsItemSelected(MenuItem item) { { { {.</code></p>
-<p><code>//</code>正しい項目がクリックされたかどうかを確認する</p>
-<p><code>// TODO:</code> アプリのナイトモードの状態を取得します。</p>
-<p>返します。</p>
-<p><code>}</code></p>
+<pre><code>@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+   //Check if the correct item was clicked
+   if(item.getItemId()==R.id.night_mode){}
+       // TODO: Get the night mode state of the app.
+   return true;
+}</code></pre>
 <ol type="1" start="1">
 <li>上記のスニペットの<code>TODO:</code>コメントを、ナイトモードが有効になっているかどうかをチェックするコードで置き換えてください。有効になっている場合、このコードはナイトモードを無効な状態に変更し、そうでない場合はナイトモードを有効にします。</li>
 </ol>
-<p><code>if(item.getItemId()==R.id.night_mode){</code></p>
-<p><code>//</code> アプリのナイトモードの状態を取得します。</p>
-<p><code>int nightMode = AppCompatDelegate.getDefaultNightMode()。</code></p>
-<p><code>//</code>再起動したアクティビティのテーマモードを設定します。</p>
-<p><code>if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) { (nightMode == AppCompatDelegate.MODE_NIGHT_YES)</code></p>
-<p><code>AppCompatDelegate.setDefaultNightMode</code></p>
-<p><code>                          (AppCompatDelegate.MODE_NIGHT_NO)を使用しています。</code></p>
-<p>他にもあります</p>
-<p><code>AppCompatDelegate.setDefaultNightMode</code></p>
-<p><code>                         (AppCompatDelegate.MODE_NIGHT_YES)。</code></p>
-<p><code>}</code></p>
-<p><code>//</code> テーマの変更が有効になるように活動を再現します。</p>
-<p>を使用しています。</p>
+<pre><code>if(item.getItemId()==R.id.night_mode){
+    // Get the night mode state of the app.
+    int nightMode = AppCompatDelegate.getDefaultNightMode();
+    //Set the theme mode for the restarted activity
+    if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+        AppCompatDelegate.setDefaultNightMode
+                          (AppCompatDelegate.MODE_NIGHT_NO);
+} else {
+   AppCompatDelegate.setDefaultNightMode
+                         (AppCompatDelegate.MODE_NIGHT_YES);
+}
+// Recreate the activity for the theme change to take effect.
+recreate();</code></pre>
 <p>メニュー項目のクリックに応答して、コードは <code>AppCompatDelegate.getDefaultNightMode()</code> を呼び出すことで、現在のナイトモード設定を検証します。</p>
 <p>テーマはアクティビティが作成されている間にしか変更できないので、コードはテーマの変更を有効にするために<code>recreate()</code>を呼び出します。</p>
 <ol type="1" start="1">
@@ -797,59 +831,62 @@
 <li>メニュー項目のラベルが常にナイトモードと表示されていることに気づくかもしれませんが、これはアプリがすでにダークテーマになっている場合、ユーザーを混乱させる可能性があります。</li>
 <li><code>onCreateOptionsMenu() メソッドの return super.onCreateOptionsMenu(menu) 文を以下のコードに置き換えます。</code></li>
 </ol>
-<p><code>//</code> アプリの状態に応じてメニューのラベルを変更します。</p>
-<p><code>int nightMode = AppCompatDelegate.getDefaultNightMode()。</code></p>
-<p><code>if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){</code></p>
-<p><code>    menu.findItem(R.id.night_mode).setTitle(R.string.day_mode).</code></p>
-<p><code>} else{</code></p>
-<p><code>    menu.findItem(R.id.night_mode).setTitle(R.string.night_mode).</code></p>
-<p><code>}</code></p>
-<p>は真を返します。</p>
+<pre><code>// Change the label of the menu based on the state of the app.
+int nightMode = AppCompatDelegate.getDefaultNightMode();
+if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
+    menu.findItem(R.id.night_mode).setTitle(R.string.day_mode);
+} else{
+    menu.findItem(R.id.night_mode).setTitle(R.string.night_mode);
+}
+return true;</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動します。ユーザーがタップした後のメニュー項目ラベルのナイトモードは、現在はデイモードに変更されています（テーマと一緒に）。</li>
 </ol>
+<p class="image-container"><img alt="Scorekeeper app set to Night Mode with the Day Mode option" style="width: 228.55px" src="img/aecc7b88c34acd94.png"></p>
 <p>4.4 SaveInstanceState</p>
 <p>前回のレッスンでは、画面を回転させたときなど、予期せぬタイミングでアクティビティが破棄されたり、再作成されたりすることを想定しておく必要があることを学びました。このアプリでは、デバイスを回転させると、スコアを含む<code>TextView</code>要素が初期値の0にリセットされます。これを修正するには、以下の手順を実行します。</p>
 <ol type="1" start="1">
 <li><code>MainActivityを開き、onSaveInstanceState()のキーとして使用されるメンバー変数の下にタグを追加します。</code></li>
 </ol>
-<p><code>static final String STATE_SCORE_1 = "Team 1 Score".</code></p>
-<p><code>static final String STATE_SCORE_2 = "Team 2 Score".</code></p>
+<pre><code>static final String STATE_SCORE_1 = &#34;Team 1 Score&#34;;
+static final String STATE_SCORE_2 = &#34;Team 2 Score&#34;;</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivityの最後に、onSaveInstanceState()メソッドをオーバーライドして、</code>2<code>つのスコアTextView要素の値を保持します。</code></li>
 </ol>
-<p>オーバーライド</p>
-<p><code>protected void onSaveInstanceState(Bundle outState) { {.</code></p>
-<p><code>//</code> スコアを保存します。</p>
-<p><code>   outState.putInt(STATE_SCORE_1, mScore1)。</code></p>
-<p><code>   outState.putInt(STATE_SCORE_2, mScore2)。</code></p>
-<p><code>super.onSaveInstanceState(outState)を保存します。</code></p>
-<p><code>}</code></p>
+<pre><code>@Override
+protected void onSaveInstanceState(Bundle outState) {
+   // Save the scores.
+   outState.putInt(STATE_SCORE_1, mScore1);
+   outState.putInt(STATE_SCORE_2, mScore2);
+   super.onSaveInstanceState(outState);
+}</code></pre>
 <ol type="1" start="1">
 <li><code>onCreate()</code>メソッドの最後に、<code>savedInstanceState</code>があるかどうかをチェックするコードを追加します。もしあれば、スコアを<code>TextView</code>要素に復元します。</li>
 </ol>
-<p><code>if (savedInstanceState != null) { (savedInstanceState != null)</code></p>
-<p><code>    mScore1 = savedInstanceState.getInt(STATE_SCORE_1).</code></p>
-<p><code>    mScore2 = savedInstanceState.getInt(STATE_SCORE_2).</code></p>
-<p><code>//</code>スコアのテキスト表示を設定する</p>
-<p><code>    mScoreText1.setText(String.valueOf(mScore1))。</code></p>
-<p><code>    mScoreText2.setText(String.valueOf(mScore2))。</code></p>
-<p><code>}</code></p>
+<pre><code>if (savedInstanceState != null) {
+    mScore1 = savedInstanceState.getInt(STATE_SCORE_1);
+    mScore2 = savedInstanceState.getInt(STATE_SCORE_2);
+
+    //Set the score text views
+    mScoreText1.setText(String.valueOf(mScore1));
+    mScoreText2.setText(String.valueOf(mScore2));
+}</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動し、プラスイメージボタンをタップするとスコアが上がります。デバイスやエミュレータを横向きに切り替えて、スコアが保持されていることを確認します。</li>
 </ol>
+<p class="image-container"><img alt="Scorekeeper app switched to horizontal orientation still retains the score value." style="width: 440.47px" src="img/cdc42619602e21c3.png"></p>
 <p>これで完了です。ユーザーがデバイスの向きを水平または垂直に変更しても動作するスタイルのスコアキーパーアプリが完成しました。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studio プロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/Scorekeeper" target="_blank">スコアキーパー</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>チャレンジしてみてください。今のところ、ボタンは押されても見た目が変わらないので、直感的には動作しません。Android には<a href="https://developer.android.com/reference/android/graphics/drawable/StateListDrawable.html" target="_blank"><code>StateListDrawable</code></a> と呼ばれる別のタイプの <code>Drawable</code> があり、オブジェクトの状態に応じて異なるグラフィックを使用することができます。</p>
 <p>今回の課題問題では、<code>ImageButton</code>の状態が「押された」ときに、<code>ImageButton</code>の背景をボーダーと同じ色に変更する<code>Drawable</code>リソースを作成してください。また、<code>ImageButton</code>要素内のテキストの色を、ボタンが「押された」ときに白になるようなセレクタに設定しておくとよいでしょう。</p>
@@ -857,7 +894,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li>描画可能な要素は、アプリの UI の外観を向上させます。</li>
 <li><a href="https://developer.android.com/reference/android/graphics/drawable/ShapeDrawable.html" target="_blank"><code>ShapeDrawable</code></a>は、XMLファイルで定義されたプリミティブな幾何学的形状です。<code>ShapeDrawable</code> を定義する属性には、色、形状、パディングなどがあります。</li>
@@ -874,13 +911,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Related concepts" duration="0">
+      <google-codelab-step label="Related concepts" duration="0">
         <p>関連するコンセプトのドキュメントは<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-1-c-drawables-styles-and-themes/5-1-c-drawables-styles-and-themes.html" target="_blank">5.1</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-1-c-drawables-styles-and-themes/5-1-c-drawables-styles-and-themes.html" target="_blank">Drawables, styles, and themes にあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -920,7 +957,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>This section lists possible homework assignments for students who are working through this codelab as part of a course led by an instructor. It&#39;s up to the instructor to do the following:</p>
 <ul>
 <li>Assign homework if required.</li>
@@ -937,7 +974,7 @@
 <li>The plus button increments the level, causing the battery indicator to appear more full.</li>
 <li>The minus button decrements the level, causing the indicator to empty one level.</li>
 </ul>
-<p class="image-container"><img alt="Example battery indicator app" style="width: 380.47px" src="img/dd50333adcf47bf7.png"></p>
+<p class="image-container"><img alt="Example battery indicator app" style="width: 245.20px" src="img/dd50333adcf47bf7.png"></p>
 <h2 is-upgraded>Answer these questions</h2>
 <h3 is-upgraded>Question 1</h3>
 <p>Which type of <code>Drawable</code> do you use to create a <code>Button</code> with a background that stretches properly to accommodate the text or image inside the <code>Button</code> so that it looks correct for different screen sizes and orientations? Choose one:</p>
@@ -976,7 +1013,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="13。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
 <p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 

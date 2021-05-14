@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 03.1: The debugger</title>
+  <title>Android Developer Fundamentals 03.1: The debugger</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,13 +23,12 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="3-1"
-                  title="Android 開発者基礎講座 03.1: The debugger"
+                  title="Android Developer Fundamentals 03.1: The debugger"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
-        <p>1。</p>
-<p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
+      <google-codelab-step label="Welcome" duration="0">
+        <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_1_get_started" target="_blank">ユニット 1:</a>Android Developer Fundamentals (Version 2) コースの一部です。このコースでは、コードラボを順番に学習することで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コースのコードラボの完全なリストについては、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</li>
 <li>すべてのコンセプトチャプター、アプリ、スライドへのリンクを含むコースの詳細については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</li>
@@ -66,14 +65,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。アプリの概要" duration="0">
+      <google-codelab-step label="アプリの概要" duration="0">
         <p>SimpleCalcアプリは、2つの<code>EditText</code>要素と4つの<code>Button</code>要素を持っています。2つの数字を入力して<code>Buttonを</code>クリックすると、アプリはその<code>Buttonの</code>計算を行い、結果を表示します。</p>
-<p class="image-container"><img alt="26a2273d0165e2cb.png" style="width: 641.76px" src="img/26a2273d0165e2cb.png"></p>
+<p class="image-container"><img alt="26a2273d0165e2cb.png" style="width: 290.15px" src="img/26a2273d0165e2cb.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1.SimpleCalcプロジェクトとアプリを探索する" duration="0">
+      <google-codelab-step label="タスク1.SimpleCalcプロジェクトとアプリを探索する" duration="0">
         <p>この実践では、SimpleCalcアプリを自分でビルドすることはありません。完全なプロジェクトは<a href="https://github.com/google-developer-training/android-fundamentals-starter-apps-v2/tree/master/SimpleCalc" target="_blank">SimpleCalc</a>で入手できます。このタスクでは、Android StudioでSimpleCalcプロジェクトを開き、アプリの主要な機能の一部を探索します。</p>
 <p>1.1 SimpleCalcプロジェクトをダウンロードして開く</p>
 <ol type="1" start="1">
@@ -96,7 +95,7 @@
 <li>結果のためのTextViewは、デフォルトではテキストを持っていません。</li>
 <li>つのEditText要素は、android:inputType属性と値&#34;numberDecimal&#34;を持っています。この属性は、EditTextが数字のみを入力として受け入れることを示しています。画面上に表示されるキーボードには数字のみが入力されます。EditText要素の入力タイプについては、後の実践で詳しく学びます。</li>
 </ul>
-<p class="image-container"><img alt="ba9cb309525495aa.png" style="width: 641.76px" src="img/ba9cb309525495aa.png"></p>
+<p class="image-container"><img alt="ba9cb309525495aa.png" style="width: 246.40px" src="img/ba9cb309525495aa.png"></p>
 <p>1.3 アプリのコードを探る</p>
 <ol type="1" start="1">
 <li>プロジェクト] &gt; [Android] ペインで、[アプリ] &gt; [java] フォルダを展開します。このプロジェクトには、MainActivityクラスに加えて、ユーティリティのCalculatorクラスも含まれています。</li>
@@ -126,7 +125,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2: デバッガでSimpleCalcを実行する" duration="0">
+      <google-codelab-step label="タスク2: デバッガでSimpleCalcを実行する" duration="0">
         <p>このタスクでは、Android Studio のデバッガについて紹介し、ブレークポイントを設定してデバッグモードでアプリを実行する方法を学びます。</p>
 <p>2.1 デバッグモードでアプリを起動して実行する</p>
 <ol type="1" start="1">
@@ -155,7 +154,7 @@
 <ol type="1" start="1">
 <li>Framesタブ**:**クリックすると、指定されたスレッドの現在の実行スタックのフレームが表示される **Frames** ペインが表示されます。実行スタックには、アプリと Android ランタイムで呼び出された各クラスとメソッドが表示され、最新のメソッドが一番上に表示されます。</li>
 </ol>
-<p>スレッド] タブをクリックして、[フレーム] ペインを [スレッド] ペインに置き換えます。アプリは現在メインスレッドで実行されており、アプリはMainActivityのcompute()メソッドを実行しています。</p>
+<p>[スレッド] タブをクリックして、[フレーム] ペインを [スレッド] ペインに置き換えます。アプリは現在メインスレッドで実行されており、アプリはMainActivityのcompute()メソッドを実行しています。</p>
 <ol type="1" start="2">
 <li>ウォッチボタン**:**クリックすると、**変数**ペイン内の**ウォッチ**ペインが表示され、設定した変数ウォッチの値が表示されます。ウォッチを使用すると、プログラム内の特定の変数を追跡し、プログラムの実行中にその変数がどのように変化するかを確認することができます。</li>
 <li>変数ペイン**:**現在のスコープ内の変数とその値が表示されます。アプリの実行のこの段階で、利用可能な変数は、this（アクティビティ）、operator（メソッドが呼び出されたCalculator.Operatorからの演算子名）、EditText要素とTextView のグローバル変数です。このペインの各変数には、変数のオブジェクト プロパティのリストを展開するための展開アイコンがあります。変数を展開して、そのプロパティを調べてみてください。</li>
@@ -170,14 +169,14 @@
 <li>実行] &gt; [デバッガを Android プロセスに添付] を選択するか、<img alt="Attach icon" style="width: 25.00px" src="img/5ce90cfcc2b5f50c.png">ツールバーの[添付 ] アイコ<img alt="Attach icon" style="width: 25.00px" src="img/5ce90cfcc2b5f50c.png">ンをクリックします。</li>
 <li>表示されるダイアログからアプリのプロセスを選択します（下図）。OK]をクリックします。</li>
 </ol>
-<p class="image-container"><img alt="Choose process dialog" style="width: 274.00px" src="img/52541a228592919f.png"></p>
+<p class="image-container"><img alt="Choose process dialog" style="width: 228.89px" src="img/52541a228592919f.png"></p>
 <p>デバッグペインが開いた状態で表示され、デバッグ モードで起動したかのようにアプリをデバッグすることができるようになります。</p>
 <p>注意: [ デバッグ] ペインが自動的に表示されない場合は、画面下部の [デバッグ] タブをクリックします。まだ選択されていない場合は、[デバッグ]ペインの[デバッガ]タブをクリックして、[デバッガ]ペインを表示します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5。 タスク 3: デバッガの機能を調べる" duration="0">
+      <google-codelab-step label="タスク 3: デバッガの機能を調べる" duration="0">
         <p>このタスクでは、アプリを 1 行ずつ実行したり、ブレークポイントを使って作業したり、変数を調べたりするなど、Android Studio デバッガーのさまざまな機能を探っていきます。</p>
 <p>3.1 Step through your app&#39;s execution</p>
 <p>ブレークポイントの後、デバッガを使用して、アプリ内のコードを 1 行ずつ実行し、アプリの実行中に変数の状態を調べることができます。</p>
@@ -260,7 +259,7 @@
 <li>式の評価 ] アイコ<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png">ンをクリックするか、[<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png"> 実行] &gt; [式の評価] を<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png">選択します。<img alt="or select Run &gt; Evaluate Expression. You can also right-click (or Control-click) any variable and choose Evaluate Expression. [IMAGEINFO]: ic_eval_expression.png, Evaluate Expression icon" style="width: 25.00px" src="img/420a3aa2ed0f47ae.png">また、任意の変数を右クリック(またはControl-click) して、[式の評価] を選択することもできます。</li>
 </ol>
 <p>コード・フラグメントの評価ウィンドウが表示されます。このウィンドウを使用して、アプリ内の変数とオブジェクトの状態を調べます。このウィンドウには、任意のコードを入力できます。</p>
-<p class="image-container"><img alt="Evaluate Code Fragment window" style="width: 570.00px" src="img/fef759a78ae30a3e.png"></p>
+<p class="image-container"><img alt="Evaluate Code Fragment window" style="width: 527.65px" src="img/fef759a78ae30a3e.png"></p>
 <ol type="1" start="12">
 <li>上図のように、[コードフラグメントの評価] ウィンドウの上部フィールドにステートメントmOperandOneEditText.getHint();を入力し、[評価] をクリックします。</li>
 <li>結果フィールドには、その式の結果が表示されます。この<code>EditText</code>のヒントは、その<code>EditText の</code> XML で元々定義されていた通り、<code>"Type Operand 1" という</code>文字列です。</li>
@@ -274,14 +273,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6. Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注意:コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題。タスク 1 の最後に、EditText要素の 1 つに値がない状態で SimpleCalc アプリを実行しようとしたところ、エラーが発生しました。デバッガを使用してコードを実行し、このエラーが発生した理由を正確に特定してください。このエラーの原因となるバグを修正してください。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li>Logcatタブをクリックして Android Studio でログ情報を表示します。</li>
 <li>デバッグアイコンをクリックするか、[実行] &gt; [デバッグアプリ]を選択して、デバッグモードでアプリを実行します。</li>
@@ -293,15 +292,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは「3<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-1-get-started/lesson-3-testing,-debugging,-and-using-support-libraries/3-1-c-the-android-studio-debugger/3-1-c-the-android-studio-debugger.html" target="_blank">.1: Android Studio デバッガ</a>」にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Learn more" duration="0">
-        <p>9。</p>
-<p>Android Studio のドキュメントです。</p>
+      <google-codelab-step label="Learn more" duration="0">
+        <p>Android Studio のドキュメントです。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio ユーザーガイド</a></li>
 <li><a href="https://developer.android.com/studio/debug/index.html" target="_blank">アプリのデバッグ</a></li>
@@ -321,9 +319,8 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Homework" duration="0">
-        <p>10。</p>
-<p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
+      <google-codelab-step label="Homework" duration="0">
+        <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことを行うのはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を割り当てる。</li>
 <li>宿題の提出方法を学生に伝える。</li>
@@ -373,9 +370,8 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Next codelab" duration="0">
-        <p>11。次のコーデラボ</p>
-<p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</p>
+      <google-codelab-step label="Next codelab" duration="0">
+        <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを探すには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>を参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、Android Developer<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Fundamentals (Version 2)</a>を参照してください。</p>
 
 

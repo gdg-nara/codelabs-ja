@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 05.3:Adaptive layouts</title>
+  <title>Android Developer Fundamentals 05.3:Adaptive layouts</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="5-3"
-                  title="Android 開発者基礎講座 05.3:Adaptive layouts"
+                  title="Android Developer Fundamentals 05.3:Adaptive layouts"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank"> Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -64,16 +64,19 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
+      <google-codelab-step label="App overview" duration="0">
         <p>アップデートされたMaterialMeアプリには、携帯電話のランドスケープモードのレイアウトが改善されます。また、タブレットのポートレートモードとランドスケープモードのレイアウトも改善され、米国外のユーザー向けにローカライズされたコンテンツが提供されます。</p>
 <p>下のスクリーンショットは、横向きでアップデートされたMaterialMeアプリを実行している携帯電話を示しています。</p>
+<p class="image-container"><img alt="Phone running the MaterialMe app with landscape resource qualifiers" style="width: 561.47px" src="img/5c00592ae7e375be.png"></p>
 <p>下のスクリーンショットは、更新されたMaterialMeアプリを実行しているタブレットで、縦向きで実行しているときに2つの列が表示されるように修飾子を付けています。</p>
+<p class="image-container"><img alt="Tablet running the MaterialMe app with qualifiers to show two columns in portrait mode" style="width: 285.89px" src="img/c6afa0d002d0098a.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1：横向きをサポートする" duration="0">
+      <google-codelab-step label="タスク1：横向きをサポートする" duration="0">
         <p>ユーザーがデバイスの向きを変更すると、Androidフレームワークは現在のアクティビティを破棄して再作成することを思い出すかもしれません。新しい向きは、元の向きとは異なるレイアウト要件を持つことがよくあります。例えば、MaterialMeアプリはポートレートモードでは良く見えますが、ランドスケープモードでは画面を最適に活用できません。ランドスケープモードでは幅が大きくなり、各リスト項目の画像がテキストを圧倒してしまい、ユーザーエクスペリエンスが悪くなります。</p>
+<p class="image-container"><img alt="Landscape Mode before resource qualifiers" style="width: 523.47px" src="img/920bd662505f8fa3.png"></p>
 <p>このタスクでは、横向きで使用するときにアプリの外観を変更する代替リソースファイルを作成します。</p>
 <p>1.1 GridLayoutManagerへの変更</p>
 <p>リストアイテムを含むレイアウトは、リストアイテムに全角の画像が含まれていると、横向きのモードではバランスが悪く見えます。1つの良い解決策は、ランドスケープモードでCardView要素を表示するときに、リニアリストの代わりにグリッドを使うことです。</p>
@@ -86,7 +89,7 @@
 <li>integers.xmlというファイル名を付けて、OKをクリックします。</li>
 <li>&lt;resources&gt;タグの間にgrid_column_countという整数定数を作成し、1に設定します。</li>
 </ol>
-<p>&lt;integer name=&#34;grid_column_count&#34;&gt; 1&lt;/integer&gt;。</p>
+<p>&lt;integer name=&#34;grid_column_count&#34;&gt;1&lt;/integer&gt;</p>
 <ol type="1" start="1">
 <li>別の値リソースファイルを作成します。これも integers.xml という名前ですが、使用可能な修飾子ペインからリソース修飾子を追加すると名前が変更されます。リソース修飾子は、様々な状況に応じたリソース設定のラベル付けに使用されます。</li>
 <li>利用可能な修飾子ペインでオリエンテーションを選択し、ダイアログの真ん中にある &gt;&gt; 記号を押して、この修飾子を割り当てます。</li>
@@ -99,35 +102,39 @@
 <ol type="1" start="1">
 <li>MainActivity を開き、integers.xml リソースファイルから整数を取得するためのコードを onCreate() に追加します。</li>
 </ol>
+<pre><code>int gridColumnCount = 
+        getResources().getInteger(R.integer.grid_column_count);</code></pre>
 <p>int gridColumnCount =</p>
 <p>        getResources().getInteger(R.integer.grid_column_count)を使用しています。</p>
 <p>デバイスの状態に応じて、どのintegers.xmlファイルを使用するかをAndroidランタイムが決定します。</p>
 <ol type="1" start="1">
 <li>RecyclerViewのLinearLayoutManagerをGridLayoutManagerに変更し、コンテキストと新しく作成した整数を渡します。</li>
 </ol>
-<p>mRecyclerView.setLayoutManager(new)</p>
-<p>GridLayoutManager(this, gridColumnCount).</p>
+<pre><code>mRecyclerView.setLayoutManager(new 
+                     GridLayoutManager(this, gridColumnCount));</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動して、デバイスを回転させます。デバイスの向きに合わせて、列数が自動的に変化します。</li>
 </ol>
+<p class="image-container"><img alt="The Material Me app with landscape resource qualifiers" style="width: 482.47px" src="img/5c00592ae7e375be.png"></p>
 <p>ランドスケープモードでアプリを使用していると、項目が1列ではなくグリッドになったため、スワイプでの解除機能が直感的に使えなくなっていることに気づくでしょう。次のステップでは、複数の列がある場合はスワイプアクションをオフにします。</p>
 <ol type="1" start="1">
 <li>複数の列がある場合にスワイプ動作を無効にする（swipeDirsをゼロに設定する）には、gridColumnCount変数を使用します。</li>
 </ol>
-<p>int swipeDirs.</p>
-<p>if(gridColumnCount &gt; 1){</p>
-<p>   swipeDirs = 0.</p>
-<p>他にもあります</p>
-<p>   swipeDirs = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT.</p>
-<p>}</p>
+<pre><code>int swipeDirs;
+if(gridColumnCount &gt; 1){
+   swipeDirs = 0;
+} else {
+   swipeDirs = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+}</code></pre>
 <ol type="1" start="1">
 <li>ItemTouchHelper.SimpleCallback()では、スワイプ方向の引数(ItemTouchHelper.LEFTT | ItemTouchHelper.RIGHT)の代わりにswipeDirsを使用します。</li>
 </ol>
-<p>ItemTouchHelper ヘルパー = new ItemTouchHelper(new)</p>
-<p>SimpleCallback(ItemTouchHelper.LEFT |)</p>
-<p>.RIGHT</p>
-<p>.DOWN | ItemTouchHelper.UP.</p>
-<p>swipeDirs) {</p>
+<pre><code>ItemTouchHelper helper = new ItemTouchHelper(new 
+          ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | 
+                ItemTouchHelper.RIGHT |
+                ItemTouchHelper.DOWN | ItemTouchHelper.UP,
+                swipeDirs) {
+</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動して端末を回転させます。横向き（横向き）では、スワイプでカードを削除することができなくなりました。</li>
 </ol>
@@ -135,9 +142,10 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：タブレット対応" duration="0">
+      <google-codelab-step label="タスク2：タブレット対応" duration="0">
         <p>横向きで見栄えが良くなるようにアプリを修正したにもかかわらず、物理的に大きなサイズのタブレットで実行すると、すべてのテキストが小さく表示されてしまいます。また、デバイスが横向きの場合、画面が効率的に使用されません。横向きのタブレットサイズの画面では、3列の方が適切です。</p>
 <p>このタスクでは、タブレットで使用するときのアプリの外観を変更するために、リソース修飾子を追加します。</p>
+<p class="image-container"><img alt="Tablet running the MaterialMe app with only a landscape qualifier (2 columns)" style="width: 641.76px" src="img/fcb012b92dca7e72.png"></p>
 <p>2.1 タブレットに合わせたレイアウト</p>
 <p>このステップでは、タブレットサイズのデバイスの画面使用を最大化するためにさまざまなリソース修飾子を作成し、列数を縦向き（垂直）の場合は2列、横向き（水平）の場合は3列に増やします。</p>
 <p>必要なリソース修飾子は、特定の要件によって異なります。新しいリソースファイルを作成する際には、[利用可能な修飾子] ペインにいくつかの修飾子があり、それらを使用して正しい条件を選択することができます。</p>
@@ -155,6 +163,8 @@
 <li>integers.xml（sw600dp-land）ファイル内のgrid_column_count変数を3に変更します。</li>
 <li>タブレットまたはタブレットエミュレータでアプリを実行し、横向きに回転させます。下の最初の図のように、アプリには3列のカードが表示されます。縦向きモードに回転させると、下の2つ目の図のように、2列のカードが表示されます。これらのリソース修飾ファイルを使用すると、アプリは画面の不動産をより効果的に使用します。</li>
 </ol>
+<p class="image-container"><img alt="Tablet running the MaterialMe app with qualifiers to show 3 columns in landscape mode" style="width: 425.90px" src="img/ce88d7a677ab78cf.png"></p>
+<p class="image-container"><img alt="Tablet running the MaterialMe app with qualifiers to show 2 columns in portrait mode" style="width: 363.82px" src="img/c6afa0d002d0098a.png"></p>
 <p>ヒント：アプリが複数のリソースファイルを使用している場合、Androidは最も特定のリソース修飾子を持つリソースファイルを最初に使用します。たとえば、integers.xmlファイルで最小画面幅修飾子の両方に値が定義されていて、OrientationがLandscapeに設定されている場合、Androidは最小画面幅の値を使用します。リソース修飾子とリソースファイルの優先順位は、<a href="http://developer.android.com/guide/topics/resources/providing-resources.html" target="_blank">App resources overview</a>の表2に記載されています。</p>
 <p>2**.2 タブレットリストの項目スタイルを更新する**。</p>
 <p>この時点で、アプリはデバイスの向きに合わせてGridLayoutManagerの列数を変更し、画面の使用を最大化します。しかし、電話の画面上では正しくサイズが表示されていたTextView要素が、タブレットの大きな画面には小さすぎて表示されるようになりました。</p>
@@ -164,31 +174,31 @@
 <ol type="1" start="1">
 <li>styles.xmlを開き、以下のスタイルを追加します。</li>
 </ol>
-<p>&lt;style name=&#34;SportsDetailText&#34;</p>
-<p>parent=&#34;TextAppearance.AppCompat.Subhead&#34;/&gt;</p>
-<p>&lt;style name=&#34;スポーツタイトル&#34;</p>
-<p>parent=&#34;TextAppearance.AppCompat.Headline&#34;/&gt;</p>
+<pre><code>&lt;style name=&#34;SportsDetailText&#34; 
+                   parent=&#34;TextAppearance.AppCompat.Subhead&#34;/&gt;
+&lt;style name=&#34;SportsTitle&#34; 
+                   parent=&#34;TextAppearance.AppCompat.Headline&#34;/&gt;</code></pre>
 <ol type="1" start="1">
 <li>タブレット用に 600 の値を持つ最小画面幅修飾子を使用する styles.xml という新しい値リソース・ファイルを作成します。</li>
 <li>元のstyles.xmlファイルから新しいstyles.xml（sw600dp）ファイルにすべてのスタイルをコピーします。</li>
 <li>styles.xml（sw600dp）で、SportsTitleスタイルの親を「TextAppearance.AppCompat.Display1」に変更します。</li>
 </ol>
-<p>&lt;style name=&#34;スポーツタイトル&#34;</p>
-<p>parent=&#34;TextAppearance.AppCompat.Display1&#34;/&gt;</p>
+<pre><code>&lt;style name=&#34;SportsTitle&#34; 
+                   parent=&#34;TextAppearance.AppCompat.Display1&#34;/&gt;</code></pre>
 <ol type="1" start="1">
 <li>Androidの定義済みDisplay1スタイルは、現在のテーマ（ThemeOverlay.AppCompat.Dark）のtextColorSecondary値を使用します。このライトグレーの色は、アプリのバナー画像ではうまく表示されません。これを修正するには、スポーツタイトルスタイルに「android:textColor」属性を追加し、「?android:textColorPrimary」に設定します。</li>
 </ol>
-<p>&lt;style name=&#34;スポーツタイトル&#34;</p>
-<p>parent=&#34;TextAppearance.AppCompat.Display1&#34;&gt; &gt; テキストを表示するには、以下のようにします。</p>
-<p>    &lt;項目名</p>
-<p>&#34;android:textColor&#34;&gt;? android:textColorPrimary&lt;/item&gt;?</p>
-<p>&lt;/style&gt; &lt;/style</p>
+<pre><code>&lt;style name=&#34;SportsTitle&#34; 
+                  parent=&#34;TextAppearance.AppCompat.Display1&#34;&gt;
+    &lt;item name=
+          &#34;android:textColor&#34;&gt;?android:textColorPrimary&lt;/item&gt;
+&lt;/style&gt;</code></pre>
 <p>クエスチョンマークは、Android ランタイムに、ビューに適用されているテーマの値を見つけるように指示します。この例では、テーマは ThemeOverlay.AppCompat.Dark で、textColorPrimary 属性は白です。</p>
 <ol type="1" start="1">
 <li>SportsDetailTextスタイルの親を「TextAppearance.AppCompat.Headline」に変更します。</li>
 <li>TextView要素のスタイルを更新するには、list_item.xmlを開き、タイトルTextViewのstyle属性を@style/SportsTitleに変更します。</li>
 </ol>
-<p>style=&#34;@style/SportsTitle&#34;</p>
+<pre><code>style=&#34;@style/SportsTitle&#34;</code></pre>
 <ol type="1" start="1">
 <li>newsTitleとsubTitle TextView要素のstyle属性を@style/SportsDetailTextに変更します。</li>
 <li>タブレットまたはタブレットエミュレータでアプリを実行します。各リスト項目は、タブレット上でのテキストサイズが大きくなりました。</li>
@@ -198,29 +208,30 @@
 <ol type="1" start="1">
 <li>詳細タイトルのstyles.xmlファイルに以下のスタイルを追加します。</li>
 </ol>
-<p>&lt;style name=&#34;SportsDetailTitle&#34;</p>
-<p>parent=&#34;TextAppearance.AppCompat.Headline&#34;/&gt;</p>
+<pre><code>&lt;style name=&#34;SportsDetailTitle&#34; 
+                   parent=&#34;TextAppearance.AppCompat.Headline&#34;/&gt;</code></pre>
 <ol type="1" start="1">
 <li>詳細タイトルのstyles.xml(sw600dp)ファイルに以下のスタイルを追加します。</li>
 </ol>
-<p>&lt;style name=&#34;SportsDetailTitle&#34;</p>
-<p>parent=&#34;TextAppearance.AppCompat.Display3&#34;/&gt;</p>
+<pre><code>&lt;style name=&#34;SportsDetailTitle&#34; 
+                   parent=&#34;TextAppearance.AppCompat.Display3&#34;/&gt;</code></pre>
 <ol type="1" start="1">
 <li>activity_detail.xmlを開き、newsTitleDetailとsubTitleDetail TextView要素の両方のstyle属性を、前のステップで作成した新しいSportsDetailTextスタイルに変更します。</li>
 </ol>
-<p>style=&#34;@style/SportsDetailText&#34;</p>
+<pre><code>style=&#34;@style/SportsDetailText&#34;</code></pre>
 <ol type="1" start="1">
 <li>activity_detail.xmlで、titleDetail TextView要素のstyle属性を、作成した新しいSportsDetailTitleスタイルに変更します。</li>
 </ol>
-<p>style=&#34;@style/SportsDetailTitle&#34;</p>
+<pre><code>style=&#34;@style/SportsDetailTitle&#34;</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。タブレットではすべてのテキストが大きく表示されるようになり、アプリのユーザーエクスペリエンスが大幅に向上しました。</li>
 </ol>
+<p class="image-container"><img alt="Tablet running the MaterialMe app with styles to make the text larger" style="width: 540.53px" src="img/479918e98f08f9e1.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3：アプリのローカライズ" duration="0">
+      <google-codelab-step label="タスク3：アプリのローカライズ" duration="0">
         <p>ロケール」とは、世界の特定の地理的、政治的、文化的な地域を表します。リソース修飾子を使用して、ユーザーのロケールに応じた代替リソースを提供することができます。Androidでは、方向や画面幅と同様に、ロケールごとに別々のリソースファイルを含めることができます。このステップでは、string.xmlファイルをもう少し国際的になるように修正します。</p>
 <p>3.1 ローカライズされたstring.xmlファイルの追加</p>
 <p>このアプリに含まれているスポーツ情報は、アメリカのユーザー向けに作られていることにお気づきかもしれませんが、このアプリでは、世界中のあらゆる場所で「サッカー」として知られているスポーツを「サッカー」という言葉で表現しています。</p>
@@ -229,10 +240,12 @@
 <li>新しい値のリソースファイルを作成します。</li>
 <li>strings.xml ファイルを呼び出し、使用可能な修飾子のリストから Locale を選択します。言語と特定地域のみ] ペインが表示されます。</li>
 </ol>
+<p class="image-container"><img alt="Clicking the Locale qualifier presents choices for language and region." style="width: 641.76px" src="img/ab75bf319fb9c980.png"></p>
 <ol type="1" start="1">
 <li>言語] ペインで [en] を選択します。英語] を選択します。</li>
 <li>特定の地域のみ] ウィンドウで [US] を選択します。アメリカ合衆国を選択し、[OK] をクリックします。Android Studioでは、プロジェクト・ディレクトリ内に米国ロケール用の特定の値のディレクトリ（values-en-rUS）が作成されます。プロジェクト &gt; Android］ペインで、このディレクトリ内のstring.xmlファイルが、新しく作成されたstrings.xmlフォルダ内のstrings.xml（en-rus）として表示されます（米国国旗のアイコンが表示されます）。</li>
 </ol>
+<p class="image-container"><img alt="The generic strings.xml file and the locale-specific strings.xml (en-rUS) file in the Project &gt; Android pane" style="width: 342.00px" src="img/c6af3486f5a89e0e.png"></p>
 <ol type="1" start="1">
 <li>generic strings.xmlファイル（現在はstring.xmlフォルダ内にあります）のすべての文字列リソースをstring.xml（en-rus）にコピーします。</li>
 <li>generic strings.xml ファイルで、sports_titles 配列の Soccer 項目を Football に変更し、sports_info 配列の Soccer news テキストを Football news に変更します。</li>
@@ -254,22 +267,24 @@
 <ol type="1" start="1">
 <li>Android 7以降を搭載している端末やエミュレータの場合は、「言語＆入力」画面で「言語」を選択し、「Français（フランス）」などの言語を選択し、言語設定画面の右側にある移動アイコンを使って「Français（フランス）」をリストの一番上にドラッグします。</li>
 </ol>
+<p class="image-container"><img alt="Dragging French to the top of the preferred languages list for Android 7 and newer versions" style="width: 214.15px" src="img/e459f5245ba58121.png"></p>
 <ol type="1" start="1">
 <li>お使いのデバイスまたはエミュレータでアプリを実行してください。アメリカ英語では「サッカー」と表示されているはずです。</li>
 <li>アメリカ英語以外の言語やロケールに切り替えて、再度アプリを起動してください。すると、「Football」が表示されるはずです。</li>
 </ol>
+<p class="image-container"><img alt="U.S. English version (left side) shows &#34;Soccer&#34; and the version in another language and locale (right side) shows &#34;Football&#34;" style="width: 396.46px" src="img/99e7bafe6b1412f7.png"></p>
 <p>この例では、言語によっては「Football」の翻訳が表示されません。翻訳を使ってアプリをローカライズするレッスンについては、<a href="https://google-developer-training.github.io/android-developer-advanced-course-practicals/" target="_blank">Advanced Android Development - Practicals</a>を参照してください。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/MaterialMe-Resource" target="_blank">MaterialMe-Resource</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題 1: 米国以外のいくつかの国では、「サッカー」の代わりに「サッカー」が使われていることがわかりました。これらの国を調査し、それらの国のためにローカライズされた文字列リソースを追加してください。</p>
 <p>課題 2: タスク 3 で学んだローカリゼーション テクニックを Google 翻訳と組み合わせて使用し、アプリ内のすべての文字列を別の言語に翻訳します。</p>
@@ -277,7 +292,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li>GridLayoutManagerは、2次元スクロールリストを扱うレイアウトマネージャです。</li>
 <li>GridLayoutManagerのカラム数を動的に変更することができます。</li>
@@ -290,13 +305,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Related concepts" duration="0">
+      <google-codelab-step label="Related concepts" duration="0">
         <p>関連する概念は<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-3-c-resources-for-adaptive-layouts/5-3-c-resources-for-adaptive-layouts.html" target="_blank">5.3</a>にあります。<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-5-delightful-user-experience/5-3-c-resources-for-adaptive-layouts/5-3-c-resources-for-adaptive-layouts.html" target="_blank">アダプティブレイアウトのためのリソース」にあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Android Studio のドキュメント。<a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studio の紹介</a></p>
 <p>Androidの開発者向けドキュメント。</p>
 <ul>
@@ -316,7 +331,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -332,8 +347,11 @@
 <li>タブレットの場合：縦方向に2カラム、横方向に3カラム</li>
 </ul>
 <p>下のスクリーンショットは、縦向きの携帯電話にリソースを指定した RecyclerView を表示しています。</p>
+<p class="image-container"><img alt="Resource-qualified RecyclerView vertical phone" style="width: 189.20px" src="img/58284aff89d74b85.png"></p>
 <p>下のスクリーンショットは、横向きの携帯電話にリソースを指定した RecyclerView を表示しています。</p>
+<p class="image-container"><img alt="Resource-qualified RecyclerView horizontal phone" style="width: 320.47px" src="img/a2294efedb7e2ff2.png"></p>
 <p>下のスクリーンショットは、横向きのタブレット上で、リソースを指定した RecyclerView を表示しています。</p>
+<p class="image-container"><img alt="Resource-qualified RecyclerView horizontal tablet" style="width: 279.50px" src="img/42899bd62c171d56.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>タブレット用に選択する際に最も頻繁に使用される資源修飾語はどれか。1つ選びなさい。</p>
@@ -370,7 +388,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>To find the next practical codelab in the Android Developer Fundamentals (V2) course, see <a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)</a>.</p>
 <p>For an overview of the course, including links to the concept chapters, apps, and slides, see <a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)</a>.</p>
 

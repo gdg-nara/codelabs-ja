@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 08.2: アラームマネージャー</title>
+  <title>Android Developer Fundamentals 08.2: アラームマネージャー</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="8-2"
-                  title="Android 開発者基礎講座 08.2: アラームマネージャー"
+                  title="Android Developer Fundamentals 08.2: アラームマネージャー"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">ユニット 3:</a> Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_3_working_in_the_background" target="_blank">バックグラウンドでの作業の一部</a>です。コードラボを順番に進めていくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -60,13 +60,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。App overview" duration="0">
-        <p>Stand Up！」は、15分ごとに立ち上がって歩き回ることをリマインドしてくれるアプリです。これは、15分が経過したことを知らせる通知を使用しています。このアプリには、アラームのオンとオフを切り替えることができるトグルボタンが含まれています。</p>
+      <google-codelab-step label="App overview" duration="0">
+        <p>Stand Up！は、15分ごとに立ち上がって歩き回ることをリマインドしてくれるアプリです。これは、15分が経過したことを知らせる通知を使用しています。このアプリには、アラームのオンとオフを切り替えることができるトグルボタンが含まれています。</p>
+<p class="image-container"><img alt="Preview for the notification in the StandUp! app" style="width: 238.72px" src="img/c01bab932820b1d9.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1：Stand Up！プロジェクトの設定と閲覧" duration="0">
+      <google-codelab-step label="タスク1：Stand Up！プロジェクトの設定と閲覧" duration="0">
         <p>1.1 Stand Up!プロジェクトのレイアウトを作成する</p>
 <ol type="1" start="1">
 <li>Android Studioで、「Stand Up！」という新しいプロジェクトを作成します。デフォルトのオプションを受け入れ、Empty Activityテンプレートを使用します。</li>
@@ -113,32 +114,34 @@
 <ol type="1" start="1">
 <li><code>idでToggleButtonを検索します。</code></li>
 </ol>
-<p><code>ToggleButton alarmToggle = findViewById(R.id.alarmToggle).</code></p>
+<pre><code>ToggleButton alarmToggle = findViewById(R.id.alarmToggle);</code></pre>
 <ol type="1" start="1">
 <li><code>ToggleButtonインスタンスでsetOnCheckedChangeListener()を呼び出し、「new OnCheckedChangeListener」の入力を開始します。</code>Android Studio <code>は、必要な onCheckedChanged() オーバーライドメソッドを含めて、このメソッドをオートコンプリートしてくれます。</code></li>
 </ol>
 <p><code>onCheckedChanged()</code> の最初のパラメータは、ユーザーがタップした複合ボタンで、この場合はアラームの <code>ToggleButton</code> です。2 番目のパラメータは、<code>ToggleButton</code> の状態、つまりトグルがオンかオフかを表すブール値です。</p>
-<p><code>alarmToggle.setOnCheckedChangeListener(</code></p>
-<p><code>new CompoundButton.OnCheckedChangeListener() {</code></p>
-<p>オーバーライド</p>
-<p><code>public void onCheckedChanged(CompoundButton compoundButton.</code></p>
-<p>ブール値がチェックされています。</p>
-<p><code>   }</code></p>
-<p><code>});</code></p>
+<pre><code>alarmToggle.setOnCheckedChangeListener(
+   new CompoundButton.OnCheckedChangeListener() {
+   @Override
+   public void onCheckedChanged(CompoundButton compoundButton, 
+      boolean isChecked) {
+   }
+});
+</code></pre>
 <ol type="1" start="1">
 <li><code>onCheckedChanged()</code>メソッドで、<code>boolean</code>パラメータを使用して<code>if-else</code>ブロックを設定します。アラームがオンまたはオフになった場合、ユーザーに<code>Toast</code>メッセージを表示します。</li>
 </ol>
-<p><code>String toastMessage.</code></p>
-<p><code>if(isChecked){</code></p>
-<p><code>//on</code>」の場合のトーストメッセージを設定します。</p>
-<p><code>       toastMessage = "Stand Up Alarm On!</code></p>
-<p>他にもあり   ます</p>
-<p><code>//"off"</code>の場合のトーストメッセージを設定します。</p>
-<p><code>       toastMessage = "Stand Up Alarm Off!</code></p>
-<p><code>   }</code></p>
-<p><code>//</code>アラームがオンになっているかオフになっているかを乾杯の音頭をとって表示します。</p>
-<p><code>Toast.makeText(MainActivity.this,toastMessage,Toast.LENGTH_SHORT)</code></p>
-<p><code>.show()</code> のようになります。</p>
+<pre><code>   String toastMessage;
+   if(isChecked){
+       //Set the toast message for the &#34;on&#34; case.
+       toastMessage = &#34;Stand Up Alarm On!&#34;;
+   } else {
+       //Set the toast message for the &#34;off&#34; case.
+       toastMessage = &#34;Stand Up Alarm Off!&#34;;
+   }
+
+   //Show a toast to say the alarm is turned on or off.
+   Toast.makeText(MainActivity.this, toastMessage,Toast.LENGTH_SHORT)
+           .show();</code></pre>
 <ol type="1" start="1">
 <li>文字列リソースを抽出します。</li>
 </ol>
@@ -146,7 +149,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2：通知を設定する" duration="0">
+      <google-codelab-step label="タスク2：通知を設定する" duration="0">
         <p>次のステップは、15分ごとに立ち上がることをリマインドする通知を作成することです。今のところ、通知はトグルが設定されるとすぐに配信されます。</p>
 <p>2.1 通知を作成する</p>
 <p>このステップでは、立ち上がって歩くためのリマインダーを投稿する <code>deliverNotification()</code> メソッドを作成します。</p>
@@ -154,18 +157,18 @@
 <ol type="1" start="1">
 <li><code>NotificationManager 型の mNotificationManager というメンバ変数を作成します。</code></li>
 </ol>
-<p><code>private NotificationManager mNotificationManager.</code></p>
+<pre><code>private NotificationManager mNotificationManager;</code></pre>
 <ol type="1" start="1">
 <li><code>onCreate() メソッドで、getSystemService() を使用して mNotificationManager を初期化します。</code></li>
 </ol>
-<p><code>mNotificationManager = (NotificationManager)</code></p>
-<p><code>        getSystemService(NOTIFICATION_SERVICE)を使用しています。</code></p>
+<pre><code>mNotificationManager = (NotificationManager) 
+        getSystemService(NOTIFICATION_SERVICE);</code></pre>
 <ol type="1" start="1">
 <li>通知IDと通知チャネルIDのメンバ定数を作成します。これらを使用して、通知を表示します。通知の詳細については、「通知の<a href="https://developer.android.com/guide/topics/ui/notifiers/notifications" target="_blank">概要</a>」を参照してください。</li>
 </ol>
-<p><code>private static final int NOTIFICATION_ID = 0.</code></p>
-<p><code>private static final String PRIMARY_CHANNEL_ID =</code></p>
-<p><code>".</code></p>
+<pre><code>private static final int NOTIFICATION_ID = 0;
+private static final String PRIMARY_CHANNEL_ID =
+       &#34;primary_notification_channel&#34;;</code></pre>
 <p>通知チャネルの作成</p>
 <p>Android 8.0（APIレベル27）以上の場合、ユーザーに通知を表示するためには、通知チャネルが必要です。</p>
 <p>通知チャネルを作成します。</p>
@@ -173,44 +176,48 @@
 <li><code>createNotificationChannel()というメソッドを作成します。</code></li>
 <li><code>onCreate() の最後に createNotificationChannel() を呼び出します。</code></li>
 </ol>
-<p><code>/**</code></p>
-<p><code>* OREO</code> 以上の通知チャネルを作成します。</p>
-<p><code>*/</code></p>
-<p><code>public void createNotificationChannel() { { {.</code></p>
-<p><code>//</code> 通知マネージャオブジェクトを作成します。</p>
-<p><code>   mNotificationManager =</code></p>
-<p><code>           (NotificationManager) getSystemService(NOTIFICATION_SERVICE)。</code></p>
-<p><code>//</code> 通知チャンネルは <code>OREO</code> 以上でのみ利用可能です。</p>
-<p><code>//</code> ということで、<code>SDK</code>のバージョンにチェックを入れておきます。</p>
-<p><code>if (android.os.Build.VERSION.SDK_INT >=</code></p>
-<p><code>           android.os.Build.VERSION_CODES.O)Build.VERSION_CODES.O) {.</code></p>
-<p><code>// すべてのパラメータを含む NotificationChannel を作成します。</code></p>
-<p><code>NotificationChannel notificationChannel = new NotificationChannel</code></p>
-<p><code>               (primary_channel_id.</code></p>
-<p><code>"</code>スタンドアップ通知<code>"</code></p>
-<p><code>NotificationManager.importance_high)を使用しています。</code></p>
-<p><code>       notificationChannel.enableLights(true)。</code></p>
-<p><code>       notificationChannel.setLightColor(Color.RED).</code></p>
-<p><code>       notificationChannel.enableVibration(true)。</code></p>
-<p><code>       通知チャネル.setDescription</code></p>
-<p><code>"               (</code>「立ち上がって歩くことを<code>15</code>分ごとに通知する」<code>)</code></p>
-<p><code>       mNotificationManager.createNotificationChannel(notificationChannel)。</code></p>
-<p><code>   }</code></p>
-<p><code>}</code></p>
+<pre><code>/**
+* Creates a Notification channel, for OREO and higher.
+*/
+public void createNotificationChannel() {
+
+   // Create a notification manager object.
+   mNotificationManager =
+           (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+   // Notification channels are only available in OREO and higher.
+   // So, add a check on SDK version.
+   if (android.os.Build.VERSION.SDK_INT &gt;=
+           android.os.Build.VERSION_CODES.O) {
+
+       // Create the NotificationChannel with all the parameters.
+       NotificationChannel notificationChannel = new NotificationChannel
+               (PRIMARY_CHANNEL_ID,
+                       &#34;Stand up notification&#34;,
+                       NotificationManager.IMPORTANCE_HIGH);
+
+       notificationChannel.enableLights(true);
+       notificationChannel.setLightColor(Color.RED);
+       notificationChannel.enableVibration(true);
+       notificationChannel.setDescription
+               (&#34;Notifies every 15 minutes to stand up and walk&#34;);
+       mNotificationManager.createNotificationChannel(notificationChannel);
+   }
+}</code></pre>
 <p>通知内容を設定する</p>
 <ol type="1" start="1">
 <li>コンテキストを引数に取り、何も返さない <code>deliverNotification()</code> メソッドを作成します。</li>
 </ol>
-<p><code>private void deliverNotification(Context context) {} {}。</code></p>
+<pre><code>private void deliverNotification(Context context) {}</code></pre>
 <ol type="1" start="1">
 <li><code>deliverNotification()</code> メソッドで、通知内容のインテントに使用するインテントを作成します。</li>
 </ol>
-<p><code>Intent contentIntent = new Intent(context, MainActivity.class).</code></p>
+<pre><code>Intent contentIntent = new Intent(context, MainActivity.class);</code></pre>
 <ol type="1" start="1">
 <li><code>deliverNotification() メソッドで contentIntent の定義後、</code>contentIntent <code>から PendingIntent を作成します。getActivity() メソッドに通知</code> ID <code>を渡し、FLAG_UPDATE_CURRENT フラグを使用します。</code></li>
 </ol>
-<p><code>PendingIntent contentPendingIntent = PendingIntent.getActivity</code></p>
-<p><code>       (context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT)。</code></p>
+<pre><code>PendingIntent contentPendingIntent = PendingIntent.getActivity
+       (context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);</code></pre>
 <p>注意:<a href="https://developer.android.com/reference/android/app/PendingIntent.html" target="_blank"><strong><code>PendingIntent</code></strong></a>フラグは、同じ<strong><code>PendingIntent</code></strong>の複数のインスタンスが作成された場合(インスタンスに同じ<strong><code>Intent</code></strong>が含まれていることを意味します)、どのように処理するかをシステムに指示します。<strong><code>FLAG_UPDATE_CURRENT</code></strong></p>
 <p><strong> フラグは</strong>、古い <strong><code>Intent</code></strong></p>
 <p><strong> を</strong>使用するが、余分<strong>な</strong>データを置き換えるようにシステムに指示します。この<strong><code>Intent</code></strong>には余分なものが入っていないので、同じP<strong><code>endingIntent</code></strong></p>
@@ -220,14 +227,14 @@
 <li><a href="https://developer.android.com/studio/write/image-asset-studio.html" target="_blank">画像アセットスタジオを</a>使用して、通知アイコンとして使用する画像アセットを追加します。このアラームに適したアイコンを選択し、<code>ic_stand_up</code> と名前を付けます。たとえば、「歩く」アイコンを使用することができます。  </li>
 <li><code>deliverNotification()</code> メソッドでは、<code>NotificationCompat.Builder</code> を使用して、通知アイコンとコンテンツ インテントを使用して通知を構築します。通知の優先度とその他のオプションを設定します。</li>
 </ol>
-<p><code>NotificationCompat.Builder Builder = new NotificationCompat.ビルダー(context, PRIMARY_CHANNEL_ID)</code></p>
-<p><code>       .setSmallIcon(R.drawable.ic_stand_up)</code></p>
-<p><code>       .setContentTitle("Stand Up Alert")</code></p>
-<p><code>       .setContentText("今すぐ立ち上がって歩き回ってください！")</code></p>
-<p><code>       .setContentIntent(contentPendingIntent)</code></p>
-<p><code>       .setPriority(NotificationCompat.PRIORITY_HIGH)</code></p>
-<p><code>       .setAutoCancel(true)</code></p>
-<p><code>       .setDefaults(NotificationCompat.DEFAULT_ALL)。</code></p>
+<pre><code>NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
+       .setSmallIcon(R.drawable.ic_stand_up)
+       .setContentTitle(&#34;Stand Up Alert&#34;)
+       .setContentText(&#34;You should stand up and walk around now!&#34;)
+       .setContentIntent(contentPendingIntent)
+       .setPriority(NotificationCompat.PRIORITY_HIGH)
+       .setAutoCancel(true)
+       .setDefaults(NotificationCompat.DEFAULT_ALL);</code></pre>
 <ol type="1" start="1">
 <li>文字列リソースを抽出します。</li>
 </ol>
@@ -235,33 +242,36 @@
 <ol type="1" start="1">
 <li><code>deliverNotification() メソッドの最後に、NotificationManager を使用して通知を配信します。</code></li>
 </ol>
-<p><code>mNotificationManager.notify(NOTIFICATION_ID, builder.build())を使用しています。</code></p>
+<pre><code>mNotificationManager.notify(NOTIFICATION_ID, builder.build());</code></pre>
 <ol type="1" start="1">
 <li><code>onCreate()</code> で、アラームのトグルボタンがオンになったときに <code>deliverNotification()</code> をコールし、アクティビティコンテキストを渡します。</li>
 <li><code>onCreate() で、通知を削除するためのトグルがオフになっている場合に NotificationManager で cancelAll() を呼び出します。</code></li>
 </ol>
-<p><code>if(isChecked){</code></p>
-<p><code>   deliverNotification(MainActivity.this)を使用しています。</code></p>
-<p><code>//on</code>」の場合のトーストメッセージを設定します。</p>
-<p><code>   toastMessage = "Stand Up Alarm On!</code></p>
-<p>他にもあります</p>
-<p><code>//</code>アラームがオフの場合は通知をキャンセルします。</p>
-<p><code>   mNotificationManager.cancelAll()。</code></p>
-<p><code>//OFF</code>」の場合のトーストメッセージを設定します。</p>
-<p><code>   toastMessage = "Stand Up Alarm Off!</code></p>
-<p><code>}</code></p>
+<pre><code>if(isChecked){
+   deliverNotification(MainActivity.this);
+   //Set the toast message for the &#34;on&#34; case
+   toastMessage = &#34;Stand Up Alarm On!&#34;;
+} else {
+   //Cancel notification if the alarm is turned off
+   mNotificationManager.cancelAll();
+
+   //Set the toast message for the &#34;off&#34; case
+   toastMessage = &#34;Stand Up Alarm Off!&#34;;
+}</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動して、通知が届いていることを確認します。</li>
 </ol>
+<p class="image-container"><img alt="Notification is shown when toggle button is turned on." style="width: 220.21px" src="img/ec7e47d97533e15a.png"></p>
 <p>この時点では、アラームは全くありません。アラームトグルボタンがオンになると、通知はすぐに配信されます。次のタスクでは、15分ごとに通知をスケジュールして配信する<code>AlarmManager</code>を実装します。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3：リピートアラームの作成" duration="0">
+      <google-codelab-step label="タスク3：リピートアラームの作成" duration="0">
         <p>アプリが通知を送信できるようになったので、アプリのメインコンポーネントである<a href="https://developer.android.com/reference/android/app/AlarmManager.html" target="_blank"><code>AlarmManager</code></a>を実装しましょう。このクラスは、定期的に立ち上がるようにリマインダーを配信します。<code>AlarmManager</code>には、1回限りのものと定期的なもの、正確なものと不正確なものの両方の多くの種類のアラームが組み込まれています。アラームの種類の詳細については、「<a href="https://developer.android.com/training/scheduling/alarms.html" target="_blank">リピート アラームをスケジュールする」を</a>参照してください。</p>
 <p><code>AlarmManager</code>は通知と同様に、指定したオプションで配信する<a href="https://developer.android.com/reference/android/app/PendingIntent.html" target="_blank"><code>PendingIntent</code>を</a>使用します。このため、<code>AlarmManager</code>はアプリが実行されていない場合でもインテントを配信することができます。</p>
 <p>放送受信機は、放送意図を受信して通知を配信する。  </p>
+<p class="image-container"><img alt="Diagram of the Stand Up! alarm process" style="width: 405.53px" src="img/c41e5fab1dcbc9c1.png"></p>
 <p>デバイスが<a href="https://developer.android.com/training/monitoring-device-state/doze-standby" target="_blank">ドーズモード</a>（アイドル状態）にあるときは、アラームは発生しません。その代わり、デバイスが休止状態を抜けるまでアラームは延期されます。アラームの実行を保証するには、<a href="https://developer.android.com/reference/android/app/AlarmManager.html#setAndAllowWhileIdle(int,%2520long,%2520android.app.PendingIntent)" target="_blank"><code>setAndAllowWhileIdle()</code></a> または<a href="https://developer.android.com/reference/android/app/AlarmManager.html#setExactAndAllowWhileIdle(int,%2520long,%2520android.app.PendingIntent)" target="_blank"><code>setExactAndAllowWhileIdle()</code> を</a>使用できます。また、新しい <code>WorkManager</code> API を使用することもできます。これは、バックグラウンドでの作業を 1 回または定期的に実行するために構築されたものです。詳細については、「<a href="https://developer.android.com/arch/work" target="_blank"><code>WorkManager</code> でタスクをスケジュールする」を</a>参照してください。</p>
 <p><a href="https://developer.android.com/reference/android/app/AlarmManager.html" target="_blank"><code>AlarmManager</code></a>は、アプリが実行されていなくても発生する1回限りのイベントや定期的なイベントをトリガーすることができます。リアルタイムクロック（<code>RTC</code>）アラームの場合は、<a href="https://developer.android.com/reference/java/lang/System#currentTimeMillis()" target="_blank"><code>System.currentTimeMillis()</code>を</a>使用してイベントをスケジュールします。経過時間（<code>ELAPSED_REALTIME</code>）アラームの場合は、<a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtime()" target="_blank"><code>elapsedRealtime()</code>を</a>使用してイベントをスケジュールします。イベントの発生時に <code>PendingIntent</code> を配信します。</p>
 <p>利用可能なクロックとイベントのタイミングを制御する方法については、<a href="https://developer.android.com/reference/android/os/SystemClock.html" target="_blank"><code>SystemClock</code> を</a>参照してください。</p>
@@ -278,39 +288,42 @@
 <li><code>mainActivity</code> クラスの <code>deliverNotification()</code> メソッドを切り取って <code>AlarmReceiver</code> クラスに貼り付け、<code>onReceive()</code> から呼び出します。いくつかの変数が赤で強調表示されていることに気づくかもしれません。次のステップで定義します。</li>
 <li><code>MainActivity クラスから NOTIFICATION_ID、PRIMARY_CHANNEL_ID、および mNotificationManager メンバ変数を AlarmReceiver クラスにコピーします。</code></li>
 </ol>
-<p><code>private NotificationManager mNotificationManager.</code></p>
-<p><code>private static final int NOTIFICATION_ID = 0.</code></p>
-<p><code>//</code> 通知チャンネルの<code>ID</code>です。</p>
-<p><code>private static final String PRIMARY_CHANNEL_ID =</code></p>
-<p><code>".</code></p>
+<pre><code>private NotificationManager mNotificationManager;
+private static final int NOTIFICATION_ID = 0;
+
+// Notification channel ID.
+private static final String PRIMARY_CHANNEL_ID =
+       &#34;primary_notification_channel&#34;;</code></pre>
 <ol type="1" start="1">
 <li><code>onReceive() メソッドの最初に mNotificationManager 変数を初期化します。渡されたコンテキストから getSystemService() を呼び出す必要があります。</code></li>
 </ol>
-<p>オーバーライド</p>
-<p><code>public void onReceive(Context context, Intent Intent) { { {.</code></p>
-<p><code>mNotificationManager = (NotificationManager)</code></p>
-<p><code>              context.getSystemService(Context.NOTIFICATION_SERVICE)を使用しています。</code></p>
-<p>   を使用しています。</p>
-<p><code>}</code></p>
+<pre><code>@Override
+public void onReceive(Context context, Intent intent) {
+mNotificationManager = (NotificationManager) 
+              context.getSystemService(Context.NOTIFICATION_SERVICE);
+   deliverNotification(context);
+}</code></pre>
 <p>3.2 ブロードキャストの保留インテントを設定する</p>
 <p><code>AlarmManager</code>は、指定された間隔で<code>PendingIntent</code>を配信する責任があります。この<code>PendingIntent</code>は、アプリに通知の残り時間を更新する時間であることを知らせるインテントを配信します。</p>
 <p><code>以下の手順を MainActivity.java の onCreate() 内で実装します。</code></p>
 <ol type="1" start="1">
 <li><code>notifyIntent</code>というインテントを作成します。コンテキストと<code>AlarmReceiver</code>クラスを渡します。</li>
+<li></li>
 </ol>
+<pre><code>Intent notifyIntent = new Intent(this, AlarmReceiver.class);</code></pre>
 <p><code>Intent notifyIntent = new Intent(this, AlarmReceiver.class).</code></p>
 <ol type="1" start="1">
 <li><code>通知PendingIntentを作成します。コンテキスト、NOTIFICATION_ID変数、新しい通知インテント、およびFLAG_UPDATE_CURRENTフラグを使用します。</code></li>
 </ol>
-<p><code>PendingIntent notifyPendingIntent = PendingIntent.getBroadcast</code></p>
-<p><code>       (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)。</code></p>
+<pre><code>PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
+       (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);</code></pre>
 <p>3.3 繰り返すアラームを設定する</p>
 <p>ここでは、<code>AlarmManager</code> を使用して 15 分ごとにブロードキャストを配信します。このタスクに適したアラームのタイプは、経過時間を使用し、デバイスが眠っている場合には目を覚ます不正確な繰り返しアラームです。15 分ごとに通知を配信したいので、ここではリアルタイムクロックは関係ありません。</p>
 <p><code>MainActivity.javaに以下の手順を実装します。</code></p>
 <ol type="1" start="1">
 <li><code>onCreate() で getSystemService() を呼び出して AlarmManager を初期化します。</code></li>
 </ol>
-<p><code>AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE).</code></p>
+<pre><code>AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);</code></pre>
 <ol type="1" start="1">
 <li><code>onCheckedChanged() メソッドで、deliverNotification() の呼び出しを削除します。</code></li>
 <li><code>onCheckedChanged()</code> メソッドで、<code>if</code> ケース内のアラーム・マネージャ・インスタンスで<a href="https://developer.android.com/reference/android/app/AlarmManager#setInexactRepeating(int,%2520long,%2520long,%2520android.app.PendingIntent)" target="_blank"><code>setInexactRepeating()</code> を</a>呼び出します (アラームがトグルされたとき)。</li>
@@ -323,22 +336,24 @@
 <li><code>ミリ秒単位の時間間隔です。AlarmManager.INTERVAL_FIFTEEN_MINUTES定数を使用することができます。</code></li>
 <li><code>配信されるPendingIntentです。</code></li>
 </ul>
-<p><code>long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES.</code></p>
-<p><code>long triggerTime = SystemClock.elapsedRealtime()</code></p>
-<p><code>       + repeatInterval.</code></p>
-<p><code>//</code>トグルがオンになっている場合は、<code>15</code> 分間隔でリピートアラームを設定します。</p>
-<p><code>if (alarmManager != null) {</code></p>
-<p><code>   alarmManager.setInexactRepeating</code></p>
-<p><code>       (AlarmManager.ELAPSED_REALTIME_WAKEUP.</code></p>
-<p><code>       triggerTime, repeatInterval, notifyPendingIntent)。</code></p>
-<p><code>}</code></p>
+<pre><code>long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+long triggerTime = SystemClock.elapsedRealtime()
+       + repeatInterval;
+
+//If the Toggle is turned on, set the repeating alarm with a 15 minute interval
+if (alarmManager != null) {
+   alarmManager.setInexactRepeating
+       (AlarmManager.ELAPSED_REALTIME_WAKEUP,
+       triggerTime, repeatInterval, notifyPendingIntent);
+}
+</code></pre>
 <p>注意：<strong><code>AlarmManager</code></strong> と <strong><code>notifyPendingIntent</code></strong> インスタンスは匿名の内部クラスからアクセスしているため、Android Studio はこれらのインスタンスを<strong>最終的なもの</strong>にしている可能性があります。そうでない場合は、自分で<strong>最終化する必要</strong>があります。</p>
 <ol type="1" start="1">
 <li><code>else</code> ケースの中（アラームがトグルオフされている場合）で、<code>AlarmManager</code> の <code>cancel()</code> を呼び出してアラームをキャンセルします。アラームの作成に使用した保留中のインテントを渡します。</li>
 </ol>
-<p><code>if (alarmManager != null) {</code></p>
-<p><code>    alarmManager.cancel(notifyPendingIntent)。</code></p>
-<p><code>}</code></p>
+<pre><code>if (alarmManager != null) {
+    alarmManager.cancel(notifyPendingIntent);
+}</code></pre>
 <p>アラームのトグルをオフにすると、既存の通知が削除されてしまうので、<code>NotificationManager</code> 上で <code>cancelAll()</code> の呼び出しを維持してください。</p>
 <p><code>AlarmManager</code>は、アラームが設定されてから15分後、その後15分ごとにブロードキャストを配信するようになりました。</p>
 <ol type="1" start="1">
@@ -352,6 +367,8 @@
 <ol type="1" start="1">
 <li><code>PendingIntent</code>が<code>null</code>でない場合は<code>true</code>、そうでない場合は<code>false</code>となるブーリアンを作成します。このブール値を使用して、アプリ起動時の<code>ToggleButton</code>の状態を設定します。このコードは、<code>PendingIntent</code>が作成される前に作成する必要があります。(そうでない場合は常に<code>true</code>を返します)。</li>
 </ol>
+<pre><code>boolean alarmUp = (PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent,
+       PendingIntent.FLAG_NO_CREATE) != null);</code></pre>
 <p><code>boolean alarmUp = (PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent.</code></p>
 <p><code>PendingIntent.FLAG_NO_CREATE) != null)。</code></p>
 <p>注意: このフラグは、作成しようとしているインテントと一致するインテントを持つ PendingIntent がすでに存在する場合の処理を決定します。<strong><code>NO_CREATE</code></strong> フラグは、一致する <strong><code>Intent</code></strong></p>
@@ -361,7 +378,7 @@
 <ol type="1" start="1">
 <li><code>alarmUp</code>を定義した直後のトグルの状態を設定します。</li>
 </ol>
-<p><code>alarmToggle.setChecked(alarmUp)。</code></p>
+<pre><code>alarmToggle.setChecked(alarmUp);</code></pre>
 <p>これにより、アラームが設定されている場合はトグルが常にオンになり、そうでない場合はオフになります。これで、15分ごとに立ち上がるように繰り返しスケジュールされたアラームが表示されるようになりました。</p>
 <ol type="1" start="1">
 <li>アプリを起動します。アラームをオンにします。アプリを終了します。アプリを再度開きます。アラームボタンには、アラームがオンになっていることが表示されます。</li>
@@ -370,13 +387,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。Solution code" duration="0">
+      <google-codelab-step label="Solution code" duration="0">
         <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/StandUp" target="_blank">スタンドアップ</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。Coding challenge" duration="0">
+      <google-codelab-step label="Coding challenge" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p><code>AlarmManager</code> クラスは、通常の目覚まし時計、つまり朝に目を覚ますような目覚まし時計も扱います。API 21 以降のデバイスでは、アラームマネージャの <code>getNextAlarmClock()</code> を呼び出すことで、この種のアラームクロックの次の情報を得ることができます。</p>
 <p>トーストメッセージを表示するボタンをアプリに追加します。トーストには、ユーザーが設定した次の目覚まし時計の時刻が表示されます。</p>
@@ -384,7 +401,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。Summary" duration="0">
+      <google-codelab-step label="Summary" duration="0">
         <ul>
 <li><code>AlarmManager</code>では、リアルタイムクロックや起動からの経過時間に基づいてタスクをスケジュールすることができます。</li>
 <li><code>AlarmManager</code>は、定期的なアラームと1回限りのアラームの両方の様々なタイプを提供します。</li>
@@ -397,13 +414,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。Related concept" duration="0">
+      <google-codelab-step label="Related concept" duration="0">
         <p>関連するコンセプトのドキュメントは、<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-3-working-in-the-background/lesson-8-alarms-and-schedulers/8-2-c-alarms/8-2-c-alarms.html" target="_blank">8.2.アラームにあります</a>。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。Learn more" duration="0">
+      <google-codelab-step label="Learn more" duration="0">
         <p>Androidの開発者向けドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/training/scheduling/alarms.html" target="_blank">リピートアラームのスケジュール</a></li>
@@ -418,7 +435,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Homework" duration="0">
+      <google-codelab-step label="Homework" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -429,6 +446,7 @@
 <p>もしあなた自身でこのコードラボに取り組んでいるのであれば、これらの宿題を使ってあなたの知識をテストしてみてはいかがでしょうか。</p>
 <p>アプリを構築して実行する</p>
 <p>時刻が午前11時11分になったら通知を配信するアプリを作ります。画面にはアラームのオンオフを切り替えるトグルスイッチが表示されます。</p>
+<p class="image-container"><img alt="AlarmManager delivers a notification at 11:11" style="width: 231.19px" src="img/8f92771b95d3ad82.png"></p>
 <p>注意：デバイスのAPIレベルによっては、通知が少し違って見える場合があります。</p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
@@ -450,7 +468,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="12。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 

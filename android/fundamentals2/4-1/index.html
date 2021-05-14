@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Android 開発者基礎講座 04.1: Clickable images</title>
+  <title>Android Developer Fundamentals 04.1: Clickable images</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,11 +23,11 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="4-1"
-                  title="Android 開発者基礎講座 04.1: Clickable images"
+                  title="Android Developer Fundamentals 04.1: Clickable images"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="1。Welcome" duration="0">
+      <google-codelab-step label="Welcome" duration="0">
         <p>この実践的なコードラボは、Android Developer Fundamentals (Version 2) コースの<a href="https://developer.android.com/courses/fundamentals-training/toc-v2#unit_2_user_experience" target="_blank">Unit 2: User experience の</a>一部です。コードラボを順番に学習していくことで、このコースを最大限に活用することができます。</p>
 <ul>
 <li>コース内のコードラボの完全なリストは、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</li>
@@ -66,13 +66,14 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="2。アプリ概要" duration="0">
+      <google-codelab-step label="アプリ概要" duration="0">
         <p>この実習では、デザートオーダーアプリを模したBasic Activityテンプレートを使って、新規アプリを作成します。下の図のように、画像をタップすることでアクション（ここではトーストのメッセージを表示）を行うことができます。また、ショッピングカートのボタンをタップして次のアクティビティに進むこともできます。</p>
+<p class="image-container"><img alt="Clicking an image displays a Toast" style="width: 193.78px" src="img/5961de998cd2e4cf.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3.タスク1.レイアウトに画像を追加する" duration="0">
+      <google-codelab-step label="タスク1.レイアウトに画像を追加する" duration="0">
         <p>XMLレイアウトに<code>android:onClick</code>属性を追加することで、ビューをボタンのようにクリック可能にすることができます。例えば、<a href="https://developer.android.com/reference/android/widget/ImageView.html" target="_blank"><code>ImageView</code></a>に<code>android:onClick</code>を追加することで、画像をボタンのように動作させることができます。</p>
 <p>このタスクでは、カフェでデザートを注文するアプリのプロトタイプを作成します。基本アクティビティのテンプレートを基に新規プロジェクトを開始した後、&#34;Hello World&#34;のテキストビューを適切なテキストで修正し、ユーザーがタップできる画像を追加します。</p>
 <p>1.1 新しいプロジェクトの開始</p>
@@ -103,6 +104,7 @@
 <ol type="1" start="1">
 <li><code>textintro TextView</code>の下部からレイアウトの下部に伸びる制約を削除して、<code>TextView</code>がレイアウトの上部にスナップするようにして、以下のように上部余白に8（8dp）を選択します。</li>
 </ol>
+<p class="image-container"><img alt="Layout with the first TextView" style="width: 519.47px" src="img/7863d195c7ca0c4c.png"></p>
 <ol type="1" start="1">
 <li>前回のレッスンでは、リテラルテキスト文字列から文字列リソースを抽出する方法を学びました。TextタブをクリックしてXMLコードに切り替え、<code>TextView</code>で<code>"Droid Desserts"</code>という文字列を抽出し、文字列リソース名としてintro_textを入力します。</li>
 </ol>
@@ -116,6 +118,7 @@
 <li>content_main.xmlファイルを開き、デザインタブをクリックします（まだ選択されていない場合）。</li>
 <li><code>ImageView</code>をレイアウトにドラッグして、それ用のDonut_circle画像を選択し、下のアニメーション図に示すように、それを<code>TextView</code>の上部とレイアウトの左側に24（24dp）の余白で拘束します。</li>
 </ol>
+<p class="image-container"><img alt="Adding an ImageView to the layout" style="width: 446.47px" src="img/c1120613b74f21fa.gif"></p>
 <ol type="1" start="1">
 <li>属性］ペインで、属性に次の値を入力します。</li>
 </ol>
@@ -134,6 +137,7 @@
 <ol type="1" start="1">
 <li>2つ目の<code>ImageView</code>をレイアウトにドラッグして、icecream_circle画像を選択し、1つ目の<code>ImageView</code>の下側とレイアウトの左側に24(24dp)の余白で拘束します。</li>
 </ol>
+<p class="image-container"><img alt="Adding a second ImageView to the layout" style="width: 403.47px" src="img/5a869a32790134ac.png"></p>
 <ol type="1" start="1">
 <li>属性］ペインで、属性に次の値を入力します。</li>
 </ol>
@@ -187,6 +191,7 @@
 </td></tr>
 </table>
 <p>これでレイアウトは下の図のようになるはずです。</p>
+<p class="image-container"><img alt="The app&#39;s image layout" style="width: 410.56px" src="img/af40f5bb72f6f99d.png"></p>
 <p>1.3 テキストの説明を追加する</p>
 <p>このステップでは、各デザートのテキスト説明（<code>TextView</code>）を追加します。<code>ImageView</code>要素の<code>contentDescription</code>フィールドの文字列リソースをすでに抽出しているので、各説明文<code>TextView</code>に同じ文字列リソースを使用することができます。</p>
 <ol type="1" start="1">
@@ -194,12 +199,15 @@
 <li>要素の左側をドーナツ<code>ImageView</code>の右側に、その上端をドーナツ<code>ImageView</code>の上端に、どちらも24(24dp)の余白で拘束します。</li>
 <li>要素の右側をレイアウトの右側に拘束し、同じ余白を24(24dp)にします。属性ペインの<code>ID</code>フィールドにdonut_descriptionを入力します。下の図のように、新しい<code>TextView</code>がドーナツ画像の横に表示されるはずです。</li>
 </ol>
+<p class="image-container"><img alt="Adding text descriptions next to the images" style="width: 466.91px" src="img/2946b7aa5c1d5f05.png"></p>
 <ol type="1" start="1">
 <li>属性] ペインで、[インスペクタ] ペインの幅を [制約に一致] に変更します。</li>
 </ol>
+<p class="image-container"><img alt="Changing the layout width to Match Constraints" style="width: 262.00px" src="img/94be94ddc9c86d38.png"></p>
 <ol type="1" start="1">
 <li>属性] ペインで、テキスト フィールドの文字列リソースの入力を開始します。@d.提案として表示される文字列リソース名（@string/donuts）をクリックします。</li>
 </ol>
+<p class="image-container"><img alt="Entering a text resource in the Attributes pane" style="width: 405.00px" src="img/9852678804934d01.png"></p>
 <ol type="1" start="1">
 <li>上記の手順を繰り返して、2つ目の<code>TextView</code>を追加します。この<code>TextView</code>は、<code>ice_cream ImageView</code>の右側と上部に拘束され、その右側はレイアウトの右側に拘束されます。属性ペインに以下のように入力します。</li>
 </ol>
@@ -241,141 +249,151 @@
 </td></tr>
 </table>
 <p>これで、以下のようなレイアウトになるはずです。</p>
+<p class="image-container"><img alt="App layout with images and text descriptions" style="width: 443.92px" src="img/12dfd124bcf93aa5.png"></p>
 <p>タスク1のソリューションコード</p>
 <p>content.xmlファイルのXMLレイアウトを以下に示します。</p>
-<p><code><?xml version="1.0" encoding="utf-8"?</code></p>
-<p><code><android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"</code></p>
-<p><code>xmlns:app="http://schemas.android.com/apk/res-auto"</code></p>
-<p><code>xmlns:tools="http://schemas.android.com/tools"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>="match_parent"</code></p>
-<p><code>app:layout_behavior="@string/appbar_scrolling_view_behavior"</code></p>
-<p><code>tools:context="com.example.android.droidcafe.MainActivity"</code></p>
-<p><code>tools:showIn="@layout/activity_main"></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/textintro"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_regular"</code></p>
-<p><code>android:text="@string/intro_text"</code></p>
-<p><code>android:textSize="@dimen/text_heading"</code></p>
-<p><code>="bold"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="親"</code></p>
-<p><code>="親" /></code></p>
-<p><code><</code>イメージビュー</p>
-<p><code>="@+id/donut"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@string/donuts"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/textintro"</code></p>
-<p><code>app:srcCompat="@drawable/donut_circle" /></code></p>
-<p><code><</code>イメージビュー</p>
-<p><code>android:id="@+id/ice_cream"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>android:contentDescription="@string/ice_cream_sandwiches"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/donut"</code></p>
-<p><code>app:srcCompat="@drawable/icecream_circle" /></code></p>
-<p><code><</code>イメージビュー</p>
-<p><code>="@+id/froyo"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@string/froyo"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/ice_cream"</code></p>
-<p><code>app:srcCompat="@drawable/froyo_circle" /></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/donut_description"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>android:text="@string/donuts"</code></p>
-<p><code>="親"</code></p>
-<p><code>="@+id/donut"</code></p>
-<p><code>="@+id/donut" /></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/ice_cream_description"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>android:text="@string/ice_cream_sandwiches"</code></p>
-<p><code>="親"</code></p>
-<p><code>="@+id/ice_cream"</code></p>
-<p><code>="@+id/ice_cream" /></code></p>
-<p><code><</code>テキストビュー</p>
-<p><code>android:id="@+id/froyo_description"</code></p>
-<p><code>="0dp"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>android:text="@string/froyo"</code></p>
-<p><code>="親"</code></p>
-<p><code>="@+id/froyo"</code></p>
-<p><code>="@+id/froyo" /></code></p>
-<p><code></android.support.constraint.ConstraintLayout> </android.support.constraint.ConstraintLayout</code></p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+&lt;android.support.constraint.ConstraintLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+    xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;
+    xmlns:tools=&#34;http://schemas.android.com/tools&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;match_parent&#34;
+    app:layout_behavior=&#34;@string/appbar_scrolling_view_behavior&#34;
+    tools:context=&#34;com.example.android.droidcafe.MainActivity&#34;
+    tools:showIn=&#34;@layout/activity_main&#34;&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/textintro&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginTop=&#34;@dimen/margin_regular&#34;
+        android:text=&#34;@string/intro_text&#34;
+        android:textSize=&#34;@dimen/text_heading&#34;
+        android:textStyle=&#34;bold&#34;
+        app:layout_constraintLeft_toLeftOf=&#34;parent&#34;
+        app:layout_constraintRight_toRightOf=&#34;parent&#34;
+        app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;
+
+    &lt;ImageView
+        android:id=&#34;@+id/donut&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:contentDescription=&#34;@string/donuts&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/textintro&#34;
+        app:srcCompat=&#34;@drawable/donut_circle&#34; /&gt;
+
+    &lt;ImageView
+        android:id=&#34;@+id/ice_cream&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:contentDescription=&#34;@string/ice_cream_sandwiches&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/donut&#34;
+        app:srcCompat=&#34;@drawable/icecream_circle&#34; /&gt;
+
+    &lt;ImageView
+        android:id=&#34;@+id/froyo&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:contentDescription=&#34;@string/froyo&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/ice_cream&#34;
+        app:srcCompat=&#34;@drawable/froyo_circle&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/donut_description&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginEnd=&#34;@dimen/margin_wide&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:text=&#34;@string/donuts&#34;
+        app:layout_constraintEnd_toEndOf=&#34;parent&#34;
+        app:layout_constraintStart_toEndOf=&#34;@+id/donut&#34;
+        app:layout_constraintTop_toTopOf=&#34;@+id/donut&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/ice_cream_description&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginEnd=&#34;@dimen/margin_wide&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:text=&#34;@string/ice_cream_sandwiches&#34;
+        app:layout_constraintEnd_toEndOf=&#34;parent&#34;
+        app:layout_constraintStart_toEndOf=&#34;@+id/ice_cream&#34;
+        app:layout_constraintTop_toTopOf=&#34;@+id/ice_cream&#34; /&gt;
+
+    &lt;TextView
+        android:id=&#34;@+id/froyo_description&#34;
+        android:layout_width=&#34;0dp&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginEnd=&#34;@dimen/margin_wide&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:text=&#34;@string/froyo&#34;
+        app:layout_constraintEnd_toEndOf=&#34;parent&#34;
+        app:layout_constraintStart_toEndOf=&#34;@+id/froyo&#34;
+        app:layout_constraintTop_toTopOf=&#34;@+id/froyo&#34; /&gt;
+
+&lt;/android.support.constraint.ConstraintLayout&gt;</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="4.タスク2: 画像のonClickメソッドを追加する" duration="0">
+      <google-codelab-step label="タスク2: 画像のonClickメソッドを追加する" duration="0">
         <p>ユーザーがタップ（またはクリック）できるようにビューをクリック可能にするには、XMLレイアウトに<a href="https://developer.android.com/reference/android/view/View.html#attr_android:onClick" target="_blank"><code>android:onClick</code></a>属性を追加し、クリックハンドラを指定します。例えば、<code>ImageView</code>に<code>android:onClick</code>を追加することで、ImageViewを単純な<code>Button</code>のように動作させることができます。このタスクでは、レイアウト内の画像をクリック可能にします。</p>
 <p>2.1 Toastメソッドを作成する</p>
 <p>このタスクでは、各画像がクリックされたときに呼び出す<code>android:onClick</code>属性の各メソッドを追加します。このタスクでは、これらのメソッドは、どの画像がタップされたかを示す<a href="https://developer.android.com/reference/android/widget/Toast.html" target="_blank"><code>Toast</code></a>メッセージを表示するだけです。(別の章では、別のアクティビティを起動するためにこれらのメソッドを変更します)。</p>
 <ol type="1" start="1">
 <li>Javaコードで文字列リソースを使用するには、まずstring<code>.xml</code>ファイルに追加する必要があります。プロジェクト] &gt; [Android] ペインで [res] &gt; [値] を展開し、string.xml を開きます。<code>Toast</code>メッセージに表示する文字列のために、以下の文字列リソースを追加します。</li>
 </ol>
-<p><code><string name="donut_order_message"> ドーナツを注文しました。</code></p>
-<p><code><string name="ice_cream_order_message"> アイスクリームサンドを注文しました。 </string>。</code></p>
-<p><code><string name="froyo_order_message"> FroYoを注文しました</string>。</code></p>
+<pre><code>&lt;string name=&#34;donut_order_message&#34;&gt;You ordered a donut.&lt;/string&gt;
+&lt;string name=&#34;ice_cream_order_message&#34;&gt;You ordered an ice cream sandwich.&lt;/string&gt;
+&lt;string name=&#34;froyo_order_message&#34;&gt;You ordered a FroYo.&lt;/string&gt;</code></pre>
 <ol type="1" start="1">
 <li>MainActivityを開き、以下の<code>displayToast()</code>メソッドをMainActivityの最後(閉じ括弧の前)に追加します。</li>
 </ol>
-<p><code>public void displayToast(String message) { {.</code></p>
-<p><code>Toast.makeText(getApplicationContext(), message.</code></p>
-<p><code>Toast.LENGTH_SHORT).show()。</code></p>
-<p><code>}</code></p>
+<pre><code>public void displayToast(String message) {
+   Toast.makeText(getApplicationContext(), message,
+                          Toast.LENGTH_SHORT).show();
+} </code></pre>
 <p>MainActivity内の任意の位置にこのメソッドを追加することができましたが、テンプレートによってMainActivity内ですでに提供されているメソッドの下に独自のメソッドを配置するのが最善の方法です。</p>
 <p>2.2 クリックハンドラの作成</p>
 <p>それぞれのクリック可能な画像は、クリックハンドラ-<code>android:onClick</code>属性が呼び出すメソッド-を必要とします。<code>android:onClick</code>属性から呼ばれるクリックハンドラは、<code>public</code>で、<code>void</code>を返し、その唯一のパラメータとして<code>View</code>を定義しなければなりません。クリックハンドラを追加するには、以下の手順に従ってください。</p>
 <ol type="1" start="1">
 <li>以下の<code>showDonutOrder()</code>メソッドをMainActivityに追加します。このタスクでは、先に作成した <code>displayToast()</code> メソッドを使用して、<code>Toast</code> メッセージを表示します。</li>
 </ol>
-<p><code>/**</code></p>
-<p><code>*</code> ドーナツ画像がクリックされた旨のメッセージが表示されます。</p>
-<p><code>*/</code></p>
-<p><code>public void showDonutOrder(View view) { {.</code></p>
-<p><code>    displayToast(getString(R.string.donut_order_message))を表示します。</code></p>
-<p><code>}</code></p>
+<pre><code>/**
+* Shows a message that the donut image was clicked.
+*/
+public void showDonutOrder(View view) {
+    displayToast(getString(R.string.donut_order_message));
+}</code></pre>
 <p>最初の3行は<a href="http://www.oracle.com/technetwork/articles/java/index-jsp-135444.html" target="_blank">Javadoc</a>形式のコメントで、コードを理解しやすくし、コードのドキュメント生成にも役立ちます。新しいメソッドを作成するたびに、このようなコメントを追加するのがベストプラクティスです。コメントの書き方の詳細については、<a href="http://www.oracle.com/technetwork/articles/java/index-137868.html" target="_blank">JavadocツールのためのDocコメントの書き方を</a>参照してください。</p>
 <ol type="1" start="1">
 <li>デザートごとにMainActivityの最後にメソッドを追加します。</li>
 </ol>
-<p><code>/**</code></p>
-<p><code>*</code> アイスクリームサンドの画像がクリックされたことを表示します。</p>
-<p><code>*/</code></p>
-<p><code>public void showIceCreamOrder(View view) {</code></p>
-<p><code>    displayToast(getString(R. string.ice_cream_order_message))を表示します。</code></p>
-<p><code>}</code></p>
-<p><code>/**</code></p>
-<p><code>*</code> フロヨ画像がクリックされた旨のメッセージが表示されます。</p>
-<p><code>*/</code></p>
-<p><code>public void showFroyoOrder(View view) { {.</code></p>
-<p><code>    displayToast(getString(R. string.froyo_order_message))を表示します。</code></p>
-<p><code>}</code></p>
+<pre><code>/**
+* Shows a message that the ice cream sandwich image was clicked.
+*/
+public void showIceCreamOrder(View view) {
+    displayToast(getString(R.string.ice_cream_order_message));
+}
+
+/**
+* Shows a message that the froyo image was clicked.
+*/
+public void showFroyoOrder(View view) {
+    displayToast(getString(R.string.froyo_order_message));
+}</code></pre>
 <ol type="1" start="1">
 <li>(オプション) [コード] &gt; [コードの再フォーマット]を選択すると、<code>MainActivity</code>で追加したコードが標準に準拠し、読みやすくなるように再フォーマットされます。</li>
 </ol>
@@ -385,58 +403,61 @@
 <li>content_main.xmlファイルを開き、レイアウトエディタでテキストタブをクリックしてXMLコードを表示します。</li>
 <li><code>donut</code> ImageViewに<code>android:onClick</code>属性を追加します。入力すると、クリックハンドラを示すサジェストが表示されます。<code>showDonutOrder</code>クリックハンドラを選択します。これでコードは以下のようになるはずです。</li>
 </ol>
-<p><code><</code>イメージビュー</p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="10dp"</code></p>
-<p><code>="@+id/donut"</code></p>
-<p><code>="@id/choose_dessert"</code></p>
-<p><code>="@string/donut"</code></p>
-<p><code>android:src="@drawable/donut_circle"</code></p>
-<p><code>="showDonutOrder"/></code></p>
-<p><code>最後の行</code>(<code>android:onClick="showDonutOrder</code>&#34;)<code>は、クリックハンドラ</code>(<code>showDonutOrder</code>)<code>をImageViewに割り当てています。</code></p>
+<pre><code>&lt;ImageView
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:padding=&#34;10dp&#34;
+        android:id=&#34;@+id/donut&#34;
+        android:layout_below=&#34;@id/choose_dessert&#34;
+        android:contentDescription=&#34;@string/donut&#34;
+        android:src=&#34;@drawable/donut_circle&#34;
+        android:onClick=&#34;showDonutOrder&#34;/&gt;</code></pre>
+<p>最後の行(android:onClick=&#34;showDonutOrder&#34;)は、クリックハンドラ(showDonutOrder)をImageViewに割り当てています。</p>
 <ol type="1" start="1">
 <li>(オプション) [コード] &gt; [コードの再フォーマット] を選択して、<code>content_main.xml</code> で追加した XML コードを標準に準拠して読みやすくするために再フォーマットします。Android Studio は自動的に <code>android:onClick</code> 属性を数行上に移動して、前置きとして <code>android:</code> を持つ他の属性と結合します。</li>
 <li>同じ手順で、<code>android:onClick</code>属性を<code>ice_cream</code>と<code>froyo ImageView</code>要素に追加します。<code>showDonutOrder</code> と <code>showFroyoOrder</code> のクリック ハンドラを選択します。オプションでCode &gt; Reformat Codeを選択してXMLコードを再フォーマットすることができます。コードは以下のようになります。</li>
 </ol>
-<p><code><</code>イメージビュー</p>
-<p><code>android:id="@+id/ice_cream"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>android:contentDescription="@string/ice_cream_sandwiches"</code></p>
-<p><code>android:onClick="showIceCreamOrder"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/donut"</code></p>
-<p><code>app:srcCompat="@drawable/icecream_circle" /></code></p>
-<p><code><</code>イメージビュー</p>
-<p><code>="@+id/froyo"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="wrap_content"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@dimen/margin_wide"</code></p>
-<p><code>="@string/froyo"</code></p>
-<p><code>="showFroyoOrder"</code></p>
-<p><code>="parent"</code></p>
-<p><code>="@+id/ice_cream"</code></p>
-<p><code>app:srcCompat="@drawable/froyo_circle" /></code></p>
+<pre><code>&lt;ImageView
+        android:id=&#34;@+id/ice_cream&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:contentDescription=&#34;@string/ice_cream_sandwiches&#34;
+        android:onClick=&#34;showIceCreamOrder&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/donut&#34;
+        app:srcCompat=&#34;@drawable/icecream_circle&#34; /&gt;
+
+&lt;ImageView
+        android:id=&#34;@+id/froyo&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:layout_marginStart=&#34;@dimen/margin_wide&#34;
+        android:layout_marginTop=&#34;@dimen/margin_wide&#34;
+        android:contentDescription=&#34;@string/froyo&#34;
+        android:onClick=&#34;showFroyoOrder&#34;
+        app:layout_constraintStart_toStartOf=&#34;parent&#34;
+        app:layout_constraintTop_toBottomOf=&#34;@+id/ice_cream&#34;
+        app:srcCompat=&#34;@drawable/froyo_circle&#34; /&gt;</code></pre>
 <p>各<code>ImageView</code>の<code>android:layout_marginStart</code>属性は赤で下線が引かれていることに注意してください。この属性は<code>ImageView</code>の&#34;開始&#34;マージンを決定します。</p>
 <ol type="1" start="1">
 <li>android:<code>layout_marginStart</code>属性の「and<code>roid:</code>preface」の部分をクリックすると、下の図のようにその横に赤い電球の警告が表示されます。</li>
 </ol>
+<p class="image-container"><img alt="Attribute shows a red bulb warning." style="width: 477.00px" src="img/6de408f368ddc483.png"></p>
 <ol type="1" start="1">
 <li>アプリを以前のバージョンのAndroidと互換性を持たせるには、この属性の各インスタンスの赤い球根をクリックし、Set layout_marginLeft...を選択して、layout<code>_marginLeft</code>を<code>"@dimen/margin_wide"</code>に設定します。</li>
 <li>アプリを実行します。</li>
 </ol>
 <p>ドーナツ、アイスクリームサンド、またはフロヨーの画像をクリックすると、下図のように注文に関するトーストメッセージが表示されます。</p>
+<p class="image-container"><img alt="Clicking an image displays a Toast" style="width: 216.06px" src="img/888b72adcc05c62e.png"></p>
 <p>タスク2のソリューションコード</p>
 <p>このタスクの解決コードは、Android Studioプロジェクト<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafe" target="_blank">DroidCafeの</a><code>MainActivity</code>のコードとレイアウトに含まれています。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="5.タスク3：フローティングアクションボタンの変更" duration="0">
+      <google-codelab-step label="タスク3：フローティングアクションボタンの変更" duration="0">
         <p>画面下に表示されるメールアイコンのフローティングアクションボタンをクリックすると、<code>MainActivity</code>のコードは、スマートフォンであれば画面下から、大きなデバイスであれば左下から開き、数秒後に閉じるドロワーに簡単なメッセージを表示します。これはスナックバーと呼ばれています。これは、操作に関するフィードバックを提供するために使用されます。詳しくは、スナック<a href="http://developer.android.com/reference/android/support/design/widget/Snackbar.html" target="_blank">バーを</a>参照してください。</p>
 <p>他のアプリがどのようにフローティングアクションボタンを実装しているかを見てみましょう。たとえば、Gmail アプリには新しい電子メール メッセージを作成するためのフローティング アクション ボタンがあり、連絡先アプリには新しい連絡先を作成するためのフローティング アクション ボタンがあります。フローティング アクション ボタンの詳細については、「<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank"><code>FloatingActionButton</code>」を</a>参照してください。</p>
 <p>このタスクでは、<code>FloatingActionButton</code> のアイコンをショッピングカート に変更し、<code>FloatingActionButton</code> のアクションを変更して新しいアクティビティを起動します。</p>
@@ -467,20 +488,21 @@
 <li>MainActivityを開きます。</li>
 <li><code>onClick(View view)メソッドを変更して、OrderActivityの開始を明示的に意図するようにしました。</code></li>
 </ol>
-<p><code>public void onClick(View view) {</code></p>
-<p><code>Intent intent = new Intent(MainActivity.this, OrderActivity.class).</code></p>
-<p><code>startActivity(intent)。</code></p>
-<p><code>}</code></p>
+<pre><code>public void onClick(View view) {
+    Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+    startActivity(intent);
+}</code></pre>
 <ol type="1" start="1">
 <li>アプリを実行します。ショッピングカートのアイコンを使用するフローティングアクションボタンをタップします。空のアクティビティ（<code>OrderActivity</code>）が表示されます。戻るボタンをタップして<code>MainActivity</code>に戻ります。</li>
 </ol>
+<p class="image-container"><img alt="The floating action button uses a shopping cart icon and displays a blank Activity." style="width: 263.44px" src="img/df8b4a0a987f1b6.png"></p>
 <p>タスク3のソリューションコード</p>
 <p>このタスクのソリューションコードは、Android Studioプロジェクト<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafe" target="_blank">DroidCafeの</a>コードとレイアウトに含まれています。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="6。コーディングの課題" duration="0">
+      <google-codelab-step label="コーディングの課題" duration="0">
         <p>注: コーディングの課題はすべて任意であり、後のレッスンの前提条件ではありません。</p>
 <p>課題: DroidCafe アプリの <code>MainActivity</code> は、<code>OrderActivity</code> と呼ばれる 2 番目の <code>Activity</code> を起動します。アクティビティから別のアクティビティにデータを送信する方法を別のレッスンで学びました。<code>MainActivity</code>で選択したデザートの注文メッセージを<code>OrderActivity</code>レイアウトの上部にある新しい<code>TextView</code>に送信するようにアプリを変更します。</p>
 <ol type="1" start="1">
@@ -488,40 +510,43 @@
 <li><code>MainActivityに、Toastに表示される注文メッセージのためのメンバ変数（mOrderMessage）を作成します。</code></li>
 <li><code>showDonutOrder</code>()<code>、showIceCreamOrder()、および showFroyoOrder() の各クリック ハンドラを変更して、トーストを表示する前にメッセージ文字列 mOrderMessage を割り当てるようにします。例えば、次の例では、donut_order_message文字列をmOrderMessageに代入し、トーストを表示しています。</code></li>
 </ol>
-<p><code>mOrderMessage = getString(R.string.donut_order_message).</code></p>
-<p><code>displayToast(mOrderMessage).</code></p>
+<pre><code>mOrderMessage = getString(R.string.donut_order_message);
+displayToast(mOrderMessage);</code></pre>
 <ol type="1" start="1">
 <li><code>MainActivityの先頭にEXTRA_MESSAGEというpublic static final Stringを追加して、intent.putExtraのキーを定義します。</code></li>
 </ol>
+<pre><code>public static final String EXTRA_MESSAGE = 
+                      &#34;com.example.android.droidcafe.extra.MESSAGE&#34;;</code></pre>
 <p><code>public static final String EXTRA_MESSAGE =</code></p>
 <p><code>"com.example.android.droidcafe.extra.MESSAGE"</code></p>
 <ol type="1" start="1">
 <li><code>onClick() メソッドを変更し、OrderActivity を起動する前に intent.putExtra ステートメントを含めるようにしました。</code></li>
 </ol>
-<p><code>public void onClick(View view) {</code></p>
-<p>＝インテント</p>
-<p><code>new Intent(MainActivity.this, OrderActivity.class).</code></p>
-<p><code>    intent.putExtra(EXTRA_MESSAGE, mOrderMessage)。</code></p>
-<p><code>    startActivity(intent)。</code></p>
-<p><code>}</code></p>
+<pre><code>public void onClick(View view) {
+    Intent intent = 
+            new Intent(MainActivity.this, OrderActivity.class);
+    intent.putExtra(EXTRA_MESSAGE, mOrderMessage);
+    startActivity(intent);
+}</code></pre>
 <ol type="1" start="1">
 <li><code>OrderActivity</code>では、<code>onCreate()</code>メソッドに以下のコードを追加して、<code>Activity</code>を起動した<code>Intent</code>を取得し、文字列メッセージを抽出し、<code>TextView</code>のテキストをメッセージに置き換えます。</li>
 </ol>
-<p><code>Intent インテント = getIntent()。</code></p>
-<p><code>String message = "Order." +</code></p>
-<p><code>                   intent.getStringExtra(MainActivity.EXTRA_MESSAGE)。</code></p>
-<p><code>TextView textView = findViewById(R.id.order_textview).</code></p>
-<p><code>textView.setText(message)</code></p>
+<pre><code>Intent intent = getIntent();
+String message = &#34;Order: &#34; + 
+                   intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+TextView textView = findViewById(R.id.order_textview);
+textView.setText(message);</code></pre>
 <ol type="1" start="1">
 <li>アプリを起動します。デザート画像を選択した後、フローティングアクションボタンをタップして<code>OrderActivity</code>を起動します。</li>
 </ol>
+<p class="image-container"><img alt="The blank Activity now shows the order message." style="width: 354.22px" src="img/415059f93edbc995.png"></p>
 <p>チャレンジソリューションコード</p>
 <p>Android Studioプロジェクト。<a href="https://github.com/google-developer-training/android-fundamentals-apps-v2/tree/master/DroidCafeChallenge" target="_blank">DroidCafeChallenge</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="7。要約" duration="0">
+      <google-codelab-step label="要約" duration="0">
         <ul>
 <li>プロジェクトで画像を使用するには、プロジェクトのdrawableフォルダ（<em>project_name </em>&gt; app &gt; src &gt; main &gt; res &gt; drawable）に画像をコピーします。</li>
 <li><code>ImageView</code>を定義して、<code>ImageView</code>をレイアウトにドラッグし、そのImageView用の画像を選択して使用します。</li>
@@ -531,19 +556,19 @@
 <li>別のアクティビティを追加します。プロジェクト &gt; Android ペインで、java フォルダ内のパッケージ名フォルダを右クリック（または Control キーを押しながらクリック）し、「新規作成」 &gt; 「アクティビティ」を選択し、アクティビティのテンプレート（Empty Activity など）を指定します。</li>
 <li><a href="https://developer.android.com/reference/android/widget/Toast.html" target="_blank">乾杯</a>メッセージを表示します。</li>
 </ul>
-<p><code>Toast.makeText(getApplicationContext(), message.</code></p>
-<p><code>Toast.LENGTH_SHORT).show()。</code></p>
+<pre><code>Toast.makeText(getApplicationContext(), message, 
+                                          Toast.LENGTH_SHORT).show();</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="8。関連コンセプト" duration="0">
+      <google-codelab-step label="関連コンセプト" duration="0">
         <p>関連するコンセプトのドキュメントは「<a href="https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-2-user-experience/lesson-4-user-interaction/4-1-c-buttons-and-clickable-images/4-1-c-buttons-and-clickable-images.html" target="_blank">4.1: ボタンとクリック可能な画像」</a>にあります。</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="9。詳細はこちら" duration="0">
+      <google-codelab-step label="詳細はこちら" duration="0">
         <p>Android Studioのドキュメント。</p>
 <ul>
 <li><a href="https://developer.android.com/studio/intro/index.html" target="_blank">Android Studioユーザーガイド</a></li>
@@ -570,7 +595,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="10。宿題" duration="0">
+      <google-codelab-step label="宿題" duration="0">
         <p>このセクションでは、インストラクターが主導するコースの一部として、このコードラボを通して作業する学生のための可能な宿題をリストアップします。以下のことをするかどうかはインストラクター次第です。</p>
 <ul>
 <li>必要に応じて宿題を出す。</li>
@@ -588,6 +613,7 @@
 <li>レイアウトバリアントで3つの画像をすべて選択し、下の図のように画面全体に均等に分散させるために、 パックボタンで「水平展開」を選択します。</li>
 <li>下図のように、画像の側面と底面にテキスト記述を拘束してください。</li>
 </ol>
+<p class="image-container"><img alt="Horizontal (landscape) layout for the DroidCafe app" style="width: 381.09px" src="img/2203359f2e86e2db.png"></p>
 <p>以下の質問に答えてください。</p>
 <p>質問1</p>
 <p>Android Studioプロジェクトに画像を追加するには？1つを選択します。</p>
@@ -623,7 +649,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="11。Next codelab" duration="0">
+      <google-codelab-step label="Next codelab" duration="0">
         <p>Android Developer Fundamentals (V2)コースの次の実践的なコードラボを見つけるには、<a href="https://developer.android.com/courses/fundamentals-training/toc-v2" target="_blank">Codelabs for Android Developer Fundamentals (V2)を</a>参照してください。</p>
 <p>概念章、アプリ、スライドへのリンクを含むコースの概要については、<a href="https://developer.android.com/courses/fundamentals-training/overview-v2" target="_blank">Android Developer Fundamentals (Version 2)を</a>参照してください。</p>
 
